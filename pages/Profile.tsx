@@ -111,6 +111,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
               { label: 'Retirar fundo', icon: 'payments', page: 'retirada' },
               { label: 'Recarregar', icon: 'account_balance_wallet', page: 'deposit' },
               { label: 'Recarregar USDT', icon: 'currency_bitcoin', page: 'deposit-usdt' },
+              { label: 'Investimento em Fundos', icon: 'trending_up', page: 'investimentos-fundo' },
               { label: 'Adicionar Conta Bancária', icon: 'add_card', page: 'add-bank' },
               { label: 'Loja', icon: 'storefront', page: 'shop' },
               { label: 'Convite', icon: 'person_add', page: 'invite' },

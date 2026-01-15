@@ -46,6 +46,7 @@ const SubordinateList = lazy(() => import('./pages/SubordinateList'));
 const DepositUSDT = lazy(() => import('./pages/DepositUSDT'));
 const DepositHistory = lazy(() => import('./pages/DepositHistory'));
 const DownloadApp = lazy(() => import('./pages/DownloadApp'));
+const InvestimentosFundo = lazy(() => import('./pages/InvestimentosFundo'));
 import LoadingOverlay from './components/LoadingOverlay';
 import StatusModal from './components/StatusModal';
 
@@ -59,7 +60,7 @@ import { useNetwork } from './contexts/NetworkContext';
 const App: React.FC = () => {
   const { showLoading, hideLoading, withLoading } = useLoading();
   const { runWithTimeout } = useNetwork();
-  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'wallet' | 'profile' | 'invite' | 'support' | 'tutorials' | 'about' | 'report' | 'add-bank' | 'withdraw-password' | 'deposit' | 'purchase-history' | 'change-password' | 'tutoriais-falar-com-gerente' | 'tutoriais-como-convidar' | 'como-comprar' | 'tutoriais-alterar-senha-retirada' | 'detalhes-conta' | 'update-withdraw-password' | 'historico-conta' | 'register' | 'confirmar-deposito' | 'como-retirar-fundos' | 'tutoriais-depositos' | 'retirada' | 'login' | 'security-auth' | 'security-verify' | 'splash-ads' | 'campaigns' | 'como-enviar-comprovante' | 'tutoriais-definir-senha' | 'tutoriais-adicionar-conta' | 'tutoriais-ganhos-tarefas' | 'ganhos-tarefas' | 'gift-chest' | 'reward-claim' | 'info' | 'terms-of-use' | 'privacy-policy' | 'system-rules' | 'subordinate-list' | 'deposit-usdt' | 'deposit-history' | 'tutoriais-adicionar-conta'>('register');
+  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'wallet' | 'profile' | 'invite' | 'support' | 'tutorials' | 'about' | 'report' | 'add-bank' | 'withdraw-password' | 'deposit' | 'purchase-history' | 'change-password' | 'tutoriais-falar-com-gerente' | 'tutoriais-como-convidar' | 'como-comprar' | 'tutoriais-alterar-senha-retirada' | 'detalhes-conta' | 'update-withdraw-password' | 'historico-conta' | 'register' | 'confirmar-deposito' | 'como-retirar-fundos' | 'tutoriais-depositos' | 'retirada' | 'login' | 'security-auth' | 'security-verify' | 'splash-ads' | 'campaigns' | 'como-enviar-comprovante' | 'tutoriais-definir-senha' | 'tutoriais-adicionar-conta' | 'tutoriais-ganhos-tarefas' | 'ganhos-tarefas' | 'gift-chest' | 'reward-claim' | 'info' | 'terms-of-use' | 'privacy-policy' | 'system-rules' | 'subordinate-list' | 'deposit-usdt' | 'deposit-history' | 'tutoriais-adicionar-conta' | 'investimentos-fundo'>('register');
   const [lastAction, setLastAction] = useState<() => void>(() => { });
   const [statusModal, setStatusModal] = useState<{
     isOpen: boolean;
@@ -275,6 +276,7 @@ const App: React.FC = () => {
       case 'subordinate-list': return <SubordinateList onNavigate={handleNavigate} />;
       case 'deposit-history': return <DepositHistory onNavigate={handleNavigate} />;
       case 'download-app': return <DownloadApp onNavigate={handleNavigate} />;
+      case 'investimentos-fundo': return <InvestimentosFundo onNavigate={handleNavigate} />;
       default: return <Home onNavigate={handleNavigate} profile={profile} />;
     }
   };
