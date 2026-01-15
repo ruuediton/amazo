@@ -113,7 +113,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <div className="flex items-center p-4 pb-2 justify-between">
                     <button
                         onClick={() => onNavigate('investimentos-fundo')}
-                        className="text-yellow-500 flex size-12 shrink-0 items-center justify-start cursor-pointer hover:opacity-70 transition-opacity"
+                        className="text-primary flex size-12 shrink-0 items-center justify-start cursor-pointer hover:opacity-70 transition-opacity"
                     >
                         <span className="material-symbols-outlined text-[24px]">arrow_back</span>
                     </button>

@@ -14,7 +14,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
           onClick={() => onNavigate('tutorials')}
           className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
-          <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+          <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
         </button>
         <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Definir Senha</h2>
       </header>
@@ -41,7 +41,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
           <div className="flex w-full flex-col items-stretch justify-center gap-3 p-5">
             <div>
               <h1 className="text-xl font-bold leading-tight tracking-tight mb-2 text-black">Proteja os seus Kz</h1>
-              <p className="text-[#bab59c] text-sm font-normal leading-relaxed">
+              <p className="text-[text-gray-400] text-sm font-normal leading-relaxed">
                 A sua senha de levantamento é a chave para movimentar o seu dinheiro com segurança. Escolha uma combinação que só você conheça.
               </p>
             </div>
@@ -59,7 +59,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
           </div>
           <div className="flex flex-col border-b border-white/10 pb-4 mb-4 last:border-0 last:pb-0 last:mb-0">
             <p className="text-black text-base font-bold leading-normal">Sem sequências</p>
-            <p className="text-[#bab59c] text-sm font-normal leading-normal">Evite números fáceis como 123456 ou 111111.</p>
+            <p className="text-[text-gray-400] text-sm font-normal leading-normal">Evite números fáceis como 123456 ou 111111.</p>
           </div>
           {/* Item 2 */}
           <div className="flex items-start justify-center pt-1">
@@ -67,7 +67,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
           </div>
           <div className="flex flex-col border-b border-white/10 pb-4 mb-4 last:border-0 last:pb-0 last:mb-0">
             <p className="text-black text-base font-bold leading-normal">Sem datas</p>
-            <p className="text-[#bab59c] text-sm font-normal leading-normal">Não use o seu ano de nascimento ou dia.</p>
+            <p className="text-[text-gray-400] text-sm font-normal leading-normal">Não use o seu ano de nascimento ou dia.</p>
           </div>
           {/* Item 3 */}
           <div className="flex items-start justify-center pt-1">
@@ -75,7 +75,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
           </div>
           <div className="flex flex-col pb-0 mb-0">
             <p className="text-black text-base font-bold leading-normal">Única</p>
-            <p className="text-[#bab59c] text-sm font-normal leading-normal">Não repita a senha de login do app.</p>
+            <p className="text-[text-gray-400] text-sm font-normal leading-normal">Não repita a senha de login do app.</p>
           </div>
         </div>
 

@@ -35,8 +35,8 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
   };
 
   const statusMap: any = {
-    'completado': { label: 'Concluído', color: 'text-green-400', bg: 'bg-green-500/20', icon: 'check_circle' },
-    'processando...': { label: 'Pendente', color: 'text-primary', bg: 'bg-yellow-500/20', icon: 'schedule' },
+    'completado': { label: 'Concluído', color: 'text-green-600', bg: 'bg-green-500/20', icon: 'check_circle' },
+    'processando...': { label: 'Pendente', color: 'text-primary', bg: 'bg-primary/20', icon: 'schedule' },
     'rejectado': { label: 'Rejeitado', color: 'text-red-400', bg: 'bg-red-500/20', icon: 'error' }
   };
 
@@ -116,7 +116,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
       <div className="flex items-center justify-between p-4 pb-2 sticky top-0 z-10 bg-background-dark">
         <button
           onClick={() => onNavigate('profile')}
-          className="text-yellow-500 flex size-12 shrink-0 items-center justify-center cursor-pointer rounded-full hover:bg-white/10 transition-colors"
+          className="text-primary flex size-12 shrink-0 items-center justify-center cursor-pointer rounded-full hover:bg-white/10 transition-colors"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
@@ -126,7 +126,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
       <div className="flex flex-col flex-1 px-4 mt-2">
         {/* Amount Input Section */}
         <div className="flex flex-col items-center justify-center py-6">
-          <p className="text-[#9d9d9d] text-sm font-medium leading-normal mb-2">Inserir Quantia</p>
+          <p className="text-[text-gray-500] text-sm font-medium leading-normal mb-2">Inserir Quantia</p>
           <div className="relative flex items-center justify-center w-full max-w-[320px]">
             <span className="text-3xl font-bold text-black absolute left-2 pointer-events-none">Kz</span>
             <input
@@ -138,7 +138,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
               onChange={(e) => setAmount(e.target.value)}
             />
           </div>
-          <p className="text-[#9d9d9d] text-xs font-medium mt-3">Min: 3.000 Kz - Max: 1.000.000 Kz</p>
+          <p className="text-[text-gray-500] text-xs font-medium mt-3">Min: 3.000 Kz - Max: 1.000.000 Kz</p>
         </div>
 
         {/* Quick Amount Buttons */}
@@ -149,14 +149,14 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
               onClick={() => handleQuickAmount(val)}
               className="flex h-9 items-center justify-center rounded-full bg-amazon-light-gray px-4 hover:bg-gray-200 transition-colors cursor-pointer border border-amazon-border focus:border-primary"
             >
-              <p className="text-[#0F1111] text-sm font-bold leading-normal">+{val.toLocaleString()}</p>
+              <p className="text-[text-black] text-sm font-bold leading-normal">+{val.toLocaleString()}</p>
             </button>
           ))}
           <button
             onClick={() => setAmount('1000000')}
             className="flex h-9 items-center justify-center rounded-full bg-amazon-light-gray px-4 hover:bg-gray-200 transition-colors cursor-pointer border border-amazon-border focus:border-primary"
           >
-            <p className="text-[#0F1111] text-sm font-bold leading-normal">Máx</p>
+            <p className="text-[text-black] text-sm font-bold leading-normal">Máx</p>
           </button>
         </div>
 
@@ -215,12 +215,12 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
         <button
           disabled={loading}
           onClick={handleConfirmClick}
-          className={`flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary hover:bg-[#eac515] text-[#221f10] text-base font-bold leading-normal tracking-[0.015em] transition-all active:scale-[0.98] ${loading ? 'opacity-50' : ''}`}
+          className={`flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary hover:bg-[#eac515] text-[text-black] text-base font-bold leading-normal tracking-[0.015em] transition-all active:scale-[0.98] ${loading ? 'opacity-50' : ''}`}
         >
           {loading ? 'Processando...' : 'Confirmar Depósito'}
         </button>
 
-        <div className="flex justify-center items-center gap-2 mt-3 text-[#8a8a8a]">
+        <div className="flex justify-center items-center gap-2 mt-3 text-[text-gray-500]">
           <span className="material-symbols-outlined text-sm" style={{ fontSize: '16px' }}>lock</span>
           <p className="text-xs font-medium">Transação segura criptografada de 256 bits</p>
         </div>

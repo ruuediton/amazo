@@ -115,7 +115,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
                         onClick={() => currentStep > 1 ? setCurrentStep(currentStep - 1) : onNavigate('tutorials')}
                         className="flex size-10 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                     >
-                        <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+                        <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
                     </button>
                     <h2 className="text-slate-900 dark:text-black text-lg font-bold leading-tight tracking-[-0.015em] text-center">Adicionar Conta</h2>
                     <button onClick={() => onNavigate('add-bank')} className="flex items-center justify-end px-2">

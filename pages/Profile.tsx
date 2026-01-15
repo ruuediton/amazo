@@ -37,16 +37,16 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
   return (
     <div className="flex flex-col pb-32 bg-background-dark text-black font-display">
       {/* Header Section */}
-      <div className="bg-primary pt-4 pb-8 rounded-b-[2rem] shadow-lg shadow-primary/10">
+      <div className="bg-white pt-4 pb-8 rounded-b-[2rem] border-b border-gray-100">
         <div className="flex items-center justify-between px-6 py-4">
           <div>
-            <h1 className="text-2xl font-black leading-tight text-text-primary">Usuário amazon</h1>
-            <p className="text-text-primary/70 text-sm mt-1">ID: {profile.code}</p>
+            <h1 className="text-2xl font-black leading-tight text-black">Usuário amazon</h1>
+            <p className="text-gray-500 text-sm mt-1 font-bold italic underline decoration-primary decoration-4 underline-offset-4">ID: {profile.code}</p>
             {/* Exibe o número de telefone em vez de 'Angola' */}
-            <p className="text-text-primary/70 text-sm">{userPhone || '+244 000 000 000'}</p>
-            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-surface-dark rounded-full border border-text-primary/10">
-              <span className="material-symbols-outlined text-text-primary text-[16px]">verified</span>
-              <span className="text-text-primary text-xs font-black uppercase tracking-wide">
+            <p className="text-gray-400 text-xs mt-1 font-bold">{userPhone || '+244 000 000 000'}</p>
+            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-gray-50 rounded-full border border-gray-200">
+              <span className="material-symbols-outlined text-primary text-[16px]">verified</span>
+              <span className="text-black text-[10px] font-black uppercase tracking-wider">
                 {profile.verified ? 'Verificado' : 'Membro Prime'}
               </span>
             </div>
@@ -56,7 +56,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
               className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 border-4 border-surface-dark shadow-xl"
               style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0")' }}
             ></div>
-            <div className="absolute bottom-0 right-0 bg-surface-dark rounded-full p-1.5 shadow-md border border-amazon-border">
+            <div className="absolute bottom-0 right-0 bg-white rounded-full p-1.5 shadow-md border border-gray-100">
               <span className="material-symbols-outlined text-primary text-[14px] block font-bold">edit</span>
             </div>
           </div>
@@ -64,38 +64,38 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
 
         {/* Balance Card */}
         <div className="px-4 mt-2">
-          <div className="rounded-xl bg-surface-dark p-5 shadow-lg relative overflow-hidden border border-amazon-border">
-            <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-              <span className="material-symbols-outlined text-[100px] text-text-primary">account_balance_wallet</span>
+          <div className="rounded-[32px] bg-black p-7 shadow-2xl relative overflow-hidden border border-gray-800">
+            <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+              <span className="material-symbols-outlined text-[120px] text-primary">account_balance_wallet</span>
             </div>
             <div className="relative z-10">
-              <p className="text-text-secondary text-sm font-medium mb-1 uppercase tracking-widest text-[10px]">Saldo Disponível</p>
-              <div className="flex items-center gap-2">
-                <h3 className="text-4xl font-extrabold text-text-primary tracking-tight">
+              <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1.5">Saldo Disponível</p>
+              <div className="flex items-center gap-3">
+                <h3 className="text-4xl font-black text-white italic tracking-tight tabular-nums">
                   Kz {showBalance ? (profile.balance || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 }) : '••••••'}
                 </h3>
                 <button
                   onClick={() => setShowBalance(!showBalance)}
-                  className="text-text-secondary hover:text-primary transition-colors focus:outline-none"
+                  className="text-gray-500 hover:text-primary transition-colors focus:outline-none"
                 >
-                  <span className="material-symbols-outlined text-[20px]">
+                  <span className="material-symbols-outlined text-[24px]">
                     {showBalance ? 'visibility' : 'visibility_off'}
                   </span>
                 </button>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-2 mt-6 border-t border-amazon-border pt-4">
+            <div className="grid grid-cols-3 gap-2 mt-8 border-t border-gray-800 pt-5">
               <div className="text-center">
-                <p className="text-[10px] uppercase text-text-secondary font-bold tracking-wider">Recarga Total</p>
-                <p className="text-sm font-bold text-text-primary mt-1">Kz {profile.deposit_total || 0}</p>
+                <p className="text-[9px] uppercase text-gray-400 font-black tracking-widest">Recarga</p>
+                <p className="text-xs font-black text-white mt-1">Kz {profile.deposit_total || 0}</p>
               </div>
-              <div className="text-center border-l border-r border-amazon-border">
-                <p className="text-[10px] uppercase text-text-secondary font-bold tracking-wider">Retirada Total</p>
-                <p className="text-sm font-bold text-text-primary mt-1">Kz {profile.withdraw_total || 0}</p>
+              <div className="text-center border-l border-r border-gray-800">
+                <p className="text-[9px] uppercase text-gray-400 font-black tracking-widest">Retirada</p>
+                <p className="text-xs font-black text-white mt-1">Kz {profile.withdraw_total || 0}</p>
               </div>
               <div className="text-center">
-                <p className="text-[10px] uppercase text-text-secondary font-bold tracking-wider">Equipe</p>
-                <p className="text-sm font-bold text-primary mt-1">{profile.team_count || 0}</p>
+                <p className="text-[9px] uppercase text-gray-400 font-black tracking-widest">Equipe</p>
+                <p className="text-xs font-black text-primary mt-1">{profile.team_count || 0}</p>
               </div>
             </div>
           </div>

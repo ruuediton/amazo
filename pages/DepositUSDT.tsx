@@ -114,7 +114,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
       <header className="sticky top-0 z-50 flex items-center justify-between bg-background-dark/95 backdrop-blur-md p-4 pb-2 border-b border-gray-200">
         <button
           onClick={() => onNavigate('profile')}
-          className="text-yellow-500 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+          className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
           <span className="material-symbols-outlined text-[24px]">arrow_back</span>
         </button>

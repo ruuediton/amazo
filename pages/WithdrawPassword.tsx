@@ -59,7 +59,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
           onClick={() => onNavigate('profile')}
           className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
-          <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+          <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
         </button>
         <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Senha de Retirada</h1>
       </header>
@@ -68,7 +68,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
         {/* Intro */}
         <div className="mb-6 mt-2">
           <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-3">Definir Senha de Retirada</h2>
-          <p className="text-[#bab59c] text-base font-normal leading-relaxed">
+          <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
             Esta senha será solicitada exclusivamente para confirmar saques, transferências e pagamentos.
           </p>
         </div>
@@ -84,14 +84,14 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
                 onChange={(e) => setPassword(e.target.value)}
                 maxLength={4}
                 inputMode="numeric"
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Crie uma nova senha (4 dígitos)"
                 type={showNew ? "text" : "password"}
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                   {showNew ? 'visibility' : 'visibility_off'}
@@ -111,14 +111,14 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 maxLength={4}
                 inputMode="numeric"
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Repita a nova senha"
                 type={showConfirm ? "text" : "password"}
               />
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                   {showConfirm ? 'visibility' : 'visibility_off'}

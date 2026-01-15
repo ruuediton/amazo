@@ -14,7 +14,7 @@ const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
         <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100 backdrop-blur-md">
           <button
             onClick={() => onNavigate('info')}
-            className="text-yellow-500 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
           >
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>

@@ -67,7 +67,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
   };
 
   const statusMap: any = {
-    'pendente': { icon: 'schedule', color: 'text-yellow-500', bg: 'bg-yellow-500/10', label: 'Em Verificação' },
+    'pendente': { icon: 'schedule', color: 'text-primary', bg: 'bg-primary/10', label: 'Em Verificação' },
     'confirmado': { icon: 'check_circle', color: 'text-green-500', bg: 'bg-green-500/10', label: 'Confirmado' },
     'cancelado': { icon: 'cancel', color: 'text-red-500', bg: 'bg-red-500/10', label: 'Cancelado' }
   };
@@ -78,7 +78,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
       <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 backdrop-blur-md p-4 pb-2 border-b border-gray-200">
         <button
           onClick={() => onNavigate('profile')}
-          className="text-yellow-500 flex size-12 shrink-0 items-center justify-start hover:bg-white/5 rounded-full transition-all active:scale-95"
+          className="text-primary flex size-12 shrink-0 items-center justify-start hover:bg-white/5 rounded-full transition-all active:scale-95"
         >
           <span className="material-symbols-outlined text-[24px]">arrow_back</span>
         </button>
@@ -144,7 +144,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
                         </div>
                         <div className="flex flex-col items-end">
                           <span className="text-[9px] text-gray-500 uppercase font-black tracking-widest">Lucro Total</span>
-                          <span className="text-sm text-green-400 font-black">{purchase.lucro_total.toLocaleString()} Kz</span>
+                          <span className="text-sm text-green-600 font-black">{purchase.lucro_total.toLocaleString()} Kz</span>
                         </div>
                       </div>
                     </div>

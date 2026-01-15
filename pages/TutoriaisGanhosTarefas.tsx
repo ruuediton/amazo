@@ -74,7 +74,7 @@ const TutoriaisGanhosTarefas: React.FC<Props> = ({ onNavigate }) => {
             onClick={() => onNavigate('tutorials')}
             className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer transition-colors"
           >
-            <span className="material-symbols-outlined text-yellow-500">arrow_back</span>
+            <span className="material-symbols-outlined text-primary">arrow_back</span>
           </div>
           <h2 className="text-base font-bold tracking-tight text-center flex-1">Gestão de Ganhos</h2>
           <div className="size-10"></div>

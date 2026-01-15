@@ -127,7 +127,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
             onClick={() => onNavigate('deposit')}
             className="flex size-10 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
           >
-            <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+            <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
           </button>
           <h2 className="text-text-primary text-lg font-bold leading-tight tracking-[-0.015em] text-center">Confirmar Depósito</h2>
           <button className="flex size-10 items-center justify-center rounded-full hover:bg-surface-dark transition-colors">

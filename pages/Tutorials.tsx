@@ -126,7 +126,7 @@ const Tutorials: React.FC<TutorialsProps> = ({ onNavigate }) => {
       <header className="sticky top-0 z-10 flex items-center bg-background-dark p-4 pb-2 justify-between border-b border-gray-200">
         <button
           onClick={() => onNavigate('profile')}
-          className="text-yellow-500 flex size-12 shrink-0 items-center justify-start cursor-pointer hover:opacity-70"
+          className="text-primary flex size-12 shrink-0 items-center justify-start cursor-pointer hover:opacity-70"
         >
           <span className="material-symbols-outlined text-[24px]">arrow_back</span>
         </button>

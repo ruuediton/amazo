@@ -265,7 +265,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       <header className="sticky top-0 z-50 flex items-center justify-between bg-background-dark/90 px-4 py-3 backdrop-blur-md border-b border-amazon-border">
         <button
           onClick={() => onNavigate('perfil')}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-surface-dark cursor-pointer transition-colors text-yellow-500"
+          className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-surface-dark cursor-pointer transition-colors text-primary"
         >
           <span className="material-symbols-outlined text-[24px]">arrow_back</span>
         </button>

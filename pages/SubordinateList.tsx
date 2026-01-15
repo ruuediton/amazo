@@ -115,7 +115,7 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
       <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-gray-200 backdrop-blur-md">
         <button
           onClick={() => onNavigate('invite')}
-          className="text-yellow-500 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+          className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
           <span className="material-symbols-outlined text-[24px]">arrow_back</span>
         </button>

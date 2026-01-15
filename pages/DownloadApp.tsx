@@ -21,7 +21,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
             <header className="sticky top-0 z-50 bg-background-dark/95 backdrop-blur-md border-b border-gray-200 px-4 py-4 flex items-center">
                 <button
                     onClick={() => onNavigate('profile')}
-                    className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors text-yellow-500"
+                    className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors text-primary"
                 >
                     <span className="material-symbols-outlined text-[24px]">arrow_back</span>
                 </button>

@@ -12,7 +12,7 @@ const Campaigns: React.FC<Props> = ({ onNavigate }) => {
       <header className="flex items-center justify-between px-4 py-3 bg-background-dark/95 sticky top-0 z-20 backdrop-blur-md border-b border-gray-200">
         <button
           onClick={() => onNavigate('home')}
-          className="flex size-10 items-center justify-center rounded-full text-yellow-500 hover:bg-white/10 transition-colors"
+          className="flex size-10 items-center justify-center rounded-full text-primary hover:bg-white/10 transition-colors"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
@@ -23,8 +23,8 @@ const Campaigns: React.FC<Props> = ({ onNavigate }) => {
       <div className="sticky top-[60px] z-10 bg-background-dark py-3">
         <div className="flex gap-3 px-4 overflow-x-auto no-scrollbar">
           <button className="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-3 pr-4 shadow-sm hover:opacity-90 transition-opacity">
-            <span className="material-symbols-outlined text-[20px] text-[#221f10] fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-            <p className="text-[#221f10] text-sm font-bold leading-normal">Todas</p>
+            <span className="material-symbols-outlined text-[20px] text-[text-black] fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+            <p className="text-[text-black] text-sm font-bold leading-normal">Todas</p>
           </button>
         </div>
       </div>

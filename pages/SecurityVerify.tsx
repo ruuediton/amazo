@@ -278,7 +278,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
         <header className="flex items-center px-4 py-3 justify-between sticky top-0 z-10 bg-background-dark/95 backdrop-blur-sm border-b border-gray-200">
           <button
             onClick={() => onNavigate('profile')}
-            className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-yellow-500"
+            className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-primary"
           >
             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back</span>
           </button>

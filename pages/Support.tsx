@@ -14,7 +14,7 @@ const Support: React.FC<SupportProps> = ({ onNavigate }) => {
           onClick={() => onNavigate('home')}
           className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-white/10 transition-colors cursor-pointer"
         >
-          <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+          <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
         </button>
         <h2 className="text-black text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Suporte</h2>
       </div>

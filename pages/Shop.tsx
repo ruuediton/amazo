@@ -229,7 +229,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                   </div>
                   <div className="flex flex-col text-left">
                     <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wide">Lucro Total</span>
-                    <span className="text-green-400 font-bold text-sm tracking-tight">{(product.renda_diaria * product.duracao_dias).toLocaleString()} Kz</span>
+                    <span className="text-green-600 font-bold text-sm tracking-tight">{(product.renda_diaria * product.duracao_dias).toLocaleString()} Kz</span>
                   </div>
                 </div>
                 <button
@@ -294,7 +294,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                 </div>
                 <div className="bg-white/5 p-3 rounded-xl border border-gray-200">
                   <span className="text-[10px] text-gray-500 uppercase font-bold tracking-tight">Lucro Final</span>
-                  <p className="text-green-400 font-bold">{(selectedProduct.renda_diaria * selectedProduct.duracao_dias * quantity).toLocaleString()} Kz</p>
+                  <p className="text-green-600 font-bold">{(selectedProduct.renda_diaria * selectedProduct.duracao_dias * quantity).toLocaleString()} Kz</p>
                 </div>
               </div>
             </div>

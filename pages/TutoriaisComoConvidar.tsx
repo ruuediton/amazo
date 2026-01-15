@@ -57,7 +57,7 @@ const TutoriaisComoConvidar: React.FC<Props> = ({ onNavigate }) => {
       <header className="flex items-center justify-between px-4 py-4 sticky top-0 z-20 bg-background-dark/95 backdrop-blur-md border-b border-gray-200">
         <button
           onClick={() => onNavigate('tutorials')}
-          className="flex items-center justify-center size-10 -ml-2 rounded-full text-yellow-500 hover:bg-white/10 transition-colors"
+          className="flex items-center justify-center size-10 -ml-2 rounded-full text-primary hover:bg-white/10 transition-colors"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>

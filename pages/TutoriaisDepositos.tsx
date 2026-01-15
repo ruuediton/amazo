@@ -103,7 +103,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       description: "É obrigatório enviar o comprovativo da transferência para a validação do saldo.",
       icon: "upload_file",
       content: (
-        <div className="flex gap-3 items-start p-4 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 text-left mt-2">
+        <div className="flex gap-3 items-start p-4 rounded-2xl bg-primary/10 border border-yellow-500/20 text-left mt-2">
           <span className="material-symbols-outlined text-yellow-400 text-sm mt-0.5">warning</span>
           <p className="text-xs text-yellow-300 font-medium leading-relaxed">
             Sim, é estritamente necessário enviar a foto/PDF do comprovativo.
@@ -120,7 +120,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         <div className="flex items-center justify-between px-4 h-16">
           <button
             onClick={() => onNavigate('tutorials')}
-            className="flex items-center justify-center size-10 -ml-2 rounded-full hover:bg-white/10 transition-colors text-yellow-500"
+            className="flex items-center justify-center size-10 -ml-2 rounded-full hover:bg-white/10 transition-colors text-primary"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>

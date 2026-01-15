@@ -19,7 +19,7 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
       <header className="flex items-center p-4 justify-between sticky top-0 z-20 bg-background-dark/95 backdrop-blur-md">
         <button
           onClick={() => onNavigate('home')}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-yellow-500"
+          className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors text-primary"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
@@ -35,21 +35,21 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
             <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
             <div className="flex flex-col z-10">
               <div className="flex justify-between items-start mb-2">
-                <p className="text-[#bab59c] text-sm font-medium">Saldo Amazon Pay</p>
+                <p className="text-gray-400 text-sm font-medium">Saldo Amazon Pay</p>
                 <span className="material-symbols-outlined text-primary">account_balance_wallet</span>
               </div>
               <p className="text-black text-3xl font-bold tracking-tight mb-4">Kz 142.250,00</p>
               <div className="flex gap-4 border-t border-white/10 pt-4">
                 <div className="flex-1">
-                  <p className="text-[#bab59c] text-xs mb-1">Entradas (Mês)</p>
-                  <p className="text-green-400 text-sm font-bold flex items-center gap-1">
+                  <p className="text-gray-400 text-xs mb-1">Entradas (Mês)</p>
+                  <p className="text-green-600 text-sm font-bold flex items-center gap-1">
                     <span className="material-symbols-outlined text-[16px]">arrow_downward</span>
                     Kz 33.450
                   </p>
                 </div>
                 <div className="w-px bg-white/10"></div>
                 <div className="flex-1">
-                  <p className="text-[#bab59c] text-xs mb-1">Saídas (Mês)</p>
+                  <p className="text-gray-400 text-xs mb-1">Saídas (Mês)</p>
                   <p className="text-black text-sm font-bold flex items-center gap-1">
                     <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
                     Kz 22.200
@@ -73,43 +73,43 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
         </div>
 
         <div className="flex flex-col gap-1">
-          <p className="text-[#bab59c] text-xs font-bold uppercase tracking-wider pb-3 px-1">Hoje</p>
+          <p className="text-gray-400 text-xs font-bold uppercase tracking-wider pb-3 px-1">Hoje</p>
           {transactions.slice(0, 2).map(t => (
             <div key={t.id} className="group flex items-center gap-4 py-4 border-b border-gray-200 hover:bg-white/5 transition-colors cursor-pointer rounded-lg px-2">
               <div className="relative flex items-center justify-center size-12 rounded-full bg-surface-dark border border-white/10 shrink-0">
-                <span className={`material-symbols-outlined ${t.type === 'incoming' ? 'text-green-400' : 'text-primary'}`}>{t.icon}</span>
+                <span className={`material-symbols-outlined ${t.type === 'incoming' ? 'text-green-600' : 'text-primary'}`}>{t.icon}</span>
               </div>
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex justify-between items-baseline">
                   <p className="text-black text-base font-bold truncate">{t.title}</p>
-                  <p className={`text-base font-bold whitespace-nowrap ${t.type === 'incoming' ? 'text-green-400' : 'text-black'}`}>
+                  <p className={`text-base font-bold whitespace-nowrap ${t.type === 'incoming' ? 'text-green-600' : 'text-black'}`}>
                     {t.amount > 0 ? '+' : '-'} Kz {Math.abs(t.amount).toLocaleString()}
                   </p>
                 </div>
                 <div className="flex justify-between items-center mt-0.5">
-                  <p className="text-[#bab59c] text-sm truncate">{t.subtitle}</p>
-                  <p className="text-[#bab59c] text-xs">{t.date.split(', ')[1] || t.date}</p>
+                  <p className="text-gray-400 text-sm truncate">{t.subtitle}</p>
+                  <p className="text-gray-400 text-xs">{t.date.split(', ')[1] || t.date}</p>
                 </div>
               </div>
             </div>
           ))}
 
-          <p className="text-[#bab59c] text-xs font-bold uppercase tracking-wider pb-3 pt-6 px-1">Ontem</p>
+          <p className="text-[text-gray-400] text-xs font-bold uppercase tracking-wider pb-3 pt-6 px-1">Ontem</p>
           {transactions.slice(2).map(t => (
             <div key={t.id} className="group flex items-center gap-4 py-4 border-b border-gray-200 hover:bg-white/5 transition-colors cursor-pointer rounded-lg px-2">
               <div className="relative flex items-center justify-center size-12 rounded-full bg-surface-dark border border-white/10 shrink-0">
-                <span className={`material-symbols-outlined ${t.type === 'incoming' ? 'text-green-400' : 'text-primary'}`}>{t.icon}</span>
+                <span className={`material-symbols-outlined ${t.type === 'incoming' ? 'text-green-600' : 'text-primary'}`}>{t.icon}</span>
               </div>
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex justify-between items-baseline">
                   <p className="text-black text-base font-bold truncate">{t.title}</p>
-                  <p className={`text-base font-bold whitespace-nowrap ${t.type === 'incoming' ? 'text-green-400' : 'text-black'}`}>
+                  <p className={`text-base font-bold whitespace-nowrap ${t.type === 'incoming' ? 'text-green-600' : 'text-black'}`}>
                     {t.amount > 0 ? '+' : '-'} Kz {Math.abs(t.amount).toLocaleString()}
                   </p>
                 </div>
                 <div className="flex justify-between items-center mt-0.5">
-                  <p className="text-[#bab59c] text-sm truncate">{t.subtitle}</p>
-                  <p className="text-[#bab59c] text-xs">{t.date}</p>
+                  <p className="text-gray-400 text-sm truncate">{t.subtitle}</p>
+                  <p className="text-gray-400 text-xs">{t.date}</p>
                 </div>
               </div>
             </div>

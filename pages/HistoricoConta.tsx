@@ -274,7 +274,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
     <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col">
       {/* Header */}
       <header className="flex items-center p-4 justify-between bg-background-dark sticky top-0 z-40 border-b border-gray-200 backdrop-blur-md bg-opacity-90">
-        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors text-yellow-500">
+        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors text-primary">
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
         <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">Histórico de Conta</h2>
@@ -283,7 +283,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       {/* Action Bar */}
       <div className="flex items-center justify-between px-6 py-4 bg-surface-dark/30">
         <div className="flex flex-col">
-          <p className="text-[#bab59c] text-[10px] font-black uppercase tracking-widest">Exibindo</p>
+          <p className="text-[text-gray-400] text-[10px] font-black uppercase tracking-widest">Exibindo</p>
           <div className="flex flex-col">
             <p className="text-black text-sm font-bold truncate max-w-[150px]">{activeType} - {months[activeMonth].toUpperCase()}</p>
             <p className="text-primary text-[10px] font-bold">
@@ -308,15 +308,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         ) : Object.keys(groupedTransactions).length > 0 ? (
           Object.keys(groupedTransactions).map(date => (
             <div key={date} className="mb-6">
-              <p className="text-[#bab59c] text-[11px] font-black uppercase tracking-[0.2em] pb-3 pt-6 px-6 opacity-60 flex items-center gap-2">
+              <p className="text-[text-gray-400] text-[11px] font-black uppercase tracking-[0.2em] pb-3 pt-6 px-6 opacity-60 flex items-center gap-2">
                 <span className="size-1 bg-primary rounded-full"></span>
                 {date}
               </p>
               <div className="flex flex-col gap-1 px-3">
                 {groupedTransactions[date].map((t: Transaction) => (
                   <div key={t.id} className="group flex items-center gap-4 px-4 py-4 hover:bg-white/5 transition-colors rounded-[24px] border border-transparent hover:border-gray-200">
-                    <div className={`relative flex items-center justify-center size-12 rounded-2xl shrink-0 border border-gray-200 shadow-inner ${t.category === 'Depósito' ? 'bg-green-500/10 text-green-400' :
-                      t.category === 'Retirada' ? 'bg-yellow-500/10 text-primary' :
+                    <div className={`relative flex items-center justify-center size-12 rounded-2xl shrink-0 border border-gray-200 shadow-inner ${t.category === 'Depósito' ? 'bg-green-500/10 text-green-600' :
+                      t.category === 'Retirada' ? 'bg-primary/10 text-primary' :
                         t.category === 'Segurança' ? 'bg-blue-500/10 text-blue-400' :
                           'bg-white/5 text-gray-600'
                       }`}>
@@ -331,14 +331,14 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
                       <div className="flex justify-between items-baseline">
                         <p className="text-black text-[15px] font-bold truncate leading-tight">{t.title}</p>
                         {t.amount !== 0 && (
-                          <p className={`text-[15px] font-black ${t.type === 'incoming' ? 'text-green-400' : 'text-black'}`}>
+                          <p className={`text-[15px] font-black ${t.type === 'incoming' ? 'text-green-600' : 'text-black'}`}>
                             {t.amount > 0 ? '+' : ''} Kz {Math.abs(t.amount).toLocaleString()}
                           </p>
                         )}
                       </div>
                       <div className="flex justify-between items-center mt-1">
-                        <p className="text-[#bab59c] text-[11px] uppercase font-bold tracking-wider opacity-70 truncate">{t.subtitle}</p>
-                        <p className="text-[#bab59c] text-[11px] font-medium">{t.time}</p>
+                        <p className="text-[text-gray-400] text-[11px] uppercase font-bold tracking-wider opacity-70 truncate">{t.subtitle}</p>
+                        <p className="text-[text-gray-400] text-[11px] font-medium">{t.time}</p>
                       </div>
                     </div>
                   </div>

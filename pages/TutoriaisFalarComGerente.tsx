@@ -13,7 +13,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
       <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-white/10">
         <button
           onClick={() => onNavigate('tutorials')}
-          className="text-yellow-500 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+          className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>

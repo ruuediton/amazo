@@ -75,7 +75,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
           onClick={() => onNavigate('profile')}
           className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
         >
-          <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+          <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
         </button>
         <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Trocar Senha</h1>
       </header>
@@ -84,7 +84,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
         {/* Headline Section */}
         <div className="mb-6 mt-2">
           <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-3">Alterar Senha de Acesso</h2>
-          <p className="text-[#bab59c] text-base font-normal leading-relaxed">
+          <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
             Para sua segurança, crie uma senha forte que você não use em outros sites.
           </p>
         </div>
@@ -98,14 +98,14 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
               <input
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Digite sua senha atual"
                 type={showCurrent ? "text" : "password"}
               />
               <button
                 type="button"
                 onClick={() => setShowCurrent(!showCurrent)}
-                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                   {showCurrent ? 'visibility' : 'visibility_off'}
@@ -115,7 +115,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
             <div className="flex justify-end pt-1">
               <button
                 type="button"
-                className="text-sm font-medium text-[#bab59c] hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4"
+                className="text-sm font-medium text-[text-gray-400] hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4"
               >
                 Esqueceu sua senha?
               </button>
@@ -132,7 +132,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                   setNewPassword(val);
                 }}
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Crie uma nova senha (6 dígitos)"
                 type={showNew ? "text" : "password"}
                 maxLength={6}
@@ -141,7 +141,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                   {showNew ? 'visibility' : 'visibility_off'}
@@ -151,9 +151,9 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
 
             {/* Password Strength Meter */}
             <div className="p-4 mt-3 rounded-xl bg-surface-dark/50 border border-[#423f30]/50">
-              <p className="text-xs font-semibold text-[#bab59c] uppercase tracking-wider mb-3">Requisitos da senha</p>
+              <p className="text-xs font-semibold text-[text-gray-400] uppercase tracking-wider mb-3">Requisitos da senha</p>
               <ul className="space-y-2">
-                <li className={`flex items-center gap-3 text-sm transition-colors ${isSixDigits ? 'text-primary font-medium' : 'text-[#bab59c]'}`}>
+                <li className={`flex items-center gap-3 text-sm transition-colors ${isSixDigits ? 'text-primary font-medium' : 'text-[text-gray-400]'}`}>
                   <div className={`size-4 rounded-full flex items-center justify-center ${isSixDigits ? 'bg-primary text-black' : 'border border-current'}`}>
                     {isSixDigits ? (
                       <span className="material-symbols-outlined" style={{ fontSize: '12px', fontWeight: 'bold' }}>check</span>
@@ -177,7 +177,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                   setConfirmPassword(val);
                 }}
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Repita a nova senha"
                 type={showConfirm ? "text" : "password"}
                 maxLength={6}
@@ -186,7 +186,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                   {showConfirm ? 'visibility' : 'visibility_off'}

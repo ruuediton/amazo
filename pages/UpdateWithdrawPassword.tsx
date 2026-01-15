@@ -74,7 +74,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                     onClick={() => onNavigate('profile')}
                     className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
                 >
-                    <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+                    <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
                 </button>
                 <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Senha de Retirada</h1>
             </header>
@@ -83,7 +83,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                 {/* Intro */}
                 <div className="mb-6 mt-2">
                     <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-3">Alterar Senha de Retirada</h2>
-                    <p className="text-[#bab59c] text-base font-normal leading-relaxed">
+                    <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
                         Esta senha será solicitada exclusivamente para confirmar saques, transferências e pagamentos.
                     </p>
                 </div>
@@ -99,14 +99,14 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setCurrentPassword(e.target.value)}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                                 placeholder="Digite a senha atual"
                                 type={showCurrent ? "text" : "password"}
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowCurrent(!showCurrent)}
-                                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
                             >
                                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                                     {showCurrent ? 'visibility' : 'visibility_off'}
@@ -116,7 +116,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                         <div className="flex justify-end pt-1">
                             <button
                                 type="button"
-                                className="text-sm font-medium text-[#bab59c] hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4"
+                                className="text-sm font-medium text-[text-gray-400] hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4"
                             >
                                 Esqueceu a senha?
                             </button>
@@ -132,14 +132,14 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                                 placeholder="Crie uma nova senha"
                                 type={showNew ? "text" : "password"}
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowNew(!showNew)}
-                                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
                             >
                                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                                     {showNew ? 'visibility' : 'visibility_off'}
@@ -159,14 +159,14 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[#bab59c] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                                 placeholder="Repita a nova senha"
                                 type={showConfirm ? "text" : "password"}
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowConfirm(!showConfirm)}
-                                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[#bab59c] hover:text-primary transition-colors"
+                                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
                             >
                                 <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                                     {showConfirm ? 'visibility' : 'visibility_off'}

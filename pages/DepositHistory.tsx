@@ -87,7 +87,7 @@ const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
         <header className="sticky top-0 z-50 flex items-center justify-between bg-background-dark/95 backdrop-blur-md p-4 pb-2 border-b border-gray-200">
           <button
             onClick={() => onNavigate('deposit')}
-            className="text-yellow-500 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+            className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
           >
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>
@@ -157,7 +157,7 @@ const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
                             <span className="material-symbols-outlined text-[24px]">{item.icon}</span>
                           </div>
                           <div className="flex flex-col justify-center min-w-0">
-                            <p className="text-[#0F1111] text-base font-bold leading-none truncate mb-1.5">{item.title}</p>
+                            <p className="text-[text-black] text-base font-bold leading-none truncate mb-1.5">{item.title}</p>
                             <p className="text-[#565959] text-xs font-medium leading-none">{item.date}</p>
                           </div>
                         </div>
@@ -165,8 +165,8 @@ const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
                           <p className={`text-base font-black leading-none ${item.status === 'Rejeitado' ? 'text-gray-500 line-through' : 'text-black'}`}>
                             {item.status === 'Rejeitado' ? '' : '+ '}{item.amount.toLocaleString()} Kz
                           </p>
-                          <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${item.status === 'Concluído' ? 'bg-green-500/10 text-green-400' :
-                            item.status === 'Pendente' ? 'bg-yellow-500/10 text-primary' :
+                          <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${item.status === 'Concluído' ? 'bg-green-500/10 text-green-600' :
+                            item.status === 'Pendente' ? 'bg-primary/10 text-primary' :
                               'bg-red-500/10 text-red-400'
                             }`}>
                             <span className="material-symbols-outlined text-[10px] font-bold">

@@ -13,7 +13,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       <div className="flex items-center bg-background-dark p-4 pb-2 justify-between sticky top-0 z-50">
         <div
           onClick={() => onNavigate('home')}
-          className="text-yellow-500 flex size-12 shrink-0 items-center justify-center cursor-pointer hover:bg-white/10 rounded-full transition-colors"
+          className="text-primary flex size-12 shrink-0 items-center justify-center cursor-pointer hover:bg-white/10 rounded-full transition-colors"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </div>

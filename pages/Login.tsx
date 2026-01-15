@@ -49,7 +49,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             onClick={() => onNavigate('home')}
             className="flex size-10 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
           >
-            <span className="material-symbols-outlined text-2xl text-yellow-500">arrow_back</span>
+            <span className="material-symbols-outlined text-2xl text-primary">arrow_back</span>
           </button>
           <div className="flex items-center gap-1">
             <span className="text-xl font-bold tracking-tight text-text-primary">amazon</span>

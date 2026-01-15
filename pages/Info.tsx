@@ -12,7 +12,7 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
       <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-gray-800/30 backdrop-blur-md">
         <button
           onClick={() => onNavigate('profile')}
-          className="text-yellow-500 flex size-12 shrink-0 items-center justify-start cursor-pointer hover:text-primary transition-colors"
+          className="text-primary flex size-12 shrink-0 items-center justify-start cursor-pointer hover:text-primary transition-colors"
         >
           <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back</span>
         </button>

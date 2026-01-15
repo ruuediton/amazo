@@ -213,7 +213,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                 <label className="text-sm font-medium leading-none text-gray-700">Confirmar Senha</label>
                 <div className="relative">
                   <input
-                    className="flex w-full rounded-lg border border-border-dark bg-surface-dark px-4 h-14 text-base focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-[#bab59c]"
+                    className="flex w-full rounded-lg border border-border-dark bg-surface-dark px-4 h-14 text-base focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-[text-gray-400]"
                     placeholder="Repita a senha"
                     type={showConfirmPassword ? "text" : "password"}
                     maxLength={6}

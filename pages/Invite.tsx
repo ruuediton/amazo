@@ -11,7 +11,7 @@ const Invite: React.FC<InviteProps> = ({ onNavigate }) => {
       <header className="flex items-center justify-between px-4 py-4 sticky top-0 z-20 bg-background-dark/95 backdrop-blur-md border-b border-gray-200">
         <button
           onClick={() => onNavigate('home')}
-          className="flex items-center justify-center p-2 rounded-full text-yellow-500 hover:bg-white/10 transition-colors"
+          className="flex items-center justify-center p-2 rounded-full text-primary hover:bg-white/10 transition-colors"
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
@@ -65,7 +65,7 @@ const Invite: React.FC<InviteProps> = ({ onNavigate }) => {
           <div className="bg-surface-dark border border-gray-200 p-4 rounded-xl">
             <div className="flex items-center gap-2 mb-3">
               <div className="p-1.5 bg-green-900/30 rounded-md">
-                <span className="material-symbols-outlined text-green-400 text-[18px]">payments</span>
+                <span className="material-symbols-outlined text-green-600 text-[18px]">payments</span>
               </div>
               <span className="text-xs font-bold text-gray-600 uppercase">Ganhos</span>
             </div>

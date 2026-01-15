@@ -19,7 +19,7 @@ const TutoriaisAlterarSenhaRetirada: React.FC<Props> = ({ onNavigate }) => {
             onClick={() => onNavigate('tutorials')}
             className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
           >
-            <span className="material-symbols-outlined text-yellow-500" style={{ fontSize: '24px' }}>arrow_back</span>
+            <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
           </button>
           <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Senha de Retirada</h1>
         </header>

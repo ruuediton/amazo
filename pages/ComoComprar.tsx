@@ -13,7 +13,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => onNavigate('tutorials')}
-            className="flex size-10 items-center justify-center rounded-full text-yellow-500 hover:bg-white/10 active:scale-95 transition-all"
+            className="flex size-10 items-center justify-center rounded-full text-primary hover:bg-white/10 active:scale-95 transition-all"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
@@ -54,7 +54,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                   <div className="flex items-center gap-3 opacity-80">
                     <span className="material-symbols-outlined text-3xl text-black/20">wallet</span>
                     <span className="material-symbols-outlined text-2xl text-primary animate-pulse">arrow_right_alt</span>
-                    <span className="material-symbols-outlined text-3xl text-green-400">add_card</span>
+                    <span className="material-symbols-outlined text-3xl text-green-600">add_card</span>
                   </div>
                 </div>
               </div>
@@ -144,7 +144,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                   </div>
                   <div className="flex justify-between text-[10px] text-gray-600 px-2 font-medium">
                     <span>Enviado</span>
-                    <span className="text-green-400">Em trânsito</span>
+                    <span className="text-green-600">Em trânsito</span>
                   </div>
                 </div>
               </div>

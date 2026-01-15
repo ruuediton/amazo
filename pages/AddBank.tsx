@@ -71,7 +71,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
           <button
             onClick={() => onNavigate('profile')}
             aria-label="Voltar"
-            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 active:scale-95 transition-all text-yellow-500"
+            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 active:scale-95 transition-all text-primary"
           >
             <span className="material-symbols-outlined font-medium">arrow_back</span>
           </button>
@@ -85,8 +85,8 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
       <main className="flex-1 flex flex-col w-full max-w-lg mx-auto px-4 pt-2 pb-6">
         {/* Security Badge */}
         <div className="flex items-center justify-center gap-1.5 py-4 mb-2 opacity-80">
-          <span className="material-symbols-outlined text-green-400 text-[18px]">lock</span>
-          <span className="text-[#bab59c] text-xs font-medium uppercase tracking-wide">Conexão Segura</span>
+          <span className="material-symbols-outlined text-green-600 text-[18px]">lock</span>
+          <span className="text-[text-gray-400] text-xs font-medium uppercase tracking-wide">Conexão Segura</span>
         </div>
 
         {/* Form Fields */}
@@ -97,7 +97,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               Selecione o seu banco
             </label>
             <div className="relative group">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#bab59c] pointer-events-none flex items-center">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[text-gray-400] pointer-events-none flex items-center">
                 <span className="material-symbols-outlined text-[24px]">account_balance</span>
               </div>
               <select
@@ -113,7 +113,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                 <option value="Banco Sol">Banco Sol</option>
                 <option value="Banco BNI">Banco BNI</option>
               </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#bab59c] flex items-center">
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[text-gray-400] flex items-center">
                 <span className="material-symbols-outlined">expand_more</span>
               </div>
             </div>
@@ -125,7 +125,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               Nome do Titular
             </label>
             <div className="relative group">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#bab59c] pointer-events-none flex items-center">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[text-gray-400] pointer-events-none flex items-center">
                 <span className="material-symbols-outlined text-[24px]">person</span>
               </div>
               <input
@@ -144,7 +144,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               Número da Conta / IBAN
             </label>
             <div className="relative group">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#bab59c] pointer-events-none flex items-center">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[text-gray-400] pointer-events-none flex items-center">
                 <span className="material-symbols-outlined text-[24px]">credit_card</span>
               </div>
               <input
@@ -156,7 +156,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                 type="text"
               />
             </div>
-            <p className="text-xs text-[#bab59c] ml-1 pt-1">
+            <p className="text-xs text-[text-gray-400] ml-1 pt-1">
               Certifique-se de que o IBAN corresponde a uma conta em kwanzas (Kz). O IBAN deve ter 21 dígitos.
             </p>
           </div>

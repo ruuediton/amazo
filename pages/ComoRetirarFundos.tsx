@@ -44,7 +44,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       <header className="sticky top-0 z-50 flex items-center bg-background-dark p-4 pb-2 justify-between border-b border-gray-200">
         <button
           onClick={() => onNavigate('tutorials')}
-          className="text-yellow-500 flex size-12 shrink-0 items-center justify-start hover:opacity-70 transition-opacity cursor-pointer"
+          className="text-primary flex size-12 shrink-0 items-center justify-start hover:opacity-70 transition-opacity cursor-pointer"
         >
           <span className="material-symbols-outlined text-3xl">arrow_back</span>
         </button>

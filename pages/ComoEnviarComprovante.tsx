@@ -15,7 +15,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
         <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-background-dark/95 backdrop-blur-md border-b border-gray-800">
           <button
             onClick={() => onNavigate('tutorials')}
-            className="flex items-center justify-center p-2 -ml-2 rounded-full hover:bg-surface-dark transition-colors text-yellow-500"
+            className="flex items-center justify-center p-2 -ml-2 rounded-full hover:bg-surface-dark transition-colors text-primary"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>

@@ -109,7 +109,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
         <header className="sticky top-0 z-10 flex items-center justify-between bg-background-dark/95 px-4 py-3 backdrop-blur-md">
           <button
             onClick={() => onNavigate('profile')}
-            className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-white/10 cursor-pointer transition-colors text-yellow-500"
+            className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-white/10 cursor-pointer transition-colors text-primary"
           >
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>

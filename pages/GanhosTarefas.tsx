@@ -155,7 +155,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
             onClick={() => onNavigate('home')}
             className="flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer transition-colors"
           >
-            <span className="material-symbols-outlined text-yellow-500">arrow_back</span>
+            <span className="material-symbols-outlined text-primary">arrow_back</span>
           </div>
           <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] text-center flex-1">Ganhos de Tarefas</h2>
           <div
@@ -169,8 +169,8 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
         {/* 6️⃣ Cálculo do rendimento - Exibição do Lucro Potencial */}
         <div className="flex flex-col items-center pt-6 pb-2 px-4">
           <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/20 px-4 py-2 rounded-full shadow-lg shadow-green-500/5">
-            <span className="material-symbols-outlined text-green-400 text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
-            <span className="text-sm font-extrabold text-green-400 uppercase tracking-wider">
+            <span className="material-symbols-outlined text-green-600 text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
+            <span className="text-sm font-extrabold text-green-600 uppercase tracking-wider">
               Hoje: {hasCollectedToday ? '+0,00' : `+${potentialIncome.toLocaleString()}`} Kz
             </span>
           </div>
@@ -186,13 +186,13 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
             className="relative z-10 flex flex-col items-center justify-center w-32 h-32 rounded-full bg-primary shadow-[0_0_40px_-10px_rgba(244,209,37,0.6)] transition-transform active:scale-95 cursor-pointer group"
           >
             {isProcessing ? (
-              <SpokeSpinner className="text-[#221f10]" size="w-8 h-8" />
+              <SpokeSpinner className="text-[text-black]" size="w-8 h-8" />
             ) : (
               <>
-                <span className="material-symbols-outlined text-[#221f10] text-[48px] mb-1 group-hover:scale-110 transition-transform" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="material-symbols-outlined text-[text-black] text-[48px] mb-1 group-hover:scale-110 transition-transform" style={{ fontVariationSettings: "'FILL' 1" }}>
                   {hasCollectedToday ? 'task_alt' : 'power_settings_new'}
                 </span>
-                <span className="text-[#221f10] text-[10px] font-black uppercase tracking-tighter">
+                <span className="text-[text-black] text-[10px] font-black uppercase tracking-tighter">
                   {hasCollectedToday ? 'Finalizado' : 'Check-in-Diario'}
                 </span>
               </>
@@ -264,7 +264,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
             purchases.map((purchase) => (
               <div key={purchase.id} className="group flex items-center gap-4 bg-white p-3 rounded-xl mb-3 border-none shadow-md transition-all">
                 <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-white flex items-center justify-center p-1">
-                  <div className={`absolute top-0 right-0 w-3 h-3 ${purchase.status === 'confirmado' ? 'bg-green-500' : (purchase.status === 'expirado' ? 'bg-red-500' : 'bg-yellow-500')} rounded-full border-2 border-background-dark z-10 -mr-1 -mt-1`}></div>
+                  <div className={`absolute top-0 right-0 w-3 h-3 ${purchase.status === 'confirmado' ? 'bg-green-500' : (purchase.status === 'expirado' ? 'bg-red-500' : 'bg-primary')} rounded-full border-2 border-background-dark z-10 -mr-1 -mt-1`}></div>
                   {purchase.url_produtos ? (
                     <img alt={purchase.nome} className="object-contain w-full h-full" src={purchase.url_produtos} />
                   ) : (

@@ -16,7 +16,7 @@ const Report: React.FC<ReportProps> = ({ onNavigate }) => {
       <header className="sticky top-0 z-10 flex items-center bg-background-dark p-4 pb-2 justify-between border-b border-gray-200">
         <button
           onClick={() => onNavigate('profile')}
-          className="text-yellow-500 flex size-12 shrink-0 items-center justify-start hover:opacity-70 transition-opacity"
+          className="text-primary flex size-12 shrink-0 items-center justify-start hover:opacity-70 transition-opacity"
         >
           <span className="material-symbols-outlined text-2xl">arrow_back</span>
         </button>
@@ -56,7 +56,7 @@ const Report: React.FC<ReportProps> = ({ onNavigate }) => {
           <label className="flex flex-col w-full">
             <span className="text-black text-base font-bold leading-normal pb-3">Descrição do Problema</span>
             <textarea
-              className="form-textarea flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-black focus:outline-0 focus:ring-2 focus:ring-primary border-transparent bg-[#393628] min-h-40 placeholder:text-[#bab59c] p-4 text-base font-normal leading-normal transition-shadow"
+              className="form-textarea flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-black focus:outline-0 focus:ring-2 focus:ring-primary border-transparent bg-[#393628] min-h-40 placeholder:text-[text-gray-400] p-4 text-base font-normal leading-normal transition-shadow"
               placeholder="Digite aqui os detalhes (ex: ID da transação, mensagem de erro)..."
             ></textarea>
           </label>
