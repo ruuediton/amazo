@@ -198,7 +198,6 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
               { label: 'Suporte', icon: 'support_agent', page: 'support' },
               { label: 'Relatar Problema', icon: 'report_problem', page: 'report' },
               { label: 'Sobre a Empresa', icon: 'domain', page: 'info' },
-              { label: 'Termos e Condições de Uso', icon: 'gavel', page: 'info' },
             ].map((item, i, arr) => (
               <button
                 key={item.label}

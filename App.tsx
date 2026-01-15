@@ -277,8 +277,8 @@ const App: React.FC = () => {
       case 'subordinate-list': return <SubordinateList onNavigate={handleNavigate} />;
       case 'deposit-history': return <DepositHistory onNavigate={handleNavigate} />;
       case 'download-app': return <DownloadApp onNavigate={handleNavigate} />;
-      case 'investimentos-fundo': return <InvestimentosFundo onNavigate={handleNavigate} />;
-      case 'historico-fundos': return <HistoricoFundos onNavigate={handleNavigate} />;
+      case 'investimentos-fundo': return <InvestimentosFundo onNavigate={handleNavigate} showToast={showToast} />;
+      case 'historico-fundos': return <HistoricoFundos onNavigate={handleNavigate} showToast={showToast} />;
       default: return <Home onNavigate={handleNavigate} profile={profile} />;
     }
   };

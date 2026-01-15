@@ -7,14 +7,14 @@ interface Props {
 
 const SystemRules: React.FC<Props> = ({ onNavigate }) => {
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black">
-      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-[#181711]">
+    <div className="bg-white font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black">
+      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-white">
 
         {/* Header Institucional */}
-        <header className="sticky top-0 z-50 flex items-center bg-[#181711]/95 p-4 pb-2 justify-between border-b border-gray-200 backdrop-blur-md">
+        <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100 backdrop-blur-md">
           <button
             onClick={() => onNavigate('info')}
-            className="text-yellow-500 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+            className="text-yellow-500 flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
           >
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>
@@ -25,31 +25,31 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
         <main className="flex-1 overflow-y-auto px-6 pt-8 pb-32 no-scrollbar">
 
           {/* Selos de Compliance */}
-          <div className="flex justify-around mb-10 bg-white/5 p-4 rounded-2xl border border-gray-200">
+          <div className="flex justify-around mb-10 bg-gray-50 p-4 rounded-2xl border border-gray-100">
             <div className="flex flex-col items-center gap-2">
               <div className="size-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
                 <span className="material-symbols-outlined text-primary text-[20px]">verified</span>
               </div>
-              <span className="text-[8px] font-black text-gray-600 uppercase text-center leading-tight">Compliance<br />Verificado</span>
+              <span className="text-[8px] font-black text-gray-500 uppercase text-center leading-tight">Compliance<br />Verificado</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <div className="size-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center">
-                <span className="material-symbols-outlined text-blue-400 text-[20px]">rule</span>
+              <div className="size-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center">
+                <span className="material-symbols-outlined text-blue-500 text-[20px]">rule</span>
               </div>
-              <span className="text-[8px] font-black text-gray-600 uppercase text-center leading-tight">Auditoria<br />Externa</span>
+              <span className="text-[8px] font-black text-gray-500 uppercase text-center leading-tight">Auditoria<br />Externa</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <div className="size-10 rounded-lg bg-green-500/10 border border-green-500/30 flex items-center justify-center">
-                <span className="material-symbols-outlined text-green-400 text-[20px]">shield_check</span>
+              <div className="size-10 rounded-lg bg-green-50 border border-green-100 flex items-center justify-center">
+                <span className="material-symbols-outlined text-green-500 text-[20px]">shield_check</span>
               </div>
-              <span className="text-[8px] font-black text-gray-600 uppercase text-center leading-tight">Operação<br />Protegida</span>
+              <span className="text-[8px] font-black text-gray-500 uppercase text-center leading-tight">Operação<br />Protegida</span>
             </div>
           </div>
 
           <div className="flex flex-col gap-10">
             <section>
               <h1 className="text-2xl font-black mb-4 leading-tight tracking-tight border-l-4 border-primary pl-4">Regulamento Interno</h1>
-              <p className="text-text-secondary text-sm leading-relaxed mb-6 italic">
+              <p className="text-gray-500 text-sm leading-relaxed mb-6 italic">
                 O descumprimento de qualquer uma das normas abaixo poderá resultar na suspensão imediata das atividades do utilizador e bloqueio preventivo de fundos para análise.
               </p>
             </section>
@@ -83,13 +83,13 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
             />
 
             {/* Nota de Rodapé Oficial */}
-            <div className="mt-6 flex flex-col items-center gap-4 py-8 border-t border-gray-200">
+            <div className="mt-6 flex flex-col items-center gap-4 py-8 border-t border-gray-100">
               <img
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX1nZQgiOTx5eDY9az3IDpQxwq_xV55MjgvXJXONNRdsEThtofBf4cQ4HsSMhjnPHjVXbszEBW3mCQVuCQ2y-P0l1unQR2pNSCUhmhyKL3gJ6P3P8N5KlKVx5gToFfYvygunNhf9O8u5gMKPMytTu6s2CyUGsrz3F_qOQ_WpHb6jImikbGi4ZciIi16FgBYvSa-NmtEbWfOZkTAOnX--ev6DldHY6b0R7j-1utVDZ9g7ww5tdCA9u5r-7lF5q2G2FoNTuDPzAbIkT9"
                 alt="amazon Seal"
-                className="h-12 opacity-50 grayscale"
+                className="h-12 opacity-80 grayscale"
               />
-              <p className="text-[10px] text-gray-600 leading-relaxed text-center font-bold uppercase tracking-[0.2em]">
+              <p className="text-[10px] text-gray-400 leading-relaxed text-center font-bold uppercase tracking-[0.2em]">
                 Amazon Angola Digital Services, SA<br />
                 Registo n.º 0284/2024
               </p>
@@ -98,10 +98,10 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
         </main>
 
         {/* Botão de Fechar */}
-        <div className="fixed bottom-0 max-w-md w-full p-6 bg-[#181711]/95 backdrop-blur-xl border-t border-gray-200 z-20">
+        <div className="fixed bottom-0 max-w-md w-full p-6 bg-white/95 backdrop-blur-xl border-t border-gray-100 z-20">
           <button
             onClick={() => onNavigate('info')}
-            className="w-full bg-white/5 hover:bg-white/10 text-black font-bold py-4 rounded-xl transition-all border border-white/10 active:scale-[0.98]"
+            className="w-full bg-primary text-black font-bold py-4 rounded-xl transition-all shadow-lg active:scale-[0.98]"
           >
             LI E CONCORDO
           </button>
@@ -117,7 +117,7 @@ const RuleBlock = ({ id, title, content }: { id: string, title: string, content:
       <span className="text-[10px] font-black text-black bg-primary px-2 py-0.5 rounded shadow-sm">{id}</span>
       <h3 className="text-sm font-black uppercase tracking-widest text-black group-hover:text-primary transition-colors">{title}</h3>
     </div>
-    <p className="text-text-secondary text-[13px] leading-relaxed pl-1">
+    <p className="text-gray-600 text-[13px] leading-relaxed pl-1">
       {content}
     </p>
   </div>
