@@ -240,7 +240,10 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate }) => {
               Confirmar Aplicação
             </button>
 
-            <button className="mt-3 w-full bg-gray-100 text-gray-600 rounded-2xl h-14 font-bold text-sm hover:bg-gray-200 active:scale-95 transition-all flex items-center justify-center gap-2">
+            <button
+              onClick={() => onNavigate('historico-fundos')}
+              className="mt-3 w-full bg-gray-100 text-gray-600 rounded-2xl h-14 font-bold text-sm hover:bg-gray-200 active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
               <span className="material-symbols-outlined text-lg">history</span>
               Ver meus Fundos ativos
             </button>

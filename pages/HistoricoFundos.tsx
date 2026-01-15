@@ -177,29 +177,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate }) => {
                 </div>
             </section>
 
-            {/* Bottom Nav */}
-            <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-100 px-6 py-3 flex justify-between items-center z-50">
-                <button onClick={() => onNavigate('home')} className="flex flex-col items-center gap-1 text-gray-400">
-                    <span className="material-symbols-outlined">home</span>
-                    <span className="text-[10px] font-medium">Início</span>
-                </button>
-                <button onClick={() => onNavigate('shop')} className="flex flex-col items-center gap-1 text-gray-400">
-                    <span className="material-symbols-outlined">shopping_bag</span>
-                    <span className="text-[10px] font-medium">Loja</span>
-                </button>
-                <button onClick={() => onNavigate('investimentos-fundo')} className="flex flex-col items-center gap-1 text-primary">
-                    <span className="material-symbols-outlined">trending_up</span>
-                    <span className="text-[10px] font-bold">Investir</span>
-                </button>
-                <button onClick={() => onNavigate('wallet')} className="flex flex-col items-center gap-1 text-gray-400">
-                    <span className="material-symbols-outlined">payments</span>
-                    <span className="text-[10px] font-medium">Pagar</span>
-                </button>
-                <button onClick={() => onNavigate('profile')} className="flex flex-col items-center gap-1 text-gray-400">
-                    <span className="material-symbols-outlined">person</span>
-                    <span className="text-[10px] font-medium">Perfil</span>
-                </button>
-            </nav>
+
         </div>
     );
 };
