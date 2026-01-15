@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 
 interface Investment {
-    id: string;
-    fund_id: string;
-    applied_value: number;
-    total_return: number;
-    start_date: string;
-    end_date: string;
-    status: 'ativo' | 'concluído';
-    created_at: string;
+    id_usuario_fundo: string;
+    id_fundo: string;
+    valor_aplicado: number;
+    retorno_calculado: number;
+    data_inicio: string;
+    data_termino: string;
+    estado_ativo: boolean;
+    taxa_retorno: number;
     fund?: {
-        name: string;
-        icon: string;
-        profitability_pct: number;
+        nome_fundo: string;
+        taxa_retorno: number;
     };
 }
 
@@ -50,10 +49,10 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
             if (!user) return;
 
             const { data, error } = await supabase
-                .from('user_funds')
-                .select('*, fund:funds(name, icon, profitability_pct)')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false });
+                .from('usuario_fundos')
+                .select('*, fund:fundos(nome_fundo, taxa_retorno)')
+                .eq('id_usuario', user.id)
+                .order('data_inicio', { ascending: false });
 
             if (error) throw error;
 
@@ -61,8 +60,14 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
             setInvestments(typedData);
 
             // Calculate stats
-            const applied = typedData.reduce((acc, curr) => acc + curr.applied_value, 0);
-            const profit = typedData.reduce((acc, curr) => acc + (curr.total_return - curr.applied_value), 0);
+            const applied = typedData.reduce((acc, curr) => acc + Number(curr.valor_aplicado), 0);
+            const profit = typedData.reduce((acc, curr) => {
+                if (!curr.estado_ativo) {
+                    return acc + (Number(curr.retorno_calculado) - Number(curr.valor_aplicado));
+                }
+                return acc;
+            }, 0);
+
             setStats({ totalApplied: applied, totalProfit: profit });
 
         } catch (err: any) {
@@ -77,7 +82,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
         const start = new Date(startDate).getTime();
         const end = new Date(endDate).getTime();
         const now = new Date().getTime();
-        
+
         if (now >= end) return 100;
         const total = end - start;
         const elapsed = now - start;
@@ -85,11 +90,11 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
         return Math.max(0, Math.min(100, progress));
     };
 
-    const getStateLabel = (status: string, progress: number) => {
-        if (status === 'concluído') return 'Concluído';
-        if (progress >= 100) return 'Processando retorno...';
-        if (progress >= 80) return 'Quase concluído';
-        return 'Em curso';
+    const getStateLabel = (isActive: boolean, progress: number) => {
+        if (!isActive) return 'Finalizado';
+        if (progress >= 100) return 'Aguardando Liquidação';
+        if (progress >= 80) return 'Próximo do Término';
+        return 'Em Crescimento';
     };
 
     const formatDate = (dateStr: string) => {
@@ -108,49 +113,46 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <div className="flex items-center p-4 pb-2 justify-between">
                     <button
                         onClick={() => onNavigate('investimentos-fundo')}
-                        className="text-gray-900 flex size-12 shrink-0 items-center justify-start cursor-pointer hover:opacity-70 transition-opacity"
+                        className="text-yellow-500 flex size-12 shrink-0 items-center justify-start cursor-pointer hover:opacity-70 transition-opacity"
                     >
                         <span className="material-symbols-outlined text-[24px]">arrow_back</span>
                     </button>
                     <h2 className="text-gray-900 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-4">
-                        Histórico de Fundos
+                        Meus Contratos
                     </h2>
                     <div className="flex w-12 items-center justify-end">
                         <button className="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-transparent text-gray-900 hover:bg-gray-100 transition-colors">
-                            <span className="material-symbols-outlined text-2xl">download</span>
+                            <span className="material-symbols-outlined text-2xl">analytics</span>
                         </button>
                     </div>
                 </div>
             </header>
 
-            {/* Hero Card */}
+            {/* Stats Card */}
             <div className="p-4">
-                <div className="flex flex-col items-stretch justify-start rounded-2xl bg-gray-50 border border-gray-100 p-6 relative overflow-hidden">
+                <div className="flex flex-col items-stretch justify-start rounded-3xl bg-black border border-gray-800 p-6 relative overflow-hidden shadow-2xl">
                     <div className="flex flex-col gap-1 z-10">
-                        <p className="text-gray-500 text-sm font-semibold uppercase tracking-wider">Património em Fundos</p>
-                        <h1 className="text-black text-3xl font-extrabold leading-tight py-1">
+                        <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em]">Volume Total Aplicado</p>
+                        <h1 className="text-white text-3xl font-black italic tabular-nums py-1">
                             Kz {stats.totalApplied.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
                         </h1>
-                        <div className="flex items-center gap-2 mt-1">
-                            <div className="flex items-center bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-sm font-bold">
-                                <span className="material-symbols-outlined text-sm mr-1">trending_up</span>
-                                +{((stats.totalProfit / (stats.totalApplied || 1)) * 100).toFixed(1)}% total
+                        <div className="flex items-center gap-2 mt-2">
+                            <div className="flex items-center bg-primary text-black px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider">
+                                <span className="material-symbols-outlined text-xs mr-1">trending_up</span>
+                                Lucros Realizados: Kz {stats.totalProfit.toLocaleString('pt-AO')}
                             </div>
-                            <p className="text-gray-400 text-xs font-semibold">Rendimentos: Kz {stats.totalProfit.toLocaleString('pt-AO')}</p>
                         </div>
                     </div>
-                    <div className="absolute right-[-10px] bottom-[-10px] opacity-10 pointer-events-none">
-                        <span className="material-symbols-outlined text-[120px] text-primary">analytics</span>
+                    <div className="absolute right-[-20px] bottom-[-20px] opacity-20 pointer-events-none">
+                        <span className="material-symbols-outlined text-[140px] text-primary">currency_exchange</span>
                     </div>
                 </div>
             </div>
 
             <section className="px-4">
-                <div className="flex items-center justify-between py-2">
-                    <h2 className="text-gray-900 text-[18px] font-bold leading-tight tracking-[-0.015em]">Seus Investimentos</h2>
-                    <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                        <span className="material-symbols-outlined text-xl">tune</span>
-                    </button>
+                <div className="flex items-center justify-between py-4">
+                    <h2 className="text-black text-[18px] font-black tracking-tight">Ativos em Carteira</h2>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full">{investments.length} Ativos</span>
                 </div>
 
                 {loading ? (
@@ -158,91 +160,100 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                         <div className="size-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-4 mt-2">
+                    <div className="flex flex-col gap-5 mt-2">
                         {investments.length > 0 ? (
                             investments.map((inv) => {
-                                const progress = calculateProgress(inv.start_date, inv.end_date);
-                                const isFinalized = inv.status === 'concluído';
-                                
+                                const progress = calculateProgress(inv.data_inicio, inv.data_termino);
+                                const isFinalized = !inv.estado_ativo;
+
                                 return (
-                                    <div key={inv.id} className="flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                                        <div className="p-4 flex gap-4">
+                                    <div key={inv.id_usuario_fundo} className="flex flex-col bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+                                        <div className="p-5 flex gap-5">
                                             <div className="flex-shrink-0">
                                                 <div
-                                                    className={`size-14 rounded-full flex items-center justify-center relative`}
+                                                    className={`size-16 rounded-full flex items-center justify-center relative shadow-inner`}
                                                     style={{
-                                                        background: `radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(${isFinalized ? '#10b981' : '#f4c025'} ${progress}%, #f3f4f6 0)`
+                                                        background: `radial-gradient(closest-side, white 82%, transparent 83% 100%), conic-gradient(${isFinalized ? '#10b981' : '#f4c025'} ${progress}%, #f8fafc 0)`
                                                     }}
                                                 >
                                                     {isFinalized ? (
-                                                        <span className="material-symbols-outlined text-green-600 text-2xl">check_circle</span>
+                                                        <span className="material-symbols-outlined text-green-600 text-3xl">task_alt</span>
                                                     ) : (
-                                                        <span className="text-[12px] font-extrabold text-gray-900">{progress}%</span>
+                                                        <span className="text-[13px] font-black text-black">{progress}%</span>
                                                     )}
                                                 </div>
                                             </div>
-                                            <div className="flex-1 flex flex-col gap-3">
+                                            <div className="flex-1 flex flex-col gap-4">
                                                 <div className="flex items-center justify-between">
-                                                    <h4 className="text-black font-bold text-base">{inv.fund?.name || 'Fundo Amazon'}</h4>
-                                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${isFinalized ? 'bg-green-50 text-green-600' : 'bg-blue-50 text-blue-600'
+                                                    <h4 className="text-black font-black text-base leading-tight">{inv.fund?.nome_fundo || 'Ativo Amazon'}</h4>
+                                                    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${isFinalized ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-700'
                                                         }`}>
-                                                        {isFinalized ? 'Finalizado' : 'Ativo'}
-                                                    </span>
+                                                        <span className="size-1.5 rounded-full bg-current animate-pulse"></span>
+                                                        {isFinalized ? 'Resgatado' : 'Operando'}
+                                                    </div>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-y-3 gap-x-2">
+
+                                                <div className="grid grid-cols-2 gap-y-4 gap-x-4">
                                                     <div>
-                                                        <p className="text-gray-400 text-[9px] uppercase font-bold tracking-wider">Valor Aplicado</p>
-                                                        <p className="text-gray-900 font-extrabold text-xs">Kz {inv.applied_value.toLocaleString('pt-AO')}</p>
+                                                        <p className="text-gray-400 text-[8px] uppercase font-black tracking-[0.15em] mb-1">Capital Aplicado</p>
+                                                        <p className="text-black font-black text-sm tabular-nums">Kz {Number(inv.valor_aplicado).toLocaleString('pt-AO')}</p>
                                                     </div>
                                                     <div className="text-right">
-                                                        <p className="text-gray-400 text-[9px] uppercase font-bold tracking-wider">
-                                                            {isFinalized ? 'Lucro Obtido' : 'Rend. Esperado'}
+                                                        <p className="text-gray-400 text-[8px] uppercase font-black tracking-[0.15em] mb-1">
+                                                            Retorno {isFinalized ? 'Final' : 'Estimado'}
                                                         </p>
-                                                        <p className="text-green-600 font-extrabold text-xs">Kz {(inv.total_return - inv.applied_value).toLocaleString('pt-AO')}</p>
+                                                        <p className="text-green-600 font-black text-sm tabular-nums">Kz {Number(inv.retorno_calculado).toLocaleString('pt-AO')}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-gray-400 text-[9px] uppercase font-bold tracking-wider">Data de Término</p>
-                                                        <p className="text-gray-900 font-medium text-xs">{formatDate(inv.end_date)}</p>
+                                                        <p className="text-gray-400 text-[8px] uppercase font-black tracking-[0.15em] mb-1">Data de Vencimento</p>
+                                                        <p className="text-black font-bold text-xs">{formatDate(inv.data_termino)}</p>
                                                     </div>
                                                     <div className="text-right">
-                                                        <p className="text-gray-400 text-[9px] uppercase font-bold tracking-wider">Estado</p>
-                                                        <p className={`${isFinalized ? 'text-green-600' : 'text-gray-900'} font-bold text-xs`}>
-                                                            {getStateLabel(inv.status, progress)}
+                                                        <p className="text-gray-400 text-[8px] uppercase font-black tracking-[0.15em] mb-1">Status da Operação</p>
+                                                        <p className={`${isFinalized ? 'text-green-600' : 'text-primary'} font-black text-[10px] uppercase tracking-tighter`}>
+                                                            {getStateLabel(inv.estado_ativo, progress)}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className={`flex ${isFinalized ? 'justify-between' : 'justify-end'} items-center p-2 bg-gray-50 border-t border-gray-100`}>
+                                        <div className={`flex ${isFinalized ? 'justify-between' : 'justify-end'} items-center p-3 px-5 bg-gray-50/50 border-t border-gray-100`}>
                                             {isFinalized && (
-                                                <span className="text-gray-400 text-[10px] px-2 font-medium">Resgatado em {formatDate(inv.end_date)}</span>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="material-symbols-outlined text-green-600 text-lg">check_circle</span>
+                                                    <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">Liquidado</span>
+                                                </div>
                                             )}
-                                            <button 
-                                                onClick={() => showToast ? showToast(isFinalized ? 'Recibo gerado com sucesso!' : 'Gerenciamento do fundo em breve...', 'info') : null}
-                                                className={`px-6 py-1.5 rounded-lg text-xs font-bold shadow-sm active:scale-95 transition-all ${isFinalized ? 'bg-gray-200 text-gray-700' : 'bg-primary text-black'
-                                                }`}>
-                                                {isFinalized ? 'Recibo' : 'Gerir'}
+                                            <button
+                                                onClick={() => showToast ? showToast(isFinalized ? 'Recibo gerado com sucesso!' : 'Contrato em custódia até o vencimento.', 'info') : null}
+                                                className={`px-8 h-9 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] shadow-sm active:scale-95 transition-all ${isFinalized ? 'bg-gray-200 text-gray-700' : 'bg-primary text-black'
+                                                    }`}>
+                                                {isFinalized ? 'Recibo' : 'Gerenciar'}
                                             </button>
                                         </div>
                                     </div>
                                 );
                             })
                         ) : (
-                            <div className="text-center py-10">
-                                <p className="text-gray-400">Nenhum investimento encontrado.</p>
+                            <div className="flex flex-col items-center justify-center py-20 text-center opacity-40">
+                                <span className="material-symbols-outlined text-6xl mb-4">inventory_2</span>
+                                <p className="font-black text-xs uppercase tracking-widest">Nenhuma operação ativa</p>
                             </div>
                         )}
                     </div>
                 )}
 
-                <div className="mt-8 mb-6 p-8 rounded-2xl bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-center">
-                    <span className="material-symbols-outlined text-gray-300 text-5xl mb-3">add_circle</span>
-                    <p className="text-gray-500 text-sm font-semibold">Deseja diversificar mais?</p>
+                <div className="mt-12 mb-10 p-10 rounded-[40px] bg-primary/5 border-2 border-dashed border-primary/20 flex flex-col items-center justify-center text-center">
+                    <div className="size-16 rounded-full bg-white flex items-center justify-center shadow-lg mb-4">
+                        <span className="material-symbols-outlined text-primary text-3xl">add</span>
+                    </div>
+                    <p className="text-black font-black text-sm uppercase tracking-widest mb-2">Novo Contrato</p>
+                    <p className="text-gray-500 text-[11px] font-medium max-w-[200px] mb-6">Explore novos ativos e maximize seus rendimentos mensais.</p>
                     <button
                         onClick={() => onNavigate('investimentos-fundo')}
-                        className="mt-2 text-primary font-bold text-sm hover:underline"
+                        className="bg-black text-white px-8 h-12 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl hover:bg-gray-900 transition-all"
                     >
-                        Explorar novos fundos
+                        EXPLORAR MERCADO
                     </button>
                 </div>
             </section>
