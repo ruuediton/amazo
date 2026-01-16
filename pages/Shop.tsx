@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
+import { useLoading } from '../contexts/LoadingContext';
 
 interface ShopProps {
   onNavigate: (page: any) => void;
@@ -10,6 +11,7 @@ interface ShopProps {
 }
 
 const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
+  const { withLoading } = useLoading();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -39,55 +41,59 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
 
   const fetchProducts = async (isInitial = false) => {
     if (isInitial) setLoading(true);
-    const { data, error } = await supabase
-      .from('produtos')
-      .select('*')
-      .eq('status', 'ativo')
-      .order('preco', { ascending: true });
+    await withLoading(async () => {
+      const { data, error } = await supabase
+        .from('produtos')
+        .select('*')
+        .eq('status', 'ativo')
+        .order('preco', { ascending: true });
 
-    if (error) {
-      showToast?.("Erro ao carregar produtos", "error");
-    } else {
-      setProducts(data || []);
-    }
+      if (error) {
+        showToast?.("Erro ao carregar produtos", "error");
+      } else {
+        setProducts(data || []);
+      }
+    });
     setLoading(false);
   };
 
   const handleOpenModal = async (product: any) => {
-    setLoading(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      showToast?.("Sessão expirada. Faça login novamente.", "error");
-      onNavigate('login');
-      return;
-    }
+    await withLoading(async () => {
+      setLoading(true);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        showToast?.("Sessão expirada. Faça login novamente.", "error");
+        onNavigate('login');
+        return;
+      }
 
-    // Buscar total já comprado pelo usuário para este produto (contagem de registros) na tabela historico_compra
-    const { count, error } = await supabase
-      .from('historico_compra')
-      .select('*', { count: 'exact', head: true })
-      .eq('uid_user', user.id)
-      .eq('id_produto', product.id);
+      // Buscar total já comprado pelo usuário para este produto (contagem de registros) na tabela historico_compra
+      const { count, error } = await supabase
+        .from('historico_compra')
+        .select('*', { count: 'exact', head: true })
+        .eq('uid_user', user.id)
+        .eq('id_produto', product.id);
 
-    if (error) {
-      showToast?.("Erro ao verificar limite de compra", "error");
+      if (error) {
+        showToast?.("Erro ao verificar limite de compra", "error");
+        setLoading(false);
+        return;
+      }
+
+      const bought = count || 0;
+      const available = product.stock - bought;
+
+      if (available <= 0) {
+        showToast?.(`Limite de compra atingido (${product.stock} unidades).`, "warning");
+        setLoading(false);
+        return;
+      }
+
+      setUserPurchasedCount(bought);
+      setSelectedProduct(product);
+      setQuantity(1);
       setLoading(false);
-      return;
-    }
-
-    const bought = count || 0;
-    const available = product.stock - bought;
-
-    if (available <= 0) {
-      showToast?.(`Limite de compra atingido (${product.stock} unidades).`, "warning");
-      setLoading(false);
-      return;
-    }
-
-    setUserPurchasedCount(bought);
-    setSelectedProduct(product);
-    setQuantity(1);
-    setLoading(false);
+    });
   };
 
   const handlePurchase = async () => {
@@ -107,51 +113,57 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
     }
 
     setIsBuying(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      onNavigate('login');
-      return;
+    try {
+      await withLoading(async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          onNavigate('login');
+          return;
+        }
+
+        const lucroTotalPorUnidade = selectedProduct.renda_diaria * selectedProduct.duracao_dias;
+
+        // Cada unidade gera um registro próprio na tabela historico_compra
+        const purchases = Array.from({ length: quantity }).map(() => ({
+          uid_user: user.id,
+          id_produto: selectedProduct.id,
+          nome: selectedProduct.nome,
+          descricao: selectedProduct.descricao,
+          preco_unitario: selectedProduct.preco,
+          renda_diaria: selectedProduct.renda_diaria,
+          duracao_dias: selectedProduct.duracao_dias,
+          quantidade: 1, // Sempre 1 por registro
+          lucro_total: lucroTotalPorUnidade,
+          status: 'confirmado',
+          url_produtos: selectedProduct.url_produto
+        }));
+
+        const { error: insertError } = await supabase.from('historico_compra').insert(purchases);
+
+        if (insertError) {
+          showToast?.("Erro ao registrar compra: " + insertError.message, "error");
+        } else {
+          // Debitar saldo do usuário na tabela public.profiles
+          const { error: updateError } = await supabase
+            .from('profiles')
+            .update({ balance: balance - totalCost })
+            .eq('user_id', user.id);
+
+          if (updateError) {
+            showToast?.("Compra registrada, mas houve um erro ao atualizar saldo.", "warning");
+          } else {
+            showToast?.(`Compra realizada! ${quantity} unidade(s) debitada(s) com sucesso.`, "success");
+          }
+
+          setSelectedProduct(null);
+          onNavigate('purchase-history');
+        }
+      });
+    } catch (error: any) {
+      showToast?.("Erro ao processar compra", "error");
+    } finally {
+      setIsBuying(false);
     }
-
-    const lucroTotalPorUnidade = selectedProduct.renda_diaria * selectedProduct.duracao_dias;
-
-    // Cada unidade gera um registro próprio na tabela historico_compra
-    const purchases = Array.from({ length: quantity }).map(() => ({
-      uid_user: user.id,
-      id_produto: selectedProduct.id,
-      nome: selectedProduct.nome,
-      descricao: selectedProduct.descricao,
-      preco_unitario: selectedProduct.preco,
-      renda_diaria: selectedProduct.renda_diaria,
-      duracao_dias: selectedProduct.duracao_dias,
-      quantidade: 1, // Sempre 1 por registro
-      lucro_total: lucroTotalPorUnidade,
-      status: 'confirmado',
-      url_produtos: selectedProduct.url_produto
-    }));
-
-    const { error: insertError } = await supabase.from('historico_compra').insert(purchases);
-
-    if (insertError) {
-      showToast?.("Erro ao registrar compra: " + insertError.message, "error");
-    } else {
-      // Debitar saldo do usuário na tabela public.profiles
-      // Usamos .eq('user_id', user.id) para coincidir com a política RLS e estrutura da tabela
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .update({ balance: balance - totalCost })
-        .eq('user_id', user.id);
-
-      if (updateError) {
-        showToast?.("Compra registrada, mas houve um erro ao atualizar saldo.", "warning");
-      } else {
-        showToast?.(`Compra realizada! ${quantity} unidade(s) debitada(s) com sucesso.`, "success");
-      }
-
-      setSelectedProduct(null);
-      onNavigate('purchase-history');
-    }
-    setIsBuying(false);
   };
 
   return (

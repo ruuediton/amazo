@@ -11,7 +11,7 @@ const SpokeSpinner: React.FC<SpokeSpinnerProps> = ({ className = "text-gray-500"
             {[...Array(12)].map((_, i) => (
                 <div
                     key={i}
-                    className="absolute left-[44.5%] top-0 h-[30%] w-[11%] bg-current rounded-full animate-ios-spinner"
+                    className="absolute left-[47%] top-0 h-[30%] w-[6%] bg-current rounded-full animate-ios-spinner"
                     style={{
                         transform: `rotate(${i * 30}deg)`,
                         transformOrigin: '50% 166.6%',

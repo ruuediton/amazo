@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useNetwork } from '../contexts/NetworkContext';
+import { useLoading } from '../contexts/LoadingContext';
 
 interface Props {
   onNavigate: (page: any) => void;
@@ -10,6 +11,7 @@ interface Props {
 
 const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
   const { runWithTimeout } = useNetwork();
+  const { withLoading } = useLoading();
   const [showPassword, setShowPassword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -26,18 +28,25 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
     setLoading(true);
     const email = `${phoneNumber.replace(/\s/g, '')}@amazon.com`;
 
-    const { data, error } = await runWithTimeout(() => supabase.auth.signInWithPassword({
-      email,
-      password,
-    }));
+    try {
+      await withLoading(async () => {
+        const { error } = await runWithTimeout(() => supabase.auth.signInWithPassword({
+          email,
+          password,
+        }));
 
-    if (error) {
+        if (error) {
+          throw error;
+        }
+
+        showToast?.("Login realizado com sucesso!", "success");
+        onNavigate('splash-ads');
+      });
+    } catch (error: any) {
       showToast?.("Falha no login: " + error.message, "error");
-    } else {
-      showToast?.("Login realizado com sucesso!", "success");
-      onNavigate('splash-ads');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
