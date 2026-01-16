@@ -10,7 +10,7 @@ interface Props {
 }
 
 const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
-  const { withLoading } = useLoading();
+  const { withLoading, showError } = useLoading();
   const [purchases, setPurchases] = useState<any[]>([]);
   const [hasCollectedToday, setHasCollectedToday] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -135,7 +135,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
       showToast?.("Tarefa diária concluída com sucesso! Saldo atualizado.", "success");
 
     } catch (error: any) {
-      showToast?.("Erro ao processar tarefa: " + error.message, "error");
+      showError(error);
     } finally {
       setIsProcessing(false);
     }

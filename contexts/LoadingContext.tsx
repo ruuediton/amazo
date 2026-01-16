@@ -47,25 +47,52 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
     }, [reset]);
 
     const sanitiseError = (error: any): string => {
-        const technicalPatterns = [
-            /sql/i, /database/i, /invalid input/i, /syntax error/i, /unexpected /i,
-            /fetch/i, /network/i, /cors/i, /token/i, /jwt/i, /auth/i, /unauthorized/i
-        ];
-
         const errorMessage = typeof error === 'string' ? error : (error.message || '');
+        const lowMsg = errorMessage.toLowerCase();
 
-        // Mapeamento específico conforme prompt
-        if (technicalPatterns.some(p => p.test(errorMessage))) {
-            if (/token|jwt|auth|unauthorized/i.test(errorMessage)) {
-                return "Sessão expirada. Por favor, entre novamente.";
-            }
-            if (/sql|database|unexpected/i.test(errorMessage)) {
-                return "Não foi possível concluir a operação. Tente novamente.";
-            }
-            return "Operação não permitida no momento.";
+        // 1. Mapeamento de Erros de Autenticação
+        if (lowMsg.includes('invalid login credentials') || lowMsg.includes('user not found') || lowMsg.includes('email not confirmed')) {
+            return "Senha ou telefone não consin .";
+        }
+        if (lowMsg.includes('token') || lowMsg.includes('jwt') || lowMsg.includes('auth') || lowMsg.includes('unauthorized') || lowMsg.includes('session expired')) {
+            return "A sua sessão expirou. Faça login novamente.";
         }
 
-        return errorMessage || "Ocorreu um erro inesperado";
+        // 2. Mapeamento de Erros de Negócio/Lógicos (Seguros)
+        if (lowMsg.includes('insufficient') || lowMsg.includes('balance') || lowMsg.includes('funds')) {
+            return "Saldo insuficiente.";
+        }
+        if (lowMsg.includes('duplicate') || lowMsg.includes('already exists') || lowMsg.includes('already processed')) {
+            return "Esta operação já foi processada.";
+        }
+        if (lowMsg.includes('limit') || lowMsg.includes('exceeded')) {
+            return "Limite diário atingido para esta operação.";
+        }
+        if (lowMsg.includes('invalid') && (lowMsg.includes('deposit') || lowMsg.includes('withdrawal'))) {
+            return "Dados de depósito inválidos.";
+        }
+        if (lowMsg.includes('null value') || lowMsg.includes('violates not-null') || lowMsg.includes('required') || lowMsg.includes('check constraint') || lowMsg.includes('violates check')) {
+            return "Verifique os dados informados.";
+        }
+
+        // 3. Detecção de Erros Técnicos Brutos (SQL, DB, Schema) - Estes devem ser mascarados
+        const technicalPatterns = [
+            /sql/i, /database/i, /invalid input/i, /syntax error/i, /unexpected /i,
+            /fetch/i, /network/i, /cors/i, /table/i, /schema/i, /cache/i, /column/i,
+            /relation/i, /row/i, /type/i, /procedure/i, /violates check/i
+        ];
+
+        if (technicalPatterns.some(p => p.test(errorMessage))) {
+            return "Não foi possível concluir a operação. Tente novamente.";
+        }
+
+        // 4. Fallback para mensagens genéricas que já sejam seguras (não técnicas)
+        // Se a mensagem original não contém termos técnicos, permitimos a exibição
+        if (errorMessage && errorMessage.length < 100 && !/[{}<>;]/.test(errorMessage)) {
+            return errorMessage;
+        }
+
+        return "Ocorreu um erro inesperado";
     };
 
     const showError = useCallback((msg: any) => {

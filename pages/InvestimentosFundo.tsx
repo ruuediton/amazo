@@ -24,7 +24,7 @@ interface Props {
 const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
   const [selectedFund, setSelectedFund] = useState<Fundo | null>(null);
   const [funds, setFunds] = useState<Fundo[]>([]);
-  const { withLoading } = useLoading();
+  const { withLoading, showError } = useLoading();
   const [applying, setApplying] = useState(false);
   const [investmentAmount, setInvestmentAmount] = useState<string>('');
 
@@ -91,15 +91,15 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
         // 2. Criar registro de investimento
         const { error: investError } = await supabase
-          .from('historico_fundos')
+          .from('usuario_fundos')
           .insert({
-            user_id: user.id,
+            id_usuario: user.id,
             id_fundo: selectedFund.id_fundo,
-            nome_fundo: selectedFund.nome_fundo,
-            valor_investido: amountNum,
+            valor_aplicado: amountNum,
             taxa_retorno: selectedFund.taxa_retorno,
-            data_vencimento: new Date(Date.now() + selectedFund.duration_days * 24 * 60 * 60 * 1000).toISOString(),
-            status: 'ativo'
+            retorno_calculado: amountNum + (amountNum * (selectedFund.taxa_retorno / 100)),
+            data_termino: new Date(Date.now() + selectedFund.duration_days * 24 * 60 * 60 * 1000).toISOString(),
+            estado_ativo: true
           });
 
         if (investError) throw investError;
