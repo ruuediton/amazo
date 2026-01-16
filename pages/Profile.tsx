@@ -69,6 +69,11 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
       {/* Balance Card Section */}
       <div className="px-4 mb-6">
         <div className="rounded-2xl bg-[#fefce8] p-6 border border-[#f4d125]/20 shadow-sm relative overflow-hidden">
+          {/* Decorative Background Icon */}
+          <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none translate-x-4 -translate-y-4">
+            <span className="material-symbols-outlined text-[120px] text-[#f4d125]">account_balance_wallet</span>
+          </div>
+
           <div className="relative z-10">
             <div className="flex justify-between items-start">
               <div>
@@ -84,7 +89,6 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
                   </button>
                 </div>
               </div>
-              <span className="material-symbols-outlined text-[#f4d125]/40 text-4xl">account_balance_wallet</span>
             </div>
           </div>
 
@@ -157,7 +161,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
               { label: 'Detalhes de Conta', icon: 'account_circle', page: 'detalhes-conta' },
               { label: 'Histórico de Fundo', icon: 'history', page: 'historico-fundos' },
               { label: 'Histórico de Compras', icon: 'shopping_bag', page: 'purchase-history' },
-              { label: 'Histórico de Retirada', icon: 'receipt_long', page: 'historico-conta' }, 
+              { label: 'Histórico de Retirada', icon: 'receipt_long', page: 'historico-conta' },
             ].map((item, i, arr) => (
               <div
                 key={item.label}
