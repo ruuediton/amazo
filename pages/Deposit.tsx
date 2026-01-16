@@ -58,7 +58,6 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
 
   const handleConfirmClick = () => {
     if (method === 'usdt') {
-      console.log("Searching for USDT wallet in banks:", banks);
       const usdtBank = banks.find(b => b.nome_banco === 'USDT' || b.nome_banco === 'USTD');
 
       if (!usdtBank) {

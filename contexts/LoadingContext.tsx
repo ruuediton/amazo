@@ -20,11 +20,14 @@ const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [status, setStatus] = useState<FeedbackStatus>('idle');
     const [message, setMessage] = useState<string | null>(null);
+    const [failureCount, setFailureCount] = useState(0);
+    const [lastFailureTime, setLastFailureTime] = useState(0);
 
     const reset = useCallback(() => {
         setStatus('idle');
         setMessage(null);
     }, []);
+
 
     const showLoading = useCallback(() => {
         setStatus('loading');
@@ -37,15 +40,39 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
         setTimeout(reset, 3000);
     }, [reset]);
 
-    const showError = useCallback((msg: string) => {
+    const sanitiseError = (error: any): string => {
+        const technicalPatterns = [
+            /sql/i, /database/i, /invalid input/i, /syntax error/i, /unexpected /i,
+            /fetch/i, /network/i, /cors/i, /token/i, /jwt/i, /auth/i, /unauthorized/i
+        ];
+
+        const errorMessage = typeof error === 'string' ? error : (error.message || '');
+
+        // Mapeamento específico conforme prompt
+        if (technicalPatterns.some(p => p.test(errorMessage))) {
+            if (/token|jwt|auth|unauthorized/i.test(errorMessage)) {
+                return "Sessão expirada. Por favor, entre novamente.";
+            }
+            if (/sql|database|unexpected/i.test(errorMessage)) {
+                return "Não foi possível concluir a operação. Tente novamente.";
+            }
+            return "Operação não permitida no momento.";
+        }
+
+        return errorMessage || "Ocorreu um erro inesperado";
+    };
+
+    const showError = useCallback((msg: any) => {
+        const safeMsg = sanitiseError(msg);
         setStatus('error');
-        setMessage(msg);
+        setMessage(safeMsg);
         setTimeout(reset, 3000);
     }, [reset]);
 
-    const showWarning = useCallback((msg: string) => {
+    const showWarning = useCallback((msg: any) => {
+        const safeMsg = sanitiseError(msg);
         setStatus('warning');
-        setMessage(msg);
+        setMessage(safeMsg);
         setTimeout(reset, 3000);
     }, [reset]);
 
@@ -54,10 +81,25 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
         successMsg?: string,
         errorMsg?: string
     ): Promise<T> => {
+        // Anti-abuso: Delay progressivo em caso de falhas consecutivas
+        const now = Date.now();
+        if (failureCount > 0) {
+            const delay = Math.min(failureCount * 1000, 5000); // Até 5 segundos
+            const timeSinceLastFailure = now - lastFailureTime;
+            if (timeSinceLastFailure < delay) {
+                await new Promise(resolve => setTimeout(resolve, delay - timeSinceLastFailure));
+            }
+        }
+
         showLoading();
         try {
             const p = typeof promise === 'function' ? promise() : promise;
             const result = await p;
+
+            // Sucesso: Reseta contador de falhas
+            setFailureCount(0);
+            setLastFailureTime(0);
+
             if (successMsg) {
                 showSuccess(successMsg);
             } else {
@@ -65,11 +107,17 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
             }
             return result;
         } catch (error: any) {
-            const msg = errorMsg || error.message || "Ocorreu um erro inesperado";
+            // Falha: Incrementa contador e regista horário
+            setFailureCount(prev => prev + 1);
+            setLastFailureTime(Date.now());
+
+            const msg = errorMsg || sanitiseError(error);
             showError(msg);
             throw error;
         }
     };
+
+
 
     return (
         <LoadingContext.Provider value={{

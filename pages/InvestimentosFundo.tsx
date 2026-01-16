@@ -59,7 +59,6 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
       if (error) throw error;
       setFunds(data || []);
     } catch (err: any) {
-      console.error('Error fetching funds:', err);
       if (showToast) showToast('Erro ao carregar dados dos fundos.', 'error');
     } finally {
       setLoading(false);

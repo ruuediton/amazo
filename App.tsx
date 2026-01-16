@@ -140,7 +140,6 @@ const App: React.FC = () => {
             filter: `user_id=eq.${userId}`
           },
           (payload) => {
-            console.log('Realtime profile update:', payload.new);
             setProfile(payload.new);
           }
         )

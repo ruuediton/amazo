@@ -42,7 +42,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
         setHistory(data);
       }
     } catch (err) {
-      console.error('Erro ao buscar histórico:', err);
+      // Falha silenciosa
     } finally {
       setFetchingHistory(false);
     }

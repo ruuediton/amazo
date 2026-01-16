@@ -88,7 +88,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       setBankAccount(bank);
 
     } catch (err) {
-      console.error('Erro ao carregar dados:', err);
+      // Falha silenciosa ou tratada pelo estado global
     } finally {
       setLoading(false);
     }

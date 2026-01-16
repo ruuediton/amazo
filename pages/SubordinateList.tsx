@@ -94,7 +94,7 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
       }
 
     } catch (err) {
-      console.error('Erro ao buscar rede:', err);
+      // Falha tratada
     } finally {
       setLoading(false);
     }
