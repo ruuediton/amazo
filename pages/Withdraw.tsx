@@ -192,49 +192,53 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
-    await withLoading(async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Usuário não autenticado");
+    try {
+      await withLoading(async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error("Usuário não autenticado");
 
-      const { data: isValid, error: pinError } = await supabase.rpc('verify_withdrawal_password', {
-        p_password: pin
-      });
+        const { data: isValid, error: pinError } = await supabase.rpc('verify_withdrawal_password', {
+          p_password: pin
+        });
 
-      if (!isValid) {
-        const newAttempts = (stats?.failedAttempts || 0) + 1;
-        if (newAttempts >= 2) {
-          await supabase.from('profiles').update({
-            bloqueio_retirada: true,
-            data_bloqueio: new Date().toISOString(),
-            failed_withdraw_attempts: 2
-          }).eq('user_id', user.id);
+        if (!isValid) {
+          const newAttempts = (stats?.failedAttempts || 0) + 1;
+          if (newAttempts >= 2) {
+            await supabase.from('profiles').update({
+              bloqueio_retirada: true,
+              data_bloqueio: new Date().toISOString(),
+              failed_withdraw_attempts: 2
+            }).eq('user_id', user.id);
 
-          setShowPinModal(false);
-          fetchInitialData();
-          throw new Error('Senha incorreta! Sua conta foi bloqueada por 72h.');
-        } else {
-          await supabase.from('profiles').update({
-            failed_withdraw_attempts: newAttempts
-          }).eq('user_id', user.id);
-          setStats(prev => prev ? { ...prev, failedAttempts: newAttempts } : null);
-          throw new Error(`Senha incorreta! Você tem mais 1 tentativa.`);
+            setShowPinModal(false);
+            fetchInitialData();
+            throw new Error('Senha incorreta! Sua conta foi bloqueada por 72h.');
+          } else {
+            await supabase.from('profiles').update({
+              failed_withdraw_attempts: newAttempts
+            }).eq('user_id', user.id);
+            setStats(prev => prev ? { ...prev, failedAttempts: newAttempts } : null);
+            throw new Error(`Senha incorreta! Você tem mais 1 tentativa.`);
+          }
         }
-      }
 
-      const numAmount = parseFloat(amount);
-      const amountRecebendo = numAmount * (1 - FEE_PERCENT);
+        const numAmount = parseFloat(amount);
+        const amountRecebendo = numAmount * (1 - FEE_PERCENT);
 
-      const { error: withdrawError } = await supabase.rpc('process_withdrawal_secure', {
-        p_amount_original: numAmount,
-        p_amount_recebendo: amountRecebendo
-      });
+        const { error: withdrawError } = await supabase.rpc('process_withdrawal_secure', {
+          p_amount_original: numAmount,
+          p_amount_recebendo: amountRecebendo
+        });
 
-      if (withdrawError) throw withdrawError;
+        if (withdrawError) throw withdrawError;
 
-      setShowPinModal(false);
+        setShowPinModal(false);
+      }, 'Solicitação de retirada enviada com sucesso!');
+
       onNavigate('historico-conta');
-      return 'Solicitação de retirada enviada com sucesso!';
-    });
+    } catch (error) {
+      // feedback já tratado pelo withLoading
+    }
   };
 
   const calculatingFee = amount ? (parseFloat(amount) * FEE_PERCENT).toLocaleString() : '0';

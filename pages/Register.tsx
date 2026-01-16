@@ -86,45 +86,49 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
       return;
     }
 
-    await withLoading(async () => {
-      const { data: existingPhone } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('phone', phoneNumber)
-        .single();
+    try {
+      await withLoading(async () => {
+        const { data: existingPhone } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('phone', phoneNumber)
+          .single();
 
-      if (existingPhone) {
-        throw new Error("Este número de telefone já está cadastrado.");
-      }
+        if (existingPhone) {
+          throw new Error("Este número de telefone já está cadastrado.");
+        }
 
-      const email = `${phoneNumber.replace(/\s/g, '')}@amazon.com`;
-      const myUniqueCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const email = `${phoneNumber.replace(/\s/g, '')}@amazon.com`;
+        const myUniqueCode = Math.random().toString(36).substring(2, 8).toUpperCase();
 
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            ref_code: myUniqueCode,
-            phone: phoneNumber,
-            referred_by: (invitationCode && refStatus.valid) ? invitationCode : null
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              ref_code: myUniqueCode,
+              phone: phoneNumber,
+              referred_by: (invitationCode && refStatus.valid) ? invitationCode : null
+            }
+          }
+        });
+
+        if (error) {
+          throw error;
+        } else if (data.user) {
+          if (invitationCode && refStatus.valid) {
+            await supabase.from('invites').insert({
+              ref_code: invitationCode,
+              new_profile_id: data.user.id
+            });
           }
         }
-      });
+      }, "Conta criada com sucesso! Boas-vindas à amazon.");
 
-      if (error) {
-        throw error;
-      } else if (data.user) {
-        if (invitationCode && refStatus.valid) {
-          await supabase.from('invites').insert({
-            ref_code: invitationCode,
-            new_profile_id: data.user.id
-          });
-        }
-        onNavigate('login');
-        return "Conta criada com sucesso! Boas-vindas à amazon.";
-      }
-    });
+      onNavigate('login');
+    } catch (error) {
+      // feedback já tratado pelo withLoading
+    }
   };
 
   return (
