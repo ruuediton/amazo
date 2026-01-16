@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabase';
+import { useLoading } from '../contexts/LoadingContext';
 
 interface Props {
   onNavigate: (page: any, data?: any) => void;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
+  const { withLoading } = useLoading();
   const [amount, setAmount] = useState<string>(data?.amount || '');
   const [exchangeRate, setExchangeRate] = useState<number>(0);
   const [isFetching, setIsFetching] = useState(false);
@@ -19,10 +21,8 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
   const recipientName = data?.bank?.nome_destinatario || "Destinatário desconhecido";
 
   // Função para buscar taxa em tempo real
-  const fetchRate = useCallback(async () => {
-    try {
-      setIsFetching(true);
-      // Usando exchangerate-api para USD -> AOA (tratando USDT como USD)
+  const fetchRate = useCallback(async (background = false) => {
+    const action = async () => {
       const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
       const data = await response.json();
 
@@ -33,24 +33,31 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
       } else {
         throw new Error("Taxa não disponível");
       }
-    } catch (err) {
-      console.error("Erro ao buscar taxa:", err);
-      // Fallback ou erro se falhar
-      if (exchangeRate === 0) {
-        showToast?.("Não foi possível obter a taxa de mercado. Tente novamente.", "error");
+    };
+
+    if (background) {
+      setIsFetching(true);
+      try {
+        await action();
+      } catch (err) {
+        // Silencioso em background
+      } finally {
+        setIsFetching(false);
       }
-    } finally {
-      setIsFetching(false);
+    } else {
+      await withLoading(action);
     }
-  }, [exchangeRate, showToast]);
+  }, [withLoading]);
+
 
   // Busca inicial e efeito ao digitar
   useEffect(() => {
-    fetchRate();
-    // Atualiza a cada 2 minutos se o usuário estiver na página
-    const interval = setInterval(fetchRate, 120000);
+    fetchRate(false); // Carregamento inicial com spinner
+    // Atualiza a cada 2 minutos se o usuário estiver na página (background)
+    const interval = setInterval(() => fetchRate(true), 120000);
     return () => clearInterval(interval);
   }, [fetchRate]);
+
 
   const handleCopy = () => {
     navigator.clipboard.writeText(walletAddress);
@@ -67,29 +74,17 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
       return;
     }
 
-    try {
-      setIsSubmitting(true);
-
-      // Captura a taxa exata do momento final
-      await fetchRate();
-      const finalRate = exchangeRate;
-
-      if (finalRate <= 0) {
-        showToast?.("Houve um problema com a taxa de câmbio. Tente novamente.", "error");
-        return;
-      }
-
-      const finalKzAmount = parseFloat(amount) * finalRate;
-
-      // 1. Salva no banco (congelando a taxa)
+    await withLoading(async () => {
+      // 1. Salva no banco (congelando a taxa atual)
       const { data: { user } } = await supabase.auth.getUser();
+      const finalKzAmount = parseFloat(amount) * exchangeRate;
 
       const { error: dbError } = await supabase
         .from('depositos_usdt')
         .insert({
           user_id: user?.id,
           amount_usdt: parseFloat(amount),
-          exchange_rate: finalRate,
+          exchange_rate: exchangeRate,
           amount_kz: finalKzAmount,
           wallet_address: walletAddress,
           status: 'pendente'
@@ -97,15 +92,9 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
 
       if (dbError) throw dbError;
 
-      showToast?.('Sua solicitação de depósito foi enviada! O saldo será creditado após a confirmação da transação na rede.', 'success');
       onNavigate('home');
-
-    } catch (err: any) {
-      console.error("Erro na confirmação:", err);
-      showToast?.("Falha ao processar depósito: " + err.message, "error");
-    } finally {
-      setIsSubmitting(false);
-    }
+      return 'Sua solicitação de depósito foi enviada!';
+    });
   };
 
   return (
@@ -232,8 +221,8 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
           disabled={isSubmitting || isFetching}
           className={`w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${isSubmitting || isFetching ? 'opacity-50' : ''}`}
         >
-          <span>{isSubmitting ? 'Processando...' : 'Confirmar Depósito'}</span>
-          {!isSubmitting && <span className="material-symbols-outlined font-bold text-[20px]">send_money</span>}
+          <span>Confirmar Depósito</span>
+          <span className="material-symbols-outlined font-bold text-[20px]">send_money</span>
         </button>
       </footer>
     </div>

@@ -82,13 +82,12 @@ const App: React.FC = () => {
     let profileSubscription: any = null;
 
     // Escuta mudanças de autenticação
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    withLoading(async () => {
+      const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
       if (session) {
-        withLoading(async () => {
-          await fetchProfile(session.user.id);
-          setupRealtimeSubscription(session.user.id);
-        });
+        await fetchProfile(session.user.id);
+        setupRealtimeSubscription(session.user.id);
       } else {
         // Detetar URL de convite: /reg?ref=ABCDE
         const params = new URLSearchParams(window.location.search);
@@ -96,6 +95,8 @@ const App: React.FC = () => {
         const path = window.location.pathname;
 
         if (path === '/reg' || ref) {
+          setCurrentPage('register');
+        } else {
           setCurrentPage('register');
         }
       }
@@ -264,24 +265,24 @@ const App: React.FC = () => {
 
     // Processos críticos que exibem Modal de Sucesso após o loading
     const successFlowPages = ['historico-conta'];
-    // Processos que apenas mostram loading
-    const loadingPages = ['confirmar-deposito'];
+    // Processos que apenas mostram loading curto
+    const loadingPages = ['confirmar-deposito', 'investimentos-fundo', 'retirada', 'deposit'];
 
     if (successFlowPages.includes(page)) {
       withLoading(async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 600));
         setCurrentPage(page);
       }, 'Dados carregados com sucesso.');
     } else if (loadingPages.includes(page)) {
-      showLoading();
-      setTimeout(() => {
-        hideLoading();
+      withLoading(async () => {
+        await new Promise(resolve => setTimeout(resolve, 500));
         setCurrentPage(page);
-      }, 800); // Small artificial delay for visual feedback
+      });
     } else {
       setCurrentPage(page);
     }
-  }, [showLoading, hideLoading]);
+  }, [withLoading]);
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

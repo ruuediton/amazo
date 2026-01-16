@@ -8,6 +8,7 @@ interface LoadingContextType {
     status: FeedbackStatus;
     message: string | null;
     showLoading: () => void;
+    hideLoading: () => void;
     showSuccess: (message: string) => void;
     showError: (message: string) => void;
     showWarning: (message: string) => void;
@@ -18,7 +19,7 @@ interface LoadingContextType {
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
 export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [status, setStatus] = useState<FeedbackStatus>('idle');
+    const [status, setStatus] = useState<FeedbackStatus>('loading');
     const [message, setMessage] = useState<string | null>(null);
     const [failureCount, setFailureCount] = useState(0);
     const [lastFailureTime, setLastFailureTime] = useState(0);
@@ -31,6 +32,11 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     const showLoading = useCallback(() => {
         setStatus('loading');
+        setMessage(null);
+    }, []);
+
+    const hideLoading = useCallback(() => {
+        setStatus('idle');
         setMessage(null);
     }, []);
 
@@ -124,6 +130,7 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
             status,
             message,
             showLoading,
+            hideLoading,
             showSuccess,
             showError,
             showWarning,

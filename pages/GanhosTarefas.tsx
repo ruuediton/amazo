@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
+import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
-  const [loading, setLoading] = useState(true);
+  const { withLoading } = useLoading();
   const [purchases, setPurchases] = useState<any[]>([]);
   const [hasCollectedToday, setHasCollectedToday] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -20,52 +21,47 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
   }, []);
 
   const fetchData = async () => {
-    setLoading(true);
+    await withLoading(async () => {
+      // 2️⃣ Sistema identifica o usuário
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        onNavigate('login');
+        return;
+      }
 
-    // 2️⃣ Sistema identifica o usuário
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      onNavigate('login');
-      return;
-    }
+      // 3️⃣ Verificação obrigatória de compra
+      const { data: purchaseData, error: purchaseError } = await supabase
+        .from('historico_compra')
+        .select('*')
+        .eq('uid_user', user.id);
 
-    // 3️⃣ Verificação obrigatória de compra (Busca todos os registros do uid_user na tabela historico_compra)
-    const { data: purchaseData, error: purchaseError } = await supabase
-      .from('historico_compra')
-      .select('*')
-      .eq('uid_user', user.id);
+      if (purchaseError) {
+        throw purchaseError;
+      }
 
-    if (purchaseError) {
-      showToast?.("Erro ao carregar compras", "error");
-    } else {
       setPurchases(purchaseData || []);
 
       // 6️⃣ Cálculo do rendimento
-      // Agora permite coletar no mesmo dia da compra, desde que o status seja 'confirmado'
-      // Itens 'expirado' são automaticamente ignorados pois não são 'confirmado'
       const paying = (purchaseData || []).filter(p => p.status === 'confirmado');
-
       const totalValue = paying.reduce((acc, curr) => acc + (curr.renda_diaria || 0), 0);
       setPotentialIncome(totalValue);
-    }
 
-    // 5️⃣ Regra especial para o tipo Renda (Verifica se já recebeu hoje)
-    const todayStr = new Date().toISOString().split('T')[0];
-    const { data: incomeData, error: incomeError } = await supabase
-      .from('rendimentos')
-      .select('*')
-      .eq('uid_user', user.id)
-      .eq('tipo', 'Renda')
-      .gte('data_em', `${todayStr}T00:00:00`)
-      .lte('data_em', `${todayStr}T23:59:59`);
+      // 5️⃣ Regra especial para o tipo Renda
+      const todayStr = new Date().toISOString().split('T')[0];
+      const { data: incomeData, error: incomeError } = await supabase
+        .from('rendimentos')
+        .select('*')
+        .eq('uid_user', user.id)
+        .eq('tipo', 'Renda')
+        .gte('data_em', `${todayStr}T00:00:00`)
+        .lte('data_em', `${todayStr}T23:59:59`);
 
-    if (incomeError) {
-      console.error("Erro ao verificar rendimentos:", incomeError);
-    } else {
+      if (incomeError) {
+        throw incomeError;
+      }
+
       setHasCollectedToday(incomeData && incomeData.length > 0);
-    }
-
-    setLoading(false);
+    });
   };
 
   const handleCheckIn = async () => {
@@ -139,7 +135,6 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
       showToast?.("Tarefa diária concluída com sucesso! Saldo atualizado.", "success");
 
     } catch (error: any) {
-      console.error("Erro no processamento da tarefa:", error);
       showToast?.("Erro ao processar tarefa: " + error.message, "error");
     } finally {
       setIsProcessing(false);
@@ -182,7 +177,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           <div className="absolute w-40 h-40 rounded-full bg-primary/20"></div>
           <button
             onClick={handleCheckIn}
-            disabled={hasCollectedToday || isProcessing || loading}
+            disabled={hasCollectedToday || isProcessing}
             className="relative z-10 flex flex-col items-center justify-center w-32 h-32 rounded-full bg-primary shadow-[0_0_40px_-10px_rgba(244,209,37,0.6)] transition-transform active:scale-95 cursor-pointer group"
           >
             {isProcessing ? (
@@ -244,11 +239,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
             </span>
           </div>
 
-          {loading ? (
-            <div className="flex justify-center py-8">
-              <SpokeSpinner size="w-8 h-8" />
-            </div>
-          ) : purchases.length === 0 ? (
+          {purchases.length === 0 ? (
             <div className="bg-white p-6 rounded-xl border-none shadow-md text-center">
               <p className="text-gray-600 text-sm font-bold leading-relaxed mb-4">
                 Por favor faça depósito para recarregar sua conta Amazon para comprar eletrónicos na Loja e começar a obter rendimentos.

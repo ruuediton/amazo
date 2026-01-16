@@ -22,8 +22,12 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
   const [recentDeposits, setRecentDeposits] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchBanks();
-    fetchRecentDeposits();
+    const init = async () => {
+      await withLoading(async () => {
+        await Promise.all([fetchBanks(), fetchRecentDeposits()]);
+      });
+    };
+    init();
   }, []);
 
   const fetchRecentDeposits = async () => {
