@@ -54,7 +54,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     if (!error && data) setBanks(data);
   };
 
-  const quickAmounts = [3000, 10000, 25000, 49000, 1200000];
+  const quickAmounts = [3000, 9000, 24000, 49000,  120000, 150000, 400000];
 
   const handleQuickAmount = (val: number) => {
     setAmount(val.toString());
