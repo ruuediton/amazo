@@ -69,32 +69,41 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
     : '0,00';
 
   const handleConfirm = async () => {
-    if (!amount || parseFloat(amount) <= 0) {
-      showToast?.("Insira um valor válido para depósito.", "warning");
+    const numAmount = parseFloat(amount);
+    if (!amount || isNaN(numAmount) || numAmount < 4) {
+      showToast?.("Recarga mínima 4 USDT.", "warning");
       return;
     }
 
-    await withLoading(async () => {
-      // 1. Salva no banco (congelando a taxa atual)
-      const { data: { user } } = await supabase.auth.getUser();
-      const finalKzAmount = parseFloat(amount) * exchangeRate;
+    if (numAmount > 1090) {
+      showToast?.("Recarga máxima 1090 USDT.", "warning");
+      return;
+    }
 
-      const { error: dbError } = await supabase
-        .from('depositos_usdt')
-        .insert({
-          user_id: user?.id,
-          amount_usdt: parseFloat(amount),
-          exchange_rate: exchangeRate,
-          amount_kz: finalKzAmount,
-          wallet_address: walletAddress,
-          status: 'pendente'
-        });
+    try {
+      await withLoading(async () => {
+        // 1. Salva no banco (congelando a taxa atual)
+        const { data: { user } } = await supabase.auth.getUser();
+        const finalKzAmount = parseFloat(amount) * exchangeRate;
 
-      if (dbError) throw dbError;
+        const { error: dbError } = await supabase
+          .from('depositos_usdt')
+          .insert({
+            user_id: user?.id,
+            amount_usdt: parseFloat(amount),
+            exchange_rate: exchangeRate,
+            amount_kz: finalKzAmount,
+            wallet_address: walletAddress,
+            status: 'pendente'
+          });
+
+        if (dbError) throw dbError;
+      }, 'Sua solicitação de depósito foi enviada!');
 
       onNavigate('home');
-      return 'Sua solicitação de depósito foi enviada!';
-    });
+    } catch (error) {
+      // erro tratado pelo withLoading
+    }
   };
 
   return (
@@ -131,8 +140,10 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                placeholder="0.00"
-                className="w-full bg-surface-dark border border-amazon-border rounded-xl h-16 px-5 text-2xl font-black text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-text-secondary/20"
+                placeholder="Mínimo 4 USDT"
+                min="4"
+                max="1090"
+                className="w-full bg-surface-dark border border-amazon-border rounded-xl h-16 px-5 text-2xl font-black text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-text-secondary/30"
               />
               <span className="absolute right-5 text-sm font-bold text-[#26a17b]">USDT</span>
             </div>

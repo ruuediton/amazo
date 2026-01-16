@@ -231,7 +231,7 @@ const App: React.FC = () => {
       case 'detalhes-conta': return <DetalhesConta onNavigate={handleNavigate} showToast={showToast} />;
       case 'historico-conta': return <HistoricoConta onNavigate={handleNavigate} />;
       case 'register': return <Register onNavigate={handleNavigate} showToast={showToast} />;
-      case 'confirmar-deposito': return <ConfirmDeposit onNavigate={handleNavigate} data={navigationData} showToast={showToast} />;
+      case 'confirme': return <ConfirmDeposit onNavigate={handleNavigate} data={navigationData} showToast={showToast} />;
       case 'como-retirar-fundos': return <ComoRetirarFundos onNavigate={handleNavigate} />;
       case 'tutoriais-depositos': return <TutoriaisDepositos onNavigate={handleNavigate} />;
       case 'retirada': return <Withdraw onNavigate={handleNavigate} showToast={showToast} />;
