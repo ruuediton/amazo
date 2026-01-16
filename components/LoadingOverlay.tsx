@@ -43,18 +43,13 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ status, message }) => {
 
     return (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 backdrop-blur-[2px] animate-in fade-in duration-300">
-            <div className="bg-black/70 backdrop-blur-md p-5 rounded-[2.5rem] flex flex-col items-center justify-center min-w-[130px] max-w-[80vw] w-fit border border-white/5 shadow-2xl animate-in zoom-in-95 duration-300 mx-4">
+            <div className="bg-black/70 backdrop-blur-md p-2 rounded-none flex flex-col items-center justify-center w-[115px] h-[110px] border border-white/10 shadow-2xl animate-in zoom-in-95 duration-300">
                 {status === 'loading' ? (
-                    <SpokeSpinner size="w-9 h-9" className="text-white/80" />
-                ) : config && (
-                    <div className="flex flex-col items-center gap-3 text-center">
-                        <div className={`size-12 rounded-full flex items-center justify-center ${config.bgColor} border ${config.borderColor} animate-in zoom-in duration-500`}>
-                            <span className={`material-symbols-outlined text-2xl ${config.iconColor}`}>
-                                {config.icon}
-                            </span>
-                        </div>
+                    <SpokeSpinner size="w-8 h-8" className="text-white/80" />
+                ) : (
+                    <div className="flex flex-col items-center justify-center text-center w-full h-full p-1">
                         {message && (
-                            <p className="text-white/90 text-[13px] font-semibold leading-snug animate-in fade-in slide-in-from-bottom duration-500 px-1">
+                            <p className="text-white/90 text-[10px] font-bold leading-tight animate-in fade-in duration-500 uppercase tracking-tight break-words overflow-hidden">
                                 {message}
                             </p>
                         )}
