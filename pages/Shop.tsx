@@ -214,9 +214,8 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                 </div>
                 <div className="flex-grow min-w-0">
                   <h3 className="font-bold text-[15px] text-slate-900 truncate uppercase mt-0.5">{product.nome}</h3>
-                  <p className="text-[11px] text-slate-500 mt-1 leading-tight">
-                    Ganhe comissão válida por {product.duracao_dias} dias<br />
-                    (Limite de {product.stock} compra)
+                  <p className="text-[11px] text-slate-500 mt-1 leading-tight whitespace-pre-line">
+                    {product.descricao}
                   </p>
                   <div className="mt-2.5 space-y-0.5">
                     <div className="flex items-baseline gap-1">
