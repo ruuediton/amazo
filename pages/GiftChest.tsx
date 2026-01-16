@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useNetwork } from '../contexts/NetworkContext';
+import { useLoading } from '../contexts/LoadingContext';
+import SpokeSpinner from '../components/SpokeSpinner';
 
 interface Props {
   onNavigate: (page: any) => void;
@@ -11,8 +13,10 @@ interface Props {
 
 const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => {
   const { runWithTimeout } = useNetwork();
+  const { withLoading } = useLoading();
   const [promoCode, setPromoCode] = useState('');
   const [loading, setLoading] = useState(false);
+
   const [isOpen, setIsOpen] = useState(false);
   const [lastReward, setLastReward] = useState<number | null>(null);
   const [history, setHistory] = useState<any[]>([]);
@@ -50,39 +54,31 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
       return;
     }
 
-    setLoading(true);
-    try {
+    await withLoading(async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        showToast?.("Sessão expirada. Entre novamente.", "error");
-        return;
+        throw new Error("Sessão expirada. Entre novamente.");
       }
 
-      // PASSO 2-11: Chamar a RPC que implementa todo o fluxo atómico e as mensagens oficiais
       const { data, error } = await runWithTimeout(() => supabase.rpc('redeem_gift_code', {
         p_user_id: user.id,
         p_code: promoCode.trim()
       }));
 
       if (error) {
-        showToast?.("Erro temporário. Tente novamente mais tarde", "error");
+        throw new Error("Erro temporário. Tente novamente mais tarde");
       } else {
         if (data.success) {
-          showToast?.(data.message, "success"); // "Resgate efectuado com sucesso"
           setLastReward(data.amount || 0);
           setIsOpen(true);
           setPromoCode('');
-          fetchHistory(); // Atualizar a lista
+          fetchHistory();
+          return data.message;
         } else {
-          // Mensagens Oficiais: "Código inválido", "Este código já foi utilizado", etc.
-          showToast?.(data.message, "error");
+          throw new Error(data.message);
         }
       }
-    } catch (err) {
-      showToast?.("Erro temporário. Tente novamente mais tarde", "error");
-    } finally {
-      setLoading(false);
-    }
+    }, "Resgate efectuado com sucesso!");
   };
 
   return (
@@ -228,7 +224,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
           <div className="flex flex-col gap-3">
             {fetchingHistory ? (
               <div className="flex justify-center p-8">
-                <div className="size-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                <SpokeSpinner size="w-8 h-8" />
               </div>
             ) : history.length > 0 ? (
               history.map((item, index) => (

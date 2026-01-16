@@ -25,29 +25,23 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
-    setLoading(true);
     const email = `${phoneNumber.replace(/\s/g, '')}@amazon.com`;
 
-    try {
-      await withLoading(async () => {
-        const { error } = await runWithTimeout(() => supabase.auth.signInWithPassword({
-          email,
-          password,
-        }));
+    await withLoading(async () => {
+      const { error } = await runWithTimeout(() => supabase.auth.signInWithPassword({
+        email,
+        password,
+      }));
 
-        if (error) {
-          throw error;
-        }
+      if (error) {
+        throw error;
+      }
 
-        showToast?.("Login realizado com sucesso!", "success");
-        onNavigate('splash-ads');
-      });
-    } catch (error: any) {
-      showToast?.("Falha no login: " + error.message, "error");
-    } finally {
-      setLoading(false);
-    }
+      onNavigate('splash-ads');
+      return "Login realizado com sucesso!";
+    });
   };
+
 
   return (
     <div className="bg-background-dark font-display text-black antialiased min-h-screen">

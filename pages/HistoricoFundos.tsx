@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
+import SpokeSpinner from '../components/SpokeSpinner';
+
 
 interface Investment {
     id_usuario_fundo: string;
@@ -157,7 +159,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
-                        <div className="size-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                        <SpokeSpinner size="w-10 h-10" />
                     </div>
                 ) : (
                     <div className="flex flex-col gap-5 mt-2">

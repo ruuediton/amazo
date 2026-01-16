@@ -1,6 +1,9 @@
 
 import React, { useState } from 'react';
 import { supabase } from '../supabase';
+import { useLoading } from '../contexts/LoadingContext';
+import SpokeSpinner from '../components/SpokeSpinner';
+
 
 interface Props {
   onNavigate: (page: any) => void;
@@ -16,8 +19,10 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
   const [confirmPassword, setConfirmPassword] = useState('');
   const [invitationCode, setInvitationCode] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const { withLoading } = useLoading();
   const [loading, setLoading] = useState(false);
   const [isValidatingRef, setIsValidatingRef] = useState(false);
+
   const [refStatus, setRefStatus] = useState<{ valid: boolean | null; message: string }>({ valid: null, message: '' });
   const [isRefLocked, setIsRefLocked] = useState(false);
 
@@ -76,16 +81,12 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
       return;
     }
 
-    // Se houver código, ele deve ser válido
     if (invitationCode && refStatus.valid === false) {
       showToast?.("O código de convite inserido é inválido.", "error");
       return;
     }
 
-    setLoading(true);
-
-    try {
-      // Verificar se telefone já existe (Antifraude)
+    await withLoading(async () => {
       const { data: existingPhone } = await supabase
         .from('profiles')
         .select('id')
@@ -93,9 +94,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
         .single();
 
       if (existingPhone) {
-        showToast?.("Este número de telefone já está cadastrado.", "error");
-        setLoading(false);
-        return;
+        throw new Error("Este número de telefone já está cadastrado.");
       }
 
       const email = `${phoneNumber.replace(/\s/g, '')}@amazon.com`;
@@ -114,24 +113,18 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
       });
 
       if (error) {
-        showToast?.(error.message, "error");
+        throw error;
       } else if (data.user) {
-        // Registar na tabela de convites (Auditoria/Antifraude)
         if (invitationCode && refStatus.valid) {
           await supabase.from('invites').insert({
             ref_code: invitationCode,
             new_profile_id: data.user.id
           });
         }
-
-        showToast?.("Conta criada com sucesso! Boas-vindas à amazon.", "success");
         onNavigate('login');
+        return "Conta criada com sucesso! Boas-vindas à amazon.";
       }
-    } catch (err: any) {
-      showToast?.("Erro inesperado: " + err.message, "error");
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   return (
@@ -242,7 +235,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                 <div className="flex items-center justify-between">
                   <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Código de Convite <span className="text-text-secondary/60 font-normal normal-case">(Opcional)</span></label>
                   <div className="flex items-center gap-2">
-                    {isValidatingRef && <div className="size-4 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>}
+                    {isValidatingRef && <SpokeSpinner size="w-4 h-4" />}
                     <span onClick={() => onOpenSupport?.()} className="material-symbols-outlined text-text-secondary text-sm cursor-pointer" title="Clique para suporte">help</span>
                   </div>
                 </div>

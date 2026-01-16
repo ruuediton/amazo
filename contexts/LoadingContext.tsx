@@ -1,49 +1,89 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import LoadingOverlay from '../components/LoadingOverlay';
 
+export type FeedbackStatus = 'idle' | 'loading' | 'success' | 'error' | 'warning';
+
 interface LoadingContextType {
-    isLoading: boolean;
+    status: FeedbackStatus;
+    message: string | null;
     showLoading: () => void;
-    hideLoading: () => void;
-    withLoading: <T>(promise: Promise<T> | (() => Promise<T>)) => Promise<T>;
+    showSuccess: (message: string) => void;
+    showError: (message: string) => void;
+    showWarning: (message: string) => void;
+    reset: () => void;
+    withLoading: <T>(promise: Promise<T> | (() => Promise<T>), successMsg?: string, errorMsg?: string) => Promise<T>;
 }
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
 export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [counter, setCounter] = useState(0);
+    const [status, setStatus] = useState<FeedbackStatus>('idle');
+    const [message, setMessage] = useState<string | null>(null);
 
-    const showLoading = () => {
-        setCounter(prev => {
-            const newCount = prev + 1;
-            if (newCount === 1) setIsLoading(true);
-            return newCount;
-        });
-    };
+    const reset = useCallback(() => {
+        setStatus('idle');
+        setMessage(null);
+    }, []);
 
-    const hideLoading = () => {
-        setCounter(prev => {
-            const newCount = Math.max(0, prev - 1);
-            if (newCount === 0) setIsLoading(false);
-            return newCount;
-        });
-    };
+    const showLoading = useCallback(() => {
+        setStatus('loading');
+        setMessage(null);
+    }, []);
 
-    const withLoading = async <T,>(promise: Promise<T> | (() => Promise<T>)): Promise<T> => {
+    const showSuccess = useCallback((msg: string) => {
+        setStatus('success');
+        setMessage(msg);
+        setTimeout(reset, 3000);
+    }, [reset]);
+
+    const showError = useCallback((msg: string) => {
+        setStatus('error');
+        setMessage(msg);
+        setTimeout(reset, 3000);
+    }, [reset]);
+
+    const showWarning = useCallback((msg: string) => {
+        setStatus('warning');
+        setMessage(msg);
+        setTimeout(reset, 3000);
+    }, [reset]);
+
+    const withLoading = async <T,>(
+        promise: Promise<T> | (() => Promise<T>),
+        successMsg?: string,
+        errorMsg?: string
+    ): Promise<T> => {
         showLoading();
         try {
             const p = typeof promise === 'function' ? promise() : promise;
-            return await p;
-        } finally {
-            hideLoading();
+            const result = await p;
+            if (successMsg) {
+                showSuccess(successMsg);
+            } else {
+                reset();
+            }
+            return result;
+        } catch (error: any) {
+            const msg = errorMsg || error.message || "Ocorreu um erro inesperado";
+            showError(msg);
+            throw error;
         }
     };
 
     return (
-        <LoadingContext.Provider value={{ isLoading, showLoading, hideLoading, withLoading }}>
+        <LoadingContext.Provider value={{
+            status,
+            message,
+            showLoading,
+            showSuccess,
+            showError,
+            showWarning,
+            reset,
+            withLoading
+        }}>
             {children}
-            <LoadingOverlay isVisible={isLoading} />
+            <LoadingOverlay status={status} message={message || ""} />
         </LoadingContext.Provider>
     );
 };
@@ -55,3 +95,4 @@ export const useLoading = () => {
     }
     return context;
 };
+

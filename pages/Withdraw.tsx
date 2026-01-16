@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
+import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
 
 interface Props {
@@ -17,6 +18,7 @@ interface WithdrawStats {
 }
 
 const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
+  const { withLoading } = useLoading();
   const [amount, setAmount] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<WithdrawStats | null>(null);
@@ -190,14 +192,10 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
-    setSubmitting(true);
-    try {
+    await withLoading(async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) throw new Error("Usuário não autenticado");
 
-      // 1. Verificar senha via RPC (Supondo que add_encrypted_bank_account/pgcrypto é usado)
-      // Como não temos um RPC pronto para validar senha, simulamos a lógica de verificação
-      // NOTA: Em produção, isso deve ser um RPC que compara o hash.
       const { data: isValid, error: pinError } = await supabase.rpc('verify_withdrawal_password', {
         p_password: pin
       });
@@ -205,32 +203,27 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       if (!isValid) {
         const newAttempts = (stats?.failedAttempts || 0) + 1;
         if (newAttempts >= 2) {
-          // Bloquear
           await supabase.from('profiles').update({
             bloqueio_retirada: true,
             data_bloqueio: new Date().toISOString(),
             failed_withdraw_attempts: 2
           }).eq('user_id', user.id);
 
-          showToast?.('Senha incorreta! Sua conta foi bloqueada por 72h.', 'error');
           setShowPinModal(false);
           fetchInitialData();
+          throw new Error('Senha incorreta! Sua conta foi bloqueada por 72h.');
         } else {
           await supabase.from('profiles').update({
             failed_withdraw_attempts: newAttempts
           }).eq('user_id', user.id);
-          showToast?.(`Senha incorreta! Você tem mais 1 tentativa.`, 'error');
           setStats(prev => prev ? { ...prev, failedAttempts: newAttempts } : null);
+          throw new Error(`Senha incorreta! Você tem mais 1 tentativa.`);
         }
-        setSubmitting(false);
-        return;
       }
 
-      // 2. Senha correta -> Processar Retirada
       const numAmount = parseFloat(amount);
       const amountRecebendo = numAmount * (1 - FEE_PERCENT);
 
-      // Usar uma transação/RPC para garantir atomicidade (Débito + Criação de Registro)
       const { error: withdrawError } = await supabase.rpc('process_withdrawal_secure', {
         p_amount_original: numAmount,
         p_amount_recebendo: amountRecebendo
@@ -238,14 +231,10 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       if (withdrawError) throw withdrawError;
 
-      showToast?.('Solicitação de retirada enviada com sucesso!', 'success');
       setShowPinModal(false);
       onNavigate('historico-conta');
-    } catch (err: any) {
-      showToast?.(err.message || 'Erro ao processar retirada.', 'error');
-    } finally {
-      setSubmitting(false);
-    }
+      return 'Solicitação de retirada enviada com sucesso!';
+    });
   };
 
   const calculatingFee = amount ? (parseFloat(amount) * FEE_PERCENT).toLocaleString() : '0';

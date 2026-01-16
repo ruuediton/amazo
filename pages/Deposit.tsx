@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
+import { useLoading } from '../contexts/LoadingContext';
+import SpokeSpinner from '../components/SpokeSpinner';
+
 
 interface DepositProps {
   onNavigate: (page: any, data?: any) => void;
@@ -9,9 +12,11 @@ interface DepositProps {
 
 const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
   const [amount, setAmount] = useState<string>('');
+  const { withLoading } = useLoading();
   const [banks, setBanks] = useState<any[]>([]);
   const [isBankModalOpen, setIsBankModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const [method, setMethod] = useState<'bank' | 'usdt'>('bank');
 
   const [recentDeposits, setRecentDeposits] = useState<any[]>([]);
@@ -81,33 +86,31 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
   };
 
   const handleSelectBank = async (bank: any) => {
-    setLoading(true);
     setIsBankModalOpen(false);
 
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      showToast?.("Utilizador não autenticado", "error");
-      setLoading(false);
-      return;
-    }
+    await withLoading(async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error("Utilizador não autenticado");
+      }
 
-    const { data, error } = await supabase.from('deposits').insert({
-      user_id: user.id,
-      amount: parseFloat(amount),
-      method: 'transferencia_bancaria',
-      id_bank_empresarial: bank.id,
-      nome_banco: bank.nome_banco,
-      nome_destinatario: bank.nome_destinatario,
-      iban: bank.iban
-    }).select().single();
+      const { data, error } = await supabase.from('deposits').insert({
+        user_id: user.id,
+        amount: parseFloat(amount),
+        method: 'transferencia_bancaria',
+        id_bank_empresarial: bank.id,
+        nome_banco: bank.nome_banco,
+        nome_destinatario: bank.nome_destinatario,
+        iban: bank.iban
+      }).select().single();
 
-    if (error) {
-      showToast?.("Erro ao criar depósito: " + error.message, "error");
-    } else {
-      showToast?.("Depósito solicitado com sucesso!", "success");
-      onNavigate('confirmar-deposito', { deposit: data });
-    }
-    setLoading(false);
+      if (error) {
+        throw error;
+      } else {
+        onNavigate('confirmar-deposito', { deposit: data });
+        return "Depósito solicitado com sucesso!";
+      }
+    });
   };
 
   return (
@@ -213,11 +216,10 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
 
         {/* Confirm Button */}
         <button
-          disabled={loading}
           onClick={handleConfirmClick}
-          className={`flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary hover:bg-[#eac515] text-[text-black] text-base font-bold leading-normal tracking-[0.015em] transition-all active:scale-[0.98] ${loading ? 'opacity-50' : ''}`}
+          className={`flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary hover:bg-[#eac515] text-[text-black] text-base font-bold leading-normal tracking-[0.015em] transition-all active:scale-[0.98]`}
         >
-          {loading ? 'Processando...' : 'Confirmar Depósito'}
+          Confirmar Depósito
         </button>
 
         <div className="flex justify-center items-center gap-2 mt-3 text-[text-gray-500]">

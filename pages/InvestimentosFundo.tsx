@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../supabase';
+import { useLoading } from '../contexts/LoadingContext';
+import SpokeSpinner from '../components/SpokeSpinner';
+
 
 interface Fundo {
   id_fundo: string;
@@ -24,10 +27,12 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFund, setSelectedFund] = useState<Fundo | null>(null);
   const [funds, setFunds] = useState<Fundo[]>([]);
+  const { withLoading } = useLoading();
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
+
   const [investmentAmount, setInvestmentAmount] = useState<string>('');
-  
+
   const totalGlobalAvailable = useMemo(() => {
     return funds.reduce((acc, fund) => acc + (Number(fund.total_fundos_disponivel) || 0), 0);
   }, [funds]);
@@ -64,15 +69,13 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
   const handleApply = async () => {
     if (!selectedFund || !investmentAmount) return;
     const amountNum = Number(investmentAmount);
-    
+
     if (isNaN(amountNum) || amountNum <= 0) {
       if (showToast) showToast('Por favor, insira um valor válido.', 'warning');
       return;
     }
 
-    try {
-      setApplying(true);
-      
+    await withLoading(async () => {
       const { data, error } = await supabase.rpc('invest_in_fund', {
         p_fund_id: selectedFund.id_fundo,
         p_amount: amountNum
@@ -81,20 +84,15 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
       if (error) throw error;
 
       if (data.success) {
-        if (showToast) showToast(data.message, 'success');
         fetchData();
         setSelectedFund(null);
         setInvestmentAmount('');
         setTimeout(() => onNavigate('historico-fundos'), 2500);
+        return data.message;
       } else {
-        if (showToast) showToast(data.message, 'warning');
+        throw new Error(data.message);
       }
-    } catch (err: any) {
-      console.error('Error investing:', err);
-      if (showToast) showToast('Falha na operação financeira. Tente novamente.', 'error');
-    } finally {
-      setApplying(false);
-    }
+    });
   };
 
   const filteredFunds = funds.filter(fund =>
@@ -174,14 +172,14 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
-          <div className="size-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <SpokeSpinner size="w-10 h-10" />
           <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">Sincronizando Mercado...</p>
         </div>
       ) : (
         <>
           {/* Section Title matching reference */}
           <div className="px-4 pt-4 mb-4">
-             <h2 className="text-black text-[18px] font-black tracking-tight">Ativos em Destaque</h2>
+            <h2 className="text-black text-[18px] font-black tracking-tight">Ativos em Destaque</h2>
           </div>
 
           <section className="overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
@@ -204,30 +202,30 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                           </div>
                         )}
                         <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur px-2.5 py-1.5 rounded-xl shadow-lg border border-gray-100">
-                           <p className="text-[11px] font-black text-green-600">+{fund.taxa_retorno}%</p>
+                          <p className="text-[11px] font-black text-green-600">+{fund.taxa_retorno}%</p>
                         </div>
                       </div>
-                      
+
                       <div className="p-5">
                         <h3 className="text-black text-[16px] font-black leading-tight mb-3">{fund.nome_fundo}</h3>
-                        
+
                         <div className="flex flex-col gap-3">
                           <div className="flex items-center gap-2">
-                             <div className="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 text-[8px] font-black uppercase tracking-widest flex items-center gap-1">
-                               <span className="size-1 rounded-full bg-yellow-600"></span>
-                               {fund.beneficio}
-                             </div>
+                            <div className="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 text-[8px] font-black uppercase tracking-widest flex items-center gap-1">
+                              <span className="size-1 rounded-full bg-yellow-600"></span>
+                              {fund.beneficio}
+                            </div>
                           </div>
 
                           <div className="grid grid-cols-2 gap-2 mt-2">
-                             <div>
-                               <p className="text-gray-400 text-[8px] uppercase font-black tracking-widest mb-0.5">Disponível</p>
-                               <p className="text-black font-black text-[11px]">Kz {Number(fund.total_fundos_disponivel).toLocaleString('pt-AO')}</p>
-                             </div>
-                             <div className="text-right">
-                               <p className="text-gray-400 text-[8px] uppercase font-black tracking-widest mb-0.5">Período</p>
-                               <p className="text-black font-black text-[11px]">{fund.duration_days} DIAS</p>
-                             </div>
+                            <div>
+                              <p className="text-gray-400 text-[8px] uppercase font-black tracking-widest mb-0.5">Disponível</p>
+                              <p className="text-black font-black text-[11px]">Kz {Number(fund.total_fundos_disponivel).toLocaleString('pt-AO')}</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-gray-400 text-[8px] uppercase font-black tracking-widest mb-0.5">Período</p>
+                              <p className="text-black font-black text-[11px]">{fund.duration_days} DIAS</p>
+                            </div>
                           </div>
 
                           <button
@@ -236,11 +234,10 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                               setInvestmentAmount('');
                             }}
                             disabled={isExhausted}
-                            className={`mt-4 flex w-full h-11 items-center justify-center rounded-2xl shadow-sm transition-all font-black text-[10px] uppercase tracking-widest ${
-                              isExhausted 
-                                ? 'bg-gray-100 text-gray-300 cursor-not-allowed' 
-                                : 'bg-primary text-black hover:bg-primary active:scale-95'
-                            }`}
+                            className={`mt-4 flex w-full h-11 items-center justify-center rounded-2xl shadow-sm transition-all font-black text-[10px] uppercase tracking-widest ${isExhausted
+                              ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                              : 'bg-primary text-black hover:bg-primary active:scale-95'
+                              }`}
                           >
                             <span>{isExhausted ? 'Indisponível' : 'Aplicar Fundos'}</span>
                           </button>
@@ -300,7 +297,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 {/* Input Area */}
                 <div className="bg-primary/5 rounded-[32px] p-6 border-2 border-dashed border-primary/20 mb-8 relative">
                   <label className="text-black text-[9px] font-black uppercase tracking-[0.2em] mb-4 block text-center opacity-60">Quanto deseja aplicar hoje?</label>
-                  
+
                   <div className="relative group">
                     <span className="absolute left-5 top-1/2 -translate-y-1/2 text-black/20 font-black text-xl group-focus-within:text-black transition-colors">Kz</span>
                     <input
@@ -312,7 +309,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                       onChange={(e) => setInvestmentAmount(e.target.value)}
                     />
                   </div>
-                  
+
                   {/* Visualizer matching the result style */}
                   <div className="mt-8 flex flex-col items-center p-4 bg-white/50 rounded-2xl border border-white">
                     <p className="text-gray-400 text-[8px] font-black uppercase tracking-[0.2em] mb-1.5">Retorno esperado em {selectedFund.duration_days} dias:</p>
@@ -339,7 +336,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                   className="w-full bg-black text-white rounded-[20px] h-16 font-black text-[11px] uppercase tracking-[0.3em] shadow-2xl hover:bg-gray-900 active:scale-95 disabled:opacity-30 transition-all flex items-center justify-center gap-4"
                 >
                   {applying ? (
-                    <div className="size-6 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+                    <SpokeSpinner size="w-6 h-6" className="text-white" />
                   ) : (
                     <>
                       <span className="material-symbols-outlined">bolt</span>
@@ -353,21 +350,21 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
           {/* Bottom CTA Box - matching "Novo Contrato" style */}
           {!selectedFund && (
-             <section className="px-4 mt-10">
-                <div className="p-10 rounded-[44px] bg-primary/5 border-2 border-dashed border-primary/20 flex flex-col items-center justify-center text-center">
-                    <div className="size-16 rounded-full bg-white flex items-center justify-center shadow-xl mb-5">
-                        <span className="material-symbols-outlined text-primary text-3xl">history</span>
-                    </div>
-                    <p className="text-black font-black text-[13px] uppercase tracking-[0.1em] mb-2">Minha Carteira</p>
-                    <p className="text-gray-500 text-[11px] font-medium max-w-[220px] mb-8 leading-relaxed">Gerencie todos os seus contratos ativos e acompanhe os rendimentos em tempo real.</p>
-                    <button
-                        onClick={() => onNavigate('historico-fundos')}
-                        className="bg-black text-white px-10 h-13 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:bg-gray-900 active:scale-95 transition-all"
-                    >
-                        VER MEUS CONTRATOS
-                    </button>
+            <section className="px-4 mt-10">
+              <div className="p-10 rounded-[44px] bg-primary/5 border-2 border-dashed border-primary/20 flex flex-col items-center justify-center text-center">
+                <div className="size-16 rounded-full bg-white flex items-center justify-center shadow-xl mb-5">
+                  <span className="material-symbols-outlined text-primary text-3xl">history</span>
                 </div>
-             </section>
+                <p className="text-black font-black text-[13px] uppercase tracking-[0.1em] mb-2">Minha Carteira</p>
+                <p className="text-gray-500 text-[11px] font-medium max-w-[220px] mb-8 leading-relaxed">Gerencie todos os seus contratos ativos e acompanhe os rendimentos em tempo real.</p>
+                <button
+                  onClick={() => onNavigate('historico-fundos')}
+                  className="bg-black text-white px-10 h-13 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:bg-gray-900 active:scale-95 transition-all"
+                >
+                  VER MEUS CONTRATOS
+                </button>
+              </div>
+            </section>
           )}
         </>
       )}

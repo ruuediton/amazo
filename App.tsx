@@ -49,7 +49,8 @@ const DownloadApp = lazy(() => import('./pages/DownloadApp'));
 const InvestimentosFundo = lazy(() => import('./pages/InvestimentosFundo'));
 const HistoricoFundos = lazy(() => import('./pages/HistoricoFundos'));
 import LoadingOverlay from './components/LoadingOverlay';
-import StatusModal from './components/StatusModal';
+import SpokeSpinner from './components/SpokeSpinner';
+
 
 import { supabase } from './supabase';
 import { ToastType } from './components/Toast';
@@ -59,34 +60,23 @@ import { useLoading } from './contexts/LoadingContext';
 import { useNetwork } from './contexts/NetworkContext';
 
 const App: React.FC = () => {
-  const { showLoading, hideLoading, withLoading } = useLoading();
+  const { showLoading, hideLoading, withLoading, showSuccess, showError, showWarning, reset } = useLoading();
   const { runWithTimeout } = useNetwork();
   const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'wallet' | 'profile' | 'invite' | 'support' | 'tutorials' | 'about' | 'report' | 'add-bank' | 'withdraw-password' | 'deposit' | 'purchase-history' | 'change-password' | 'tutoriais-falar-com-gerente' | 'tutoriais-como-convidar' | 'como-comprar' | 'tutoriais-alterar-senha-retirada' | 'detalhes-conta' | 'update-withdraw-password' | 'historico-conta' | 'register' | 'confirmar-deposito' | 'como-retirar-fundos' | 'tutoriais-depositos' | 'retirada' | 'login' | 'security-auth' | 'security-verify' | 'splash-ads' | 'campaigns' | 'como-enviar-comprovante' | 'tutoriais-definir-senha' | 'tutoriais-adicionar-conta' | 'tutoriais-ganhos-tarefas' | 'ganhos-tarefas' | 'gift-chest' | 'reward-claim' | 'info' | 'terms-of-use' | 'privacy-policy' | 'system-rules' | 'subordinate-list' | 'deposit-usdt' | 'deposit-history' | 'tutoriais-adicionar-conta' | 'investimentos-fundo' | 'historico-fundos'>('register');
   const [lastAction, setLastAction] = useState<() => void>(() => { });
-  const [statusModal, setStatusModal] = useState<{
-    isOpen: boolean;
-    type: 'success' | 'error' | 'warning' | 'info';
-    title?: string;
-    message?: string;
-  }>({
-    isOpen: false,
-    type: 'success'
-  });
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<any>(null);
   const timerRef = useRef<any>(null);
 
 
   const showToast = useCallback((message: string, type: ToastType = 'info') => {
-    setStatusModal({
-      isOpen: true,
-      type: type,
-      title: type === 'success' ? 'Sucesso!' :
-        type === 'error' ? 'Erro!' :
-          type === 'warning' ? 'Aviso!' : 'Informação',
-      message: message
-    });
-  }, []);
+    switch (type) {
+      case 'success': showSuccess(message); break;
+      case 'error': showError(message); break;
+      case 'warning': showWarning(message); break;
+      default: showSuccess(message); break;
+    }
+  }, [showSuccess, showError, showWarning]);
 
   useEffect(() => {
     let profileSubscription: any = null;
@@ -185,12 +175,7 @@ const App: React.FC = () => {
 
     timerRef.current = setTimeout(async () => {
       await supabase.auth.signOut();
-      setStatusModal({
-        isOpen: true,
-        type: 'error',
-        title: 'Sessão Expirada',
-        message: 'Sua sessão expirou por inatividade de 30 minutos. Por favor, faça login novamente.'
-      });
+      showError('Sua sessão expirou por inatividade de 30 minutos. Por favor, faça login novamente.');
       setCurrentPage('login');
     }, thirtyMinutes);
   }, [session]);
@@ -213,14 +198,6 @@ const App: React.FC = () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [session, resetSessionTimer]);
-
-  const handleCloseStatusModal = () => {
-    const wasSuccess = statusModal.type === 'success';
-    setStatusModal(prev => ({ ...prev, isOpen: false }));
-    if (wasSuccess && lastAction) {
-      lastAction();
-    }
-  };
 
   const [navigationData, setNavigationData] = useState<any>(null);
 
@@ -292,17 +269,10 @@ const App: React.FC = () => {
     const loadingPages = ['confirmar-deposito'];
 
     if (successFlowPages.includes(page)) {
-      showLoading();
-      setTimeout(() => {
-        hideLoading();
+      withLoading(async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000));
         setCurrentPage(page);
-        setStatusModal({
-          isOpen: true,
-          type: 'success',
-          title: 'Sucesso!',
-          message: 'Dados carregados com sucesso.'
-        });
-      }, 1000);
+      }, 'Dados carregados com sucesso.');
     } else if (loadingPages.includes(page)) {
       showLoading();
       setTimeout(() => {
@@ -324,7 +294,7 @@ const App: React.FC = () => {
       <main className="flex-1 overflow-y-auto no-scrollbar">
         <Suspense fallback={
           <div className="flex h-screen items-center justify-center bg-background-dark">
-            <div className="size-10 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+            <SpokeSpinner size="w-12 h-12" className="text-white" />
           </div>
         }>
           {(() => {
@@ -391,16 +361,7 @@ const App: React.FC = () => {
 
 
 
-      <StatusModal
-        isOpen={statusModal.isOpen}
-        type={statusModal.type}
-        title={statusModal.title}
-        message={statusModal.message}
-        onClose={handleCloseStatusModal}
-        onSupport={() => {
-          setStatusModal(prev => ({ ...prev, isOpen: false }));
-        }}
-      />
+
 
     </div>
   );
