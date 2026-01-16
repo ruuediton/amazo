@@ -43,9 +43,9 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ status, message }) => {
 
     return (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 backdrop-blur-[2px] animate-in fade-in duration-300">
-            <div className="bg-black/80 backdrop-blur-md p-8 rounded-3xl flex flex-col items-center justify-center min-w-[140px] max-w-[280px] border border-white/10 shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="bg-black/80 backdrop-blur-md p-6 rounded-3xl flex flex-col items-center justify-center min-w-[120px] max-w-[85vw] w-fit border border-white/10 shadow-2xl animate-in zoom-in-95 duration-300 mx-4">
                 {status === 'loading' ? (
-                    <SpokeSpinner size="w-12 h-12" className="text-white" />
+                    <SpokeSpinner size="w-10 h-10" className="text-white" />
                 ) : config && (
                     <div className="flex flex-col items-center gap-4 text-center">
                         <div className={`size-16 rounded-full flex items-center justify-center ${config.bgColor} border ${config.borderColor} animate-in zoom-in duration-500`}>
