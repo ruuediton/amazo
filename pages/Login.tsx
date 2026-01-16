@@ -21,7 +21,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneNumber || phoneNumber.length < 9) {
-      showToast?.("Telefone inválido ou incompleto.", "error");
+      showToast?.("Por favor digite telefine correto", "error");
       return;
     }
 
@@ -49,7 +49,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
               .single();
 
             if (!profile) {
-              throw new Error("Este telefone não está cadastrado.");
+              throw new Error("Esta conta não existe.");
             } else {
               throw new Error("Senha de acesso incorreta.");
             }

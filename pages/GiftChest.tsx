@@ -50,7 +50,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
 
   const handleRedeem = async () => {
     if (!promoCode.trim()) {
-      showToast?.("Por favor, insira um código.", "warning");
+      showToast?.("Por favor, digite código.", "warning");
       return;
     }
 
@@ -78,7 +78,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
           throw new Error(data.message);
         }
       }
-    }, "Resgate efectuado com sucesso!");
+    }, "Resgate sucedido!");
   };
 
   return (

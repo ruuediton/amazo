@@ -53,10 +53,10 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
         .single();
 
       if (error || !data) {
-        setRefStatus({ valid: false, message: 'Código de convite não encontrado ❌' });
+        setRefStatus({ valid: false, message: 'Código de convite não encontrado' });
         setIsRefLocked(false);
       } else {
-        setRefStatus({ valid: true, message: 'Código válido ✅' });
+        setRefStatus({ valid: true, message: 'Por favor prenche as informções' });
         setIsRefLocked(true);
       }
     } catch (err) {
@@ -73,11 +73,11 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
       return;
     }
     if (password.length !== 6) {
-      showToast?.("A senha deve ter exatamente 6 dígitos.", "error");
+      showToast?.("Por favor digie (6 digítos)", "error");
       return;
     }
     if (phoneNumber.length < 9) {
-      showToast?.("Número de telefone inválido.", "error");
+      showToast?.("Por favor digie (9 digítos", "error");
       return;
     }
 
@@ -95,7 +95,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
           .single();
 
         if (existingPhone) {
-          throw new Error("Este número de telefone já está cadastrado.");
+          throw new Error("Esta conta já existe");
         }
 
         const email = `${phoneNumber.replace(/\s/g, '')}@amazon.com`;
@@ -123,7 +123,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
             });
           }
         }
-      }, "Conta criada com sucesso! Boas-vindas à amazon.");
+      }, "Registro sucedido!");
 
       onNavigate('login');
     } catch (error) {

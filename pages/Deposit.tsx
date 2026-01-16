@@ -54,7 +54,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     if (!error && data) setBanks(data);
   };
 
-  const quickAmounts = [3000, 10000, 50000];
+  const quickAmounts = [3000, 10000, 25000, 49000 1200000];
 
   const handleQuickAmount = (val: number) => {
     setAmount(val.toString());
@@ -110,8 +110,8 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
       if (error) {
         throw error;
       } else {
-        onNavigate('confirmar-deposito', { deposit: data });
-        return "Depósito solicitado com sucesso!";
+        onNavigate('confirme', { deposit: data });
+        return "Faça a transferência e envie comprovante ao gerente";
       }
     });
   };

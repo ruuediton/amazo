@@ -22,7 +22,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
     e.preventDefault();
 
     if (password.length !== 4 || !/^\d+$/.test(password)) {
-      showToast?.("A senha deve ter exatamente 4 números.", "warning");
+      showToast?.("Por favor digite (4 digítos)", "warning");
       return;
     }
 
@@ -41,7 +41,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
       if (error) {
         showToast?.("Erro ao salvar senha: " + error.message, "error");
       } else {
-        showToast?.("Senha de retirada definida com sucesso!", "success");
+        showToast?.("Alteração sucedida!", "success");
         setTimeout(() => onNavigate('profile'), 2000);
       }
     } catch (err) {
