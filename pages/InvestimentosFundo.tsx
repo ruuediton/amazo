@@ -65,14 +65,14 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
     if (!selectedFund || !investmentAmount) return;
     const amountNum = Number(investmentAmount);
 
-    if (isNaN(amountNum) || amountNum <= 0) {
-      if (showToast) showToast('Por favor, insira um valor válido.', 'warning');
+    if (isNaN(amountNum) || amountNum < 100) {
+      if (showToast) showToast('Valor mínimo de fundo 100 Kz.', 'warning');
       return;
     }
 
     setApplying(true);
-    await withLoading(async () => {
-      try {
+    try {
+      await withLoading(async () => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) throw new Error("Não autenticado");
 
@@ -86,7 +86,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
         if (profileError) throw profileError;
 
         if ((profile.balance || 0) < amountNum) {
-          throw new Error("Saldo insuficiente para este investimento.");
+          throw new Error("Saldo insuficiente, recarregue para aplica fundos.");
         }
 
         // 2. Criar registro de investimento
@@ -111,17 +111,17 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
           .eq('user_id', user.id);
 
         if (updateError) throw updateError;
+      }, "Fundos aplicado, sucesso!");
 
-        setSelectedFund(null);
-        setInvestmentAmount('');
-        fetchData();
-        return "Investimento realizado com sucesso!";
-      } catch (err: any) {
-        throw err;
-      } finally {
-        setApplying(false);
-      }
-    });
+      // Reseta e atualiza após o sucesso
+      setSelectedFund(null);
+      setInvestmentAmount('');
+      fetchData();
+    } catch (err: any) {
+      // feedback já tratado pelo withLoading/showError global
+    } finally {
+      setApplying(false);
+    }
   };
 
   return (
@@ -280,7 +280,8 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <input
                   autoFocus
                   type="number"
-                  placeholder="0.00"
+                  min="100"
+                  placeholder="100.00"
                   className="w-full h-16 bg-white border-2 border-transparent focus:border-primary rounded-[20px] pl-14 pr-6 text-2xl font-black text-black outline-none transition-all shadow-xl shadow-black/5"
                   value={investmentAmount}
                   onChange={(e) => setInvestmentAmount(e.target.value)}

@@ -20,8 +20,13 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (phoneNumber.length < 9) {
-      showToast?.("Número de telefone inválido.", "error");
+    if (!phoneNumber || phoneNumber.length < 9) {
+      showToast?.("Telefone inválido ou incompleto.", "error");
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      showToast?.("A senha deve ter 6 dígitos.", "error");
       return;
     }
 
@@ -35,14 +40,28 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
         }));
 
         if (error) {
+          if (error.message.toLowerCase().includes('invalid login credentials')) {
+            // Check if user exists to be specific
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('id')
+              .eq('phone', phoneNumber)
+              .single();
+
+            if (!profile) {
+              throw new Error("Este telefone não está cadastrado.");
+            } else {
+              throw new Error("Senha de acesso incorreta.");
+            }
+          }
           throw error;
         }
-      }, "Login realizado com sucesso!");
+      }, "Login sucedido!");
 
       // Navega após o feedback de sucesso ser disparado pelo withLoading
       onNavigate('splash-ads');
     } catch (error) {
-      // feedback já tratado pelo withLoading
+      // feedback já tratado pelo withLoading/sanitiseError
     }
   };
 
