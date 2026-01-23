@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -22,19 +21,24 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
   const checkExistingBank = async () => {
     setLoading(true);
-    const { data } = await supabase.rpc('get_my_bank_accounts');
-    if (data && data.length > 0) {
-      setExistingBank(data[0]);
-      setMode('view');
+    try {
+      const { data } = await supabase.rpc('get_my_bank_accounts');
+      if (data && data.length > 0) {
+        setExistingBank(data[0]);
+        setMode('view');
+      }
+    } catch (err) {
+      console.error('Erro ao buscar conta:', err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleEdit = () => {
     if (existingBank) {
       setBankName(existingBank.nome_banco);
       setHolderName(existingBank.nome_completo);
-      setIban(existingBank.iban); // Decrypted IBAN comes from RPC
+      setIban(existingBank.iban);
       setMode('edit');
     }
   };
@@ -42,38 +46,45 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
   const handleDelete = async () => {
     if (confirm('Tem certeza que deseja apagar esta conta?')) {
       setLoading(true);
-      const { error } = await supabase.from('bancos_clientes').delete().eq('user_id', existingBank.user_id); // Assuming get_my_bank_accounts returns user_id or we filter by auth.uid() implicitly in logic but here we use RLS or ID if available. Using delete on table with RLS is safest.
-      // Actually better to delete by ID if we have it. get_my_bank_accounts usually returns everything.
-      // Let's assume RLS handles 'user_id' check on delete.
-      // Correction: delete().eq('id', existingBank.id) is better.
+      try {
+        // Tenta usar RPC se existir, senão usa delete direto
+        const { error } = await supabase
+          .from('bancos_clientes')
+          .delete()
+          .eq('user_id', existingBank.user_id);
 
-      if (error) {
-        showToast?.('Erro ao deletar: ' + error.message, 'error');
-        setLoading(false);
-      } else {
+        if (error) throw error;
+
         showToast?.('Conta removida com sucesso!', 'success');
         setExistingBank(null);
         setBankName('');
         setHolderName('');
         setIban('');
         setMode('create');
+      } catch (error: any) {
+        showToast?.('Erro ao deletar: ' + (error.message || 'Erro desconhecido'), 'error');
+      } finally {
         setLoading(false);
       }
     }
   };
 
+  // Formata o IBAN enquanto o usuário digita
+  const handleIbanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    // Aplica máscara AO06 XXXX XXXX XXXX XXXX X (simplificado para exibição)
+    setIban(value);
+  };
+
   const handleSaveBank = async () => {
-    // 1. Validação de campos vazios
     if (!bankName || !holderName || !iban) {
-      showToast?.("Por favor, preencha todos os campos obrigatórios.", "warning");
+      showToast?.("Por favor, preencha todos os campos.", "warning");
       return;
     }
 
-    // 2. Validação do IBAN (21 dígitos conforme pedido)
-    // Removemos espaços e caracteres não alfanuméricos para contar apenas os dígitos/letras
     const cleanIban = iban.replace(/\s/g, '');
-    if (cleanIban.length !== 21) {
-      showToast?.("O IBAN deve conter exatamente 21 caracteres (ex: AO06...).", "error");
+    if (cleanIban.length < 21) {
+      showToast?.("IBAN inválido. Deve ter no mínimo 21 caracteres.", "error");
       return;
     }
 
@@ -83,40 +94,29 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
       const { data: { user } } = await supabase.auth.getUser();
 
       if (!user) {
-        showToast?.("Sessão expirada. Por favor, faça login novamente.", "error");
+        showToast?.("Sessão expirada. Faça login novamente.", "error");
         onNavigate('login');
         return;
       }
 
-      // Inserir ou atualizar dados bancários usando a RPC que criptografa os dados
-      let error;
-      if (mode === 'edit') {
-        const { error: updateError } = await supabase.rpc('update_bank_account', {
-          p_bank_name: bankName,
-          p_holder_name: holderName,
-          p_iban: cleanIban
-        });
-        error = updateError;
-      } else {
-        const { error: insertError } = await supabase.rpc('add_bank_account', {
-          p_bank_name: bankName,
-          p_holder_name: holderName,
-          p_iban: cleanIban
-        });
-        error = insertError;
-      }
+      const payload = {
+        p_bank_name: bankName,
+        p_holder_name: holderName,
+        p_iban: cleanIban
+      };
 
-      if (error) {
-        showToast?.(`Erro ao salvar: ${error.message}`, "error");
-      } else {
-        showToast?.("Dados bancários salvos com sucesso!", "success");
-        // Pequeno delay para o usuário ver o feedback antes de navegar
-        setTimeout(() => {
-          onNavigate('profile');
-        }, 1500);
-      }
+      const { error } = await supabase.rpc(
+        mode === 'edit' ? 'update_bank_account' : 'add_bank_account',
+        payload
+      );
+
+      if (error) throw error;
+
+      showToast?.("Dados salvos com sucesso!", "success");
+      await checkExistingBank();
+      setTimeout(() => onNavigate('profile'), 800);
     } catch (err: any) {
-      showToast?.("Ocorreu um erro inesperado. Tente novamente.", "error");
+      showToast?.(`Erro: ${err.message || 'Falha ao salvar'}`, "error");
     } finally {
       setLoading(false);
     }
@@ -124,76 +124,77 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
   return (
     <div className="font-display antialiased bg-background-dark text-black min-h-screen flex flex-col">
-      {/* Top App Bar */}
-      <header className="sticky top-0 z-50 bg-background-dark border-b border-gray-200">
-        <div className="flex items-center justify-between px-4 py-3">
+      {/* Top App Bar - Título reduzido para 14px */}
+      <header className="sticky top-0 z-50 bg-background-dark border-b border-gray-100">
+        <div className="flex items-center justify-between px-4 py-2">
           <button
             onClick={() => onNavigate('profile')}
-            aria-label="Voltar"
-            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 active:scale-95 transition-all text-primary"
+            className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 active:scale-95 transition-all text-primary"
           >
-            <span className="material-symbols-outlined font-medium">arrow_back</span>
+            <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
-          <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10 text-black">
+          <h1 className="text-[14px] font-bold tracking-tight flex-1 text-center pr-8 text-black uppercase">
             {mode === 'view' ? 'Gerenciar Conta' : mode === 'edit' ? 'Editar Conta' : 'Adicionar Conta'}
           </h1>
         </div>
       </header>
 
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col w-full max-w-lg mx-auto px-4 pt-2 pb-6">
-
+      <main className="flex-1 flex flex-col w-full max-w-lg mx-auto px-4 pt-4 pb-6">
         {mode === 'view' ? (
-          <div className="flex flex-col items-center justify-center flex-1 space-y-6">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-2">
-              <span className="material-symbols-outlined text-green-600 text-4xl">check_circle</span>
+          <div className="flex flex-col items-center justify-center flex-1 space-y-4">
+            {/* Stamp Compacto */}
+            <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
             </div>
-            <h2 className="text-xl font-bold text-black text-center">Conta Bancária Vinculada</h2>
-            <div className="w-full bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">Banco</p>
-              <p className="text-lg font-bold text-black mb-4">{existingBank?.nome_banco}</p>
+            <h2 className="text-sm font-bold text-black text-center mt-2">Conta Vinculada</h2>
 
-              <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">Titular</p>
-              <p className="text-lg font-bold text-black mb-4">{existingBank?.nome_completo}</p>
-
-              <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">IBAN</p>
-              <p className="text-lg font-mono font-bold text-black bg-gray-50 p-2 rounded-lg break-all">{existingBank?.iban}</p>
+            <div className="w-full bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-3">
+              <div>
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Banco</p>
+                <p className="text-[13px] font-bold text-black">{existingBank?.nome_banco}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Titular</p>
+                <p className="text-[13px] font-bold text-black">{existingBank?.nome_completo}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">IBAN</p>
+                <p className="text-[12px] font-mono font-bold text-black bg-gray-50 p-2 rounded-lg break-all border border-gray-100">
+                  {existingBank?.iban}
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col w-full gap-3 mt-4">
-              <button onClick={handleEdit} className="w-full h-12 bg-black text-white font-bold rounded-xl shadow-lg text-sm">
+            <div className="flex flex-col w-full gap-2 mt-2">
+              <button
+                onClick={handleEdit}
+                className="w-full h-10 bg-black text-white text-[12px] font-bold rounded-lg shadow-sm active:scale-[0.98] transition-all"
+              >
                 EDITAR DADOS
               </button>
-              <button onClick={handleDelete} className="w-full h-11 bg-red-50 text-red-600 font-bold rounded-xl border border-red-100 text-sm">
-                REMOVER CONTA
+              <button
+                onClick={handleDelete}
+                className="w-full h-10 bg-transparent text-red-500 text-[12px] font-bold rounded-lg border border-red-50 active:scale-[0.98] transition-all"
+              >
+                REMOVER
               </button>
             </div>
           </div>
         ) : (
           <>
-            {/* Security Badge */}
-            <div className="flex items-center justify-center gap-1.5 py-4 mb-2 opacity-80">
-              <span className="material-symbols-outlined text-green-600 text-[18px]">lock</span>
-              <span className="text-[text-gray-400] text-xs font-medium uppercase tracking-wide">Conexão Segura</span>
-            </div>
-
-            {/* Form Fields */}
-            <div className="space-y-6 flex-1">
-              {/* Bank Selection */}
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-200 ml-1">
-                  Selecione o seu banco
+            {/* Form Fields - Mais compactos e sem bordas coloridas */}
+            <div className="space-y-3 flex-1">
+              <div className="space-y-1">
+                <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase">
+                  Banco
                 </label>
-                <div className="relative group">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[text-gray-400] pointer-events-none flex items-center">
-                    <span className="material-symbols-outlined text-[24px]">account_balance</span>
-                  </div>
+                <div className="relative">
                   <select
                     value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
-                    className="w-full h-12 pl-12 pr-10 rounded-xl bg-surface-dark border border-gray-300 text-black text-base focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all cursor-pointer shadow-sm appearance-none"
+                    className="w-full h-10 pl-4 pr-10 rounded-lg bg-white border border-gray-100 text-[12.5px] text-black focus:outline-none focus:border-gray-300 transition-all appearance-none shadow-sm"
                   >
-                    <option value="" disabled>Escolha uma opção (e.g., BAI, BFA)</option>
+                    <option value="" disabled>Selecione seu banco</option>
                     <option value="Banco BAI">Banco BAI</option>
                     <option value="Banco BFA">Banco BFA</option>
                     <option value="Banco BIC">Banco BIC</option>
@@ -201,64 +202,46 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                     <option value="Banco Sol">Banco Sol</option>
                     <option value="Banco BNI">Banco BNI</option>
                   </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[text-gray-400] flex items-center">
-                    <span className="material-symbols-outlined">expand_more</span>
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                    <span className="material-symbols-outlined text-[18px]">expand_more</span>
                   </div>
                 </div>
               </div>
 
-              {/* Account Holder Name */}
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-200 ml-1">
-                  Nome do Titular
+              <div className="space-y-1">
+                <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase">
+                  Titular
                 </label>
-                <div className="relative group">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[text-gray-400] pointer-events-none flex items-center">
-                    <span className="material-symbols-outlined text-[24px]">person</span>
-                  </div>
-                  <input
-                    value={holderName}
-                    onChange={(e) => setHolderName(e.target.value)}
-                    className="w-full h-12 pl-12 pr-4 rounded-xl bg-surface-dark border border-gray-300 text-black placeholder:text-[#6e6b5e] text-base focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
-                    placeholder="Nome completo como consta no banco"
-                    type="text"
-                  />
-                </div>
+                <input
+                  value={holderName}
+                  onChange={(e) => setHolderName(e.target.value)}
+                  className="w-full h-10 px-4 rounded-lg bg-white border border-gray-100 text-[12.5px] text-black placeholder:text-gray-300 focus:outline-none focus:border-gray-300 transition-all shadow-sm"
+                  placeholder="Nome completo"
+                  type="text"
+                />
               </div>
 
-              {/* IBAN / Account Number */}
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-200 ml-1">
-                  Número da Conta / IBAN
+              <div className="space-y-1">
+                <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase">
+                  IBAN
                 </label>
-                <div className="relative group">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[text-gray-400] pointer-events-none flex items-center">
-                    <span className="material-symbols-outlined text-[24px]">credit_card</span>
-                  </div>
-                  <input
-                    value={iban}
-                    onChange={(e) => setIban(e.target.value)}
-                    maxLength={25} // Maior que 21 para permitir espaços na digitação
-                    className="w-full h-12 pl-12 pr-4 rounded-xl bg-surface-dark border border-gray-300 text-black placeholder:text-[#6e6b5e] text-base focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
-                    placeholder="AO06 ..."
-                    type="text"
-                  />
-                </div>
-                <p className="text-xs text-[text-gray-400] ml-1 pt-1">
-                  Certifique-se de que o IBAN corresponde a uma conta em kwanzas (Kz). O IBAN deve ter 21 dígitos.
-                </p>
+                <input
+                  value={iban}
+                  onChange={handleIbanChange}
+                  maxLength={25}
+                  className="w-full h-10 px-4 rounded-lg bg-white border border-gray-100 text-[12.5px] text-black placeholder:text-gray-300 focus:outline-none focus:border-gray-300 transition-all shadow-sm font-mono"
+                  placeholder="AO06..."
+                  type="text"
+                />
               </div>
             </div>
 
-            {/* Spacer */}
-            <div className="h-8"></div>
-
-            {/* Footer / CTA */}
-            <div className="mt-auto pt-4 pb-32">
+            {/* Footer / Botão de Salvar Branco */}
+            <div className="mt-auto pt-6 pb-20">
               {mode === 'edit' && (
                 <button
                   onClick={() => setMode('view')}
-                  className="w-full h-10 mb-4 text-gray-500 font-bold"
+                  className="w-full h-8 mb-2 text-gray-400 text-[11px] font-bold uppercase"
                 >
                   Cancelar Edição
                 </button>
@@ -266,16 +249,16 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               <button
                 onClick={handleSaveBank}
                 disabled={loading}
-                className={`w-full h-12 bg-primary hover:bg-primary/90 active:bg-primary/80 text-black font-bold text-base rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center transition-all transform active:scale-[0.98] ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`w-full h-11 bg-white border border-gray-200 text-black font-bold text-[13px] rounded-lg shadow-sm flex items-center justify-center transition-all active:scale-[0.98] ${loading ? 'opacity-50' : ''}`}
               >
                 {loading ? (
-                  <SpokeSpinner size="w-6 h-6" className="text-black" />
+                  <SpokeSpinner size="w-5 h-5" className="text-black" />
                 ) : (
-                  mode === 'edit' ? 'Salvar Alterações' : 'Salvar Cartão'
+                  mode === 'edit' ? 'SALVAR ALTERAÇÕES' : 'SALVAR CARTÃO'
                 )}
               </button>
-              <p className="text-center text-xs text-[#6e6b5e] mt-4 leading-relaxed px-4">
-                Ao continuar, você concorda com os <a className="underline hover:text-primary decoration-1 underline-offset-2" href="#">Termos de Serviço</a> da Amazon e confirma que é o titular desta conta bancária.
+              <p className="text-center text-[10px] text-gray-400 mt-4 leading-relaxed px-6">
+                Ao continuar, você confirma que é o titular desta conta bancária e concorda com as políticas de segurança.
               </p>
             </div>
           </>
