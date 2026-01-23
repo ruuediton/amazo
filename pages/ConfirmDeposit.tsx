@@ -165,9 +165,9 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
                 <p className="text-[10px] font-black uppercase tracking-widest leading-none">Nome do Beneficiário</p>
               </div>
               <div className="flex justify-between items-center mt-1">
-                <p className="text-text-primary text-base font-bold uppercase truncate pr-4">{deposit.nome_destinatario}</p>
+                <p className="text-text-primary text-base font-bold uppercase truncate pr-4">{deposit.nome_destinatario || deposit.beneficiario || "N/A"}</p>
                 <button
-                  onClick={() => handleCopy(deposit.nome_destinatario, "Nome")}
+                  onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario || "", "Nome")}
                   className="text-text-primary hover:scale-110 active:scale-95 transition-all bg-primary/10 size-8 flex items-center justify-center rounded-md"
                 >
                   <span className="material-symbols-outlined text-lg font-bold">content_copy</span>
@@ -184,9 +184,9 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
                 <p className="text-[10px] font-black uppercase tracking-widest leading-none">Banco Destino</p>
               </div>
               <div className="flex justify-between items-center mt-1">
-                <p className="text-black text-base font-bold uppercase">{deposit.nome_banco}</p>
+                <p className="text-black text-base font-bold uppercase">{deposit.nome_banco || deposit.nome_do_banco || "N/A"}</p>
                 <button
-                  onClick={() => handleCopy(deposit.nome_banco, "Banco")}
+                  onClick={() => handleCopy(deposit.nome_banco || deposit.nome_do_banco || "", "Banco")}
                   className="text-primary hover:scale-110 active:scale-95 transition-all bg-primary/10 size-8 flex items-center justify-center rounded-md"
                 >
                   <span className="material-symbols-outlined text-lg font-bold">content_copy</span>

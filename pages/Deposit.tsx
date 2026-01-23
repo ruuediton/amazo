@@ -110,7 +110,13 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
         if (error) throw error;
 
         if (data.success) {
-          onNavigate('confirme', { deposit: data.data });
+          onNavigate('confirme', {
+            deposit: {
+              ...data.data,
+              nome_destinatario: bank.nome_destinatario,
+              nome_banco: bank.nome_do_banco
+            }
+          });
         }
       }, "Depósito criado com sucesso. Efetue a transferência e envie o comprovativo.");
     } catch (err) {
