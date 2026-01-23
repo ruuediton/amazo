@@ -23,10 +23,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
   const { withLoading } = useLoading();
   const [amount, setAmount] = useState<string>('');
   const [loading, setLoading] = useState(false);
-
-  // Estado simplificado vindo do RPC
   const [screenData, setScreenData] = useState<any>(null);
-
   const [showPinModal, setShowPinModal] = useState(false);
   const [pin, setPin] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -47,260 +44,222 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         return;
       }
 
-      // Busca dados seguros e pré-calculados do backend
       const { data, error } = await supabase.rpc('get_withdrawal_screen_data');
-
-      if (error) throw error;
+      if (error) {
+        console.error('RPC Error:', error);
+        throw error;
+      }
       setScreenData(data);
-
-    } catch (err) {
-      console.error(err);
-      showToast?.("Erro ao carregar dados da conta.", "error");
+    } catch (err: any) {
+      console.error('Fetch Error:', err);
+      showToast?.("Erro ao carregar dados. Verifique sua conexão.", "error");
     } finally {
       setLoading(false);
     }
   };
 
   const validateWithdrawal = async () => {
-    // 1. Validação de Sessão/Dados
     if (!screenData) {
-      showToast?.('Aguarde o carregamento do sistema...', 'info');
+      showToast?.('Aguarde o carregamento...', 'info');
+      fetchInitialData();
       return;
     }
 
-    // 2. Validação de Horário (09h às 14h Fuso Angola/GMT+1)
-    // No cliente usamos a hora local do usuário para feedback, mas o servidor tem a palavra final
     const now = new Date();
-    // Ajuste para Angola (UTC+1)
     const angolaHour = new Date(now.toLocaleString("en-US", { timeZone: "Africa/Luanda" })).getHours();
 
     if (angolaHour < 9 || angolaHour >= 14) {
-      showToast?.('O horário de retirada é das 09h às 14h (Fuso de Angola).', 'error');
+      showToast?.('Retiradas disponíveis das 09h às 14h (Angola).', 'error');
       return;
     }
 
-    // 3. Validação de Conta Bancária
     if (!screenData?.has_bank_account) {
-      showToast?.('Nenhuma conta bancária vinculada. Adicione uma para retirar.', 'warning');
+      showToast?.('Vincule uma conta bancária primeiro.', 'warning');
       onNavigate('add-bank');
       return;
     }
 
-    // 4. Validação de Retirada Pendente
     if (screenData?.has_pending_withdrawal) {
-      showToast?.('Você já possui uma retirada pendente. Aguarde a conclusão.', 'error');
+      showToast?.('Você já possui uma retirada em processamento.', 'error');
       return;
     }
 
-    // 5. Validação de Conta Bloqueada
     if (screenData?.is_blocked) {
-      showToast?.(`Conta bloqueada até ${new Date(screenData.blocked_until).toLocaleTimeString()}.`, 'error');
+      showToast?.(`Conta temporariamente bloqueada.`, 'error');
       return;
     }
 
     const numAmount = parseFloat(amount);
-
-    // 6. Validação de Montante
     if (!amount || isNaN(numAmount)) {
-      showToast?.('Insira um valor de retirada válido.', 'warning');
+      showToast?.('Insira um valor válido.', 'warning');
       return;
     }
 
     if (numAmount < 300) {
-      showToast?.('O valor mínimo de retirada é 300 Kz.', 'warning');
-      return;
-    }
-
-    if (numAmount > 100000) {
-      showToast?.('O valor máximo por retirada é 100.000 Kz.', 'warning');
+      showToast?.('Mínimo: 300 Kz.', 'warning');
       return;
     }
 
     if (numAmount > screenData.balance) {
-      showToast?.('Saldo insuficiente para realizar esta retirada.', 'error');
+      showToast?.('Saldo insuficiente.', 'error');
       return;
     }
 
-    // Abre modal de senha
     setShowPinModal(true);
   };
 
   const handleConfirmWithdraw = async () => {
-    if (!pin || pin.length !== 4 || !/^\d+$/.test(pin)) {
-      showToast?.('PIN inválido. Insira os 4 dígitos numéricos.', 'warning');
-      return;
-    }
+    if (pin.length !== 4) return;
 
     setSubmitting(true);
     try {
-      await withLoading(async () => {
-        const { data, error } = await supabase.rpc('request_withdrawal', {
-          p_amount: parseFloat(amount),
-          p_pin: pin
-        });
+      const { data, error } = await supabase.rpc('request_withdrawal', {
+        p_amount: parseFloat(amount),
+        p_pin: pin
+      });
 
-        if (error) throw error;
+      if (error) throw error;
 
-        setShowPinModal(false);
-        setPin('');
-      }, 'Retirada autorizada com sucesso! Aguarde o processamento.');
-
-      onNavigate('historico-conta');
-    } catch (error: any) {
+      showToast?.('Retirada solicitada com sucesso!', 'success');
       setShowPinModal(false);
       setPin('');
-      console.error('Withdrawal error:', error);
+      setTimeout(() => onNavigate('withdrawal-history'), 1000);
+    } catch (error: any) {
+      showToast?.(error.message || 'Erro ao processar retirada.', 'error');
+      setPin('');
     } finally {
       setSubmitting(false);
-      fetchInitialData(); // Atualiza estado (saldo, pendentes, etc)
     }
   };
 
-  const calculatingFee = amount ? (parseFloat(amount) * FEE_PERCENT).toLocaleString() : '0';
-  const finalAmount = amount ? (parseFloat(amount) * (1 - FEE_PERCENT)).toLocaleString() : '0';
+  const currentFee = amount ? (parseFloat(amount) * FEE_PERCENT) : 0;
+  const receiveAmount = amount ? (parseFloat(amount) - currentFee) : 0;
 
-  if (loading) {
+  if (loading && !screenData) {
     return (
       <div className="bg-background-dark min-h-screen flex items-center justify-center">
-        <SpokeSpinner size="w-10 h-10" />
+        <SpokeSpinner size="w-8 h-8" />
       </div>
     );
   }
 
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black pb-28">
-      {/* Header */}
-      <header className="sticky top-0 z-50 flex items-center justify-between bg-background-dark/90 px-4 py-3 backdrop-blur-md border-b border-amazon-border">
+    <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col pb-24">
+      {/* Header - 14px Título */}
+      <header className="sticky top-0 z-50 flex items-center justify-between bg-white px-4 py-2 border-b border-gray-100">
         <button
-          onClick={() => onNavigate('perfil')}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-surface-dark cursor-pointer transition-colors text-primary"
+          onClick={() => onNavigate('profile')}
+          className="flex size-8 items-center justify-center rounded-full active:scale-90 transition-transform text-primary"
         >
-          <span className="material-symbols-outlined text-[24px]">arrow_back</span>
+          <span className="material-symbols-outlined text-[20px]">arrow_back</span>
         </button>
-        <h1 className="flex-1 text-center text-lg font-bold leading-tight tracking-tight text-text-primary pl-10">
+        <h1 className="flex-1 text-center text-[14px] font-bold uppercase tracking-tight text-black pr-8">
           Retirar Fundos
         </h1>
-        <button
-          onClick={() => onNavigate('withdrawal-history')}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-surface-dark cursor-pointer transition-colors text-gray-400"
-        >
-          <span className="material-symbols-outlined text-[24px]">history</span>
-        </button>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col px-5 pt-6">
-        {/* Balance Display */}
-        <div className="mb-8">
-          <p className="text-text-secondary text-sm font-medium mb-1">Saldo Disponível</p>
-          <h2 className="text-3xl font-extrabold text-text-primary tracking-tight">Kz {screenData?.balance?.toLocaleString() || '0,00'}</h2>
+      <main className="flex-1 flex flex-col px-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        {/* Balance Card - Compacto com Elevação */}
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-50 mb-6">
+          <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-1">Saldo Disponível</p>
+          <h2 className="text-2xl font-black text-black">
+            Kz {screenData?.balance?.toLocaleString() || '0,00'}
+          </h2>
         </div>
 
-        {/* Amount Input */}
-        <div className="mb-2">
-          <label className="block text-sm font-bold text-text-secondary uppercase tracking-wider mb-3">Quantia a Retirar</label>
-          <div className="relative flex items-center bg-surface-dark rounded-2xl border border-amazon-border p-4 focus-within:border-primary transition-colors">
-            <span className="text-2xl font-bold text-primary mr-3">Kz</span>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="0,00"
-              disabled={screenData?.is_blocked}
-              className={`w-full bg-transparent border-none p-0 text-2xl font-bold text-text-primary placeholder:text-text-secondary/20 focus:ring-0 ${screenData?.is_blocked ? 'opacity-50' : ''}`}
-            />
-          </div>
-        </div>
-
-        {/* Fee Info */}
-        <div className="flex justify-between items-center px-1 mb-6">
-          <p className="text-[10px] text-text-secondary font-bold uppercase tracking-widest">Taxa (12%): Kz {calculatingFee}</p>
-          <p className="text-[10px] text-primary font-black uppercase tracking-widest">Receberá: Kz {finalAmount}</p>
-        </div>
-
-        {/* Quick Selections */}
-        <div className="grid grid-cols-4 gap-3 mb-8">
-          {quickAmounts.map(val => (
-            <button
-              key={val}
-              disabled={screenData?.is_blocked}
-              onClick={() => setAmount(val.toString())}
-              className={`h-10 rounded-lg bg-surface-dark border border-gray-200 flex items-center justify-center text-xs font-bold hover:border-primary transition-colors ${screenData?.is_blocked ? 'opacity-50 cursor-not-allowed' : ''}`}
-            >
-              +{val.toLocaleString()}
-            </button>
-          ))}
-        </div>
-
-        {/* Bank Selection */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-3">
-            <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Conta de Destino</label>
-            <button
-              onClick={() => onNavigate('add-bank')}
-              className="text-xs font-bold text-primary hover:underline"
-            >
-              {screenData?.has_bank_account ? 'Gerir' : 'Adicionar'}
-            </button>
-          </div>
-
-          {screenData?.has_bank_account ? (
-            <div className="bg-surface-dark border border-amazon-border rounded-2xl p-4 flex items-center gap-4 relative shadow-sm">
-              <div className="size-12 rounded-xl bg-background-dark p-1.5 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-text-primary" style={{ fontSize: '32px' }}>account_balance</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-bold text-text-primary">{screenData.bank_name}</p>
-                <p className="text-xs text-text-secondary">IBAN: {screenData.masked_iban}</p>
-              </div>
-              <div className="ml-auto">
-                <span className="material-symbols-outlined text-success-text">check_circle</span>
-              </div>
+        {/* Input Area */}
+        <div className="space-y-4">
+          <div className="space-y-1">
+            <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase">Quanto deseja retirar?</label>
+            <div className="relative flex items-center bg-white rounded-xl border border-gray-100 h-12 px-4 shadow-sm focus-within:border-primary transition-all">
+              <span className="text-lg font-bold text-primary mr-2">Kz</span>
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="0,00"
+                className="w-full bg-transparent border-none p-0 text-[16px] font-bold text-black placeholder:text-gray-200 focus:ring-0"
+              />
             </div>
-          ) : (
-            <div className="bg-error-bg border border-amazon-border rounded-2xl p-6 flex flex-col items-center text-center gap-2">
-              <span className="material-symbols-outlined text-error-text">warning</span>
-              <p className="text-sm font-bold text-text-primary">Nenhuma conta vinculada</p>
-              <p className="text-xs text-text-secondary">Adicione uma conta para retirar.</p>
+            {/* Fee Info - Mais discreto */}
+            <div className="flex justify-between px-1 pt-1">
+              <span className="text-[10px] text-gray-400 font-medium">Taxa (12%): Kz {currentFee.toLocaleString()}</span>
+              <span className="text-[10px] text-primary font-bold">Recebe: Kz {receiveAmount.toLocaleString()}</span>
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Security Notice */}
-        <div className="bg-warning-bg border border-amazon-border rounded-2xl p-4 flex items-start gap-3 mb-8">
-          <span className="material-symbols-outlined text-warning-text text-[20px] mt-0.5">verified_user</span>
-          <div className="flex flex-col gap-1">
-            <p className="text-text-primary text-xs font-bold leading-tight">Segurança Amazon</p>
-            <p className="text-text-secondary text-[11px] leading-normal">
-              Seu IBAN está protegido. Validação crítica ocorre no servidor.
-            </p>
+          {/* Quick Amounts - Compactos */}
+          <div className="grid grid-cols-4 gap-2">
+            {quickAmounts.map(val => (
+              <button
+                key={val}
+                onClick={() => setAmount(val.toString())}
+                className="h-9 rounded-lg bg-white border border-gray-100 flex items-center justify-center text-[11px] font-bold hover:border-primary active:scale-95 transition-all shadow-sm"
+              >
+                +{val.toLocaleString()}
+              </button>
+            ))}
+          </div>
+
+          {/* Bank Display - Compacto e Elegante */}
+          <div className="space-y-1">
+            <div className="flex justify-between items-center px-1">
+              <label className="text-[11px] font-bold text-gray-500 uppercase">Conta de Destino</label>
+              <button onClick={() => onNavigate('add-bank')} className="text-[11px] font-bold text-primary">Alterar</button>
+            </div>
+
+            {screenData?.has_bank_account ? (
+              <div className="bg-white border border-gray-100 rounded-xl p-3 flex items-center gap-3 shadow-sm">
+                <div className="size-10 rounded-lg bg-gray-50 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-black text-[20px]">account_balance</span>
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <p className="text-[12.5px] font-bold text-black truncate">{screenData.bank_name}</p>
+                  <p className="text-[11px] text-gray-400 font-mono">{screenData.masked_iban}</p>
+                </div>
+                <span className="material-symbols-outlined text-green-500 ml-auto text-[20px]">verified</span>
+              </div>
+            ) : (
+              <button
+                onClick={() => onNavigate('add-bank')}
+                className="w-full bg-red-50 border border-red-100 rounded-xl p-3 flex flex-col items-center gap-1 active:scale-95 transition-all"
+              >
+                <span className="material-symbols-outlined text-red-400 text-[20px]">add_card</span>
+                <p className="text-[11px] font-bold text-red-500">Vincular Conta Bancária</p>
+              </button>
+            )}
           </div>
         </div>
 
+        {/* Security Info Compacto */}
+        <div className="mt-8 flex items-center justify-center gap-2 opacity-40">
+          <span className="material-symbols-outlined text-[14px]">lock</span>
+          <p className="text-[10px] font-bold uppercase tracking-widest">Processamento Criptografado</p>
+        </div>
       </main>
 
-      {/* Sticky Bottom Action */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-background-dark/90 backdrop-blur-lg border-t border-gray-200 z-40">
+      {/* Footer CTA - Botão Branco */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background-dark/80 backdrop-blur-md">
         <button
           onClick={validateWithdrawal}
-          disabled={screenData?.is_blocked}
-          className={`w-full h-11 bg-primary hover:bg-[#ffe14d] active:scale-[0.98] transition-all rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 text-black font-extrabold text-sm cursor-pointer ${screenData?.is_blocked ? 'opacity-30 grayscale cursor-not-allowed' : ''}`}
+          disabled={submitting}
+          className="w-full h-12 bg-white border border-gray-200 text-black font-black text-[13px] rounded-xl shadow-lg flex items-center justify-center active:scale-[0.98] transition-all uppercase tracking-wider"
         >
-          {screenData?.is_blocked ? 'Conta Temporariamente Bloqueada' : 'Confirmar Retirada'}
+          {submitting ? <SpokeSpinner size="w-5 h-5" /> : 'Confirmar Retirada'}
         </button>
       </div>
 
-      {/* Modal de Senha (PIN) - Refactored to Bottom Popup */}
+      {/* Pin Modal - Refined */}
       {showPinModal && (
-        <div className="fixed inset-0 z-[100] flex items-end justify-center px-4 pb-8 animate-in fade-in duration-300">
-          <div className="absolute inset-0 bg-black/30 backdrop-blur-[1px]" onClick={() => !submitting && setShowPinModal(false)}></div>
-          <div className="relative w-full max-w-sm bg-white rounded-[32px] p-6 shadow-2xl animate-in slide-in-from-bottom-8 duration-300 border border-slate-100">
-            <div className="flex flex-col items-center text-center mb-6">
-              <div className="size-14 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined text-blue-600 text-2xl">lock_open</span>
+        <div className="fixed inset-0 z-[100] flex items-end justify-center px-4 pb-8">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => !submitting && setShowPinModal(false)}></div>
+          <div className="relative w-full max-w-sm bg-white rounded-[28px] p-6 shadow-2xl animate-in slide-in-from-bottom-10 duration-300">
+            <div className="flex flex-col items-center mb-6">
+              <div className="size-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
+                <span className="material-symbols-outlined text-primary text-[24px]">key</span>
               </div>
-              <h2 className="text-xl font-black text-slate-900 mb-1">Senha de Retirada</h2>
-              <p className="text-sm text-slate-500">Insira seu PIN de 4 dígitos para autorizar.</p>
+              <h2 className="text-lg font-black text-black">Senha de Retirada</h2>
+              <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Segurança Amazon</p>
             </div>
 
             <div className="space-y-6">
@@ -315,26 +274,22 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
                   placeholder="••••"
                   autoFocus
                   maxLength={4}
-                  inputMode="numeric"
-                  className="w-48 h-12 bg-slate-50 border border-slate-200 rounded-2xl text-center text-2xl font-black text-slate-900 tracking-[0.5em] focus:border-blue-500 focus:ring-0 transition-all placeholder:text-slate-300 placeholder:tracking-normal"
+                  className="w-full bg-gray-50 border border-gray-100 rounded-xl h-12 text-center text-2xl font-black text-black tracking-[1em] focus:border-primary focus:ring-0 transition-all"
                 />
               </div>
 
-              <div className="flex items-center justify-between px-2">
+              <div className="flex gap-3">
                 <button
                   disabled={submitting}
                   onClick={() => setShowPinModal(false)}
-                  className="text-slate-400 font-bold text-sm hover:text-slate-600 transition-colors"
+                  className="flex-1 h-11 text-gray-400 font-bold text-[12px] uppercase"
                 >
                   Cancelar
                 </button>
                 <button
                   disabled={submitting || pin.length < 4}
                   onClick={handleConfirmWithdraw}
-                  className={`font-black text-sm uppercase tracking-widest px-6 py-2 rounded-full transition-all active:scale-95 ${pin.length === 4
-                    ? 'text-blue-600 hover:text-blue-700'
-                    : 'text-slate-300 cursor-not-allowed'
-                    }`}
+                  className="flex-1 h-11 bg-black text-white rounded-xl font-bold text-[12px] uppercase active:scale-95 transition-all"
                 >
                   {submitting ? <SpokeSpinner size="w-4 h-4" /> : 'Confirmar'}
                 </button>
