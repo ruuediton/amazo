@@ -27,25 +27,27 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+    if (!profile?.id) return;
 
-      // Fetch cheapest product
-      const { data: products } = await supabase
-        .from('products')
-        .select('*')
-        .eq('status', 'active')
-        .order('price', { ascending: true })
-        .limit(1);
+    const fetchCheapest = async () => {
+      try {
+        const { data: products } = await supabase
+          .from('products')
+          .select('*')
+          .eq('status', 'active')
+          .order('price', { ascending: true })
+          .limit(1);
 
-      if (products && products.length > 0) {
-        setCheapestProduct(products[0]);
+        if (products && products.length > 0) {
+          setCheapestProduct(products[0]);
+        }
+      } catch (err) {
+        console.error("Home fetch error:", err);
       }
     };
 
-    fetchData();
-  }, [profile]);
+    fetchCheapest();
+  }, [profile?.id]);
 
   const filters = [
     { label: 'Todas', icon: 'star' },

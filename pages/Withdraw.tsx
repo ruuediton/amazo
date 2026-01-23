@@ -144,125 +144,144 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
   }
 
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col pb-24">
-      {/* Header - 14px Título */}
-      <header className="sticky top-0 z-50 flex items-center justify-between bg-white px-4 py-2 border-b border-gray-100">
+    <div className="bg-[#0a0a0b] font-display text-white antialiased min-h-screen flex flex-col selection:bg-amber-500/30 pb-24">
+      {/* Premium Header */}
+      <header className="sticky top-0 z-50 flex items-center justify-between bg-[#0a0a0b]/80 px-6 py-4 backdrop-blur-xl border-b border-white/5">
         <button
           onClick={() => onNavigate('profile')}
-          className="flex size-8 items-center justify-center rounded-full active:scale-90 transition-transform text-primary"
+          className="group flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 transition-all border border-white/10"
         >
-          <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+          <span className="material-symbols-outlined text-amber-500 text-[22px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
         </button>
-        <h1 className="flex-1 text-center text-[14px] font-bold uppercase tracking-tight text-black pr-8">
-          Retirar Fundos
+        <h1 className="flex-1 text-center text-[15px] font-black uppercase tracking-[0.1em] text-white pr-10">
+          Retirar kwanza
         </h1>
       </header>
 
-      <main className="flex-1 flex flex-col px-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        {/* Balance Card - Compacto com Elevação */}
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-50 mb-6">
-          <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-1">Saldo Disponível</p>
-          <h2 className="text-2xl font-black text-black">
-            Kz {screenData?.balance?.toLocaleString() || '0,00'}
-          </h2>
+      <main className="flex-1 flex flex-col px-6 pt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        {/* Neon Balance Display */}
+        <div className="relative mb-10 group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 to-amber-200/20 blur-2xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <div className="relative bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[32px] border border-white/10 shadow-2xl">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="material-symbols-outlined text-amber-500 text-[18px]">account_balance_wallet</span>
+              <p className="text-gray-400 text-[11px] font-black uppercase tracking-widest">Saldo para Retirada</p>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-amber-500">Kz</span>
+              <h2 className="text-4xl font-black text-white tracking-tighter">
+                {screenData?.balance?.toLocaleString() || '0,00'}
+              </h2>
+            </div>
+          </div>
         </div>
 
         {/* Input Area */}
-        <div className="space-y-4">
-          <div className="space-y-1">
-            <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase">Quanto deseja retirar?</label>
-            <div className="relative flex items-center bg-white rounded-xl border border-gray-100 h-12 px-4 shadow-sm focus-within:border-primary transition-all">
-              <span className="text-lg font-bold text-primary mr-2">Kz</span>
+        <div className="space-y-6">
+          <div className="space-y-2 group">
+            <label className="block text-[11px] font-black text-gray-500 ml-1 uppercase tracking-widest group-focus-within:text-amber-500 transition-colors">
+              Quantia Desejada
+            </label>
+            <div className="relative flex items-center bg-white/[0.03] rounded-2xl border border-white/10 h-16 px-5 focus-within:border-amber-500/50 transition-all">
+              <span className="text-xl font-bold text-amber-500 mr-3">Kz</span>
               <input
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                placeholder="0,00"
-                className="w-full bg-transparent border-none p-0 text-[16px] font-bold text-black placeholder:text-gray-200 focus:ring-0"
+                placeholder="Introduza o valor"
+                className="w-full bg-transparent border-none p-0 text-[18px] font-bold text-white placeholder:text-gray-700 focus:ring-0"
               />
             </div>
-            {/* Fee Info - Mais discreto */}
-            <div className="flex justify-between px-1 pt-1">
-              <span className="text-[10px] text-gray-400 font-medium">Taxa (12%): Kz {currentFee.toLocaleString()}</span>
-              <span className="text-[10px] text-primary font-bold">Recebe: Kz {receiveAmount.toLocaleString()}</span>
+            {/* Fee Metadata */}
+            <div className="flex justify-between items-center px-2 pt-1 border-t border-white/5">
+              <div className="flex items-center gap-1.5 grayscale">
+                <span className="material-symbols-outlined text-xs">analytics</span>
+                <span className="text-[10px] text-gray-500 font-bold uppercase tracking-tight">Taxa 12%: Kz {currentFee.toLocaleString()}</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-black text-amber-500">
+                <span className="text-[10px] uppercase tracking-wide">Líquido: Kz {receiveAmount.toLocaleString()}</span>
+              </div>
             </div>
           </div>
 
-          {/* Quick Amounts - Compactos */}
+          {/* Quick Amount Chips */}
           <div className="grid grid-cols-4 gap-2">
             {quickAmounts.map(val => (
               <button
                 key={val}
                 onClick={() => setAmount(val.toString())}
-                className="h-9 rounded-lg bg-white border border-gray-100 flex items-center justify-center text-[11px] font-bold hover:border-primary active:scale-95 transition-all shadow-sm"
+                className="h-11 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-[12px] font-bold hover:bg-amber-500 hover:text-black hover:border-amber-500 active:scale-95 transition-all shadow-sm"
               >
-                +{val.toLocaleString()}
+                {val >= 1000 ? `${val / 1000}k` : val}
               </button>
             ))}
           </div>
 
-          {/* Bank Display - Compacto e Elegante */}
-          <div className="space-y-1">
+          {/* Destination Account Card */}
+          <div className="space-y-2 pt-2">
             <div className="flex justify-between items-center px-1">
-              <label className="text-[11px] font-bold text-gray-500 uppercase">Conta de Destino</label>
-              <button onClick={() => onNavigate('add-bank')} className="text-[11px] font-bold text-primary">Alterar</button>
+              <label className="text-[11px] font-black text-gray-500 uppercase tracking-widest">Canal de Destino</label>
+              <button onClick={() => onNavigate('add-bank')} className="text-[11px] font-black text-amber-500 uppercase">Alterar</button>
             </div>
 
             {screenData?.has_bank_account ? (
-              <div className="bg-white border border-gray-100 rounded-xl p-3 flex items-center gap-3 shadow-sm">
-                <div className="size-10 rounded-lg bg-gray-50 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-black text-[20px]">account_balance</span>
+              <div className="bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 rounded-2xl p-4 flex items-center gap-4 group hover:bg-white/[0.08] transition-colors cursor-pointer" onClick={() => onNavigate('add-bank')}>
+                <div className="size-12 rounded-2xl bg-amber-500 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20">
+                  <span className="material-symbols-outlined text-black text-[28px]">payments</span>
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <p className="text-[12.5px] font-bold text-black truncate">{screenData.bank_name}</p>
-                  <p className="text-[11px] text-gray-400 font-mono">{screenData.masked_iban}</p>
+                  <p className="text-[15px] font-black text-white truncate">{screenData.bank_name}</p>
+                  <p className="text-[11px] text-gray-500 font-mono tracking-wider">{screenData.masked_iban}</p>
                 </div>
-                <span className="material-symbols-outlined text-green-500 ml-auto text-[20px]">verified</span>
+                <span className="material-symbols-outlined text-amber-500 ml-auto animate-pulse">check_circle</span>
               </div>
             ) : (
               <button
                 onClick={() => onNavigate('add-bank')}
-                className="w-full bg-red-50 border border-red-100 rounded-xl p-3 flex flex-col items-center gap-1 active:scale-95 transition-all"
+                className="w-full bg-white/5 border border-dashed border-white/20 rounded-2xl p-6 flex flex-col items-center gap-2 hover:bg-white/10 transition-all"
               >
-                <span className="material-symbols-outlined text-red-400 text-[20px]">add_card</span>
-                <p className="text-[11px] font-bold text-red-500">Vincular Conta Bancária</p>
+                <div className="size-10 rounded-full bg-gray-900 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-gray-500">add_task</span>
+                </div>
+                <p className="text-[11px] font-black text-white uppercase tracking-widest">Ativar Conta Bancária</p>
               </button>
             )}
           </div>
         </div>
-
-        {/* Security Info Compacto */}
-        <div className="mt-8 flex items-center justify-center gap-2 opacity-40">
-          <span className="material-symbols-outlined text-[14px]">lock</span>
-          <p className="text-[10px] font-bold uppercase tracking-widest">Processamento Criptografado</p>
-        </div>
       </main>
 
-      {/* Footer CTA - Botão Branco */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background-dark/80 backdrop-blur-md">
+      {/* Glossy Bottom Button */}
+      <div className="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b]/90 to-transparent">
         <button
           onClick={validateWithdrawal}
           disabled={submitting}
-          className="w-full h-12 bg-white border border-gray-200 text-black font-black text-[13px] rounded-xl shadow-lg flex items-center justify-center active:scale-[0.98] transition-all uppercase tracking-wider"
+          className="relative group w-full h-16 overflow-hidden rounded-2xl shadow-2xl shadow-amber-500/10"
         >
-          {submitting ? <SpokeSpinner size="w-5 h-5" /> : 'Confirmar Retirada'}
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-400 group-hover:scale-105 transition-transform duration-500"></div>
+          <div className="relative flex items-center justify-center font-black text-black text-sm uppercase tracking-[0.2em]">
+            {submitting ? (
+              <SpokeSpinner size="w-6 h-6" className="text-black" />
+            ) : (
+              'Solicitar Saque'
+            )}
+          </div>
         </button>
       </div>
 
-      {/* Pin Modal - Refined */}
+      {/* Security Pin Bottom Modal */}
       {showPinModal && (
-        <div className="fixed inset-0 z-[100] flex items-end justify-center px-4 pb-8">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => !submitting && setShowPinModal(false)}></div>
-          <div className="relative w-full max-w-sm bg-white rounded-[28px] p-6 shadow-2xl animate-in slide-in-from-bottom-10 duration-300">
-            <div className="flex flex-col items-center mb-6">
-              <div className="size-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
-                <span className="material-symbols-outlined text-primary text-[24px]">key</span>
+        <div className="fixed inset-0 z-[100] flex items-end justify-center px-4 pb-10">
+          <div className="absolute inset-0 bg-[#0a0a0b]/95 backdrop-blur-md" onClick={() => !submitting && setShowPinModal(false)}></div>
+          <div className="relative w-full max-w-sm bg-[#121214] border border-white/10 rounded-[40px] p-8 shadow-2xl animate-in slide-in-from-bottom-20 duration-500">
+            <div className="flex flex-col items-center mb-8">
+              <div className="size-16 bg-amber-500/10 rounded-full flex items-center justify-center mb-4 border border-amber-500/20">
+                <span className="material-symbols-outlined text-amber-500 text-[32px]">dialpad</span>
               </div>
-              <h2 className="text-lg font-black text-black">Senha de Retirada</h2>
-              <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">Segurança Amazon</p>
+              <h2 className="text-xl font-black text-white mb-1">PIN Operacional</h2>
+              <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em]">Criptografia de 256 bits</p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex justify-center">
                 <input
                   type="password"
@@ -271,27 +290,27 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
                     const val = e.target.value.replace(/\D/g, '');
                     if (val.length <= 4) setPin(val);
                   }}
-                  placeholder="••••"
+                  placeholder="0000"
                   autoFocus
                   maxLength={4}
-                  className="w-full bg-gray-50 border border-gray-100 rounded-xl h-12 text-center text-2xl font-black text-black tracking-[1em] focus:border-primary focus:ring-0 transition-all"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl h-16 text-center text-4xl font-black text-amber-500 tracking-[0.5em] focus:border-amber-500/50 focus:ring-0 transition-all placeholder:text-gray-800"
                 />
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-4">
                 <button
                   disabled={submitting}
                   onClick={() => setShowPinModal(false)}
-                  className="flex-1 h-11 text-gray-400 font-bold text-[12px] uppercase"
+                  className="flex-1 h-14 bg-white/5 text-gray-400 font-black text-[12px] uppercase tracking-widest rounded-2xl border border-white/5 active:scale-95 transition-all"
                 >
                   Cancelar
                 </button>
                 <button
                   disabled={submitting || pin.length < 4}
                   onClick={handleConfirmWithdraw}
-                  className="flex-1 h-11 bg-black text-white rounded-xl font-bold text-[12px] uppercase active:scale-95 transition-all"
+                  className="flex-1 h-14 bg-white text-black font-black text-[12px] uppercase tracking-widest rounded-2xl active:scale-95 transition-all disabled:opacity-30"
                 >
-                  {submitting ? <SpokeSpinner size="w-4 h-4" /> : 'Confirmar'}
+                  {submitting ? <SpokeSpinner size="w-5 h-5" /> : 'Confirmar'}
                 </button>
               </div>
             </div>

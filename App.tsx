@@ -84,68 +84,48 @@ const App: React.FC = () => {
   useEffect(() => {
     let profileSubscription: any = null;
 
-    // Escuta mudanças de autenticação
-    withLoading(async () => {
+    const setupAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
-      if (session) {
-        await fetchProfile(session.user.id);
-        setupRealtimeSubscription(session.user.id);
-      } else {
-        // Detetar URL de convite: /reg?ref=ABCDE
-        const params = new URLSearchParams(window.location.search);
-        const ref = params.get('ref');
-        const path = window.location.pathname;
 
-        if (path === '/reg' || ref) {
-          setCurrentPage('register');
-        } else {
+      if (session) {
+        fetchProfile(session.user.id);
+        profileSubscription = setupRealtimeSubscription(session.user.id);
+      } else {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('ref') || window.location.pathname === '/reg') {
           setCurrentPage('register');
         }
       }
-    });
+    };
+
+    setupAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
-        // Background update for auth change, maybe show loading if explicit login
         fetchProfile(session.user.id);
-        setupRealtimeSubscription(session.user.id);
+        if (!profileSubscription) {
+          profileSubscription = setupRealtimeSubscription(session.user.id);
+        }
         resetSessionTimer();
       } else {
         setProfile(null);
-        if (profileSubscription) profileSubscription.unsubscribe();
-
-        // Detetar URL de convite novamente no logout
-        const params = new URLSearchParams(window.location.search);
-        const ref = params.get('ref');
-        const path = window.location.pathname;
-
-        if (path === '/reg' || ref) {
-          setCurrentPage('register');
-        } else {
-          // Manter na página de registro por padrão se não houver sessão
-          setCurrentPage('register');
+        if (profileSubscription) {
+          profileSubscription.unsubscribe();
+          profileSubscription = null;
         }
+        setCurrentPage('register');
       }
     });
 
     function setupRealtimeSubscription(userId: string) {
-      if (profileSubscription) profileSubscription.unsubscribe();
-
-      profileSubscription = supabase
+      return supabase
         .channel(`profile-changes-${userId}`)
         .on(
           'postgres_changes',
-          {
-            event: 'UPDATE',
-            schema: 'public',
-            table: 'profiles',
-            filter: `id=eq.${userId}`
-          },
-          (payload) => {
-            setProfile(payload.new);
-          }
+          { event: 'UPDATE', schema: 'public', table: 'profiles', filter: `id=eq.${userId}` },
+          (payload) => setProfile(payload.new)
         )
         .subscribe();
     }
@@ -157,43 +137,39 @@ const App: React.FC = () => {
   }, []);
 
   const fetchProfile = async (userId: string) => {
-    const { data, error } = await runWithTimeout(() => supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single());
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
 
-    if (!error && data) {
-      setProfile(data);
+      if (!error && data) setProfile(data);
+    } catch (err) {
+      console.error("Profile fetch error:", err);
     }
   };
 
   const resetSessionTimer = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-
-    // Se não houver sessão, não inicia o timer
     if (!session) return;
 
-    const thirtyMinutes = 30 * 60 * 1000;
+    const sessionDuration = 45 * 60 * 1000; // 45 minutos para melhor UX
 
     timerRef.current = setTimeout(async () => {
       await supabase.auth.signOut();
-      showError('Sua sessão expirou por inatividade de 30 minutos. Por favor, faça login novamente.');
+      showError('Sessão expirada. Por favor, entre novamente para sua segurança.');
       setCurrentPage('login');
-    }, thirtyMinutes);
-  }, [session]);
+    }, sessionDuration);
+  }, [session, showError]);
 
-  // Listeners de atividade para resetar o timer
   useEffect(() => {
-    const events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'];
-
-    const handleActivity = () => {
-      resetSessionTimer();
-    };
+    const events = ['mousedown', 'keydown', 'touchstart'];
+    const handleActivity = () => resetSessionTimer();
 
     if (session) {
-      events.forEach(event => window.addEventListener(event, handleActivity));
-      resetSessionTimer(); // Inicia o timer
+      events.forEach(event => window.addEventListener(event, handleActivity, { passive: true }));
+      resetSessionTimer();
     }
 
     return () => {
@@ -204,84 +180,16 @@ const App: React.FC = () => {
 
   const [navigationData, setNavigationData] = useState<any>(null);
 
-  const renderPage = () => {
-    // Redireciona para login se não houver sessão, exceto em páginas públicas
-    const publicPages = ['login', 'register', 'splash-ads'];
-    if (!session && !publicPages.includes(currentPage)) {
-      return <Register onNavigate={handleNavigate} showToast={showToast} />;
-    }
-
-    switch (currentPage) {
-      case 'home': return <Home onNavigate={handleNavigate} profile={profile} />;
-      case 'shop': return <Shop onNavigate={handleNavigate} showToast={showToast} balance={profile?.balance || 0} />;
-      case 'wallet': return <Wallet onNavigate={handleNavigate} />;
-      case 'profile': return <Profile onNavigate={handleNavigate} profile={profile} onLogout={handleLogout} />;
-      case 'support': return <Support onNavigate={handleNavigate} />;
-      case 'tutorials': return <Tutorials onNavigate={handleNavigate} />;
-      case 'about': return <About onNavigate={handleNavigate} />;
-      case 'report': return <Report onNavigate={handleNavigate} />;
-      case 'add-bank': return <AddBank onNavigate={handleNavigate} showToast={showToast} />;
-      case 'withdraw-password': return <WithdrawPassword onNavigate={handleNavigate} showToast={showToast} />;
-      case 'update-withdraw-password': return <UpdateWithdrawPassword onNavigate={handleNavigate} showToast={showToast} />;
-      case 'deposit': return <Deposit onNavigate={handleNavigate} showToast={showToast} />;
-      case 'purchase-history': return <PurchaseHistory onNavigate={handleNavigate} showToast={showToast} />;
-      case 'change-password': return <ChangePassword onNavigate={handleNavigate} />;
-      case 'tutoriais-falar-com-gerente': return <TutoriaisFalarComGerente onNavigate={handleNavigate} />;
-      case 'tutoriais-como-convidar': return <TutoriaisComoConvidar onNavigate={handleNavigate} />;
-      case 'como-comprar': return <ComoComprar onNavigate={handleNavigate} />;
-      case 'tutoriais-alterar-senha-retirada': return <TutoriaisAlterarSenhaRetirada onNavigate={handleNavigate} />;
-      case 'detalhes-conta': return <DetalhesConta onNavigate={handleNavigate} showToast={showToast} />;
-      case 'historico-conta': return <HistoricoConta onNavigate={handleNavigate} />;
-      case 'register': return <Register onNavigate={handleNavigate} showToast={showToast} />;
-      case 'confirme': return <ConfirmDeposit onNavigate={handleNavigate} data={navigationData} showToast={showToast} />;
-      case 'como-retirar-fundos': return <ComoRetirarFundos onNavigate={handleNavigate} />;
-      case 'tutoriais-depositos': return <TutoriaisDepositos onNavigate={handleNavigate} />;
-      case 'retirada': return <Withdraw onNavigate={handleNavigate} showToast={showToast} />;
-      case 'login': return <Login onNavigate={handleNavigate} showToast={showToast} />;
-      case 'security-verify': return <SecurityVerify onNavigate={handleNavigate} showToast={showToast} />;
-      case 'splash-ads': return <SplashScreenAds onNavigate={handleNavigate} />;
-      case 'campaigns': return <Campaigns onNavigate={handleNavigate} />;
-      case 'como-enviar-comprovante': return <ComoEnviarComprovante onNavigate={handleNavigate} />;
-      case 'tutoriais-definir-senha': return <TutoriaisDefinirSenha onNavigate={handleNavigate} />;
-      case 'tutoriais-adicionar-conta': return <TutoriaisAdicionarConta onNavigate={handleNavigate} />;
-      case 'tutoriais-ganhos-tarefas': return <TutoriaisGanhosTarefas onNavigate={handleNavigate} />;
-      case 'ganhos-tarefas': return <GanhosTarefas onNavigate={handleNavigate} />;
-      case 'gift-chest': return <GiftChest onNavigate={handleNavigate} showToast={showToast} />;
-      case 'reward-claim': return <RewardClaim onNavigate={handleNavigate} />;
-      case 'deposit-usdt': return <DepositUSDT onNavigate={handleNavigate} showToast={showToast} data={navigationData} />;
-      case 'info': return <Info onNavigate={handleNavigate} />;
-      case 'terms-of-use': return <TermsOfUse onNavigate={handleNavigate} />;
-      case 'privacy-policy': return <PrivacyPolicy onNavigate={handleNavigate} />;
-      case 'system-rules': return <SystemRules onNavigate={handleNavigate} />;
-      case 'subordinate-list': return <SubordinateList onNavigate={handleNavigate} />;
-      case 'deposit-history': return <DepositHistory onNavigate={handleNavigate} />;
-      case 'download-app': return <DownloadApp onNavigate={handleNavigate} />;
-      case 'investimentos-fundo': return <InvestimentosFundo onNavigate={handleNavigate} showToast={showToast} />;
-      case 'historico-fundos': return <HistoricoFundos onNavigate={handleNavigate} showToast={showToast} />;
-      case 'p2p-transfer': return <TransferenciaP2P onNavigate={handleNavigate} showToast={showToast} />;
-      case 'settings': return <Settings onNavigate={handleNavigate} showToast={showToast} profile={profile} />;
-      case 'withdrawal-history': return <WithdrawalHistory onNavigate={handleNavigate} />;
-      case 'invite-page': return <InvitePage onNavigate={handleNavigate} showToast={showToast} />;
-      default: return <Home onNavigate={handleNavigate} profile={profile} />;
-    }
-  };
-
   const handleNavigate = useCallback((page: any, data: any = null) => {
     setNavigationData(data);
 
-    // Processos críticos que exibem Modal de Sucesso após o loading
-    const successFlowPages = ['historico-conta'];
-    // Processos que apenas mostram loading curto
-    const loadingPages = ['confirmar-deposito', 'investimentos-fundo', 'retirada', 'deposit'];
+    // Otimização: Apenas processos pesados ou explicitamente solicitados mostram loading
+    const heavyPages = ['historico-conta', 'purchase-history', 'withdrawal-history'];
 
-    if (successFlowPages.includes(page)) {
+    if (heavyPages.includes(page)) {
       withLoading(async () => {
-        await new Promise(resolve => setTimeout(resolve, 600));
-        setCurrentPage(page);
-      }, 'Dados carregados com sucesso.');
-    } else if (loadingPages.includes(page)) {
-      withLoading(async () => {
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Simulação curta para garantir que o usuário perceba a transição
+        await new Promise(resolve => setTimeout(resolve, 300));
         setCurrentPage(page);
       });
     } else {
@@ -289,10 +197,72 @@ const App: React.FC = () => {
     }
   }, [withLoading]);
 
-
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setCurrentPage('register');
+    setCurrentPage('login');
+  };
+
+  const PageComponent = () => {
+    const publicPages = ['login', 'register', 'splash-ads'];
+    if (!session && !publicPages.includes(currentPage)) {
+      return <Register onNavigate={handleNavigate} showToast={showToast} />;
+    }
+
+    const pagesMap: Record<string, ReactElement> = {
+      'home': <Home onNavigate={handleNavigate} profile={profile} />,
+      'shop': <Shop onNavigate={handleNavigate} showToast={showToast} balance={profile?.balance || 0} />,
+      'wallet': <Wallet onNavigate={handleNavigate} />,
+      'profile': <Profile onNavigate={handleNavigate} profile={profile} onLogout={handleLogout} />,
+      'support': <Support onNavigate={handleNavigate} />,
+      'tutorials': <Tutorials onNavigate={handleNavigate} />,
+      'about': <About onNavigate={handleNavigate} />,
+      'report': <Report onNavigate={handleNavigate} />,
+      'add-bank': <AddBank onNavigate={handleNavigate} showToast={showToast} />,
+      'withdraw-password': <WithdrawPassword onNavigate={handleNavigate} showToast={showToast} />,
+      'update-withdraw-password': <UpdateWithdrawPassword onNavigate={handleNavigate} showToast={showToast} />,
+      'deposit': <Deposit onNavigate={handleNavigate} showToast={showToast} />,
+      'purchase-history': <PurchaseHistory onNavigate={handleNavigate} showToast={showToast} />,
+      'change-password': <ChangePassword onNavigate={handleNavigate} />,
+      'tutoriais-falar-com-gerente': <TutoriaisFalarComGerente onNavigate={handleNavigate} />,
+      'tutoriais-como-convidar': <TutoriaisComoConvidar onNavigate={handleNavigate} />,
+      'como-comprar': <ComoComprar onNavigate={handleNavigate} />,
+      'tutoriais-alterar-senha-retirada': <TutoriaisAlterarSenhaRetirada onNavigate={handleNavigate} />,
+      'detalhes-conta': <DetalhesConta onNavigate={handleNavigate} showToast={showToast} />,
+      'historico-conta': <HistoricoConta onNavigate={handleNavigate} />,
+      'register': <Register onNavigate={handleNavigate} showToast={showToast} />,
+      'confirmar-deposito': <ConfirmDeposit onNavigate={handleNavigate} data={navigationData} showToast={showToast} />,
+      'como-retirar-fundos': <ComoRetirarFundos onNavigate={handleNavigate} />,
+      'tutoriais-depositos': <TutoriaisDepositos onNavigate={handleNavigate} />,
+      'retirada': <Withdraw onNavigate={handleNavigate} showToast={showToast} />,
+      'login': <Login onNavigate={handleNavigate} showToast={showToast} />,
+      'security-verify': <SecurityVerify onNavigate={handleNavigate} showToast={showToast} />,
+      'splash-ads': <SplashScreenAds onNavigate={handleNavigate} />,
+      'campaigns': <Campaigns onNavigate={handleNavigate} />,
+      'como-enviar-comprovante': <ComoEnviarComprovante onNavigate={handleNavigate} />,
+      'tutoriais-definir-senha': <TutoriaisDefinirSenha onNavigate={handleNavigate} />,
+      'tutoriais-adicionar-conta': <TutoriaisAdicionarConta onNavigate={handleNavigate} />,
+      'tutoriais-ganhos-tarefas': <TutoriaisGanhosTarefas onNavigate={handleNavigate} />,
+      'ganhos-tarefas': <GanhosTarefas onNavigate={handleNavigate} />,
+      'gift-chest': <GiftChest onNavigate={handleNavigate} showToast={showToast} />,
+      'reward-claim': <RewardClaim onNavigate={handleNavigate} />,
+      'deposit-usdt': <DepositUSDT onNavigate={handleNavigate} showToast={showToast} data={navigationData} />,
+      'info': <Info onNavigate={handleNavigate} />,
+      'terms-of-use': <TermsOfUse onNavigate={handleNavigate} />,
+      'privacy-policy': <PrivacyPolicy onNavigate={handleNavigate} />,
+      'system-rules': <SystemRules onNavigate={handleNavigate} />,
+      'subordinate-list': <SubordinateList onNavigate={handleNavigate} />,
+      'deposit-history': <DepositHistory onNavigate={handleNavigate} />,
+      'download-app': <DownloadApp onNavigate={handleNavigate} />,
+      'investimentos-fundo': <InvestimentosFundo onNavigate={handleNavigate} showToast={showToast} />,
+      'historico-fundos': <HistoricoFundos onNavigate={handleNavigate} showToast={showToast} />,
+      'p2p-transfer': <TransferenciaP2P onNavigate={handleNavigate} showToast={showToast} />,
+      'settings': <Settings onNavigate={handleNavigate} showToast={showToast} profile={profile} />,
+      'withdrawal-history': <WithdrawalHistory onNavigate={handleNavigate} />,
+      'invite-page': <InvitePage onNavigate={handleNavigate} showToast={showToast} />
+    };
+
+    const target = pagesMap[currentPage] || <Home onNavigate={handleNavigate} profile={profile} />;
+    return cloneElement(target, { onNavigate: handleNavigate, onLogout: handleLogout, showToast });
   };
 
   return (
@@ -303,14 +273,7 @@ const App: React.FC = () => {
             <SpokeSpinner size="w-12 h-12" className="text-white" />
           </div>
         }>
-          {(() => {
-            const page = renderPage();
-            return cloneElement(page as ReactElement, {
-              onNavigate: handleNavigate,
-              onLogout: handleLogout,
-              showToast
-            });
-          })()}
+          <PageComponent />
         </Suspense>
       </main>
 

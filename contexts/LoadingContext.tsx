@@ -19,7 +19,7 @@ interface LoadingContextType {
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
 export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [status, setStatus] = useState<FeedbackStatus>('loading');
+    const [status, setStatus] = useState<FeedbackStatus>('idle');
     const [message, setMessage] = useState<string | null>(null);
     const [failureCount, setFailureCount] = useState(0);
     const [lastFailureTime, setLastFailureTime] = useState(0);
@@ -28,7 +28,6 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
         setStatus('idle');
         setMessage(null);
     }, []);
-
 
     const showLoading = useCallback(() => {
         setStatus('loading');
@@ -43,66 +42,65 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
     const showSuccess = useCallback((msg: string) => {
         setStatus('success');
         setMessage(msg);
-        setTimeout(reset, 3000);
+        setTimeout(reset, 2500);
     }, [reset]);
 
     const sanitiseError = (error: any): string => {
         const errorMessage = typeof error === 'string' ? error : (error.message || '');
         const lowMsg = errorMessage.toLowerCase();
 
-        // 1. Mapeamento de Erros de Autenticação
-        if (lowMsg.includes('invalid login credentials') || lowMsg.includes('user not found') || lowMsg.includes('email not confirmed')) {
-            return "Senha ou telefone não consin .";
+        // 1. Auth Mapping
+        if (lowMsg.includes('invalid login credentials') || lowMsg.includes('user not found') || lowMsg.includes('invalid credentials')) {
+            return "Dados de acesso incorretos. Verifique e tente novamente.";
         }
-        if (lowMsg.includes('token') || lowMsg.includes('jwt') || lowMsg.includes('auth') || lowMsg.includes('unauthorized') || lowMsg.includes('session expired')) {
-            return "A sua sessão expirou. Faça login novamente.";
+        if (lowMsg.includes('email not confirmed')) {
+            return "Por favor, confirme seu cadastro.";
+        }
+        if (lowMsg.includes('token') || lowMsg.includes('jwt') || lowMsg.includes('auth') || lowMsg.includes('unauthorized') || lowMsg.includes('session expired') || lowMsg.includes('not logged in')) {
+            return "Sessão expirada. Por favor, acesse sua conta novamente.";
         }
 
-        // 2. Mapeamento de Erros de Negócio/Lógicos (Seguros)
+        // 2. Business Logic
         if (lowMsg.includes('insufficient') || lowMsg.includes('balance') || lowMsg.includes('funds')) {
-            return "Saldo insuficiente.";
+            return "Saldo insuficiente para esta operação.";
         }
         if (lowMsg.includes('duplicate') || lowMsg.includes('already exists') || lowMsg.includes('already processed')) {
-            return "Esta operação já foi processada.";
+            return "Esta ação já foi realizada anteriormente.";
         }
         if (lowMsg.includes('user already registered')) {
-            return "Este número já está registado.";
+            return "Este número de telefone já está em uso.";
         }
         if (lowMsg.includes('limit') || lowMsg.includes('exceeded')) {
-            return "Limite diário atingido para esta operação.";
+            return "Limite operacional atingido. Tente mais tarde.";
         }
         if (lowMsg.includes('invalid') && (lowMsg.includes('deposit') || lowMsg.includes('withdrawal'))) {
-            return "Dados de depósito inválidos.";
-        }
-        if (lowMsg.includes('null value') || lowMsg.includes('violates not-null') || lowMsg.includes('required') || lowMsg.includes('check constraint') || lowMsg.includes('violates check')) {
-            return "Verifique os dados informados.";
+            return "Os dados informados para a transação são inválidos.";
         }
 
-        // 3. Detecção de Erros Técnicos Brutos (SQL, DB, Schema) - Estes devem ser mascarados
+        // 3. Technical Error Masking (Crucial for Security)
         const technicalPatterns = [
             /sql/i, /database/i, /invalid input/i, /syntax error/i, /unexpected /i,
-            /fetch/i, /network/i, /cors/i, /table/i, /schema/i, /cache/i, /column/i,
-            /relation/i, /row/i, /type/i, /procedure/i, /violates check/i
+            /fetch/i, /network/i, /cors/i, /table/i, /schema/i, /column/i,
+            /relation/i, /row/i, /procedure/i, /rpc/i, /postgrest/i, /violates/i
         ];
 
         if (technicalPatterns.some(p => p.test(errorMessage))) {
-            return "Não foi possível concluir a operação. Tente novamente.";
+            return "Serviço temporariamente indisponível. Nossa equipe técnica já foi notificada.";
         }
 
-        // 4. Fallback para mensagens genéricas que já sejam seguras (não técnicas)
-        // Se a mensagem original não contém termos técnicos, permitimos a exibição
-        if (errorMessage && errorMessage.length < 100 && !/[{}<>;]/.test(errorMessage)) {
+        // Safe Fallback
+        if (errorMessage && errorMessage.length < 80 && !/[{}<>|\\/]/.test(errorMessage)) {
             return errorMessage;
         }
 
-        return "Ocorreu um erro inesperado";
+        return "Ocorreu um erro no processamento. Por favor, tente em instantes.";
     };
 
     const showError = useCallback((msg: any) => {
         const safeMsg = sanitiseError(msg);
         setStatus('error');
         setMessage(safeMsg);
-        setTimeout(reset, 3000);
+        setTimeout(reset, 4000);
     }, [reset]);
 
     const showWarning = useCallback((msg: any) => {
@@ -117,10 +115,9 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
         successMsg?: string,
         errorMsg?: string
     ): Promise<T> => {
-        // Anti-abuso: Delay progressivo em caso de falhas consecutivas
         const now = Date.now();
-        if (failureCount > 0) {
-            const delay = Math.min(failureCount * 1000, 5000); // Até 5 segundos
+        if (failureCount > 2) {
+            const delay = Math.min(failureCount * 800, 4000);
             const timeSinceLastFailure = now - lastFailureTime;
             if (timeSinceLastFailure < delay) {
                 await new Promise(resolve => setTimeout(resolve, delay - timeSinceLastFailure));
@@ -132,7 +129,6 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
             const p = typeof promise === 'function' ? promise() : promise;
             const result = await p;
 
-            // Sucesso: Reseta contador de falhas
             setFailureCount(0);
             setLastFailureTime(0);
 
@@ -143,7 +139,6 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
             }
             return result;
         } catch (error: any) {
-            // Falha: Incrementa contador e regista horário
             setFailureCount(prev => prev + 1);
             setLastFailureTime(Date.now());
 
