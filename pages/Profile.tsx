@@ -151,7 +151,9 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
               { label: 'Recarregar', icon: 'payments', page: 'deposit' },
               { label: 'Recarga USDT', icon: 'stars', page: 'deposit-usdt' },
               { label: 'Aplicar Fundo', icon: 'trending_up', page: 'investimentos-fundo' },
-
+              { label: 'Convidar Amigos', icon: 'person_add', page: 'invite-page' },
+              { label: 'Campanhas', icon: 'campaign', page: 'campaigns' },
+              { label: 'Enviar Saldo (P2P)', icon: 'send_money', page: 'p2p-transfer' },
               { label: 'Baixar App', icon: 'download', page: 'download-app' },
               { label: 'Resgatar prêmios', icon: 'assignment', page: 'gift-chest' },
             ].map((item, i, arr) => (
