@@ -134,18 +134,20 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased">
       <div className="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto">
 
-        {/* Simple Back Header */}
-        <header className="p-4 flex items-center">
+        {/* Simple Back Header with Title */}
+        <header className="p-4 flex items-center justify-between border-b border-gray-50">
           <button onClick={() => onNavigate('deposit')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-100">
             <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
           </button>
+          <span className="text-[16px] font-bold text-[#0F1111]">Detalhes</span>
+          <div className="w-10"></div>
         </header>
 
-        <main className="flex-1 space-y-7 px-6 pt-2">
+        <main className="flex-1 space-y-7 px-6 pt-4">
 
           {/* Amount & Time Badges */}
           <div className="flex items-center justify-center gap-2">
-            <div className="px-4 py-1.5 bg-[#00A8E1] text-white text-[11px] font-bold rounded shadow-sm">Amount</div>
+            <div className="px-4 py-1.5 bg-[#00A8E1] text-white text-[11px] font-bold rounded shadow-sm uppercase">Quantia</div>
             <div className="px-4 py-1.5 bg-[#FFD814] text-[#0F1111] text-[11px] font-bold rounded shadow-sm tabular-nums">{timeLeft}</div>
           </div>
 
@@ -161,7 +163,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
             {/* Bank Name */}
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Bank Name</label>
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Nome do Banco</label>
               <div className="flex gap-2">
                 <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden">
                   {deposit.nome_banco || deposit.nome_do_banco || "N/A"}
@@ -174,7 +176,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
             {/* Account Name */}
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Account Name</label>
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Nome da Conta</label>
               <div className="flex gap-2">
                 <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden whitespace-nowrap">
                   {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
@@ -187,7 +189,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
             {/* Account Number */}
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Account Number</label>
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Número da Conta</label>
               <div className="flex gap-2">
                 <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-mono font-bold text-[#0F1111] text-[11px] overflow-hidden">
                   {deposit.iban}
@@ -202,12 +204,12 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
             {/* Your Name */}
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Your Name</label>
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Seu Nome</label>
               <input
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 className="w-full h-[52px] bg-white border border-gray-200 rounded-lg px-4 text-sm font-medium outline-none focus:border-[#00A8E1] transition-colors"
-                placeholder="Please enter your name"
+                placeholder="Por favor, insira o seu nome"
                 type="text"
               />
             </div>
@@ -226,7 +228,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
               onClick={handleSubmit}
               className="w-full h-[52px] bg-[#FFD814] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase shadow-md disabled:opacity-50"
             >
-              {loading ? 'Sincronizando...' : 'Submit'}
+              {loading ? 'Sincronizando...' : 'Enviar'}
             </button>
           </div>
 
