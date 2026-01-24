@@ -232,7 +232,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   onChange={handleIbanChange}
                   maxLength={25}
                   className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] font-mono placeholder:text-[#565959] focus:outline-none focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
-                  placeholder="AO06 0000 0000..."
+                  placeholder={bankName ? `Digite o IBAN do ${bankName}` : "AO06 0000 0000..."}
                   type="text"
                 />
               </div>
