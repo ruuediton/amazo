@@ -179,9 +179,9 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                     <h3 className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Segurança e Acesso</h3>
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
                         {[
-                            { label: 'Trocar Senha', action: () => onNavigate('change-password'), icon: 'lock_reset' },
-                            { label: 'Definir Senha de Retirada', action: () => onNavigate('withdraw-password'), icon: 'pin' },
-                            { label: 'Alterar Senha de Retirada', action: () => onNavigate('update-withdraw-password'), icon: 'lock_person' },
+                            { label: 'Senha login', action: () => onNavigate('change-password'), icon: 'lock_reset' },
+                            { label: 'PIN de Retirada', action: () => onNavigate('withdraw-password'), icon: 'pin' },
+                            { label: 'Alterar PIN de Retirada', action: () => onNavigate('update-withdraw-password'), icon: 'lock_person' },
                         ].map((link, i, arr) => (
                             <button
                                 key={link.label}

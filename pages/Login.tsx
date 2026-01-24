@@ -120,14 +120,11 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
 
             {/* Password Field */}
             <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium leading-none text-gray-700">Senha</label>
-                <button type="button" className="text-xs font-bold text-primary hover:underline">Esqueceu a senha?</button>
-              </div>
+              <label className="text-[13px] font-bold text-[#0F1111]">Senha</label>
               <div className="relative">
                 <input
-                  className="flex w-full rounded-lg border border-border-dark bg-surface-dark px-4 pr-12 h-12 text-base focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-gray-600"
-                  placeholder="Digite sua senha (6 dígitos)"
+                  className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white px-4 pr-12 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] focus:outline-none transition-all placeholder:text-gray-500"
+                  placeholder="Sua senha Amazon"
                   type={showPassword ? "text" : "password"}
                   value={password}
                   inputMode="numeric"
@@ -140,50 +137,40 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 hover:text-primary transition-colors"
+                  className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-gray-600 hover:text-black transition-colors"
                 >
-                  <span className="material-symbols-outlined text-xl">
+                  <span className="material-symbols-outlined text-[20px]">
                     {showPassword ? 'visibility' : 'visibility_off'}
                   </span>
                 </button>
               </div>
             </div>
 
-            {/* Remember Me */}
-            <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                id="remember"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="size-5 rounded border-amazon-border bg-surface-dark text-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer"
-              />
-              <label htmlFor="remember" className="text-sm font-bold text-text-secondary cursor-pointer italic">Lembrar de mim</label>
-            </div>
-
             {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className={`mt-4 flex w-full items-center justify-center rounded-lg bg-primary py-3 text-base font-black text-text-primary shadow-lg shadow-primary/20 hover:bg-primary-hover active:scale-[0.98] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`mt-4 flex w-full items-center justify-center rounded-[8px] bg-[#FFD814] py-3 text-[15px] font-normal text-[#0F1111] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {loading ? 'Entrando...' : 'Entrar'}
+              {loading ? 'Entrando...' : 'Fazer Login'}
             </button>
 
             {/* Footer Link */}
-            <div className="text-center mt-4">
-              <p className="text-sm font-medium text-text-secondary">
-                Não tem uma conta?
-                <button type="button" onClick={() => onNavigate('register')} className="text-primary hover:text-primary-hover ml-1 font-bold">Criar conta</button>
-              </p>
+            <div className="text-center mt-6 relative">
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-[#FFFFFF] px-2 text-[#565959] text-[12px]">Novo na Amazon?</span>
+              </div>
             </div>
-          </form>
 
-          {/* Security Branding */}
-          <div className="mt-16 flex flex-col items-center opacity-30">
-            <span className="material-symbols-outlined text-3xl mb-2">lock</span>
-            <p className="text-[10px] font-bold uppercase tracking-widest">Segurança amazon</p>
-          </div>
+            <button
+              type="button"
+              onClick={() => onNavigate('register')}
+              className="w-full py-3 rounded-[8px] bg-white border border-[#D5D9D9] text-[#0F1111] text-[14px] font-medium hover:bg-gray-50 active:scale-[0.99] shadow-sm transition-all"
+            >
+              Criar sua conta Amazon
+            </button>
+          </form>
         </main>
       </div>
     </div>
