@@ -159,6 +159,13 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
     ? `Digite o IBAN do ${bankName} (Ex: AO06 ${currentBankPrefix || '....'} ...)`
     : "AO06 0000 0000...";
 
+  const maskIban = (val: string) => {
+    if (!val) return '';
+    const clean = val.replace(/\s/g, '');
+    if (clean.length < 13) return val;
+    return `${clean.substring(0, 8)}*****${clean.substring(clean.length - 9)}`;
+  };
+
   return (
     <div className="font-sans antialiased bg-white text-[#0F1111] min-h-screen flex flex-col selection:bg-amber-100">
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">

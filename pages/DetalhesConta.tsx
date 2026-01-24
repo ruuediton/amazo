@@ -41,6 +41,13 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
     }
   };
 
+  const maskIban = (val: string) => {
+    if (!val) return '';
+    const clean = val.replace(/\s/g, '');
+    if (clean.length < 13) return val;
+    return `${clean.substring(0, 8)}*****${clean.substring(clean.length - 9)}`;
+  };
+
   const getBankStyle = (name: string) => {
     if (!name) return 'from-[#2d2a1e] via-[#3d3a2e] to-[#1d1a0e]';
     const n = name.toUpperCase();
@@ -173,7 +180,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
                   <div className="mt-auto mb-2">
                     <p className="text-[7px] text-black/60 font-black uppercase tracking-[0.3em] mb-1">IBAN</p>
                     <p className="text-[16px] font-mono font-bold text-black tracking-[0.08em] drop-shadow-md select-all leading-none">
-                      {bankInfo?.iban?.match(/.{1,4}/g)?.join(' ')}
+                      {maskIban(bankInfo?.iban)}
                     </p>
                   </div>
 

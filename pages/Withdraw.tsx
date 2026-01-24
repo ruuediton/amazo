@@ -111,12 +111,17 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         setAmount('');
         // Atualiza saldo
         fetchData();
-        // Opcional: navegar para histórico
-        // onNavigate('withdrawal-history');
       }, "Processando saque...");
     } catch (error: any) {
       showToast?.(error.message || "Erro ao processar saque.", "error");
     }
+  };
+
+  const maskIban = (val: string) => {
+    if (!val) return '';
+    const clean = val.replace(/\s/g, '');
+    if (clean.length < 13) return val;
+    return `${clean.substring(0, 8)}*****${clean.substring(clean.length - 9)}`;
   };
 
   if (loading) return (
@@ -200,7 +205,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               </div>
               <div className="flex-1 overflow-hidden">
                 <p className="text-[14px] font-bold text-[#0F1111] truncate">{bankAccount.nome_banco}</p>
-                <p className="text-[11px] text-[#565959] font-mono truncate">{bankAccount.iban}</p>
+                <p className="text-[11px] text-[#565959] font-mono truncate">{maskIban(bankAccount.iban)}</p>
               </div>
               <span className="material-symbols-outlined text-green-600">check_circle</span>
             </div>

@@ -69,6 +69,13 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
     return val.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA' }).replace('AOA', 'Kz');
   };
 
+  const maskIban = (val: string) => {
+    if (!val) return '';
+    const clean = val.replace(/\s/g, '');
+    if (clean.length < 13) return val;
+    return `${clean.substring(0, 8)}*****${clean.substring(clean.length - 9)}`;
+  };
+
   return (
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-10">
       {/* Header */}
@@ -110,7 +117,7 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
               <div className="pt-3 border-t border-gray-50 flex justify-between items-end gap-4">
                 <div className="flex-1 min-w-0">
                   <span className="text-[10px] text-[#565959] block mb-0.5">IBAN de Destino</span>
-                  <p className="text-[12px] font-mono text-[#0F1111] truncate">{record.iban}</p>
+                  <p className="text-[12px] font-mono text-[#0F1111] truncate">{maskIban(record.iban)}</p>
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] text-[#565959] block mb-0.5">Taxa (12%)</span>
