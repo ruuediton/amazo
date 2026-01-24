@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
@@ -9,310 +8,255 @@ interface Props {
   showToast?: (message: string, type: 'success' | 'error' | 'warning' | 'info') => void;
 }
 
-interface WithdrawStats {
-  balance: number;
-  reloaded_amount: number;
-  full_name: string;
-  isVerified: boolean;
-  isBlocked: boolean;
-  blockDate: string | null;
-  failedAttempts: number;
-}
-
 const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
   const { withLoading } = useLoading();
-  const [amount, setAmount] = useState<string>('');
-  const [loading, setLoading] = useState(false);
-  const [screenData, setScreenData] = useState<any>(null);
-  const [showPinModal, setShowPinModal] = useState(false);
+  const [balance, setBalance] = useState(0);
+  const [bankAccount, setBankAccount] = useState<any>(null);
+  const [amount, setAmount] = useState('');
   const [pin, setPin] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const quickAmounts = [5000, 10000, 20000, 50000];
   const FEE_PERCENT = 0.12;
 
   useEffect(() => {
-    fetchInitialData();
+    fetchData();
   }, []);
 
-  const fetchInitialData = async () => {
-    setLoading(true);
+  const fetchData = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        onNavigate('login');
-        return;
+      if (!user) return onNavigate('login');
+
+      // 1. Get Balance
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('balance')
+        .eq('id', user.id)
+        .single();
+
+      if (profile) setBalance(profile.balance || 0);
+
+      // 2. Get Bank Account
+      const { data: banks } = await supabase.rpc('get_my_bank_accounts');
+      if (banks && banks.length > 0) {
+        setBankAccount(banks[0]);
       }
 
-      const { data, error } = await supabase.rpc('get_withdrawal_screen_data');
-      if (error) {
-        console.error('RPC Error:', error);
-        throw error;
-      }
-      setScreenData(data);
-    } catch (err: any) {
-      console.error('Fetch Error:', err);
-      showToast?.("Erro ao carregar dados. Verifique sua conexão.", "error");
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  const validateWithdrawal = async () => {
-    if (!screenData) {
-      showToast?.('Aguarde o carregamento...', 'info');
-      fetchInitialData();
-      return;
-    }
+  const calculateFee = () => {
+    const val = parseFloat(amount);
+    if (isNaN(val)) return 0;
+    return val * FEE_PERCENT;
+  };
 
-    const now = new Date();
-    const angolaHour = new Date(now.toLocaleString("en-US", { timeZone: "Africa/Luanda" })).getHours();
+  const calculateLiquid = () => {
+    const val = parseFloat(amount);
+    if (isNaN(val)) return 0;
+    return val - calculateFee();
+  };
 
-    if (angolaHour < 9 || angolaHour >= 14) {
-      showToast?.('Retiradas disponíveis das 09h às 14h (Angola).', 'error');
-      return;
-    }
+  const handleQuickAmount = (val: number) => {
+    setAmount(val.toString());
+  };
 
-    if (!screenData?.has_bank_account) {
-      showToast?.('Vincule uma conta bancária primeiro.', 'warning');
+  const handleInitiateWithdraw = () => {
+    if (!bankAccount) {
+      showToast?.("Você precisa vincular uma conta bancária.", "warning");
       onNavigate('add-bank');
       return;
     }
 
-    if (screenData?.has_pending_withdrawal) {
-      showToast?.('Você já possui uma retirada em processamento.', 'error');
+    const val = parseFloat(amount);
+    if (!amount || isNaN(val) || val <= 0) {
+      showToast?.("Digite um valor válido.", "error");
       return;
     }
 
-    if (screenData?.is_blocked) {
-      showToast?.(`Conta temporariamente bloqueada.`, 'error');
+    if (val < 300) { // Exemplo de mínimo
+      showToast?.("O valor mínimo para saque é 300 Kz.", "warning");
       return;
     }
 
-    const numAmount = parseFloat(amount);
-    if (!amount || isNaN(numAmount)) {
-      showToast?.('Insira um valor válido.', 'warning');
-      return;
-    }
-
-    if (numAmount < 300) {
-      showToast?.('Mínimo: 300 Kz.', 'warning');
-      return;
-    }
-
-    if (numAmount > screenData.balance) {
-      showToast?.('Saldo insuficiente.', 'error');
+    if (val > balance) {
+      showToast?.("Saldo insuficiente.", "error");
       return;
     }
 
     setShowPinModal(true);
   };
 
-  const handleConfirmWithdraw = async () => {
-    if (pin.length !== 4) return;
-
-    setSubmitting(true);
+  const confirmWithdraw = async () => {
     try {
-      const { data, error } = await supabase.rpc('request_withdrawal', {
-        p_amount: parseFloat(amount),
-        p_pin: pin
-      });
+      await withLoading(async () => {
+        const val = parseFloat(amount);
 
-      if (error) throw error;
+        // RPC call to process withdrawal
+        const { error } = await supabase.rpc('request_withdrawal', {
+          p_amount: val,
+          p_pin: pin
+        });
 
-      showToast?.('Retirada solicitada com sucesso!', 'success');
-      setShowPinModal(false);
-      setPin('');
-      setTimeout(() => onNavigate('withdrawal-history'), 1000);
+        if (error) throw error;
+
+        showToast?.("Saque solicitado com sucesso!", "success");
+        setShowPinModal(false);
+        setPin('');
+        setAmount('');
+        // Atualiza saldo
+        fetchData();
+        // Opcional: navegar para histórico
+        // onNavigate('withdrawal-history');
+      }, "Processando saque...");
     } catch (error: any) {
-      showToast?.(error.message || 'Erro ao processar retirada.', 'error');
-      setPin('');
-    } finally {
-      setSubmitting(false);
+      showToast?.(error.message || "Erro ao processar saque.", "error");
     }
   };
 
-  const currentFee = amount ? (parseFloat(amount) * FEE_PERCENT) : 0;
-  const receiveAmount = amount ? (parseFloat(amount) - currentFee) : 0;
-
-  if (loading && !screenData) {
-    return (
-      <div className="bg-background-dark min-h-screen flex items-center justify-center">
-        <SpokeSpinner size="w-8 h-8" />
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="flex justify-center items-center h-screen bg-white">
+      <SpokeSpinner size="w-8 h-8" color="text-[#FFD814]" />
+    </div>
+  );
 
   return (
-    <div className="bg-[#0a0a0b] font-display text-white antialiased min-h-screen flex flex-col selection:bg-amber-500/30 pb-24">
-      {/* Premium Header */}
-      <header className="sticky top-0 z-50 flex items-center justify-between bg-[#0a0a0b]/80 px-6 py-4 backdrop-blur-xl border-b border-white/5">
-        <button
-          onClick={() => onNavigate('profile')}
-          className="group flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 active:scale-90 transition-all border border-white/10"
-        >
-          <span className="material-symbols-outlined text-amber-500 text-[22px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
+    <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20">
+      {/* Header */}
+      <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
+          <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <h1 className="flex-1 text-center text-[15px] font-black uppercase tracking-[0.1em] text-white pr-10">
-          Retirar kwanza
-        </h1>
+        <span className="font-bold text-[16px]">Retirar Kwanza</span>
+        <div className="size-10"></div>
       </header>
 
-      <main className="flex-1 flex flex-col px-6 pt-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-        {/* Neon Balance Display */}
-        <div className="relative mb-10 group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 to-amber-200/20 blur-2xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
-          <div className="relative bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[32px] border border-white/10 shadow-2xl">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="material-symbols-outlined text-amber-500 text-[18px]">account_balance_wallet</span>
-              <p className="text-gray-400 text-[11px] font-black uppercase tracking-widest">Saldo para Retirada</p>
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-amber-500">Kz</span>
-              <h2 className="text-4xl font-black text-white tracking-tighter">
-                {screenData?.balance?.toLocaleString() || '0,00'}
-              </h2>
-            </div>
+      <main className="p-5 space-y-6">
+        {/* Balance Card - Amazon Style */}
+        <div className="bg-[#FFD814] rounded-xl p-6 border border-[#FCD200] shadow-sm relative overflow-hidden">
+          <div className="absolute right-[-20px] top-[-20px] opacity-10">
+            <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>
           </div>
+          <p className="text-[12px] font-bold uppercase tracking-widest text-[#0F1111]/70 mb-1">Saldo Disponível</p>
+          <h1 className="text-4xl font-extrabold text-[#0F1111]">Kz {balance.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</h1>
         </div>
 
-        {/* Input Area */}
-        <div className="space-y-6">
-          <div className="space-y-2 group">
-            <label className="block text-[11px] font-black text-gray-500 ml-1 uppercase tracking-widest group-focus-within:text-amber-500 transition-colors">
-              Quantia Desejada
-            </label>
-            <div className="relative flex items-center bg-white/[0.03] rounded-2xl border border-white/10 h-16 px-5 focus-within:border-amber-500/50 transition-all">
-              <span className="text-xl font-bold text-amber-500 mr-3">Kz</span>
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Introduza o valor"
-                className="w-full bg-transparent border-none p-0 text-[18px] font-bold text-white placeholder:text-gray-700 focus:ring-0"
-              />
-            </div>
-            {/* Fee Metadata */}
-            <div className="flex justify-between items-center px-2 pt-1 border-t border-white/5">
-              <div className="flex items-center gap-1.5 grayscale">
-                <span className="material-symbols-outlined text-xs">analytics</span>
-                <span className="text-[10px] text-gray-500 font-bold uppercase tracking-tight">Taxa 12%: Kz {currentFee.toLocaleString()}</span>
-              </div>
-              <div className="flex items-center gap-1.5 font-black text-amber-500">
-                <span className="text-[10px] uppercase tracking-wide">Líquido: Kz {receiveAmount.toLocaleString()}</span>
-              </div>
-            </div>
+        {/* Input */}
+        <div className="space-y-2">
+          <label className="text-[13px] font-bold text-[#0F1111]">Quantia Desejada</label>
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-gray-400">Kz</span>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="0,00"
+              className="w-full h-14 pl-12 pr-4 bg-white border border-[#D5D9D9] rounded-xl text-xl font-bold focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] outline-none transition-all placeholder:text-gray-300"
+            />
           </div>
-
-          {/* Quick Amount Chips */}
-          <div className="grid grid-cols-4 gap-2">
-            {quickAmounts.map(val => (
-              <button
-                key={val}
-                onClick={() => setAmount(val.toString())}
-                className="h-11 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-[12px] font-bold hover:bg-amber-500 hover:text-black hover:border-amber-500 active:scale-95 transition-all shadow-sm"
-              >
-                {val >= 1000 ? `${val / 1000}k` : val}
-              </button>
-            ))}
-          </div>
-
-          {/* Destination Account Card */}
-          <div className="space-y-2 pt-2">
-            <div className="flex justify-between items-center px-1">
-              <label className="text-[11px] font-black text-gray-500 uppercase tracking-widest">Canal de Destino</label>
-              <button onClick={() => onNavigate('add-bank')} className="text-[11px] font-black text-amber-500 uppercase">Alterar</button>
+          {/* Fee Info - Flat */}
+          {amount && !isNaN(parseFloat(amount)) && (
+            <div className="flex justify-between items-center text-[11px] bg-gray-50 p-2 rounded-lg border border-gray-100">
+              <span className="text-gray-500">Taxa (12%): <span className="font-bold text-red-500">- Kz {calculateFee().toLocaleString()}</span></span>
+              <span className="font-bold text-green-600">Receberá: Kz {calculateLiquid().toLocaleString()}</span>
             </div>
-
-            {screenData?.has_bank_account ? (
-              <div className="bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 rounded-2xl p-4 flex items-center gap-4 group hover:bg-white/[0.08] transition-colors cursor-pointer" onClick={() => onNavigate('add-bank')}>
-                <div className="size-12 rounded-2xl bg-amber-500 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20">
-                  <span className="material-symbols-outlined text-black text-[28px]">payments</span>
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <p className="text-[15px] font-black text-white truncate">{screenData.bank_name}</p>
-                  <p className="text-[11px] text-gray-500 font-mono tracking-wider">{screenData.masked_iban}</p>
-                </div>
-                <span className="material-symbols-outlined text-amber-500 ml-auto animate-pulse">check_circle</span>
-              </div>
-            ) : (
-              <button
-                onClick={() => onNavigate('add-bank')}
-                className="w-full bg-white/5 border border-dashed border-white/20 rounded-2xl p-6 flex flex-col items-center gap-2 hover:bg-white/10 transition-all"
-              >
-                <div className="size-10 rounded-full bg-gray-900 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-gray-500">add_task</span>
-                </div>
-                <p className="text-[11px] font-black text-white uppercase tracking-widest">Ativar Conta Bancária</p>
-              </button>
-            )}
-          </div>
+          )}
         </div>
+
+        {/* Quick Amounts */}
+        <div className="grid grid-cols-4 gap-2">
+          {[2000, 5000, 10000, 20000].map(val => (
+            <button
+              key={val}
+              onClick={() => handleQuickAmount(val)}
+              className="py-2.5 bg-white border border-[#D5D9D9] rounded-lg text-[13px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
+            >
+              {val >= 1000 ? `${val / 1000}k` : val}
+            </button>
+          ))}
+        </div>
+
+        {/* Bank Account */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-[13px] font-bold text-[#0F1111]">Conta de Destino</span>
+            {bankAccount && <button onClick={() => onNavigate('add-bank')} className="text-[12px] font-bold text-[#007185]">Alterar</button>}
+          </div>
+
+          {bankAccount ? (
+            <div className="flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl bg-white shadow-sm">
+              <div className="size-10 rounded-lg bg-gray-100 flex items-center justify-center text-[#565959]">
+                <span className="material-symbols-outlined">account_balance</span>
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <p className="text-[14px] font-bold text-[#0F1111] truncate">{bankAccount.nome_banco}</p>
+                <p className="text-[11px] text-[#565959] font-mono truncate">{bankAccount.iban}</p>
+              </div>
+              <span className="material-symbols-outlined text-green-600">check_circle</span>
+            </div>
+          ) : (
+            <button
+              onClick={() => onNavigate('add-bank')}
+              className="w-full py-4 border-2 border-dashed border-[#D5D9D9] rounded-xl flex items-center justify-center gap-2 text-[#565959] font-bold text-[13px] hover:bg-gray-50 transition-colors"
+            >
+              <span className="material-symbols-outlined text-[18px]">add</span>
+              Adicionar Conta Bancária
+            </button>
+          )}
+        </div>
+
       </main>
 
-      {/* Glossy Bottom Button */}
-      <div className="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b]/90 to-transparent">
+      <div className="fixed bottom-0 left-0 w-full p-4 bg-white border-t border-gray-100">
         <button
-          onClick={validateWithdrawal}
-          disabled={submitting}
-          className="relative group w-full h-16 overflow-hidden rounded-2xl shadow-2xl shadow-amber-500/10"
+          onClick={handleInitiateWithdraw}
+          className="w-full bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-normal text-[15px] py-3.5 rounded-lg shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-400 group-hover:scale-105 transition-transform duration-500"></div>
-          <div className="relative flex items-center justify-center font-black text-black text-sm uppercase tracking-[0.2em]">
-            {submitting ? (
-              <SpokeSpinner size="w-6 h-6" className="text-black" />
-            ) : (
-              'Solicitar Saque'
-            )}
-          </div>
+          Solicitar Saque
         </button>
       </div>
 
-      {/* Security Pin Bottom Modal */}
+      {/* Pin Modal */}
       {showPinModal && (
-        <div className="fixed inset-0 z-[100] flex items-end justify-center px-4 pb-10">
-          <div className="absolute inset-0 bg-[#0a0a0b]/95 backdrop-blur-md" onClick={() => !submitting && setShowPinModal(false)}></div>
-          <div className="relative w-full max-w-sm bg-[#121214] border border-white/10 rounded-[40px] p-8 shadow-2xl animate-in slide-in-from-bottom-20 duration-500">
-            <div className="flex flex-col items-center mb-8">
-              <div className="size-16 bg-amber-500/10 rounded-full flex items-center justify-center mb-4 border border-amber-500/20">
-                <span className="material-symbols-outlined text-amber-500 text-[32px]">dialpad</span>
-              </div>
-              <h2 className="text-xl font-black text-white mb-1">PIN Operacional</h2>
-              <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em]">Criptografia de 256 bits</p>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white w-full max-w-sm rounded-[24px] p-6 shadow-2xl animate-in slide-in-from-bottom-10 duration-300">
+            <div className="text-center mb-6">
+              <span className="size-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                <span className="material-symbols-outlined text-[#0F1111]">lock</span>
+              </span>
+              <h3 className="text-lg font-bold text-[#0F1111]">Confirme com seu PIN</h3>
+              <p className="text-xs text-gray-500 mt-1">Digite sua senha de retirada para confirmar</p>
             </div>
 
-            <div className="space-y-8">
-              <div className="flex justify-center">
-                <input
-                  type="password"
-                  value={pin}
-                  onChange={(e) => {
-                    const val = e.target.value.replace(/\D/g, '');
-                    if (val.length <= 4) setPin(val);
-                  }}
-                  placeholder="0000"
-                  autoFocus
-                  maxLength={4}
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl h-16 text-center text-4xl font-black text-amber-500 tracking-[0.5em] focus:border-amber-500/50 focus:ring-0 transition-all placeholder:text-gray-800"
-                />
-              </div>
+            <input
+              type="password"
+              maxLength={4}
+              value={pin}
+              onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+              placeholder="••••"
+              className="w-full h-14 text-center text-3xl tracking-[8px] font-bold border border-[#D5D9D9] rounded-xl focus:border-[#E77600] outline-none mb-6"
+              autoFocus
+            />
 
-              <div className="flex gap-4">
-                <button
-                  disabled={submitting}
-                  onClick={() => setShowPinModal(false)}
-                  className="flex-1 h-14 bg-white/5 text-gray-400 font-black text-[12px] uppercase tracking-widest rounded-2xl border border-white/5 active:scale-95 transition-all"
-                >
-                  Cancelar
-                </button>
-                <button
-                  disabled={submitting || pin.length < 4}
-                  onClick={handleConfirmWithdraw}
-                  className="flex-1 h-14 bg-white text-black font-black text-[12px] uppercase tracking-widest rounded-2xl active:scale-95 transition-all disabled:opacity-30"
-                >
-                  {submitting ? <SpokeSpinner size="w-5 h-5" /> : 'Confirmar'}
-                </button>
-              </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowPinModal(false)}
+                className="flex-1 py-3 border border-[#D5D9D9] rounded-lg font-bold text-[#0F1111] hover:bg-gray-50"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmWithdraw}
+                disabled={pin.length < 4}
+                className="flex-1 py-3 bg-[#FFD814] border border-[#FCD200] rounded-lg font-normal text-[#0F1111] disabled:opacity-50"
+              >
+                Confirmar
+              </button>
             </div>
           </div>
         </div>
