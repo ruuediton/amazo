@@ -208,7 +208,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                 <div>
                   <span className="text-[11px] font-bold text-[#565959] uppercase tracking-wider mb-1 block">IBAN</span>
                   <p className="text-[15px] font-mono font-medium text-[#0F1111] bg-gray-50 p-3 rounded-lg border border-gray-200 break-all">
-                    {maskIban(existingBank?.iban)}
+                    {existingBank?.iban}
                   </p>
                 </div>
               </div>
