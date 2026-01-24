@@ -91,6 +91,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Sessão expirada.");
 
+      // 1. Upload File to get URL
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}_${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage
@@ -99,20 +100,28 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
       if (uploadError) throw uploadError;
 
-      const { error: updateError } = await supabase
-        .from('depositos_clientes')
-        .update({
-          nome_pagador: userName,
-          comprovativo_url: fileName,
-          estado_de_pagamento: 'pendente'
-        })
-        .eq('id', deposit.id);
+      // 2. Get Public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('comprovativos')
+        .getPublicUrl(fileName);
 
-      if (updateError) throw updateError;
+      // 3. Construct WhatsApp Message
+      const message = `
+ID: ${deposit.id}
+VALOR: ${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} Kz
+BANCO: ${deposit.nome_banco || deposit.nome_do_banco}
+NOME DO PAGADOR: ${userName}
+COMPROVANTE: ${publicUrl}
 
-      showToast?.("Enviado com sucesso!", "success");
+Olá fiz um deposíto para a confirmação.`.trim();
+
+      // 4. Redirect to WhatsApp
+      const whatsappUrl = `https://wa.me/244933850746?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+
+      showToast?.("Redirecionando para o WhatsApp...", "success");
       localStorage.removeItem('current_deposit_data');
-      onNavigate('deposit-history');
+      onNavigate('home');
 
     } catch (err: any) {
       showToast?.("Erro: " + err.message, "error");
