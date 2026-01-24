@@ -94,7 +94,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}_${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage
-        .from('comprovantes')
+        .from('comprovativos')
         .upload(fileName, file);
 
       if (uploadError) throw uploadError;
