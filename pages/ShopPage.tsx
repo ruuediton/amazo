@@ -88,7 +88,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
         if (error) throw error;
         if (data?.success === false) throw new Error(data.message);
 
-        showToast?.(`Compra realizada com sucesso!`, "success");
+        showToast?.(data?.message || `Compra realizada com sucesso!`, "success");
         setPurchasedIds(prev => [...prev, selectedProduct.id]);
         setSelectedProduct(null);
         setTimeout(() => onNavigate('purchase-history'), 800);
@@ -185,8 +185,8 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                       onClick={() => handleOpenModal(product)}
                       disabled={isPurchased}
                       className={`w-full py-2.5 rounded-full text-[13px] font-medium shadow-sm transition-all active:scale-[0.98] ${isPurchased
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
-                          : 'bg-[#FFD814] hover:bg-[#F7CA00] text-black border border-[#FCD200]'
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
+                        : 'bg-[#FFD814] hover:bg-[#F7CA00] text-black border border-[#FCD200]'
                         }`}
                     >
                       {isPurchased ? 'Já adquirido' : 'Adicionar ao carrinho'}
