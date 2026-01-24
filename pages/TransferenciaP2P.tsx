@@ -14,11 +14,42 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
     const [amount, setAmount] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [receiverName, setReceiverName] = useState<string | null>(null);
+    const [isValidatingPhone, setIsValidatingPhone] = useState(false);
 
     const feePercentage = 0.02; // 2%
     const amountNum = Number(amount);
     const fee = amountNum > 0 ? amountNum * feePercentage : 0;
     const total = amountNum + fee;
+
+    // Real-time phone validation
+    const handlePhoneChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const phone = e.target.value;
+        setReceiverPhone(phone);
+        setReceiverName(null);
+
+        if (phone.length >= 9) {
+            setIsValidatingPhone(true);
+            try {
+                // Simple check if user exists (can be improved with specific RPC if needed to return partial name)
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('full_name')
+                    .eq('phone', phone)
+                    .single();
+
+                if (data) {
+                    setReceiverName(data.full_name);
+                } else {
+                    // Silent fail or custom UI indication
+                }
+            } catch (err) {
+                // ignore
+            } finally {
+                setIsValidatingPhone(false);
+            }
+        }
+    };
 
     const handleTransfer = async () => {
         if (!receiverPhone || !amount || !password) {
@@ -26,8 +57,12 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
             return;
         }
 
-        if (amountNum < 100) {
-            showToast?.('Mínimo de transferência é 100 Kz.', 'warning');
+        if (amountNum < 1000) {
+            showToast?.('Mínimo de transferência é 1.000 Kz.', 'warning');
+            return;
+        }
+        if (amountNum > 10000) {
+            showToast?.('Máximo de transferência é 10.000 Kz.', 'warning');
             return;
         }
 
@@ -44,7 +79,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                 if (error) throw error;
 
                 if (data && data.success) {
-                    showToast?.(`Transferência realizada! Enviado: ${data.sent_amount} Kz (+${data.fee} taxa)`, 'success');
+                    showToast?.(data.message || "Tranferencia sucedida", 'success');
                     onNavigate('historico-conta');
                 } else {
                     throw new Error(data?.message || 'Erro na transferência.');
@@ -73,7 +108,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
             </header>
 
             <main className="flex-1 flex flex-col px-6 pt-8 animate-in fade-in slide-in-from-bottom-8 duration-500 max-w-md mx-auto">
-
+                
                 {/* Info Card - Light Style */}
                 <div className="relative mb-8">
                     <div className="bg-gray-50 border border-gray-100 p-6 rounded-[24px] shadow-sm flex items-center gap-4 relative overflow-hidden">
@@ -90,14 +125,20 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <div className="space-y-6">
                     {/* Receiver Input */}
                     <div className="space-y-2">
-                        <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Telefone do Destinatário</label>
-                        <div className="relative flex items-center bg-white rounded-xl border border-[#D5D9D9] h-14 px-4 focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600] transition-all shadow-sm">
-                            <span className="material-symbols-outlined text-gray-400 mr-3">person_search</span>
+                        <div className="flex justify-between">
+                            <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Telefone do Destinatário</label>
+                            {isValidatingPhone && <span className="text-[10px] text-[#e77600] animate-pulse">Verificando...</span>}
+                            {receiverName && !isValidatingPhone && <span className="text-[10px] text-green-600 font-bold truncate max-w-[150px]">{receiverName}</span>}
+                        </div>
+                        <div className={`relative flex items-center bg-white rounded-xl border h-14 px-4 transition-all shadow-sm ${receiverName ? 'border-green-500 ring-1 ring-green-500' : 'border-[#D5D9D9] focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600]'}`}>
+                            <span className={`material-symbols-outlined mr-3 ${receiverName ? 'text-green-500' : 'text-gray-400'}`}>
+                                {receiverName ? 'check_circle' : 'person_search'}
+                            </span>
                             <input
                                 type="tel"
                                 placeholder="Nº do destinatário"
                                 value={receiverPhone}
-                                onChange={(e) => setReceiverPhone(e.target.value)}
+                                onChange={handlePhoneChange}
                                 className="w-full bg-transparent border-none p-0 text-[16px] font-bold text-[#0F1111] placeholder:text-gray-400 focus:ring-0"
                             />
                         </div>
@@ -158,7 +199,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     >
                         {loading ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar Envio'}
                     </button>
-
+                    
                     <p className="text-center text-[11px] text-gray-400 font-medium px-4 leading-relaxed italic">
                         O envio de saldo entre contas Amazon é instantâneo e seguro. Verifique os dados antes de confirmar.
                     </p>
