@@ -15,7 +15,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
   const [currentProfile, setCurrentProfile] = React.useState<any>(profile);
 
   const [stats, setStats] = React.useState<any>({
-    balance: 0,
+    balance: profile?.balance || 0,
     reloaded_amount: 0,
     retirada_total: 0,
     renda_diaria: 0,
@@ -24,58 +24,30 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
   });
 
   const fetchData = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
+    try {
       // Fetch consolidated stats via RPC
       const { data: statsData, error: statsError } = await supabase.rpc('get_profile_stats');
       if (!statsError && statsData) {
         setStats(statsData);
       }
 
-      // Fetch profile for name/invite_code/phone
-      const { data: profileData } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (profileData) {
-        setCurrentProfile(profileData);
-
-        // Use phone from profiles table if available
-        let displayPhone = profileData.phone || user.phone || user.user_metadata?.phone || "";
-        if (displayPhone && !displayPhone.startsWith('+')) {
-          displayPhone = `+244 ${displayPhone}`;
-        }
-        setUserPhone(displayPhone);
-      } else {
-        // Fallback to auth if profile not found
-        let phone = user.phone || user.user_metadata?.phone || "";
-        if (phone && !phone.startsWith('+')) {
-          phone = `+244 ${phone}`;
-        }
-        setUserPhone(phone);
+      // Update phone display
+      let displayPhone = profile?.phone || "";
+      if (displayPhone && !displayPhone.startsWith('+')) {
+        displayPhone = `+244 ${displayPhone}`;
       }
+      setUserPhone(displayPhone);
+    } catch (err) {
+      console.error("Profile fetch stats error:", err);
     }
   };
 
   React.useEffect(() => {
-    fetchData();
-
-    // Subscribe to profile changes for "real-time" balance updates
-    const subscription = supabase
-      .channel('profile-stats-realtime')
-      .on(
-        'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'profiles' },
-        () => fetchData()
-      )
-      .subscribe();
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+    if (profile) {
+      setCurrentProfile(profile);
+      fetchData();
+    }
+  }, [profile]);
 
   if (!currentProfile || !stats.balance === undefined) return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black/5 backdrop-blur-sm">

@@ -242,7 +242,10 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                 <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-2">unid</span>
               </div>
               <button
-                onClick={() => setQuantity(prev => prev + 1)}
+                onClick={() => setQuantity(prev => {
+                  const available = selectedProduct.purchase_limit - (selectedProduct.bought_count || 0);
+                  return prev < available ? prev + 1 : prev;
+                })}
                 className="size-12 rounded-2xl border-2 border-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-50 active:scale-90 transition-all font-bold text-xl bg-slate-50"
               >
                 <span className="material-symbols-outlined text-[24px]">add</span>

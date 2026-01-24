@@ -35,34 +35,23 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
       return;
     }
 
-    setLoading(true);
-
-    try {
-      // 2. Validação de Sessão
+    await withLoading(async () => {
+      // Validação de Sessão
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        showToast?.("Sessão expirada.", "error");
-        onNavigate('login');
-        return;
+        throw new Error("Sessão expirada. Acesse novamente.");
       }
 
-      // 3. Chamada Segura RPC
+      // Chamada Segura RPC
       const { error } = await supabase.rpc('set_withdrawal_password', {
         p_password: cleanPass
       });
 
-      if (error) {
-        // Feedback Genérico de Erro
-        showToast?.("Erro ao definir senha.", "error");
-      } else {
-        showToast?.("Senha de retirada definida com sucesso!", "success");
-        setTimeout(() => onNavigate('profile'), 2000);
-      }
-    } catch (err) {
-      showToast?.("Erro inesperado.", "error");
-    } finally {
-      setLoading(false);
-    }
+      if (error) throw error;
+
+      showToast?.("Senha de retirada definida com sucesso!", "success");
+      setTimeout(() => onNavigate('profile'), 1500);
+    });
   };
 
   return (

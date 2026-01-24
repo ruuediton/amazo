@@ -53,27 +53,30 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       // Buscar perfil para o Código e Telefone
       const { data: profile } = await supabase
         .from('profiles')
-        .select('code')
-        .eq('user_id', user.id)
+        .select('code, phone')
+        .eq('id', user.id)
         .single();
 
       setUserProfile({
         code: profile?.code || "N/A",
-        phone: user.phone || user.user_metadata?.phone || "N/A"
+        phone: profile?.phone || user.phone || user.user_metadata?.phone || "N/A"
       });
 
-      const { data: deposits } = await supabase.from('deposits').select('*').eq('user_id', user.id);
-      const { data: withdrawals } = await supabase.from('withdrawals').select('*').eq('user_id', user.id);
-      const { data: purchases } = await supabase.from('historico_compra').select('*').eq('uid_user', user.id);
+      // Fetch parallel data for speed
+      const [depositsRes, withdrawalsRes, purchasesRes] = await Promise.all([
+        supabase.from('deposits').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('retirada_clientes').select('*').eq('user_id', user.id).order('data_de_criacao', { ascending: false }),
+        supabase.from('historico_compras').select('*').eq('user_id', user.id).order('created_at', { ascending: false })
+      ]);
 
       const combined: Transaction[] = [];
 
-      deposits?.forEach(d => {
+      depositsRes.data?.forEach(d => {
         const date = new Date(d.created_at);
         combined.push({
           id: `dep-${d.id}`,
           title: 'Depósito de Saldo',
-          subtitle: `${d.nome_banco || d.method} - ${d.status_playment || 'Pendente'}`,
+          subtitle: `${d.nome_banco || d.method || 'Transferência'} - ${d.status_playment || 'Pendente'}`,
           amount: Number(d.amount),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
@@ -85,30 +88,30 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         });
       });
 
-      withdrawals?.forEach(w => {
-        const date = w.created_at ? new Date(w.created_at) : new Date();
+      withdrawalsRes.data?.forEach(w => {
+        const date = w.data_de_criacao ? new Date(w.data_de_criacao) : new Date();
         combined.push({
           id: `wit-${w.id}`,
           title: 'Levantamento de Fundos',
-          subtitle: `${w.nome_banco} - ${w.status}`,
-          amount: -Number(w.amount_original),
+          subtitle: `${w.nome_do_banco || 'Banco'} - ${w.estado_da_retirada || 'Pendente'}`,
+          amount: -Number(w.valor_solicitado),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'outgoing',
           category: 'Retirada',
-          status: w.status
+          status: w.estado_da_retirada
         });
       });
 
-      purchases?.forEach(p => {
+      purchasesRes.data?.forEach(p => {
         const date = new Date(p.created_at);
         combined.push({
           id: `pur-${p.id}`,
-          title: p.nome || 'Compra de Pacote',
+          title: p.nome_produto || 'Compra de Pacote',
           subtitle: `Investimento amazon`,
-          amount: -Number(p.preco_unitario),
+          amount: -Number(p.preco_pago || p.preco_unitario || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
@@ -118,9 +121,14 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         });
       });
 
-      setTransactions(combined.sort((a, b) => b.id.localeCompare(a.id)));
+      setTransactions(combined.sort((a, b) => {
+        // Sort by actual date for reliability
+        const dateA = new Date(a.year, a.monthIndex, parseInt(a.dateLabel)).getTime();
+        const dateB = new Date(b.year, b.monthIndex, parseInt(b.dateLabel)).getTime();
+        return dateB - dateA;
+      }));
     } catch (err) {
-      console.error('Erro ao buscar histórico real:', err);
+      console.error('Erro ao buscar histórico:', err);
     } finally {
       setLoading(false);
     }
