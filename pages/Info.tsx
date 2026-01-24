@@ -92,7 +92,7 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
       {/* Footer */}
       <div className="mt-auto pb-10 pt-6">
         <p className="text-center text-xs font-bold text-gray-600 tracking-widest uppercase">
-          Versão 2.4.1 (Build 890)
+          Versão 2.4.1
         </p>
       </div>
     </div>
