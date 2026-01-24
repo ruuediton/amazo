@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
+import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
 
 interface AddBankProps {
@@ -8,7 +9,7 @@ interface AddBankProps {
 }
 
 const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
-  const { withLoading } = useLoading(); // Hook importado corretamente
+  const { withLoading } = useLoading();
   const [bankName, setBankName] = useState('');
   const [holderName, setHolderName] = useState('');
   const [iban, setIban] = useState('');
@@ -76,41 +77,41 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
   const handleSaveBank = async () => {
     try {
-        const cleanIban = iban.replace(/[^A-Z0-9]/g, '');
-        if (cleanIban.length < 21) {
-            showToast?.("IBAN inválido. Um IBAN angolano deve conter pelo menos 21 caracteres.", "error");
-            return;
+      const cleanIban = iban.replace(/[^A-Z0-9]/g, '');
+      if (cleanIban.length < 21) {
+        showToast?.("IBAN inválido. Um IBAN angolano deve conter pelo menos 21 caracteres.", "error");
+        return;
+      }
+
+      await withLoading(async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+          throw new Error("Sessão expirada. Acesse novamente.");
         }
 
-        await withLoading(async () => {
-            const { data: { user } } = await supabase.auth.getUser();
+        const payload = {
+          p_bank_name: bankName,
+          p_holder_name: holderName,
+          p_iban: cleanIban
+        };
 
-            if (!user) {
-                throw new Error("Sessão expirada. Acesse novamente.");
-            }
+        const { error } = await supabase.rpc(
+          mode === 'edit' ? 'update_bank_account' : 'add_bank_account',
+          payload
+        );
 
-            const payload = {
-                p_bank_name: bankName,
-                p_holder_name: holderName,
-                p_iban: cleanIban
-            };
+        if (error) throw error;
 
-            const { error } = await supabase.rpc(
-                mode === 'edit' ? 'update_bank_account' : 'add_bank_account',
-                payload
-            );
-
-            if (error) throw error;
-
-            showToast?.("Conta bancária vinculada com sucesso!", "success");
-            await checkExistingBank();
-            setTimeout(() => onNavigate('profile'), 1200);
-        }, "Salvando dados bancários...");
+        showToast?.("Bem sucedido", "success");
+        await checkExistingBank();
+        setTimeout(() => onNavigate('profile'), 1200);
+      }, "Salvando dados bancários...");
 
     } catch (err: any) {
-        if (err.message && !err.message.includes('loading')) {
-            showToast?.(err.message, "error");
-        }
+      if (err.message && !err.message.includes('loading')) {
+        showToast?.(err.message, "error");
+      }
     }
   };
 
@@ -135,7 +136,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
         {mode === 'view' ? (
           <div className="flex flex-col items-center justify-center flex-1 space-y-8 animate-in fade-in zoom-in-95 duration-500">
             <div className="size-20 bg-green-50 rounded-full flex items-center justify-center mb-2">
-               <span className="material-symbols-outlined text-green-600 text-4xl">verified_user</span>
+              <span className="material-symbols-outlined text-green-600 text-4xl">verified_user</span>
             </div>
 
             <div className="text-center space-y-1">
@@ -154,10 +155,10 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   <span className="text-[14px] font-bold text-[#0F1111]">{existingBank?.nome_completo}</span>
                 </div>
                 <div>
-                   <span className="text-[11px] font-bold text-[#565959] uppercase tracking-wider mb-1 block">IBAN</span>
-                   <p className="text-[15px] font-mono font-medium text-[#0F1111] bg-gray-50 p-3 rounded-lg border border-gray-200 break-all">
-                      {existingBank?.iban}
-                   </p>
+                  <span className="text-[11px] font-bold text-[#565959] uppercase tracking-wider mb-1 block">IBAN</span>
+                  <p className="text-[15px] font-mono font-medium text-[#0F1111] bg-gray-50 p-3 rounded-lg border border-gray-200 break-all">
+                    {existingBank?.iban}
+                  </p>
                 </div>
               </div>
             </div>
@@ -251,13 +252,13 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                 disabled={loading}
                 className="w-full h-[44px] bg-[#FFD814] border border-[#FCD200] rounded-[8px] flex items-center justify-center font-normal text-[#0F1111] text-[15px] shadow-sm hover:bg-[#F7CA00] active:scale-[0.99] transition-all"
               >
-                  {loading ? (
-                    'Salvando...'
-                  ) : (
-                    mode === 'edit' ? 'Salvar Alterações' : 'Vincular Conta'
-                  )}
+                {loading ? (
+                  'Salvando...'
+                ) : (
+                  mode === 'edit' ? 'Salvar Alterações' : 'Vincular Conta'
+                )}
               </button>
-              
+
               <div className="flex items-center justify-center gap-1.5 pt-2 opacity-60">
                 <span className="material-symbols-outlined text-[16px] text-[#565959]">lock</span>
                 <p className="text-[11px] text-[#565959]">Ambiente seguro Amazon</p>
@@ -268,6 +269,6 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
       </main>
     </div>
   );
-};};
+};
 
 export default AddBank;
