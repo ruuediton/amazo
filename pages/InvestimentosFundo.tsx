@@ -24,10 +24,11 @@ interface Props {
 const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
   const [selectedFund, setSelectedFund] = useState<Fundo | null>(null);
   const [funds, setFunds] = useState<Fundo[]>([]);
-  const { withLoading, showError } = useLoading();
+  const { withLoading } = useLoading();
   const [applying, setApplying] = useState(false);
   const [investmentAmount, setInvestmentAmount] = useState<string>('');
   const [autoReinvest, setAutoReinvest] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const totalGlobalAvailable = useMemo(() => {
     return funds.reduce((acc, fund) => acc + (Number(fund.total_fundos_disponivel) || 0), 0);
@@ -41,16 +42,16 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
     return amount + (amount * rate);
   }, [selectedFund, investmentAmount]);
 
-  const filteredFunds = useMemo(() => {
-    return funds; // Adicionar busca se necessário
-  }, [funds]);
-
   useEffect(() => {
-    fetchData();
+    const init = async () => {
+        await fetchData(true); // silent fetch for initial
+        setInitialLoading(false);
+    };
+    init();
   }, []);
 
-  const fetchData = async () => {
-    await withLoading(async () => {
+  const fetchData = async (silent = false) => {
+    const fetch = async () => {
       const { data, error } = await supabase
         .from('fundos')
         .select('*')
@@ -59,14 +60,19 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       if (error) throw error;
       setFunds(data || []);
-    });
+    };
+
+    if (silent) {
+        await fetch();
+    } else {
+        await withLoading(fetch);
+    }
   };
 
   const handleApply = async () => {
     if (!selectedFund || !investmentAmount) return;
     const amountNum = Number(investmentAmount);
 
-    // Validação de UX apenas (Segurança real no backend)
     if (isNaN(amountNum) || amountNum < 100) {
       if (showToast) showToast('Valor mínimo de fundo 100 Kz.', 'warning');
       return;
@@ -75,29 +81,24 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
     setApplying(true);
     try {
       await withLoading(async () => {
-        // Validação de Sessão
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
           onNavigate('login');
           throw new Error("Sessão expirada. Entre novamente.");
         }
 
-        // Validação de Liquidez no Frontend (Feedback rápido)
         if (amountNum > Number(selectedFund.total_fundos_disponivel)) {
           throw new Error(`⚠️ O valor disponível é de ${Number(selectedFund.total_fundos_disponivel).toLocaleString('pt-AO')} Kz.`);
         }
 
-        // Chamada Segura RPC
         const { data, error } = await supabase.rpc('purchase_fund', {
           p_fund_id: selectedFund.id_fundo,
           p_amount: amountNum,
           p_auto_reinvest: autoReinvest
         });
 
-        // Erro de rede ou sistema
-        if (error) throw new Error("Erro de conexão.");
+        if (error) throw new Error("Erro de conexão com o banco.");
 
-        // Erro de negócio retornado pelo backend
         if (data && !data.success) {
           throw new Error(data.message || "Não foi possível realizar o investimento.");
         }
@@ -105,17 +106,22 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
         return data.message;
       }, "Aplicação realizada com sucesso!");
 
-      // Reseta e atualiza após o sucesso
       setSelectedFund(null);
       setInvestmentAmount('');
       setAutoReinvest(false);
-      fetchData(); // Recarrega disponibilidade atualizada
+      fetchData(true); 
     } catch (err: any) {
-      // feedback já tratado pelo withLoading/showError global ou exceções acima
+      // Handled by withLoading
     } finally {
       setApplying(false);
     }
   };
+
+  if (initialLoading) return (
+     <div className="flex justify-center items-center h-screen bg-[#0F1111]">
+         <SpokeSpinner size="w-10 h-10" color="text-primary" />
+     </div>
+  );
 
   return (
     <div className="bg-background-dark min-h-screen font-display antialiased">
@@ -178,8 +184,8 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       <section className="overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar mt-4">
         <div className="flex items-stretch px-6 gap-5 pb-8">
-          {filteredFunds.length > 0 ? (
-            filteredFunds.map((fund) => {
+          {funds.length > 0 ? (
+            funds.map((fund) => {
               const isExhausted = Number(fund.total_fundos_disponivel) <= 0;
               return (
                 <div
