@@ -198,6 +198,29 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                     </div>
                 </section>
 
+                <section className="space-y-4">
+                    <h3 className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Conta e Suporte</h3>
+                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                        {[
+                            { label: 'Detalhes de Conta', action: () => onNavigate('detalhes-conta'), icon: 'account_circle' },
+                            { label: 'Suporte', action: () => onNavigate('support'), icon: 'support_agent' },
+                            { label: 'Relatar Problema', action: () => onNavigate('report'), icon: 'report_problem' },
+                        ].map((link, i, arr) => (
+                            <button
+                                key={link.label}
+                                onClick={link.action}
+                                className={`w-full flex items-center justify-between p-4 active:bg-gray-50 transition-colors ${i !== arr.length - 1 ? 'border-b border-gray-100' : ''}`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <span className="material-symbols-outlined text-primary">{link.icon}</span>
+                                    <span className="text-sm font-bold">{link.label}</span>
+                                </div>
+                                <span className="material-symbols-outlined text-gray-300">chevron_right</span>
+                            </button>
+                        ))}
+                    </div>
+                </section>
+
                 <div className="pt-4">
                     <button
                         onClick={handleSave}

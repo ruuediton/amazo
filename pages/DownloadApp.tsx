@@ -1,15 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface DownloadAppProps {
     onNavigate: (page: any) => void;
 }
 
 const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
-    const handleDownload = () => {
-        // Logic to download the APK file
-        // For now, we can link to a placeholder or the actual file if provided
+    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+    const [isIOS, setIsIOS] = useState(false);
+    const [isAndroid, setIsAndroid] = useState(false);
+
+    // Detect platform on mount
+    useEffect(() => {
+        const ua = window.navigator.userAgent;
+        setIsIOS(/iPhone|iPad|iPod/.test(ua));
+        setIsAndroid(/Android/.test(ua));
+        // Capture the beforeinstallprompt event for Android PWA install
+        const handler = (e: any) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+        };
+        window.addEventListener('beforeinstallprompt', handler);
+        return () => window.removeEventListener('beforeinstallprompt', handler);
+    }, []);
+
+    const handleDownload = async () => {
+        if (isAndroid && deferredPrompt) {
+            // Trigger the native install prompt for Android
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('User accepted the install');
+            } else {
+                console.log('User dismissed the install');
+            }
+            setDeferredPrompt(null);
+            return;
+        }
+        if (isIOS) {
+            // iOS does not support automatic install; show instructions
+            alert('Para instalar, toque no ícone de compartilhamento e escolha "Adicionar à Tela de Início".');
+            return;
+        }
+        // Fallback: download APK for Android devices (or any other platform)
         const link = document.createElement('a');
-        link.href = '/app-release.apk'; // Assuming the APK is in the public folder or similar
+        link.href = '/app-release.apk';
         link.download = 'Amazoning.apk';
         document.body.appendChild(link);
         link.click();
@@ -58,7 +92,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
                                 onClick={handleDownload}
                                 className="flex items-center bg-black text-white hover:bg-gray-800 px-5 py-2.5 rounded-xl text-xs font-black transition-colors active:scale-95"
                             >
-                                BAIXAR <span className="material-symbols-outlined text-base ml-1.5">download</span>
+                                {isAndroid ? 'INSTALAR' : 'BAIXAR'} <span className="material-symbols-outlined text-base ml-1.5">download</span>
                             </button>
                         </div>
                     </div>
@@ -76,7 +110,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
                         <div className="flex items-start space-x-5 relative">
                             <div className="absolute left-[11px] top-8 bottom-[-20px] w-0.5 bg-gray-200"></div>
                             <div className="flex-shrink-0 w-6 h-6 bg-primary text-black rounded-full flex items-center justify-center text-xs font-black z-10">1</div>
-                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">Clique no botão <span className="text-black font-bold">"Baixar"</span> acima para iniciar o download do arquivo.</p>
+                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">Clique no botão <span className="text-black font-bold">"{isAndroid ? 'Instalar' : 'Baixar'}"</span> acima para iniciar o download ou a instalação do PWA.</p>
                         </div>
                         <div className="flex items-start space-x-5 relative">
                             <div className="absolute left-[11px] top-8 bottom-[-20px] w-0.5 bg-gray-200"></div>
