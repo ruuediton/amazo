@@ -14,6 +14,9 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
     return stored ? JSON.parse(stored) : null;
   });
 
+  const [userName, setUserName] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+
   useEffect(() => {
     if (data?.deposit) {
       setDeposit(data.deposit);
@@ -24,28 +27,6 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
   const [timeLeft, setTimeLeft] = useState<string>('30:00');
   const [isExpired, setIsExpired] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const handleCancelDeposit = async () => {
-    if (!deposit) return;
-    setLoading(true);
-    try {
-      const { error } = await supabase
-        .from('depositos_clientes')
-        .delete()
-        .eq('id', deposit.id)
-        .eq('estado_de_pagamento', 'processando...');
-
-      if (error) throw error;
-
-      showToast?.("Depósito cancelado.", "info");
-      localStorage.removeItem('current_deposit_data');
-      onNavigate('deposit');
-    } catch (err: any) {
-      showToast?.("Erro ao cancelar: " + err.message, "error");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     if (!deposit) return;
@@ -61,7 +42,6 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
         setTimeLeft('00:00');
         if (!isExpired) {
           setIsExpired(true);
-          handleAutoReject();
         }
         return false;
       }
@@ -72,17 +52,6 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
       setTimeLeft(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
       return true;
-    };
-
-    const handleAutoReject = async () => {
-      if (deposit.estado_de_pagamento === 'processando...') {
-        await supabase
-          .from('depositos_clientes')
-          .delete()
-          .eq('id', deposit.id)
-          .eq('estado_de_pagamento', 'processando...');
-        localStorage.removeItem('current_deposit_data');
-      }
     };
 
     calculateTime();
@@ -96,141 +65,180 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
   }, [deposit]);
 
   const handleCopy = (text: string, label: string) => {
+    if (!text) return;
     navigator.clipboard.writeText(text);
     showToast?.(`${label} copiado!`, "success");
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!userName) {
+      showToast?.("Por favor, insira o seu nome.", "warning");
+      return;
+    }
+    if (!file) {
+      showToast?.("Por favor, carregue o comprovativo.", "warning");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Sessão expirada.");
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}_${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage
+        .from('comprovantes')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { error: updateError } = await supabase
+        .from('depositos_clientes')
+        .update({
+          nome_pagador: userName,
+          comprovativo_url: fileName,
+          estado_de_pagamento: 'pendente'
+        })
+        .eq('id', deposit.id);
+
+      if (updateError) throw updateError;
+
+      showToast?.("Enviado com sucesso!", "success");
+      localStorage.removeItem('current_deposit_data');
+      onNavigate('deposit-history');
+
+    } catch (err: any) {
+      showToast?.("Erro: " + err.message, "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!deposit) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white text-[#0F1111] p-6 text-center">
-        <span className="material-symbols-outlined text-6xl mb-4 text-gray-300">receipt_long</span>
-        <h3 className="text-xl font-bold mb-2">Dados não encontrados</h3>
-        <p className="text-gray-500 mb-6">Não foi possível carregar os detalhes do depósito.</p>
-        <button
-          onClick={() => onNavigate('deposit')}
-          className="bg-[#FFD814] text-[#0F1111] border border-[#FCD200] px-8 py-3 rounded-xl font-bold"
-        >
-          Voltar ao Depósito
-        </button>
+        <h3 className="text-xl font-bold mb-2">Solicitação não encontrada</h3>
+        <button onClick={() => onNavigate('deposit')} className="bg-[#FFD814] px-8 py-3 rounded-xl font-bold">Voltar</button>
       </div>
     );
   }
 
   return (
-    <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-32 selection:bg-amber-100 antialiased">
+    <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased">
       <div className="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto">
-        {/* Header - Identical to Image */}
-        <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-          <button
-            onClick={() => onNavigate('deposit')}
-            className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
-          >
+
+        {/* Simple Back Header */}
+        <header className="p-4 flex items-center">
+          <button onClick={() => onNavigate('deposit')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-100">
             <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
-          </button>
-          <span className="font-bold text-[16px]">Confirmar Depósito</span>
-          <button
-            onClick={() => onNavigate('deposit-history')}
-            className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[#0F1111]">history</span>
           </button>
         </header>
 
-        <main className="p-5 space-y-6">
+        <main className="flex-1 space-y-7 px-6 pt-2">
 
-          {/* Balance/Amount Card - Identical to Image */}
-          <div className="bg-[#FFD814] rounded-xl p-6 border border-[#FCD200] shadow-sm relative overflow-hidden">
-            <div className="absolute right-[-20px] top-[-20px] opacity-10">
-              <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>
-            </div>
-            <p className="text-[12px] font-bold uppercase tracking-widest text-[#0F1111]/70 mb-1">VALOR A TRANSFERIR</p>
-            <h1 className="text-4xl font-extrabold text-[#0F1111]">
-              Kz {(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
+          {/* Amount & Time Badges */}
+          <div className="flex items-center justify-center gap-2">
+            <div className="px-4 py-1.5 bg-[#00A8E1] text-white text-[11px] font-bold rounded shadow-sm">Amount</div>
+            <div className="px-4 py-1.5 bg-[#FFD814] text-[#0F1111] text-[11px] font-bold rounded shadow-sm tabular-nums">{timeLeft}</div>
+          </div>
+
+          {/* Large Amount */}
+          <div className="text-center">
+            <h1 className="text-[36px] font-black text-[#E77600] tracking-tight">
+              KZ {(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
             </h1>
           </div>
 
-          {/* Destination Section - Label + Alterar Link */}
-          <div>
-            <div className="flex justify-between items-center mb-2 px-1">
-              <span className="text-[13px] font-bold text-[#0F1111]">Conta de Destino (Empresa)</span>
-              <button
-                onClick={() => onNavigate('deposit')}
-                className="text-[12px] font-bold text-[#007185] hover:underline"
-              >
-                Alterar
-              </button>
-            </div>
-
-            {/* Bank Card - Identical to Image */}
-            <div className="flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl bg-white shadow-sm">
-              <div className="size-10 rounded-lg bg-gray-100 flex items-center justify-center text-[#565959]">
-                <span className="material-symbols-outlined">account_balance</span>
-              </div>
-              <div className="flex-1 overflow-hidden">
-                <p className="text-[14px] font-bold text-[#0F1111] truncate uppercase">{deposit.nome_banco || deposit.nome_do_banco || "Banco Selecionado"}</p>
-                <p className="text-[11px] text-[#565959] font-mono truncate">{deposit.iban}</p>
-              </div>
-              <span className="material-symbols-outlined text-green-600">check_circle</span>
-            </div>
-          </div>
-
-          {/* Details Section - Clean Standard Layout */}
+          {/* Data Fields */}
           <div className="space-y-4">
-            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 space-y-3">
-              <div className="flex justify-between items-center">
-                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-none">Titular do Beneficiário</p>
-                <button
-                  onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario || "", "Nome")}
-                  className="text-[11px] font-bold text-blue-600 flex items-center gap-1 active:opacity-50"
-                >
-                  <span className="material-symbols-outlined text-[14px]">content_copy</span> COPIAR
+
+            {/* Bank Name */}
+            <div className="space-y-1">
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Bank Name</label>
+              <div className="flex gap-2">
+                <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden">
+                  {deposit.nome_banco || deposit.nome_do_banco || "N/A"}
+                </div>
+                <button onClick={() => handleCopy(deposit.nome_banco || deposit.nome_do_banco, "Banco")} className="w-[84px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[13px]">
+                  Cópia
                 </button>
               </div>
-              <p className="text-[14px] font-bold text-[#0F1111] uppercase tracking-tighter">
-                {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
-              </p>
             </div>
 
-            <div className="bg-red-50 border border-red-100 rounded-xl p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-red-500 animate-pulse">timer</span>
-                <div>
-                  <p className="text-[10px] font-bold text-red-700/60 uppercase tracking-widest leading-none">A sessão expira em</p>
-                  <p className="text-xl font-black text-red-600 tabular-nums">{timeLeft}</p>
+            {/* Account Name */}
+            <div className="space-y-1">
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Account Name</label>
+              <div className="flex gap-2">
+                <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden whitespace-nowrap">
+                  {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
                 </div>
+                <button onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario, "Nome")} className="w-[84px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[13px]">
+                  Cópia
+                </button>
               </div>
             </div>
 
-            <div className="bg-sky-50 border border-sky-100 p-4 rounded-xl flex gap-3">
-              <span className="material-symbols-outlined text-sky-500 text-[20px]">info</span>
-              <p className="text-[11px] text-sky-900 font-medium leading-relaxed">
-                Efetue a transferência do valor exato e carregue o comprovativo abaixo para validação imediata.
-              </p>
+            {/* Account Number */}
+            <div className="space-y-1">
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Account Number</label>
+              <div className="flex gap-2">
+                <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-mono font-bold text-[#0F1111] text-[11px] overflow-hidden">
+                  {deposit.iban}
+                </div>
+                <button onClick={() => handleCopy(deposit.iban, "IBAN")} className="w-[84px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[13px]">
+                  Cópia
+                </button>
+              </div>
+            </div>
+
+            <hr className="border-gray-50" />
+
+            {/* Your Name */}
+            <div className="space-y-1">
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Your Name</label>
+              <input
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="w-full h-[52px] bg-white border border-gray-200 rounded-lg px-4 text-sm font-medium outline-none focus:border-[#00A8E1] transition-colors"
+                placeholder="Please enter your name"
+                type="text"
+              />
             </div>
           </div>
 
-          <div className="text-center pt-2">
+          {/* Action Buttons */}
+          <div className="space-y-3 pt-2">
+            <label className="flex items-center justify-center gap-2 w-full h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg cursor-pointer active:scale-[0.98] transition-all shadow-sm">
+              <span className="material-symbols-outlined text-[20px]">cloud_upload</span>
+              <span className="text-[14px] uppercase">{file ? 'Arquivo Carregado' : 'Comprovante de pagamento'}</span>
+              <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+            </label>
+
             <button
-              disabled={loading}
-              onClick={handleCancelDeposit}
-              className="text-[12px] font-bold text-gray-400 hover:text-red-500 transition-colors uppercase tracking-widest"
+              disabled={loading || isExpired}
+              onClick={handleSubmit}
+              className="w-full h-[52px] bg-[#FFD814] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase shadow-md disabled:opacity-50"
             >
-              {loading ? 'Processando...' : 'Cancelar Solicitação'}
+              {loading ? 'Sincronizando...' : 'Submit'}
             </button>
           </div>
 
-        </main>
+          {/* Footer Info */}
+          <div className="bg-gray-50/50 border border-gray-100 rounded-xl p-5 text-[11px] text-[#565959] leading-relaxed space-y-3">
+            <p>Esta encomenda tem validade de <span className="font-bold">30 minutos</span>. Por favor, efetue o pagamento de acordo com as informações da página e o valor fixo. </p>
+            <p>Após o pagamento, preencha o nome do pagador o mais rapidamente possível e envie uma captura de tela da confirmação de pagamento.</p>
+            <p>Para garantir que os seus fundos são creditados de forma mais rápida e precisa, preencha apenas o seu nome na nota de transferência.</p>
+            <p className="font-black text-[#CC0000] bg-red-50 p-2 rounded">Atenção: Esta conta bancária é apenas para um pagamento único!</p>
+          </div>
 
-        {/* Action Footer - Fixed like image */}
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 px-8 bg-white border-t border-gray-100 pb-8">
-          <button
-            disabled={isExpired}
-            onClick={() => onNavigate('como-enviar-comprovante')}
-            className={`w-full bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] py-3.5 rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center ${isExpired ? 'opacity-30 grayscale cursor-not-allowed' : ''}`}
-          >
-            Enviar Comprovante
-          </button>
-        </div>
+        </main>
       </div>
     </div>
   );
