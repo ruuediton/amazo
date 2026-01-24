@@ -151,34 +151,33 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                     <span className="material-symbols-outlined text-[24px] text-[#0F1111]">arrow_back</span>
                 </button>
                 <h2 className="text-[#0F1111] text-[16px] font-bold flex-1 text-center pr-10">
-                    Meus Investimentos
+                    Meus fundos
                 </h2>
             </header>
 
             <main className="max-w-md mx-auto">
-                <div className="p-4 bg-gray-50 border-b border-gray-100">
+                <div className="p-6 bg-[#FFD814] border-b border-[#FCD200]">
                     <div className="space-y-1">
-                        <p className="text-[11px] text-[#565959] font-bold uppercase tracking-widest">Patrimônio em Fundo</p>
+                        <p className="text-[11px] text-[#0F1111]/60 font-bold uppercase tracking-widest">Patrimônio em Fundo</p>
                         <div className="flex items-baseline gap-1">
-                            <span className="text-lg font-bold">Kz</span>
+                            <span className="text-xl font-bold">Kz</span>
                             <h1 className="text-3xl font-black tracking-tighter">
                                 {stats.totalApplied.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
                             </h1>
                         </div>
                         <div className="flex items-center gap-2 mt-2">
-                            <span className="text-[12px] font-bold text-green-700">Lucros: +Kz {stats.totalProfit.toLocaleString('pt-AO')}</span>
-                            <span className="size-1 bg-gray-300 rounded-full"></span>
-                            <span className="text-[12px] text-[#565959] font-medium">{investments.length} Contratos</span>
+                            <div className="bg-white/30 px-2 py-0.5 rounded text-[11px] font-bold text-green-800">Lucros: +Kz {stats.totalProfit.toLocaleString('pt-AO')}</div>
+                            <span className="text-[11px] text-[#0F1111]/50 font-medium">{investments.length} Contratos ativos</span>
                         </div>
                     </div>
                 </div>
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-40 gap-4">
-                        <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
+                        <SpokeSpinner size="w-10 h-10" color="text-[#FFD814]" />
                     </div>
                 ) : (
-                    <div className="flex flex-col divide-y divide-gray-100">
+                    <div className="flex flex-col divide-y divide-gray-100 px-2">
                         {investments.length > 0 ? (
                             investments.map((inv) => {
                                 const progress = calculateProgress(inv.data_inicio, inv.data_termino);
@@ -186,61 +185,62 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 const { inteiro, centavos } = formatPrice(Number(inv.valor_aplicado));
 
                                 return (
-                                    <div key={inv.id_usuario_fundo} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors">
-                                        <div className="relative w-36 h-36 bg-gray-50 rounded-lg overflow-hidden shrink-0 flex items-center justify-center p-2 border border-gray-100">
+                                    <div key={inv.id_usuario_fundo} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors bg-white rounded-xl my-1 border border-transparent">
+                                        <div className="relative w-28 h-28 bg-gray-50 rounded-xl overflow-hidden shrink-0 flex items-center justify-center border border-gray-100">
                                             {inv.fund?.url_imagem ? (
-                                                <img src={inv.fund.url_imagem} alt={inv.fund.nome_fundo} className="max-w-full max-h-full object-contain" />
+                                                <img src={inv.fund.url_imagem} alt={inv.fund.nome_fundo} className="w-full h-full object-cover" />
                                             ) : (
                                                 <div className="flex flex-col items-center">
-                                                    <span className={`material-symbols-outlined text-4xl ${isFinalized ? 'text-green-600' : 'text-amber-500'}`}>
+                                                    <span className={`material-symbols-outlined text-3xl ${isFinalized ? 'text-green-600' : 'text-amber-500'}`}>
                                                         {isFinalized ? 'verified' : 'analytics'}
                                                     </span>
-                                                    <span className="text-[10px] font-bold mt-1">{progress}%</span>
                                                 </div>
                                             )}
                                             {isFinalized && (
-                                                <div className="absolute top-0 left-0 bg-[#007600] text-white text-[9px] font-bold px-2 py-0.5 rounded-br-sm uppercase">Liquidado</div>
+                                                <div className="absolute inset-0 bg-black/5 flex items-center justify-center backdrop-blur-[1px]">
+                                                    <div className="bg-[#007600] text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Liquidado</div>
+                                                </div>
                                             )}
                                         </div>
 
                                         <div className="flex-1 min-w-0 flex flex-col gap-1">
-                                            <p className="text-[12px] text-[#565959] font-medium mb-0.5 flex items-center justify-between">
-                                                Início: {formatDate(inv.data_inicio)}
-                                                {inv.estado_ativo && <span className="text-amber-600 font-bold px-1.5 py-0.5 bg-amber-50 rounded text-[10px] animate-pulse">Operando</span>}
-                                            </p>
+                                            <div className="flex justify-between items-start">
+                                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Iníc. {formatDate(inv.data_inicio)}</p>
+                                                {inv.estado_ativo && <span className="text-[#e77600] font-black px-2 py-0.5 bg-amber-50 rounded text-[9px] uppercase tracking-tighter">Operando</span>}
+                                            </div>
 
-                                            <h3 className="text-[15px] font-medium leading-tight line-clamp-2 text-[#0F1111]">
-                                                {inv.fund?.nome_fundo || 'Fundo de Investimento'}
+                                            <h3 className="text-[14px] font-black leading-tight line-clamp-1 text-[#0F1111] uppercase tracking-tighter mt-1">
+                                                {inv.fund?.nome_fundo || 'Fundo Amazon'}
                                             </h3>
 
-                                            <div className="flex items-center gap-1.5 mt-0.5">
-                                                <span className="text-[12px] text-[#565959] font-medium">Contrato: #AMZ-{inv.id_usuario_fundo.toString().slice(0, 6)}</span>
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="text-[10px] text-gray-400 font-medium">Contrato: #AMZ-{inv.id_usuario_fundo.toString().slice(0, 6)}</span>
                                             </div>
 
-                                            <div className="flex items-start mt-1">
-                                                <span className="text-[13px] font-medium mt-1 pr-0.5 text-[#0F1111]">Kz</span>
-                                                <span className="text-[24px] font-bold leading-none text-[#0F1111]">{inteiro}</span>
-                                                <span className="text-[13px] font-medium mt-1 text-[#0F1111]">{centavos}</span>
+                                            <div className="flex items-baseline mt-1">
+                                                <span className="text-[13px] font-bold text-[#0F1111] mr-1">Kz</span>
+                                                <span className="text-[22px] font-black text-[#0F1111] leading-none">{inteiro}</span>
+                                                <span className="text-[11px] font-bold text-[#0F1111] ml-0.5 uppercase">{centavos}</span>
                                             </div>
 
-                                            <div className="mt-2 p-2.5 rounded-lg bg-gray-50 border border-gray-100 space-y-1">
-                                                <div className="flex justify-between items-center text-[11px]">
-                                                    <span className="text-[#565959] font-medium">Retorno Estimado:</span>
-                                                    <span className="text-green-700 font-bold">Kz {Number(inv.retorno_calculado).toLocaleString()}</span>
+                                            <div className="mt-2 p-2 rounded-lg bg-gray-50/50 border border-gray-100 flex flex-col gap-0.5">
+                                                <div className="flex justify-between items-center text-[10px]">
+                                                    <span className="text-gray-400 font-bold uppercase tracking-tighter">Retorno Estimado:</span>
+                                                    <span className="text-green-700 font-black tracking-tighter">Kz {Number(inv.retorno_calculado).toLocaleString()}</span>
                                                 </div>
-                                                <div className="flex justify-between items-center text-[11px]">
-                                                    <span className="text-[#565959] font-medium">Vencimento:</span>
-                                                    <span className="text-[#0F1111] font-bold">{formatDate(inv.data_termino)}</span>
+                                                <div className="flex justify-between items-center text-[10px]">
+                                                    <span className="text-gray-400 font-bold uppercase tracking-tighter">Vencimento:</span>
+                                                    <span className="text-[#0F1111] font-bold tracking-tighter">{formatDate(inv.data_termino)}</span>
                                                 </div>
                                             </div>
 
                                             {isFinalized && (
                                                 <button
                                                     onClick={() => generateCertificate(inv)}
-                                                    className="mt-3 w-full py-2 bg-white border border-gray-300 rounded-lg text-[12px] font-medium hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                                                    className="mt-3 py-2 bg-white border border-gray-200 rounded-lg text-[11px] font-bold text-[#0F1111] hover:bg-gray-50 transition-all flex items-center justify-center gap-2 shadow-sm"
                                                 >
-                                                    <span className="material-symbols-outlined text-[18px]">attachment</span>
-                                                    Baixar Certificado
+                                                    <span className="material-symbols-outlined text-[16px]">overview</span>
+                                                    Baixar Recibo
                                                 </button>
                                             )}
                                         </div>
