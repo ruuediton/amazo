@@ -17,6 +17,25 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
   const [existingBank, setExistingBank] = useState<any>(null);
   const [mode, setMode] = useState<'create' | 'view' | 'edit'>('create');
 
+  // Custom Mini Toast State
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  const BANK_PREFIXES: Record<string, string> = {
+    "Banco BAI": "0040",
+    "Banco BFA": "0006",
+    "Banco BIC": "0051",
+    "Banco Atlântico": "0055",
+    "Banco Sol": "0044",
+    "Banco BNI": "0009"
+  };
+
+  useEffect(() => {
+    if (localError) {
+      const timer = setTimeout(() => setLocalError(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [localError]);
+
   useEffect(() => {
     checkExistingBank();
   }, []);
@@ -77,10 +96,30 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
   const handleSaveBank = async () => {
     try {
+      setLocalError(null);
       const cleanIban = iban.replace(/[^A-Z0-9]/g, '');
+
+      // 1. Validação de Tamanho e prefixo AO06
       if (cleanIban.length < 21) {
-        showToast?.("IBAN inválido. Um IBAN angolano deve conter pelo menos 21 caracteres.", "error");
+        setLocalError("IBAN inválido. Mínimo 21 caracteres.");
         return;
+      }
+
+      if (!cleanIban.startsWith('AO06')) {
+        setLocalError("IBAN deve começar com AO06.");
+        return;
+      }
+
+      // 2. Validação de Prefixo do Banco
+      if (bankName && BANK_PREFIXES[bankName]) {
+        const expectedPrefix = BANK_PREFIXES[bankName];
+        // O prefixo vem logo após o AO06 (índices 4 a 8)
+        const currentPrefix = cleanIban.substring(4, 8);
+
+        if (currentPrefix !== expectedPrefix) {
+          setLocalError(`IBAN não corresponde ao ${bankName} (Prefixo ${expectedPrefix}).`);
+          return;
+        }
       }
 
       await withLoading(async () => {
@@ -110,10 +149,15 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
     } catch (err: any) {
       if (err.message && !err.message.includes('loading')) {
-        showToast?.(err.message, "error");
+        setLocalError(err.message);
       }
     }
   };
+
+  const currentBankPrefix = bankName ? BANK_PREFIXES[bankName] : '';
+  const ibanPlaceholder = bankName
+    ? `Digite o IBAN do ${bankName} (Ex: AO06 ${currentBankPrefix || '....'} ...)`
+    : "AO06 0000 0000...";
 
   return (
     <div className="font-sans antialiased bg-white text-[#0F1111] min-h-screen flex flex-col selection:bg-amber-100">
@@ -232,7 +276,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   onChange={handleIbanChange}
                   maxLength={25}
                   className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] font-mono placeholder:text-[#565959] focus:outline-none focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
-                  placeholder={bankName ? `Digite o IBAN do ${bankName}` : "AO06 0000 0000..."}
+                  placeholder={ibanPlaceholder}
                   type="text"
                 />
               </div>
@@ -267,6 +311,15 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
           </div>
         )}
       </main>
+
+      {/* Mini Toast - Pequenino, Translúcido e Centralizado */}
+      {localError && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none animate-in fade-in duration-200">
+          <div className="bg-red-500/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl shadow-2xl max-w-sm mx-4 text-center text-sm font-medium pointer-events-auto">
+            {localError}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
