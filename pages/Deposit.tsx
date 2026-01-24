@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
-
 
 interface DepositProps {
   onNavigate: (page: any, data?: any) => void;
@@ -15,43 +13,33 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
   const { withLoading } = useLoading();
   const [banks, setBanks] = useState<any[]>([]);
   const [isBankModalOpen, setIsBankModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [method, setMethod] = useState<'bank' | 'usdt'>('bank');
-
-  const [recentDeposits, setRecentDeposits] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const init = async () => {
-      await withLoading(async () => {
-        await Promise.all([fetchBanks(), fetchRecentDeposits()]);
-      });
-    };
-    init();
+    fetchData();
   }, []);
 
-  const fetchRecentDeposits = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+  const fetchData = async () => {
+    try {
+      // Fetch only banks for transfer
+      const { data, error } = await supabase
+        .from('bancos_empresa')
+        .select('*')
+        .eq('ativo', true);
 
-    const { data } = await supabase
-      .from('depositos_clientes')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(3);
-    if (data) setRecentDeposits(data);
-  };
-
-  const statusMap: any = {
-    'completado': { label: 'Concluído', color: 'text-green-600', bg: 'bg-green-500/20', icon: 'check_circle' },
-    'processando...': { label: 'Pendente', color: 'text-primary', bg: 'bg-primary/20', icon: 'schedule' },
-    'rejeitado': { label: 'Rejeitado', color: 'text-red-400', bg: 'bg-red-500/20', icon: 'error' }
-  };
-
-  const fetchBanks = async () => {
-    const { data, error } = await supabase.from('bancos_empresa').select('*').eq('ativo', true);
-    if (!error && data) setBanks(data);
+      if (!error && data) {
+        // Filtramos qualquer banco que possa ser USDT, pois agora tem página própria
+        const filteredBanks = data.filter(b =>
+          !b.nome_do_banco.toUpperCase().includes('USDT') &&
+          !b.nome_do_banco.toUpperCase().includes('USTD')
+        );
+        setBanks(filteredBanks);
+      }
+    } catch (err) {
+      console.error('Erro ao carregar bancos:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const quickAmounts = [3000, 9000, 24000, 49000, 120000, 150000, 400000];
@@ -61,23 +49,8 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
   };
 
   const handleConfirmClick = () => {
-    if (method === 'usdt') {
-      const usdtBank = banks.find(b => b.nome_do_banco === 'USDT' || b.nome_do_banco === 'USTD');
-
-      if (!usdtBank) {
-        showToast?.("Carteira USDT indisponível no momento.", "error");
-        return;
-      }
-
-      onNavigate('deposit-usdt', {
-        amount,
-        bank: usdtBank
-      });
-      return;
-    }
-
     const val = parseFloat(amount);
-    if (isNaN(val) || val < 3000) {
+    if (!amount || isNaN(val) || val < 3000) {
       showToast?.("Valor mínimo de depósito: 3.000 KZ", "warning");
       return;
     }
@@ -110,7 +83,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
         if (error) throw error;
 
         if (data.success) {
-          onNavigate('confirme', {
+          onNavigate('confirmar-deposito', {
             deposit: {
               ...data.data,
               nome_destinatario: bank.nome_destinatario,
@@ -118,167 +91,132 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
             }
           });
         }
-      }, "Depósito criado com sucesso. Efetue a transferência e envie o comprovativo.");
-    } catch (err) {
-      // Error handled by withLoading
+      }, "Gerando dados de depósito...");
+    } catch (err: any) {
+      showToast?.(err.message || "Erro ao processar depósito", "error");
     }
   };
 
+  if (loading) return (
+    <div className="flex justify-center items-center h-screen bg-white">
+      <SpokeSpinner size="w-8 h-8" color="text-[#FFD814]" />
+    </div>
+  );
+
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col bg-background-dark group/design-root overflow-x-hidden font-display text-black pb-32">
+    <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 selection:bg-amber-100">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 pb-2 sticky top-0 z-10 bg-background-dark">
-        <button
-          onClick={() => onNavigate('profile')}
-          className="text-primary flex size-12 shrink-0 items-center justify-center cursor-pointer rounded-full hover:bg-white/10 transition-colors"
-        >
+      <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <h2 className="text-black text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">Depósito</h2>
+        <span className="font-bold text-[16px]">Depositar Kwanza</span>
         <button
           onClick={() => onNavigate('deposit-history')}
-          className="text-gray-400 flex size-12 shrink-0 items-center justify-center cursor-pointer rounded-full hover:bg-white/10 transition-colors"
+          className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
         >
-          <span className="material-symbols-outlined">history</span>
+          <span className="material-symbols-outlined text-[#0F1111]">history</span>
         </button>
-      </div>
+      </header>
 
-      <div className="flex flex-col flex-1 px-4 mt-2">
-        {/* Amount Input Section */}
-        <div className="flex flex-col items-center justify-center py-6">
-          <p className="text-[text-gray-500] text-sm font-medium leading-normal mb-2">Inserir Quantia</p>
-          <div className="relative flex items-center justify-center w-full max-w-[320px]">
-            <span className="text-3xl font-bold text-black absolute left-2 pointer-events-none">Kz</span>
+      <main className="p-5 space-y-8">
+        {/* Input Section */}
+        <div className="text-center space-y-4">
+          <p className="text-[13px] font-bold text-gray-500 uppercase tracking-widest">Quanto deseja depositar?</p>
+          <div className="relative inline-block w-full">
+            <span className="absolute left-1/2 -translate-x-[110px] top-1/2 -translate-y-1/2 text-3xl font-extrabold text-gray-300">Kz</span>
             <input
-              autoFocus
-              className="flex w-full bg-transparent text-center text-5xl font-bold text-black placeholder:text-black/10 focus:outline-none border-none p-0 h-16 caret-primary pl-10"
-              placeholder="0"
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              placeholder="0"
+              className="w-full bg-transparent text-center text-6xl font-black text-[#0F1111] outline-none placeholder:text-gray-100"
+              autoFocus
             />
           </div>
-          <p className="text-[text-gray-500] text-xs font-medium mt-3">Min: 3.000 Kz - Max: 1.000.000 Kz</p>
+          <p className="text-[11px] font-medium text-gray-400">Min: 3.000 Kz • Max: 1.000.000 Kz</p>
         </div>
 
-        {/* Quick Amount Buttons */}
-        <div className="flex gap-3 py-4 justify-center flex-wrap">
+        {/* Quick Chip Selection */}
+        <div className="flex flex-wrap gap-2 justify-center">
           {quickAmounts.map(val => (
             <button
               key={val}
               onClick={() => handleQuickAmount(val)}
-              className="flex h-9 items-center justify-center rounded-full bg-amazon-light-gray px-4 hover:bg-gray-200 transition-colors cursor-pointer border border-amazon-border focus:border-primary"
+              className="px-5 py-2.5 bg-white border border-[#D5D9D9] rounded-full text-[13px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
             >
-              <p className="text-[text-black] text-sm font-bold leading-normal">+{val.toLocaleString()}</p>
+              + {val.toLocaleString('pt-AO')}
             </button>
           ))}
-          <button
-            onClick={() => setAmount('1000000')}
-            className="flex h-9 items-center justify-center rounded-full bg-amazon-light-gray px-4 hover:bg-gray-200 transition-colors cursor-pointer border border-amazon-border focus:border-primary"
-          >
-            <p className="text-[text-black] text-sm font-bold leading-normal">Máx</p>
-          </button>
         </div>
 
-        <div className="h-6"></div>
-
-        {/* Payment Methods */}
-        <div className="flex flex-col gap-3">
-          <p className="text-text-primary text-base font-black leading-normal mb-1">Método de Depósito</p>
-
-          {/* Bank Transfer */}
-          <div
-            onClick={() => setMethod('bank')}
-            className={`flex items-center gap-4 bg-surface-dark p-4 rounded-xl border-2 transition-all cursor-pointer relative overflow-hidden ${method === 'bank' ? 'border-primary shadow-md' : 'border-amazon-border opacity-70'}`}
-          >
-            {method === 'bank' && (
-              <div className="absolute top-0 right-0 p-2 text-primary">
-                <span className="material-symbols-outlined filled text-[20px]">check_circle</span>
-              </div>
-            )}
-            <div className="flex items-center gap-4 flex-1">
-              <div className={`flex items-center justify-center h-10 w-14 shrink-0 rounded-lg ${method === 'bank' ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-background-dark text-text-secondary border border-amazon-border'}`}>
-                <span className="material-symbols-outlined text-2xl">account_balance</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-text-primary text-sm font-black leading-tight">Transferência Bancária</p>
-                <p className="text-text-secondary text-[11px] leading-tight">Envio de Kz via MultiCaixa</p>
-              </div>
-            </div>
+        {/* Method Info Card */}
+        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 flex gap-4">
+          <div className="size-12 rounded-xl bg-white flex items-center justify-center text-blue-600 shadow-sm shrink-0">
+            <span className="material-symbols-outlined text-[28px]">account_balance</span>
           </div>
-
-          {/* USDT Crypto */}
-          <div
-            onClick={() => setMethod('usdt')}
-            className={`flex items-center gap-4 bg-surface-dark p-4 rounded-xl border-2 transition-all cursor-pointer relative overflow-hidden ${method === 'usdt' ? 'border-[#26a17b] shadow-md' : 'border-amazon-border opacity-70'}`}
-          >
-            {method === 'usdt' && (
-              <div className="absolute top-0 right-0 p-2 text-[#26a17b]">
-                <span className="material-symbols-outlined filled text-[20px]">check_circle</span>
-              </div>
-            )}
-            <div className="flex items-center gap-4 flex-1">
-              <div className={`flex items-center justify-center h-10 w-14 shrink-0 rounded-lg ${method === 'usdt' ? 'bg-[#26a17b]/10 text-[#26a17b] border border-[#26a17b]/20' : 'bg-background-dark text-text-secondary border border-amazon-border'}`}>
-                <span className="material-symbols-outlined text-2xl">currency_bitcoin</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-text-primary text-sm font-black leading-tight">Recarregar USDT (TRC20)</p>
-                <p className="text-[#26a17b] text-[11px] font-bold leading-tight">Depósito Cripto Instantâneo</p>
-              </div>
-            </div>
+          <div>
+            <p className="text-[14px] font-bold text-blue-900">Transferência Bancária</p>
+            <p className="text-[12px] text-blue-700/80 leading-snug">Ao confirmar, você escolherá um banco para realizar a transferência via MultiCaixa ou SmartApp.</p>
           </div>
         </div>
 
-        <div className="h-8"></div>
+      </main>
 
-        {/* Confirm Button */}
+      {/* Action Footer */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 px-8 bg-white border-t border-gray-100 pb-8 z-20">
         <button
           onClick={handleConfirmClick}
-          className={`flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 bg-primary hover:bg-[#eac515] text-[text-black] text-sm font-black leading-normal tracking-[0.015em] transition-all active:scale-[0.98] shadow-lg shadow-primary/20`}
+          disabled={!amount || parseFloat(amount) < 3000}
+          className="w-full bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] py-3.5 rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center disabled:opacity-50 disabled:grayscale"
         >
-          Confirmar Depósito
+          Prosseguir para Pagamento
         </button>
-
-        <div className="flex justify-center items-center gap-2 mt-3 text-[text-gray-500]">
-          <span className="material-symbols-outlined text-sm" style={{ fontSize: '16px' }}>lock</span>
-          <p className="text-xs font-medium">Transação segura criptografada de 256 bits</p>
+        <div className="flex items-center justify-center gap-1.5 mt-3 opacity-50">
+          <span className="material-symbols-outlined text-[14px]">lock</span>
+          <p className="text-[10px] font-bold uppercase tracking-tighter">Ambiente de segurança Amazon</p>
         </div>
       </div>
 
       {/* Bank Selection Modal */}
       {isBankModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md bg-surface-dark rounded-t-3xl p-6 animate-in slide-in-from-bottom-full duration-300 shadow-2xl border-t border-white/10 pb-10">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-sm bg-white rounded-[24px] p-6 shadow-2xl animate-in slide-in-from-bottom-10 duration-300">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold">Escolha um Banco</h3>
+              <h3 className="text-lg font-bold text-[#0F1111]">Selecione o Destino</h3>
               <button
                 onClick={() => setIsBankModalOpen(false)}
-                className="size-10 flex items-center justify-center rounded-full bg-white/5 text-black/60"
+                className="size-8 flex items-center justify-center rounded-full hover:bg-gray-100"
               >
-                <span className="material-symbols-outlined">close</span>
+                <span className="material-symbols-outlined text-[20px]">close</span>
               </button>
             </div>
-            <div className="flex flex-col gap-3">
+
+            <div className="space-y-3">
               {banks.map(bank => (
                 <button
                   key={bank.id}
                   onClick={() => handleSelectBank(bank)}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-gray-200 hover:border-primary/50 hover:bg-primary/5 transition-all text-left"
+                  className="w-full flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl hover:border-[#E77600] active:bg-gray-50 transition-all text-left"
                 >
-                  <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <div className="size-10 rounded-lg bg-gray-50 flex items-center justify-center text-[#565959]">
                     <span className="material-symbols-outlined">account_balance</span>
                   </div>
-                  <div>
-                    <p className="font-bold text-black">{bank.nome_do_banco}</p>
-                    <p className="text-xs text-gray-600">Clique para selecionar</p>
+                  <div className="flex-1">
+                    <p className="text-[14px] font-bold text-[#0F1111] leading-none mb-1">{bank.nome_do_banco}</p>
+                    <p className="text-[11px] text-gray-500">{bank.nome_destinatario}</p>
                   </div>
+                  <span className="material-symbols-outlined text-gray-300">chevron_right</span>
                 </button>
               ))}
             </div>
+
+            <p className="mt-6 text-[10px] text-center text-gray-400 font-medium">
+              Sua solicitação será gerada imediatamente após a seleção.
+            </p>
           </div>
         </div>
       )}
-
     </div>
   );
 };
