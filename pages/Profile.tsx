@@ -196,30 +196,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
           </div>
         </section>
 
-        <section>
-          <h3 className="text-[11px] font-extrabold text-[#637381] uppercase tracking-[0.05em] mb-2.5 ml-1">Segurança</h3>
-          <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-            {[
-              { label: 'Trocar Senha', icon: 'lock_reset', page: 'change-password' },
-              { label: 'Definir Senha de Retirada', icon: 'pin', page: 'withdraw-password' },
-              { label: 'Alterar Senha de Retirada', icon: 'lock_person', page: 'update-withdraw-password' },
-            ].map((item, i, arr) => (
-              <div
-                key={item.label}
-                onClick={() => item.page ? onNavigate(item.page) : null}
-                className={`flex items-center gap-3 p-3.5 ${i !== arr.length - 1 ? 'border-b-[0.5px] border-[#F3F4F6]' : ''} active:bg-gray-50 cursor-pointer`}
-              >
-                <div className="flex items-center justify-center rounded-lg bg-[#FFF9DB] text-[#f4d125] shrink-0 size-9">
-                  <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
-                </div>
-                <div className="flex-1">
-                  <p className="font-bold text-[14px]">{item.label}</p>
-                </div>
-                <span className="material-symbols-outlined text-gray-300 text-xl">chevron_right</span>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
         <section>
           <h3 className="text-[11px] font-extrabold text-[#637381] uppercase tracking-[0.05em] mb-2.5 ml-1">Outros</h3>
