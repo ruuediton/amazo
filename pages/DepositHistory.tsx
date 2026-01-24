@@ -40,7 +40,7 @@ const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
     if (!user) return;
 
     const { data, error } = await supabase
-      .from('deposits')
+      .from('depositos_clientes')
       .select('*')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false });
@@ -59,8 +59,8 @@ const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
           id: d.id.toString(),
           title: d.nome_banco || 'Transferência Bancária',
           date: `${day} ${monthLabel}, ${hours}:${minutes}`,
-          amount: d.amount,
-          status: statusMap[d.status_playment] || 'Pendente',
+          amount: d.valor_deposito,
+          status: statusMap[d.estado_de_pagamento] || 'Pendente',
           icon: 'account_balance',
           month: `${dateObj.toLocaleString('pt-PT', { month: 'long' })} ${year}`,
           raw_date: d.created_at
@@ -191,14 +191,6 @@ const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
           </div>
         </main>
 
-        <div className="fixed bottom-6 right-6 z-20">
-          <button
-            onClick={() => window.print()}
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-black shadow-xl shadow-primary/20 hover:scale-110 active:scale-95 transition-all"
-          >
-            <span className="material-symbols-outlined text-[28px] font-bold">download</span>
-          </button>
-        </div>
       </div>
     </div>
   );
