@@ -285,7 +285,7 @@ const App: React.FC = () => {
               onClick={() => setCurrentPage('home')}
               className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'home' ? 'text-primary' : 'text-gray-500'}`}
             >
-              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'home' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'home' ? 1 : 0}` }}>homebox</span>
+              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'home' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'home' ? 1 : 0}` }}>home</span>
               <span className="text-[9px] font-bold">Início</span>
             </button>
 
