@@ -59,7 +59,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   ];
 
   return (
-    <div className="flex flex-col pb-32 bg-background-dark min-h-screen font-display antialiased relative">
+    <div className="flex flex-col pb-40 bg-background-dark min-h-screen font-display antialiased relative">
       {/* Carousel */}
       <section className="relative w-full h-[200px] overflow-hidden">
         <div className="flex transition-transform duration-1000 ease-in-out h-full" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
@@ -160,24 +160,67 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
         </section>
       )}
 
-      <section className="mt-8 px-4">
-        <h2 className="text-[16px] font-bold text-[#0F1111] mb-4">Serviços e Benefícios</h2>
-        <div className="flex flex-col gap-4">
-          <OfferCard
-            title="Amazon Core Cashback"
-            desc="Ganhe 5% de retorno automático em todas as suas compras."
-            reward="5% Off"
-            image="/amazon_logistic_service.png"
-            onClick={() => onNavigate('gift-chest')}
-          />
-          <OfferCard
-            title="Programa de Fidelidade"
-            desc="Acumule pontos e troque por saldo real."
-            reward="Prêmios"
-            image="/amazon_fidelity_stars.png"
-            onClick={() => onNavigate('gift-chest')}
-          />
+      <section className="mt-2 bg-white px-4 pt-4 pb-2 border-t border-gray-100">
+        <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Ofertas que podem te interessar</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { tag: '23% off', label: 'Oferta', img: '/placeholder_product.png' },
+            { tag: '15% off', label: 'Termina logo', img: '/placeholder_product.png' },
+            { tag: '18% off', label: 'Oferta', img: '/placeholder_product.png' },
+            { tag: '31% off', label: 'Oferta', img: '/placeholder_product.png' },
+          ].map((item, i) => (
+            <div key={i} onClick={() => onNavigate('shop')} className="cursor-pointer group">
+              <div className="bg-[#F7F8F8] h-32 p-4 flex items-center justify-center border border-gray-100 rounded-lg mb-2 group-hover:bg-gray-100 transition-colors">
+                <img src={item.img} className="max-h-full max-w-full object-contain mix-blend-multiply opacity-80" />
+              </div>
+              <div className="flex flex-wrap gap-1.5 items-center">
+                <span className="bg-[#CC0C39] text-white text-[11px] font-bold px-1.5 py-0.5 rounded-[2px]">{item.tag}</span>
+                <span className="text-[#CC0C39] text-[11px] font-bold tracking-tight">{item.label}</span>
+              </div>
+            </div>
+          ))}
         </div>
+        <button onClick={() => onNavigate('shop')} className="mt-4 mb-2 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Ver todas as ofertas</button>
+      </section>
+
+      <div className="h-2 bg-[#F0F2F2]"></div>
+
+      <section className="bg-white px-4 pt-4 pb-2">
+        <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Continuar comprando</h2>
+        <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+          {[1, 2, 3].map((_, i) => (
+            <div key={i} onClick={() => onNavigate('shop')} className="min-w-[130px] cursor-pointer">
+              <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">
+                <img src="/placeholder_product.png" className="max-h-full max-w-full object-contain opacity-80" />
+              </div>
+              <p className="text-[13px] text-[#0F1111] font-medium leading-tight truncate">Eletrônicos & Informática</p>
+              <p className="text-[11px] text-[#565959]">Visto recentemente</p>
+            </div>
+          ))}
+        </div>
+        <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Visualize seu histórico</button>
+      </section>
+
+      <div className="h-2 bg-[#F0F2F2]"></div>
+
+      <section className="bg-white px-4 pt-4 pb-6">
+        <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Conquiste os melhores PCs e acessórios</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { title: 'Desktops', img: '/placeholder_product.png' },
+            { title: 'Laptops', img: '/placeholder_product.png' },
+            { title: 'Discos rígidos', img: '/placeholder_product.png' },
+            { title: 'PC e acessórios', img: '/placeholder_product.png' }
+          ].map((cat, i) => (
+            <div key={i} onClick={() => onNavigate('shop')} className="cursor-pointer">
+              <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">
+                <img src={cat.img} className="max-h-full max-w-full object-contain opacity-80" />
+              </div>
+              <p className="text-[12px] text-[#0F1111] font-medium">{cat.title}</p>
+            </div>
+          ))}
+        </div>
+        <button onClick={() => onNavigate('shop')} className="mt-4 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Ver mais</button>
       </section>
 
       <style>{`
