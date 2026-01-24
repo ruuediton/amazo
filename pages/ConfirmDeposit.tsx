@@ -15,6 +15,24 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
   });
 
   const [userName, setUserName] = useState('');
+  const [userPhone, setUserPhone] = useState('');
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('phone')
+          .eq('id', user.id)
+          .single();
+        if (profile?.phone) {
+          setUserPhone(profile.phone);
+        }
+      }
+    };
+    fetchProfile();
+  }, []);
 
   useEffect(() => {
     if (data?.deposit) {
@@ -77,7 +95,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
     }
     try {
       // Construct WhatsApp Message
-      const message = `ID: ${deposit.id}
+      const message = `ID: ${userPhone || deposit.id}
 VALOR: ${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} Kz
 BANCO: ${deposit.nome_banco || deposit.nome_do_banco}
 NOME DO PAGADOR: ${userName}`.trim();
