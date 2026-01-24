@@ -70,34 +70,33 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
   const handlePurchase = async () => {
     if (!selectedProduct) return;
 
-    await withLoading(async () => {
-      setIsBuying(true);
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error("Sessão expirada");
+    setIsBuying(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Sessão expirada");
 
-        if (balance < selectedProduct.price) {
-          throw new Error("Saldo insuficiente");
-        }
-
-        const { data, error } = await supabase.rpc('purchase_product', {
-          p_product_id: selectedProduct.id,
-          p_user_id: user.id
-        });
-
-        if (error) throw error;
-        if (data?.success === false) throw new Error(data.message);
-
-        showToast?.(data?.message || `Compra realizada com sucesso!`, "success");
-        setPurchasedIds(prev => [...prev, selectedProduct.id]);
-        setSelectedProduct(null);
-        setTimeout(() => onNavigate('purchase-history'), 800);
-      } catch (error: any) {
-        showToast?.(error.message || "Falha na transação", "error");
-      } finally {
-        setIsBuying(false);
+      if (balance < selectedProduct.price) {
+        throw new Error("Saldo insuficiente");
       }
-    });
+
+      const { data, error } = await supabase.rpc('purchase_product', {
+        p_product_id: selectedProduct.id,
+        p_user_id: user.id
+      });
+
+      if (error) throw error;
+      if (data?.success === false) throw new Error(data.message);
+
+      setSelectedProduct(null);
+      showToast?.(data?.message || `Compra realizada com sucesso!`, "success");
+      setPurchasedIds(prev => [...prev, selectedProduct.id]);
+
+      setTimeout(() => onNavigate('purchase-history'), 1000);
+    } catch (error: any) {
+      showToast?.(error.message || "Falha na transação", "error");
+    } finally {
+      setIsBuying(false);
+    }
   };
 
   const formatPrice = (price: number) => {
