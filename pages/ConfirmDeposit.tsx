@@ -15,7 +15,6 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
   });
 
   const [userName, setUserName] = useState('');
-  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (data?.deposit) {
@@ -70,52 +69,20 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
     showToast?.(`${label} copiado!`, "success");
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  };
 
   const handleSubmit = async () => {
     if (!userName) {
       showToast?.("Por favor, insira o seu nome.", "warning");
       return;
     }
-    if (!file) {
-      showToast?.("Por favor, carregue o comprovativo.", "warning");
-      return;
-    }
-
-    setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Sessão expirada.");
-
-      // 1. Upload File to get URL
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}_${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage
-        .from('comprovativos')
-        .upload(fileName, file);
-
-      if (uploadError) throw uploadError;
-
-      // 2. Get Public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('comprovativos')
-        .getPublicUrl(fileName);
-
-      // 3. Construct WhatsApp Message
-      const message = `
-ID: ${deposit.id}
+      // Construct WhatsApp Message
+      const message = `ID: ${deposit.id}
 VALOR: ${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} Kz
 BANCO: ${deposit.nome_banco || deposit.nome_do_banco}
-NOME DO PAGADOR: ${userName}
-COMPROVANTE: ${publicUrl}
+NOME DO PAGADOR: ${userName}`.trim();
 
-Olá fiz um deposíto para a confirmação.`.trim();
-
-      // 4. Redirect to WhatsApp
+      // Redirect to WhatsApp
       const whatsappUrl = `https://wa.me/244933850746?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
 
@@ -226,18 +193,13 @@ Olá fiz um deposíto para a confirmação.`.trim();
 
           {/* Action Buttons */}
           <div className="space-y-3 pt-2">
-            <label className="flex items-center justify-center gap-2 w-full h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg cursor-pointer active:scale-[0.98] transition-all shadow-sm">
-              <span className="material-symbols-outlined text-[20px]">cloud_upload</span>
-              <span className="text-[14px] uppercase">{file ? 'Arquivo Carregado' : 'Comprovante de pagamento'}</span>
-              <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
-            </label>
 
             <button
               disabled={loading || isExpired}
               onClick={handleSubmit}
               className="w-full h-[52px] bg-[#FFD814] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase shadow-md disabled:opacity-50"
             >
-              {loading ? 'Sincronizando...' : 'Enviar'}
+              {loading ? 'Processando...' : 'Finalizar Depósito'}
             </button>
           </div>
 
