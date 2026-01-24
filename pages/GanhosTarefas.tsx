@@ -11,6 +11,7 @@ interface Props {
 
 const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
   const { withLoading, showError } = useLoading();
+  const [loading, setLoading] = useState(true);
   const [purchases, setPurchases] = useState<any[]>([]);
   const [hasCollectedToday, setHasCollectedToday] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -21,18 +22,15 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
   }, []);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      // 1. Validação de sessão
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         onNavigate('login');
         return;
       }
 
-      // 2. Busca consolidada e segura via RPC
-      // O backend calcula tudo, evitando manipulação de valores no frontend
       const { data, error } = await supabase.rpc('get_task_screen_data');
-
       if (error) throw error;
 
       if (data) {
@@ -42,7 +40,8 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
       }
     } catch (err) {
       console.error(err);
-      // Fail silently or show generic error
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,13 +51,10 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
 
     try {
       await withLoading(async () => {
-        // Validação de sessão antes da ação crítica
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) throw new Error("Sessão expirada.");
 
-        // RPC Atômica para Coleta
-        // O backend verifica validade, calcula valores e atualiza saldo numa única transação
-        const { data, error } = await supabase.rpc('collect_daily_income'); // sem params, userId vem da sessão
+        const { data, error } = await supabase.rpc('collect_daily_income');
 
         if (error) throw new Error("Erro de comunicação. Tente novamente.");
 
@@ -66,10 +62,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           throw new Error(data.message || "Erro ao coletar renda.");
         }
 
-        // Sucesso Confirmado pelo Backend
         setHasCollectedToday(true);
-        // Atualiza UI com valores confirmados se necessário
-
         return data.message;
       }, "Tarefa diária concluída!");
 
@@ -81,147 +74,154 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
   };
 
   return (
-    <div className="bg-background-dark font-display text-black transition-colors duration-200 min-h-screen">
-      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto">
+    <div className="bg-white font-sans text-[#0F1111] min-h-screen selection:bg-amber-100">
+      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 sticky top-0 z-10 bg-background-dark/95 backdrop-blur-sm border-b border-gray-200">
-          <div
+        <header className="flex items-center justify-between p-4 sticky top-0 z-50 bg-white border-b border-gray-100">
+          <button
             onClick={() => onNavigate('home')}
-            className="flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer transition-colors"
+            className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
           >
-            <span className="material-symbols-outlined text-primary">arrow_back</span>
-          </div>
-          <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] text-center flex-1">Ganhos de Tarefas</h2>
-          <div
+            <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
+          </button>
+          <h2 className="text-[16px] font-bold tracking-tight text-center flex-1">Minhas Compras</h2>
+          <button
             onClick={() => onNavigate('tutoriais-ganhos-tarefas')}
-            className="flex size-12 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer"
+            className="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
           >
-            <span className="material-symbols-outlined text-black">help</span>
-          </div>
-        </div>
+            <span className="material-symbols-outlined text-[#0F1111]">help_outline</span>
+          </button>
+        </header>
 
-        {/* 6️⃣ Cálculo do rendimento - Exibição do Lucro Potencial */}
-        <div className="flex flex-col items-center pt-6 pb-2 px-4">
-          <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/20 px-4 py-2 rounded-full shadow-lg shadow-green-500/5">
-            <span className="material-symbols-outlined text-green-600 text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
-            <span className="text-sm font-extrabold text-green-600 uppercase tracking-wider">
+        {/* 6️⃣ Rendimento Diário Badge */}
+        <div className="flex flex-col items-center pt-8 pb-4">
+          <div className="flex items-center gap-2 bg-[#F0F2F2] border border-gray-200 px-5 py-2 rounded-full">
+            <span className="material-symbols-outlined text-[#007600] text-[18px]">trending_up</span>
+            <span className="text-[13px] font-bold text-[#007600] uppercase tracking-wide">
               Hoje: {hasCollectedToday ? '+0,00' : `+${potentialIncome.toLocaleString()}`} Kz
             </span>
           </div>
         </div>
 
-        {/* Power Controller (Botão de Ação) */}
-        <div className="flex flex-col items-center justify-center py-8 relative">
-          <div className="absolute w-48 h-48 rounded-full bg-primary/10 animate-pulse"></div>
-          <div className="absolute w-40 h-40 rounded-full bg-primary/20"></div>
+        {/* Action Button - Amazon Hub Style */}
+        <div className="flex flex-col items-center justify-center py-10">
           <button
             onClick={handleCheckIn}
             disabled={hasCollectedToday || isProcessing}
-            className="relative z-10 flex flex-col items-center justify-center w-28 h-28 rounded-full bg-primary shadow-[0_0_40px_-10px_rgba(244,209,37,0.6)] transition-transform active:scale-95 cursor-pointer group"
+            className={`relative z-10 flex flex-col items-center justify-center w-32 h-32 rounded-full transition-all active:scale-95 group border-4 ${hasCollectedToday
+              ? 'bg-gray-100 border-gray-200 text-[#565959]'
+              : 'bg-[#FFD814] border-[#FCD200] text-[#0F1111] hover:bg-[#F7CA00]'
+              }`}
           >
             {isProcessing ? (
-              <SpokeSpinner className="text-[text-black]" size="w-7 h-7" />
+              <SpokeSpinner className="text-[#0F1111]" size="w-8 h-8" />
             ) : (
               <>
-                <span className="material-symbols-outlined text-[text-black] text-[40px] mb-1 group-hover:scale-110 transition-transform" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  {hasCollectedToday ? 'task_alt' : 'power_settings_new'}
+                <span className="material-symbols-outlined text-[44px] mb-1">
+                  {hasCollectedToday ? 'verified' : 'power_settings_new'}
                 </span>
-                <span className="text-[text-black] text-[9px] font-black uppercase tracking-tighter">
-                  {hasCollectedToday ? 'Finalizado' : 'Check-in-Diario'}
+                <span className="text-[10px] font-bold uppercase tracking-tight text-center px-2">
+                  {hasCollectedToday ? 'Coletado' : 'Check-in'}
                 </span>
               </>
             )}
           </button>
-          <p className="mt-6 text-sm font-medium text-primary uppercase tracking-widest animate-pulse">
-            {hasCollectedToday ? 'Renda Coletada' : 'Sistema Online'}
+          <p className={`mt-6 text-[12px] font-bold uppercase tracking-[0.2em] ${hasCollectedToday ? 'text-[#565959]' : 'text-[#007600] animate-pulse'}`}>
+            {hasCollectedToday ? 'RENDA COLETADA' : 'SISTEMA ONLINE'}
           </p>
         </div>
 
-        {/* Ticker / Log */}
-        <div className="mx-4 my-4 p-3 rounded-lg bg-white border-none shadow-md flex items-center gap-3 overflow-hidden">
-          <span className="material-symbols-outlined text-primary text-[20px] shrink-0">notifications_active</span>
-          <div className="flex-1 overflow-hidden relative h-6">
-            <div className="absolute whitespace-nowrap animate-marquee flex items-center text-sm text-black font-bold">
-              <span className="mr-12">👉 As tarefas devem ser realizadas diariamente para receber os ganhos.</span>
-              <span className="mr-12">👉 Verifique seus itens ativos para ver os ganhos prontos para coleta.</span>
+        {/* Ticker / Log - Flat */}
+        <div className="mx-4 mb-8 p-3 rounded-lg bg-[#FEF9E7] border border-[#FCD200]/30 flex items-center gap-3 overflow-hidden">
+          <span className="material-symbols-outlined text-[#0F1111] text-[20px] shrink-0">info</span>
+          <div className="flex-1 overflow-hidden relative h-5">
+            <div className="absolute whitespace-nowrap animate-marquee flex items-center text-[13px] text-[#0F1111] font-medium">
+              <span className="mr-12">👉 Realize seu check-in diariamente para receber seus lucros.</span>
+              <span className="mr-12">👉 Seus dispositivos ativos geram renda 24 horas por dia.</span>
             </div>
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-3 px-4 mb-6">
-          <div className="bg-white p-4 rounded-xl border-none shadow-md">
-            <div className="flex items-center gap-2 mb-2 text-text-secondary">
-              <span className="material-symbols-outlined text-[20px] text-green-600">calendar_view_week</span>
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Renda Semanal</span>
+        {/* Stats Grid - Flat Borders */}
+        <div className="grid grid-cols-2 gap-3 px-4 mb-10">
+          <div className="bg-white p-4 rounded-xl border border-gray-100">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="material-symbols-outlined text-[20px] text-[#565959]">calendar_month</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#565959]">Projeção Semanal</span>
             </div>
-            <p className="text-lg font-black text-black">
+            <p className="text-[18px] font-bold text-[#0F1111]">
               Kz {(potentialIncome * 7).toLocaleString()}
             </p>
           </div>
-          <div className="bg-white p-4 rounded-xl border-none shadow-md">
-            <div className="flex items-center gap-2 mb-2 text-text-secondary">
-              <span className="material-symbols-outlined text-[20px] text-primary">inventory_2</span>
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Total de Ativos</span>
+          <div className="bg-white p-4 rounded-xl border border-gray-100">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="material-symbols-outlined text-[20px] text-[#565959]">inventory</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#565959]">Ativos Totais</span>
             </div>
-            <p className="text-lg font-black text-black">
-              {purchases.filter(p => p.status === 'confirmado').length} Itens
+            <p className="text-[18px] font-bold text-[#0F1111]">
+              {purchases.filter(p => p.status === 'confirmado').length} Unidades
             </p>
           </div>
         </div>
 
-        {/* Active Items List */}
+        {/* Active Items List - Divider Design */}
         <div className="flex flex-col px-4 pb-32">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold leading-tight">Itens Ativos ({purchases.length})</h3>
-            <span
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-[16px] font-bold text-[#0F1111]">Dispositivos Geradores</h3>
+            <button
               onClick={() => onNavigate('purchase-history')}
-              className="text-xs font-bold text-primary cursor-pointer hover:underline"
+              className="text-[12px] font-bold text-[#007185] hover:underline"
             >
-              Ver Todos
-            </span>
+              Ver Detalhes
+            </button>
           </div>
 
-          {purchases.length === 0 ? (
-            <div className="bg-white p-6 rounded-xl border-none shadow-md text-center">
-              <p className="text-gray-600 text-sm font-bold leading-relaxed mb-4">
-                Por favor faça depósito para recarregar sua conta Amazon para comprar eletrónicos na Loja e começar a obter rendimentos.
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-40 gap-4">
+              <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
+            </div>
+          ) : purchases.length === 0 ? (
+            <div className="bg-gray-50 p-8 rounded-xl border border-dashed border-gray-200 text-center">
+              <p className="text-[#565959] text-[13px] font-medium leading-relaxed mb-6">
+                Você ainda não possui eletrônicos geradores de renda. Visite a loja para começar.
               </p>
               <button
-                onClick={() => onNavigate('deposit')}
-                className="inline-flex items-center justify-center px-6 h-10 bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase rounded-lg active:scale-95 transition-all"
+                onClick={() => onNavigate('shop')}
+                className="w-full h-11 bg-[#FFD814] hover:bg-[#F7CA00] text-[#0F1111] text-[13px] font-bold uppercase rounded-full transition-all border border-[#FCD200]"
               >
-                Depositar Agora
+                Visitar Loja
               </button>
             </div>
           ) : (
-            purchases.map((purchase) => (
-              <div key={purchase.id} className="group flex items-center gap-4 bg-white p-3 rounded-xl mb-3 border-none shadow-md transition-all">
-                <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-white flex items-center justify-center p-1">
-                  <div className={`absolute top-0 right-0 w-3 h-3 ${purchase.status === 'confirmado' ? 'bg-green-500' : (purchase.status === 'expirado' ? 'bg-red-500' : 'bg-primary')} rounded-full border-2 border-background-dark z-10 -mr-1 -mt-1`}></div>
-                  {purchase.url_produtos ? (
-                    <img alt={purchase.nome} className="object-contain w-full h-full" src={purchase.url_produtos} />
-                  ) : (
-                    <span className="material-symbols-outlined text-gray-600 text-[32px]">memory</span>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-base font-bold text-black truncate">{purchase.nome}</h4>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="h-1.5 w-16 bg-gray-700 rounded-full overflow-hidden">
-                      <div className={`h-full bg-primary rounded-full ${purchase.status === 'confirmado' ? 'w-[70%]' : 'w-0'}`}></div>
+            <div className="flex flex-col divide-y divide-gray-100 border-t border-gray-100">
+              {purchases.map((purchase) => (
+                <div key={purchase.id} className="flex items-center gap-4 py-4 active:bg-gray-50 transition-colors">
+                  <div className="relative w-16 h-16 shrink-0 rounded-lg bg-gray-50 flex items-center justify-center p-2 border border-gray-100">
+                    {purchase.url_produtos ? (
+                      <img alt={purchase.nome} className="object-contain w-full h-full" src={purchase.url_produtos} />
+                    ) : (
+                      <span className="material-symbols-outlined text-[#565959] text-[32px]">devices</span>
+                    )}
+                    <div className={`absolute top-0 right-0 w-2.5 h-2.5 ${purchase.status === 'confirmado' ? 'bg-[#007600]' : 'bg-amber-500'} rounded-full border-2 border-white -mr-1 -mt-1`}></div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-[14px] font-medium text-[#0F1111] truncate">{purchase.nome}</h4>
+                    <div className="flex items-center gap-2 mt-1.5 font-bold">
+                      <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
+                        <div className={`h-full bg-[#FFD814] rounded-full ${purchase.status === 'confirmado' ? 'w-full' : 'w-0'}`}></div>
+                      </div>
+                      <span className={`text-[10px] uppercase tracking-tighter ${purchase.status === 'confirmado' ? 'text-[#007600]' : 'text-amber-600'}`}>
+                        {purchase.status === 'confirmado' ? 'Gerando' : 'Aguardando'}
+                      </span>
                     </div>
-                    <span className="text-xs text-text-secondary">
-                      {purchase.status === 'confirmado' ? 'Gerando...' : (purchase.status === 'expirado' ? 'Expirado' : 'Pendente')}
-                    </span>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[14px] font-bold text-[#0F1111]">+{purchase.renda_diaria.toLocaleString()} Kz</p>
+                    <p className="text-[10px] text-[#565959] font-bold">/dia</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-bold text-black">+{purchase.renda_diaria.toLocaleString()} Kz</p>
-                  <p className="text-xs text-text-secondary">/dia</p>
-                </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
       </div>

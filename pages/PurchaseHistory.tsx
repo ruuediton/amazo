@@ -69,14 +69,19 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
 
       const imageMap: Record<string, { url: string, cat: string }> = {};
       productData?.forEach(p => {
-        imageMap[p.name.trim().toLowerCase()] = { url: p.image_url, cat: p.category };
+        if (p?.name) {
+          imageMap[p.name.trim().toLowerCase()] = { url: p.image_url, cat: p.category };
+        }
       });
 
-      const purchasesWithImages = purchaseData?.map(p => ({
-        ...p,
-        image_url: imageMap[p.nome_produto.trim().toLowerCase()]?.url || null,
-        category: imageMap[p.nome_produto.trim().toLowerCase()]?.cat || 'Eletrônicos'
-      }));
+      const purchasesWithImages = purchaseData?.map(p => {
+        const nameKey = p?.nome_produto?.trim().toLowerCase();
+        return {
+          ...p,
+          image_url: nameKey ? imageMap[nameKey]?.url : null,
+          category: nameKey ? imageMap[nameKey]?.cat : 'Eletrônicos'
+        };
+      });
 
       setPurchases(purchasesWithImages || []);
     } catch (error: any) {
@@ -109,7 +114,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
           <span className="material-symbols-outlined text-[24px] text-[#0F1111]">arrow_back</span>
         </button>
         <h2 className="text-[#0F1111] text-[16px] font-bold flex-1 text-center pr-10">
-          Meus Pedidos
+          Minhas Compras
         </h2>
       </header>
 
