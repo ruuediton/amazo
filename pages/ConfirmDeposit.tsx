@@ -119,120 +119,118 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
   return (
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-32 selection:bg-amber-100 antialiased">
       <div className="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto">
-        {/* Header */}
-        <header className="sticky top-0 z-10 bg-white border-b border-gray-100 flex items-center justify-between p-4 py-3 px-6">
+        {/* Header - Identical to Image */}
+        <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => onNavigate('deposit')}
-            className="flex size-10 items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
+            className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#0F1111] text-[24px]">arrow_back</span>
+            <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
           </button>
-          <span className="text-[16px] font-bold">Confirmar Depósito</span>
+          <span className="font-bold text-[16px]">Confirmar Depósito</span>
           <button
             onClick={() => onNavigate('deposit-history')}
-            className="flex size-10 items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
+            className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#0F1111] text-[24px]">history</span>
+            <span className="material-symbols-outlined text-[#0F1111]">history</span>
           </button>
         </header>
 
-        <main className="p-6 space-y-6 animate-in fade-in duration-500">
+        <main className="p-5 space-y-6">
 
-          {/* Main Card Style for Amount (Matching image layout) */}
-          <div className="bg-[#FFD814] rounded-[24px] p-8 border border-[#FCD200] shadow-sm relative overflow-hidden">
+          {/* Balance/Amount Card - Identical to Image */}
+          <div className="bg-[#FFD814] rounded-xl p-6 border border-[#FCD200] shadow-sm relative overflow-hidden">
             <div className="absolute right-[-20px] top-[-20px] opacity-10">
-              <span className="material-symbols-outlined text-[120px]">account_balance_wallet</span>
+              <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>
             </div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0F1111]/60 mb-1">VALOR A DEPOSITAR</p>
-            <h1 className="text-4xl font-black text-[#0F1111]">
+            <p className="text-[12px] font-bold uppercase tracking-widest text-[#0F1111]/70 mb-1">VALOR A TRANSFERIR</p>
+            <h1 className="text-4xl font-extrabold text-[#0F1111]">
               Kz {(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
             </h1>
           </div>
 
-          {/* Destination Account Card (Matching image style) */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center px-1">
-              <span className="text-[13px] font-bold text-[#0F1111]">Conta de Destino</span>
-              <button onClick={() => onNavigate('deposit')} className="text-[12px] font-bold text-[#007185]">Alterar</button>
+          {/* Destination Section - Label + Alterar Link */}
+          <div>
+            <div className="flex justify-between items-center mb-2 px-1">
+              <span className="text-[13px] font-bold text-[#0F1111]">Conta de Destino (Empresa)</span>
+              <button
+                onClick={() => onNavigate('deposit')}
+                className="text-[12px] font-bold text-[#007185] hover:underline"
+              >
+                Alterar
+              </button>
             </div>
 
-            <div className="bg-white border border-[#D5D9D9] rounded-[16px] p-5 shadow-sm space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="size-11 rounded-xl bg-gray-50 flex items-center justify-center text-[#565959] border border-gray-100">
-                  <span className="material-symbols-outlined">account_balance</span>
-                </div>
-                <div className="flex-1 overflow-hidden">
-                  <p className="text-[15px] font-bold text-[#0F1111] truncate uppercase">{deposit.nome_banco || deposit.nome_do_banco || "Seleção Padrão"}</p>
-                  <p className="text-[11px] text-[#565959] font-mono truncate">{deposit.iban}</p>
-                </div>
-                <span className="material-symbols-outlined text-green-600">check_circle</span>
+            {/* Bank Card - Identical to Image */}
+            <div className="flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl bg-white shadow-sm">
+              <div className="size-10 rounded-lg bg-gray-100 flex items-center justify-center text-[#565959]">
+                <span className="material-symbols-outlined">account_balance</span>
               </div>
-
-              <div className="pt-4 border-t border-gray-100 flex justify-between items-center bg-gray-50/50 -mx-5 px-5 py-3 rounded-b-[16px]">
-                <div className="flex-1 overflow-hidden mr-4">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Titular</p>
-                  <p className="text-[12px] font-bold text-[#0F1111] truncate uppercase">
-                    {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleCopy(deposit.iban, "IBAN")}
-                    className="h-10 px-4 bg-white border border-gray-200 rounded-lg text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm flex items-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">content_copy</span>
-                    Copiar IBAN
-                  </button>
-                </div>
+              <div className="flex-1 overflow-hidden">
+                <p className="text-[14px] font-bold text-[#0F1111] truncate uppercase">{deposit.nome_banco || deposit.nome_do_banco || "Banco Selecionado"}</p>
+                <p className="text-[11px] text-[#565959] font-mono truncate">{deposit.iban}</p>
               </div>
+              <span className="material-symbols-outlined text-green-600">check_circle</span>
             </div>
           </div>
 
-          {/* Timer Section (Redesigned to be more integrated) */}
-          <div className="bg-red-50 border border-red-100 rounded-2xl p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-red-500 animate-pulse">timer</span>
-              <div>
-                <p className="text-[10px] font-bold text-red-700/60 uppercase tracking-widest leading-none">Expira em</p>
-                <p className="text-xl font-black text-red-600 tabular-nums">{timeLeft}</p>
+          {/* Details Section - Clean Standard Layout */}
+          <div className="space-y-4">
+            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 space-y-3">
+              <div className="flex justify-between items-center">
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-none">Titular do Beneficiário</p>
+                <button
+                  onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario || "", "Nome")}
+                  className="text-[11px] font-bold text-blue-600 flex items-center gap-1 active:opacity-50"
+                >
+                  <span className="material-symbols-outlined text-[14px]">content_copy</span> COPIAR
+                </button>
+              </div>
+              <p className="text-[14px] font-bold text-[#0F1111] uppercase tracking-tighter">
+                {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
+              </p>
+            </div>
+
+            <div className="bg-red-50 border border-red-100 rounded-xl p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-red-500 animate-pulse">timer</span>
+                <div>
+                  <p className="text-[10px] font-bold text-red-700/60 uppercase tracking-widest leading-none">A sessão expira em</p>
+                  <p className="text-xl font-black text-red-600 tabular-nums">{timeLeft}</p>
+                </div>
               </div>
             </div>
-            <p className="text-[10px] text-red-700/40 text-right font-medium max-w-[120px] leading-tight">
-              Faça o envio antes que a sessão expire.
-            </p>
+
+            <div className="bg-sky-50 border border-sky-100 p-4 rounded-xl flex gap-3">
+              <span className="material-symbols-outlined text-sky-500 text-[20px]">info</span>
+              <p className="text-[11px] text-sky-900 font-medium leading-relaxed">
+                Efetue a transferência do valor exato e carregue o comprovativo abaixo para validação imediata.
+              </p>
+            </div>
           </div>
 
-          {/* Security Alert */}
-          <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl flex gap-3">
-            <span className="material-symbols-outlined text-blue-500 text-[20px]">info</span>
-            <p className="text-[11px] text-blue-900 font-medium leading-relaxed">
-              Realize a transferência bancária e **guarde o comprovativo**. A verificação é necessária para liberar o saldo.
-            </p>
-          </div>
-
-          <div className="text-center pt-4">
+          <div className="text-center pt-2">
             <button
               disabled={loading}
               onClick={handleCancelDeposit}
               className="text-[12px] font-bold text-gray-400 hover:text-red-500 transition-colors uppercase tracking-widest"
             >
-              {loading ? 'Processando...' : 'Cancelar Depósito'}
+              {loading ? 'Processando...' : 'Cancelar Solicitação'}
             </button>
           </div>
 
         </main>
 
-        {/* Footer Action (Matching image style) */}
-        <footer className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white p-4 px-8 border-t border-gray-100 pb-10">
+        {/* Action Footer - Fixed like image */}
+        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 px-8 bg-white border-t border-gray-100 pb-8">
           <button
             disabled={isExpired}
             onClick={() => onNavigate('como-enviar-comprovante')}
-            className={`w-full flex items-center justify-center gap-3 rounded-[16px] h-14 bg-[#FFD814] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.98] transition-all text-[#0F1111] text-base font-bold shadow-sm ${isExpired ? 'opacity-30 grayscale cursor-not-allowed' : ''}`}
+            className={`w-full bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] py-3.5 rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center ${isExpired ? 'opacity-30 grayscale cursor-not-allowed' : ''}`}
           >
-            <span className="material-symbols-outlined">description</span>
-            <span>Enviar Comprovante</span>
+            Enviar Comprovante
           </button>
-        </footer>
+        </div>
       </div>
     </div>
   );
