@@ -301,7 +301,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               <button
                 onClick={handleSaveBank}
                 disabled={loading}
-                className="w-full h-[44px] bg-[#FFD814] border border-[#FCD200] rounded-[8px] flex items-center justify-center font-normal text-[#0F1111] text-[15px] shadow-sm hover:bg-[#F7CA00] active:scale-[0.99] transition-all"
+                className="w-full h-[44px] bg-white border border-gray-200 rounded-[8px] flex items-center justify-center font-normal text-[#0F1111] text-[15px] shadow-sm hover:bg-gray-50 active:scale-[0.99] transition-all"
               >
                 {loading ? (
                   'Salvando...'

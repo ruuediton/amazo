@@ -25,6 +25,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cheapestProduct, setCheapestProduct] = useState<any>(null);
   const [marketingItems, setMarketingItems] = useState<MarketingItem[]>([]);
+  const [recentPurchases, setRecentPurchases] = useState<any[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -69,8 +70,26 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       }
     };
 
+    const fetchRecentPurchases = async () => {
+      try {
+        const { data } = await supabase
+          .from('historico_compras')
+          .select('id, nome_produto, status')
+          .eq('user_id', profile.id)
+          .order('data_compra', { ascending: false })
+          .limit(5);
+
+        if (data) {
+          setRecentPurchases(data);
+        }
+      } catch (err) {
+        console.error("Purchases fetch error:", err);
+      }
+    };
+
     fetchCheapest();
     fetchMarketing();
+    fetchRecentPurchases();
   }, [profile?.id]);
 
   const filters = [
@@ -230,15 +249,27 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <section className="bg-white px-4 pt-4 pb-2">
         <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Continuar comprando</h2>
         <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-          {[1, 2, 3].map((_, i) => (
-            <div key={i} onClick={() => onNavigate('shop')} className="min-w-[130px] cursor-pointer">
-              <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">
-                <img src="/placeholder_product.png" className="max-h-full max-w-full object-contain opacity-80" />
+          {recentPurchases.length > 0 ? (
+            recentPurchases.map((purchase) => (
+              <div key={purchase.id} onClick={() => onNavigate('purchase-history')} className="min-w-[130px] cursor-pointer group">
+                <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5 group-hover:bg-gray-100 transition-colors">
+                  <img src="/placeholder_product.png" className="max-h-full max-w-full object-contain opacity-80 mix-blend-multiply" />
+                </div>
+                <p className="text-[13px] text-[#0F1111] font-medium leading-tight truncate">{purchase.nome_produto}</p>
+                <p className="text-[11px] text-[#565959] truncate">{purchase.status === 'pendente' ? 'Processando' : 'Comprado recentemente'}</p>
               </div>
-              <p className="text-[13px] text-[#0F1111] font-medium leading-tight truncate">Eletrônicos & Informática</p>
-              <p className="text-[11px] text-[#565959]">Visto recentemente</p>
-            </div>
-          ))}
+            ))
+          ) : (
+            [1, 2, 3].map((_, i) => (
+              <div key={i} onClick={() => onNavigate('shop')} className="min-w-[130px] cursor-pointer opacity-60">
+                <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">
+                  <span className="material-symbols-outlined text-gray-300 text-3xl">shopping_bag</span>
+                </div>
+                <p className="text-[13px] text-[#0F1111] font-medium leading-tight truncate">Explorar ofertas</p>
+                <p className="text-[11px] text-[#565959]">Ver produtos</p>
+              </div>
+            ))
+          )}
         </div>
         <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Visualize seu histórico</button>
       </section>

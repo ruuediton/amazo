@@ -68,7 +68,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       doc.text('GUIA OFICIAL DO USUÁRIO', 105, 130, { align: 'center' });
 
       doc.setFontSize(12);
-      doc.text('Versão 2.4.0', 105, 280, { align: 'center' });
+      doc.text('Versão 4.2.0', 105, 280, { align: 'center' });
 
       // --- PAGE 2: WELCOME ---
       doc.addPage();
@@ -97,7 +97,11 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       let yPos = 90;
 
       const addSection = (title: string, content: string) => {
-        if (yPos > 250) {
+        // Calculate required height roughly: title (8) + lines * 6 + padding (15)
+        const lines = doc.splitTextToSize(content, 190);
+        const requiredHeight = 8 + (lines.length * 6) + 15;
+
+        if (yPos + requiredHeight > 270) {
           doc.addPage();
           yPos = 30;
           // Header on new page
@@ -114,7 +118,6 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(11);
         doc.setTextColor(60, 60, 60);
-        const lines = doc.splitTextToSize(content, 190);
         doc.text(lines, 10, yPos);
         yPos += (lines.length * 6) + 15;
       };
@@ -146,11 +149,77 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         "- Copie seu link ou código exclusivo.\n" +
         "- Quando seus amigos se cadastram e investem, você ganha comissões automáticas.");
 
-      addSection('5. Segurança',
+      addSection('5. Como Enviar Comprovante',
+        "Siga os passos para enviar seu comprovante com segurança:\n" +
+        "1. Localizar Comprovante: Acesse seu histórico de transações, encontre o depósito recente e toque em 'Ver Comprovante'.\n" +
+        "2. Acessar WhatsApp: Toque no botão oficial para abrir o WhatsApp.\n" +
+        "3. Falar com Gerente: Inicie uma conversa com seu Gerente de Conta Amazon (verifique o selo de verificação).\n" +
+        "4. Anexar e Enviar: No chat, toque no anexo (clipe) e envie a imagem do comprovante.");
+
+      addSection('6. Maximizar Ganhos',
+        "Dicas para aumentar seus rendimentos:\n" +
+        "- Acesse a Página de Ganhos (ícone de Raio) para visualizar seu painel.\n" +
+        "- Acompanhe seu Saldo: Atualizado em tempo real na moeda local (Kz).\n" +
+        "- Controle a Operação: Use o botão 'Check-in Diário' para coletar recompensas e mantenha o sistema ativo.");
+
+      addSection('7. Segurança',
         "Sua segurança é prioridade. Nunca compartilhe sua senha de retirada com ninguém. " +
         "Se tiver problemas, use a opção 'Suporte' nas 'Configurações' para falar com nossa equipe.");
 
-      doc.save('Manual_Aprende_Amazon.pdf');
+      // --- LEGAL & REGULATION SECTIONS ---
+
+      addSection('REGULAMENTO INTERNO',
+        "O descumprimento de qualquer uma das normas abaixo poderá resultar na suspensão imediata das atividades do utilizador e bloqueio preventivo de fundos para análise.\n\n" +
+        "01. Operações de Caixa\nOs depósitos via Multicaixa Express são processados automaticamente 24/7. Pedidos de retirada são processados em dias úteis, das 09:00 às 18:00 (Hora de Luanda), com prazo de liquidação de até 24 horas úteis.\n\n" +
+        "02. Limites e Taxas\nO valor mínimo de saque é de 1.000 Kz. A amazon reserva-se o direito de aplicar taxas administrativas sobre transações de acordo com o nível da conta do utilizador e as parcerias interbancárias vigentes.\n\n" +
+        "03. Propriedade de Conta\nCada conta é pessoal e intransferível. A verificação de identidade (BI) é obrigatória para movimentações acima do limite básico. O uso de contas de terceiros para saques resultará em rejeição automática da transação.\n\n" +
+        "04. Sistema de Ganhos\nA remuneração por tarefas e cashback é baseada em performance sistémica. Manipulações de software ou uso de bots para automatizar cliques violam as políticas de uso e levam ao encerramento definitivo da conta sem aviso prévio.");
+
+      addSection('TERMOS E CONDIÇÕES',
+        "Última atualização: 24 de Outubro de 2023.\n\n" +
+        "Bem-vindo à amazon. Ao utilizar o nosso aplicativo e serviços bancários integrados, você concorda com os termos descritos abaixo.\n\n" +
+        "01. Introdução\nAo criar uma conta na plataforma amazon, o utilizador declara ter capacidade jurídica e concorda integralmente com as regras de operação financeira, prazos de processamento e políticas de cashback vigentes.\n\n" +
+        "02. Serviços Financeiros\nTodas as transações são efetuadas em Kwanzas (Kz). Depósitos via Multicaixa Express possuem tempo médio de compensação de 5 minutos, enquanto retiradas bancárias podem levar até 24 horas úteis. *A amazon não se responsabiliza por dados de IBAN inseridos incorretamente.\n\n" +
+        "03. Marketplace e Ganhos\nA aquisição de dispositivos na loja amazon integrada concede ao utilizador o direito de participar de campanhas de recompensas por tarefas. Os rendimentos diários são variáveis.\n\n" +
+        "04. Segurança\nO utilizador é o único responsável por manter o sigilo de sua senha. A amazon nunca solicitará sua senha por WhatsApp ou e-mail.");
+
+      addSection('DECLARAÇÃO DE PRIVACIDADE',
+        "A Amazon Angola Digital Services, SA assume o compromisso de proteger a privacidade dos seus utilizadores em conformidade com a Lei n.º 22/11 – Lei da Protecção de Dados Pessoais da República de Angola.\n\n" +
+        "01. Recolha de Informação\nRecolhemos dados essenciais para a prestação de serviços financeiros: Nome, BI, IBAN, contacto telefónico e metadados de transação. Estes dados são processados exclusivamente para fins de segurança bancária.\n\n" +
+        "02. Finalidade do Tratamento\nAs informações destinam-se à gestão da conta, processamento de depósitos/retiradas e prevenção contra branqueamento de capitais (AML).\n\n" +
+        "03. Criptografia e Armazenamento\nTodos os dados são armazenados em servidores com criptografia militar. O acesso é restrito a pessoal autorizado.\n\n" +
+        "04. Direitos do Titular\nAo abrigo da lei angolana, o utilizador tem o direito de aceder, retificar e solicitar a eliminação dos seus dados pessoais.\n\n" +
+        "AUDITORIA INDEPENDENTE\nEste sistema de tratamento de dados é auditado periodicamente por entidades externas para garantir a resiliência contra ciberataques.");
+
+      // Footer line if space permits on the last page, otherwise just let it flow
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.setTextColor(150, 150, 150);
+
+      if (yPos + 20 > 280) {
+        doc.addPage();
+        yPos = 30;
+      } else {
+        yPos += 10;
+      }
+      doc.text("Amazon Angola Digital Services, SA", 10, yPos);
+      doc.text("Luanda, República de Angola - Regulamentado pela APD", 10, yPos + 5);
+
+
+      // Forced manual download to ensure correct MIME type and filename
+      const pdfBlob = doc.output('blob');
+      const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Manual_Amazon_Guia.pdf'; // Simplified, sure-fire extension
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
       showToast?.('Manual baixado com sucesso!', 'success');
       setShowManualModal(false);
     } catch (err) {

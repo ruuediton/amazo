@@ -44,7 +44,7 @@ const Support: React.FC<SupportProps> = ({ onNavigate }) => {
               Precisa de ajuda com depósitos, retiradas ou dúvidas sobre a plataforma? Nosso time especializado está pronto para atender você agora.
             </p>
             <button
-              onClick={() => window.open('https://wa.me/244900000000', '_blank')}
+              onClick={() => window.open('https://wa.me/244933850746', '_blank')}
               className="flex w-full cursor-pointer items-center justify-center rounded-xl h-14 px-4 bg-primary text-background-dark text-base font-black leading-normal transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
             >
               <span className="mr-2 material-symbols-outlined">chat</span>
