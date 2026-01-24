@@ -170,6 +170,57 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Recompensas por Metas - New Section */}
+                        <div className="pt-6 border-t border-gray-50">
+                            <div className="flex items-center gap-2 mb-4 px-2">
+                                <span className="material-symbols-outlined text-[#E47911]">emoji_events</span>
+                                <h4 className="font-bold text-[14px] text-[#0F1111] uppercase tracking-wider">Metas de Bônus</h4>
+                            </div>
+
+                            <div className="space-y-3">
+                                {[
+                                    { level: 1, target: 50, reward: 4000, title: 'Bronze' },
+                                    { level: 2, target: 100, reward: 8000, title: 'Prata' },
+                                    { level: 3, target: 500, reward: 50000, title: 'Ouro' },
+                                    { level: 4, target: 1000, reward: 100000, title: 'Diamante' },
+                                ].map((meta) => {
+                                    const progress = Math.min((stats.total_invited / meta.target) * 100, 100);
+                                    const isReached = stats.total_invited >= meta.target;
+
+                                    return (
+                                        <div key={meta.level} className={`relative overflow-hidden rounded-xl border ${isReached ? 'bg-[#F0FDF4] border-green-200' : 'bg-white border-gray-200'}`}>
+                                            <div className="p-4 relative z-10">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <div>
+                                                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${isReached ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                                                            Nível {meta.level} • {meta.title}
+                                                        </span>
+                                                        <h5 className="font-bold text-[15px] mt-1 text-[#0F1111]">{meta.target} Convites</h5>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <p className="text-[10px] text-gray-500 font-bold uppercase">Prêmio</p>
+                                                        <p className="text-[16px] font-black text-[#B12704]">Kz {meta.reward.toLocaleString('pt-AO')}</p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Progress Bar */}
+                                                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                                    <div
+                                                        className={`h-full transition-all duration-500 ${isReached ? 'bg-green-500' : 'bg-[#FFD814]'}`}
+                                                        style={{ width: `${progress}%` }}
+                                                    ></div>
+                                                </div>
+                                                <div className="flex justify-between mt-1">
+                                                    <span className="text-[10px] font-medium text-gray-500">{stats.total_invited} / {meta.target}</span>
+                                                    {isReached && <span className="text-[10px] font-bold text-green-600 flex items-center gap-1"><span className="material-symbols-outlined text-[12px]">check_circle</span> Conquistado</span>}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </>
                 )}
             </main>
