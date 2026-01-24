@@ -53,14 +53,12 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
     try {
       await withLoading(async () => {
         if (!invitationCode) {
-          showToast?.("Código de convite é obrigatório.", "error");
-          return;
+          throw new Error("Código de convite é obrigatório.");
         }
 
         const email = `${phoneNumber.replace(/\s/g, '')}@deepbank.user`;
-        // Backend handle invite_code generation
 
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -71,23 +69,12 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
           }
         });
 
-        if (error) {
-          throw error;
-        } else if (data.user) {
-          // Atualiza o perfil com telefone
-          await supabase.from('profiles').update({
-            phone: phoneNumber
-          }).eq('id', data.user.id);
-        }
+        if (error) throw error;
       }, "Registro sucedido!");
 
       onNavigate('login');
     } catch (error: any) {
-      // Erro tratado pelo withLoading ou throw message acima
-      if (error.message && !error.message.includes('Auth')) {
-        // Se for erro customizado (ex: código inválido), exibe toast
-        // O withLoading ja exibe o erro, mas garantimos
-      }
+      console.error('Erro no registro:', error);
     }
   };
 
@@ -203,13 +190,13 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                   <input
                     className={`flex w-full rounded-[8px] border border-[#D5D9D9] bg-white pl-12 pr-4 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:outline-none transition-all placeholder:text-gray-500 ${new URLSearchParams(window.location.search).get('ref') ? 'bg-gray-50 cursor-not-allowed' : ''
                       }`}
-                    placeholder="6 dígitos de convite"
+                    placeholder="Código de convite"
                     type="text"
                     value={invitationCode}
                     onChange={(e) => {
                       // Allow manual entry if not from URL
                       if (!new URLSearchParams(window.location.search).get('ref')) {
-                        setInvitationCode(e.target.value.toUpperCase().slice(0, 6));
+                        setInvitationCode(e.target.value.toUpperCase().slice(0, 8));
                       }
                     }}
                     required
