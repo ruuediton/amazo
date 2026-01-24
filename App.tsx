@@ -278,22 +278,30 @@ const App: React.FC = () => {
       </main>
 
       {/* Bottom Navigation */}
-      {session && ['home', 'shop', 'profile', 'ganhos-tarefas'].includes(currentPage) && (
+      {session && ['home', 'shop', 'profile', 'ganhos-tarefas', 'invite-page'].includes(currentPage) && (
         <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-surface-dark/95 backdrop-blur-lg border-t border-amazon-border pb-1.5 pt-1.5 px-2 z-50">
           <div className="flex justify-between items-center">
             <button
               onClick={() => setCurrentPage('home')}
               className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'home' ? 'text-primary' : 'text-gray-500'}`}
             >
-              <span className={`material-symbols-outlined text-[22px] ${currentPage === 'home' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'home' ? 1 : 0}` }}>home</span>
+              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'home' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'home' ? 1 : 0}` }}>homebox</span>
               <span className="text-[9px] font-bold">Início</span>
+            </button>
+
+            <button
+              onClick={() => setCurrentPage('invite-page')}
+              className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'invite-page' ? 'text-primary' : 'text-gray-500'}`}
+            >
+              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'invite-page' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'invite-page' ? 1 : 0}` }}>group_add</span>
+              <span className="text-[9px] font-medium">Convidar</span>
             </button>
 
             <button
               onClick={() => setCurrentPage('ganhos-tarefas')}
               className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'ganhos-tarefas' ? 'text-primary' : 'text-gray-500'}`}
             >
-              <span className={`material-symbols-outlined text-[22px] ${currentPage === 'ganhos-tarefas' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'ganhos-tarefas' ? 1 : 0}` }}>bolt</span>
+              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'ganhos-tarefas' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'ganhos-tarefas' ? 1 : 0}` }}>bolt</span>
               <span className="text-[9px] font-medium">Ganhos</span>
             </button>
 
@@ -301,9 +309,7 @@ const App: React.FC = () => {
               onClick={() => setCurrentPage('shop')}
               className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'shop' ? 'text-primary' : 'text-gray-500'}`}
             >
-              <div className={`flex items-center justify-center p-0.5 rounded-full ${currentPage === 'shop' ? 'bg-primary/10' : ''}`}>
-                <span className={`material-symbols-outlined text-[22px] ${currentPage === 'shop' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'shop' ? 1 : 0}` }}>storefront</span>
-              </div>
+              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'shop' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'shop' ? 1 : 0}` }}>shopping_bag</span>
               <span className="text-[9px] font-medium">Loja</span>
             </button>
 
@@ -311,7 +317,7 @@ const App: React.FC = () => {
               onClick={() => setCurrentPage('profile')}
               className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'profile' ? 'text-primary' : 'text-gray-500'}`}
             >
-              <span className={`material-symbols-outlined text-[22px] ${currentPage === 'profile' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'profile' ? 1 : 0}` }}>person</span>
+              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'profile' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'profile' ? 1 : 0}` }}>person</span>
               <span className="text-[9px] font-medium">Conta</span>
             </button>
           </div>

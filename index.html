@@ -15,40 +15,37 @@
       theme: {
         extend: {
           colors: {
-            primary: '#f4c025',
-            'primary-hover': '#eeb315',
-            secondary: '#F8F9FA',
-            black: '#000000',
+            primary: '#FFD814',
+            'primary-hover': '#F7CA00',
+            secondary: '#F0F2F2',
+            black: '#0F1111',
             gray: {
               50: '#FDFDFD',
-              100: '#F8F9FA',
-              200: '#E5E5EA',
+              100: '#F0F2F2',
+              200: '#E6E6E6',
               300: '#D1D1D6',
               400: '#A1A1A1',
-              500: '#737373',
-              600: '#525252',
-              700: '#404040',
+              500: '#565959',
+              600: '#404040',
+              700: '#333333',
               800: '#262626',
-              900: '#171717',
+              900: '#111111',
             },
+            'amazon-green': '#007600',
+            'amazon-blue': '#007185',
             'background-dark': '#FFFFFF',
             'surface-dark': '#FFFFFF',
-            'card-dark': '#FFFFFF',
-            'border-dark': '#E5E5EA',
-            'text-primary': '#000000',
-            'text-secondary': '#737373',
-            'amazon-dark': '#111111',
-            'amazon-border': '#F3F4F6',
-            'amazon-light-gray': '#F9FAFB',
-            'success-bg': '#DCFCE7',
-            'success-text': '#166534',
-            'error-bg': '#FEE2E2',
-            'error-text': '#991B1B',
-            'warning-bg': '#FEF9C3',
+            'amazon-border': '#F0F2F2',
+            'success-bg': '#E7F4E7',
+            'success-text': '#007600',
+            'error-bg': '#FDE8EB',
+            'error-text': '#CC0C39',
+            'warning-bg': '#FEF9E7',
             'warning-text': '#854D0E'
           },
           fontFamily: {
             display: ['Manrope', 'sans-serif'],
+            sans: ['Manrope', 'sans-serif'],
           }
         }
       }
@@ -57,8 +54,15 @@
   <style>
     body {
       background-color: #FFFFFF;
-      color: #000000;
+      color: #0F1111;
       font-family: 'Manrope', sans-serif;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Global Flat Style - No Shadows */
+    * {
+      box-shadow: none !important;
     }
 
     .no-scrollbar::-webkit-scrollbar {
