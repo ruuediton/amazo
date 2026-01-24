@@ -40,7 +40,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
         }
     };
 
-    const quickAmounts = [5000, 10000, 25000, 50000];
+    const quickAmounts = [3000, 12000, 39000, 75000];
 
     const handleQuickAmount = (val: number) => {
         setAmount(val.toString());
@@ -93,6 +93,13 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
         }
     };
 
+    const maskIban = (val: string) => {
+        if (!val) return '';
+        const clean = val.replace(/\s/g, '');
+        if (clean.length < 13) return val;
+        return `${clean.substring(0, 8)}*****${clean.substring(clean.length - 9)}`;
+    };
+
     if (loading) return (
         <div className="flex justify-center items-center h-screen bg-white">
             <SpokeSpinner size="w-8 h-8" color="text-[#FFD814]" />
@@ -131,15 +138,15 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     <p className="text-[11px] font-medium text-gray-400">Min: 3.000 Kz • Max: 1.000.000 Kz</p>
                 </div>
 
-                {/* Quick Amount Buttons - 4 botões arredondados */}
+                {/* Quick Amount Buttons - 4 botões arredondados com valores corrigidos */}
                 <div className="grid grid-cols-4 gap-2">
                     {quickAmounts.map(val => (
                         <button
                             key={val}
                             onClick={() => handleQuickAmount(val)}
-                            className="py-3 bg-white border border-[#D5D9D9] rounded-[16px] text-[13px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
+                            className="py-3 bg-white border border-[#D5D9D9] rounded-[16px] text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
                         >
-                            {val >= 1000 ? `${val / 1000}k` : val}
+                            {val.toLocaleString('pt-AO')}
                         </button>
                     ))}
                 </div>
@@ -166,7 +173,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 </button>
             </div>
 
-            {/* Bank Modal */}
+            {/* Bank Modal Otimizado */}
             {isBankModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
                     <div className="w-full max-w-sm bg-white rounded-[24px] p-6 shadow-2xl animate-in slide-in-from-bottom-10 duration-300">
@@ -181,19 +188,23 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                                 <button
                                     key={bank.id}
                                     onClick={() => handleSelectBank(bank)}
-                                    className="w-full flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl hover:border-[#E77600] active:bg-gray-50 transition-all text-left"
+                                    className="w-full flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-2xl hover:border-[#E77600] active:bg-gray-50 transition-all text-left group"
                                 >
-                                    <div className="size-10 rounded-lg bg-gray-50 flex items-center justify-center text-[#565959]">
-                                        <span className="material-symbols-outlined">account_balance</span>
+                                    <div className="size-12 rounded-xl bg-gray-50 flex items-center justify-center text-[#565959] group-hover:text-[#E77600] transition-colors shadow-sm">
+                                        <span className="material-symbols-outlined text-[24px]">account_balance</span>
                                     </div>
-                                    <div className="flex-1">
-                                        <p className="text-[14px] font-bold text-[#0F1111] leading-none mb-1">{bank.nome_do_banco}</p>
-                                        <p className="text-[11px] text-gray-500">{bank.nome_destinatario}</p>
+                                    <div className="flex-1 overflow-hidden">
+                                        <p className="text-[14px] font-bold text-[#0F1111] leading-none mb-1 group-hover:text-[#E77600] transition-colors">{bank.nome_do_banco}</p>
+                                        <p className="text-[11px] text-gray-500 font-medium truncate mb-1">{bank.nome_destinatario}</p>
+                                        <p className="text-[10px] text-gray-400 font-mono tracking-tighter">{maskIban(bank.iban)}</p>
                                     </div>
-                                    <span className="material-symbols-outlined text-gray-300">chevron_right</span>
+                                    <span className="material-symbols-outlined text-gray-300 group-hover:text-[#E77600] transition-colors">chevron_right</span>
                                 </button>
                             ))}
                         </div>
+                        <p className="mt-6 text-[11px] text-center text-gray-400 font-medium leading-tight">
+                            Os dados bancários completos serão exibidos <br /> na próxima etapa para cópia.
+                        </p>
                     </div>
                 </div>
             )}
