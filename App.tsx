@@ -53,6 +53,7 @@ const SubordinateList = lazy(() => import('./pages/SubordinateList'));
 const InvitePage = lazy(() => import('./pages/InvitePage'));
 import LoadingOverlay from './components/LoadingOverlay';
 import SpokeSpinner from './components/SpokeSpinner';
+import FloatingSupportButton from './components/FloatingSupportButton';
 
 
 import { supabase } from './supabase';
@@ -275,6 +276,7 @@ const App: React.FC = () => {
         }>
           <PageComponent />
         </Suspense>
+        {session && <FloatingSupportButton />}
       </main>
 
       {/* Bottom Navigation */}
