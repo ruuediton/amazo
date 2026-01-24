@@ -133,7 +133,12 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
         <span className="font-bold text-[16px]">Retirar Kwanza</span>
-        <div className="size-10"></div>
+        <button
+          onClick={() => onNavigate('withdrawal-history')}
+          className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
+        >
+          <span className="material-symbols-outlined text-[#0F1111]">history</span>
+        </button>
       </header>
 
       <main className="p-5 space-y-6">
