@@ -222,10 +222,10 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       </main>
 
-      <div className="fixed bottom-0 left-0 w-full p-4 bg-white border-t border-gray-100">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 px-8 bg-white border-t border-gray-100 pb-8">
         <button
           onClick={handleInitiateWithdraw}
-          className="w-full bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-normal text-[15px] py-3.5 rounded-lg shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center"
+          className="w-full bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] py-3.5 rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center"
         >
           Solicitar Saque
         </button>
