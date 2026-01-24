@@ -13,23 +13,17 @@ interface ShopProps {
 const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
   const { withLoading } = useLoading();
   const [products, setProducts] = useState<any[]>([]);
+  const [purchasedIds, setPurchasedIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [quantity, setQuantity] = useState(1);
   const [isBuying, setIsBuying] = useState(false);
 
   useEffect(() => {
-    fetchProducts();
+    fetchInitialData();
 
     const productsSubscription = supabase
-      .channel('products-realtime')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'products' },
-        () => {
-          fetchProducts();
-        }
-      )
+      .channel('shop-updates')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => fetchProducts())
       .subscribe();
 
     return () => {
@@ -37,27 +31,40 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
     };
   }, []);
 
-  const fetchProducts = async (isInitial = false) => {
-    if (isInitial) setLoading(true);
-    await withLoading(async () => {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('status', 'active')
-        .order('price', { ascending: true });
-
-      if (error) {
-        showToast?.("Tente novamente", "error");
-      } else {
-        setProducts(data || []);
-      }
-    });
+  const fetchInitialData = async () => {
+    setLoading(true);
+    await Promise.all([fetchProducts(), fetchUserPurchases()]);
     setLoading(false);
   };
 
+  const fetchProducts = async () => {
+    const { data } = await supabase
+      .from('products')
+      .select('*')
+      .eq('status', 'active')
+      .order('price', { ascending: true });
+
+    if (data) setProducts(data);
+  };
+
+  const fetchUserPurchases = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data } = await supabase
+      .from('historico_compras')
+      .select('product_id')
+      .eq('user_id', user.id);
+
+    if (data) setPurchasedIds(data.map(p => p.product_id));
+  };
+
   const handleOpenModal = (product: any) => {
+    if (purchasedIds.includes(product.id)) {
+      showToast?.("Você já adquiriu este produto anteriormente.", "warning");
+      return;
+    }
     setSelectedProduct(product);
-    setQuantity(1);
   };
 
   const handlePurchase = async () => {
@@ -67,220 +74,166 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
       setIsBuying(true);
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-          showToast?.("Sessão expirada. Faça login novamente.", "error");
-          onNavigate('login');
-          return;
+        if (!user) throw new Error("Sessão expirada");
+
+        if (balance < selectedProduct.price) {
+          throw new Error("Saldo insuficiente");
         }
 
-        // Realizar validação de limite aqui dentro do processo de compra
-        const { count, error: countError } = await supabase
-          .from('historico_compras')
-          .select('*', { count: 'exact', head: true })
-          .eq('user_id', user.id)
-          .eq('nome_produto', selectedProduct.name);
+        const { data, error } = await supabase.rpc('purchase_product', {
+          p_product_id: selectedProduct.id,
+          p_user_id: user.id
+        });
 
-        if (countError) throw countError;
-
-        const bought = count || 0;
-        const available = selectedProduct.purchase_limit - bought;
-
-        if (quantity > available) {
-          showToast?.(`Limite atingido (${selectedProduct.purchase_limit} unidades).`, "error");
-          return;
-        }
-
-        const totalCost = selectedProduct.price * quantity;
-        if (balance < totalCost) {
-          showToast?.("Saldo insuficiente", "error");
-          return;
-        }
-
-        // Usar a RPC purchase_product do banco de dados para segurança
-        for (let i = 0; i < quantity; i++) {
-          const { data, error } = await supabase.rpc('purchase_product', {
-            p_product_id: selectedProduct.id,
-            p_user_id: user.id
-          });
-
-          if (error) throw error;
-          if (data && data.success === false) {
-            throw new Error(data.message);
-          }
-        }
+        if (error) throw error;
+        if (data?.success === false) throw new Error(data.message);
 
         showToast?.(`Compra realizada com sucesso!`, "success");
+        setPurchasedIds(prev => [...prev, selectedProduct.id]);
         setSelectedProduct(null);
-        onNavigate('purchase-history');
+        setTimeout(() => onNavigate('purchase-history'), 800);
       } catch (error: any) {
-        showToast?.(error.message || "Tente novamente", "error");
+        showToast?.(error.message || "Falha na transação", "error");
       } finally {
         setIsBuying(false);
       }
     });
   };
 
+  const formatPrice = (price: number) => {
+    const [inteiro, centavos] = price.toFixed(2).split('.');
+    return { inteiro, centavos };
+  };
+
   return (
-    <div className="bg-white min-h-screen text-slate-900 font-sans antialiased pb-32">
-      <main className="max-w-md mx-auto p-4 space-y-5 pt-8">
+    <div className="bg-white min-h-screen text-[#0F1111] font-sans selection:bg-amber-100 pb-32">
+      {/* Header fake similar a amazon opcional se necessário */}
+
+      <main className="max-w-md mx-auto bg-white">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <SpokeSpinner size="w-12 h-12" />
-            <p className="text-slate-400 font-medium animate-pulse text-sm">Preparando loja...</p>
-          </div>
-        ) : products.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center animate-in fade-in zoom-in duration-700">
-            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
-              <span className="material-symbols-outlined text-slate-300 text-4xl">inventory_2</span>
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Loja Vazia</h3>
-            <p className="text-slate-400 text-sm">Nenhum produto disponível no momento.</p>
+          <div className="flex flex-col items-center justify-center py-40 gap-4">
+            <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-5">
-            {products.map((product, index) => (
-              <div
-                key={product.id}
-                className="group relative bg-white rounded-3xl p-4 border border-slate-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] transition-all active:scale-[0.98] animate-in slide-in-from-bottom-8 fade-in"
-                style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
-              >
-                {product.purchase_limit <= 0 && (
-                  <div className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-full z-20 uppercase tracking-widest shadow-lg">
-                    Esgotado
-                  </div>
-                )}
+          <div className="flex flex-col divide-y divide-gray-100">
+            {products.map((product) => {
+              const { inteiro, centavos } = formatPrice(product.price);
+              const isPurchased = purchasedIds.includes(product.id);
 
-                <div className="flex flex-col gap-4">
-                  {/* Image Container with Zoom Effect */}
-                  <div className="w-full aspect-square bg-[#F8FAFC] rounded-2xl flex items-center justify-center overflow-hidden border border-slate-50 relative group-hover:shadow-inner">
-                    {product.image_url ? (
-                      <img
-                        alt={product.name}
-                        className="object-contain w-3/4 h-3/4 scale-110 group-hover:scale-125 transition-transform duration-700 ease-out"
-                        src={product.image_url}
-                      />
-                    ) : (
-                      <span className="material-symbols-outlined text-6xl text-slate-200">devices</span>
+              return (
+                <div key={product.id} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors">
+                  {/* Left Side: Image Container */}
+                  <div className="relative w-36 h-36 bg-gray-50 rounded-lg overflow-hidden shrink-0 flex items-center justify-center p-2">
+                    <img
+                      src={product.image_url || "/placeholder_product.png"}
+                      alt={product.name}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                    <button className="absolute bottom-2 left-2 size-8 bg-white/90 backdrop-blur rounded shadow-sm flex items-center justify-center border border-gray-100">
+                      <span className="material-symbols-outlined text-[20px] text-gray-400">add_to_photos</span>
+                    </button>
+
+                    {/* Badge */}
+                    {product.price < 5000 && (
+                      <div className="absolute top-0 left-0 bg-[#CC0C39] text-white text-[10px] font-bold px-2 py-0.5 rounded-br-sm uppercase">Mais Vendido</div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  <div className="flex flex-col flex-1 px-1">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-extrabold text-lg text-slate-900 leading-tight uppercase tracking-tight">{product.name}</h3>
-                      <div className="bg-primary/10 px-2 py-0.5 rounded-lg">
-                        <span className="text-primary font-black text-xs">NOVO</span>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">
-                      {product.description}
+                  {/* Right Side: Info */}
+                  <div className="flex-1 min-w-0 flex flex-col gap-1">
+                    <p className="text-[12px] text-gray-500 font-medium mb-1">
+                      {product.category || 'Escolha geral'}
+                      <span className="material-symbols-outlined text-[14px] align-middle ml-1">info</span>
                     </p>
 
-                    <div className="flex items-center justify-between mt-auto">
-                      <div className="flex flex-col">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Preço:</span>
-                        <span className="text-2xl font-black text-[#CC0000] tracking-tighter">
-                          {product.price.toLocaleString()} <span className="text-sm">Kz</span>
-                        </span>
+                    <h3 className="text-[15px] font-medium leading-tight line-clamp-3 text-[#0F1111]">
+                      {product.name}
+                    </h3>
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 mt-1">
+                      <span className="text-[14px] font-bold text-[#565959] leading-none">4,7</span>
+                      <div className="flex text-amber-500">
+                        {Array(5).fill(0).map((_, i) => (
+                          <span key={i} className="material-symbols-filled text-[14px]">star</span>
+                        ))}
                       </div>
-                      <div className="flex flex-col items-end">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Renda/Dia:</span>
-                        <span className="text-lg font-black text-green-600 tracking-tighter">
-                          +{product.daily_income.toLocaleString()} <span className="text-xs">Kz</span>
-                        </span>
-                      </div>
+                      <span className="text-[14px] text-[#007185] font-medium">(3,5 mil)</span>
                     </div>
 
+                    <p className="text-[13px] text-[#565959] font-medium">Mais de 50 compras no mês passado</p>
+
+                    {/* Price Section */}
+                    <div className="flex items-start mt-1">
+                      <span className="text-[13px] font-medium mt-1 pr-0.5">Kz</span>
+                      <span className="text-[28px] font-bold leading-none">{inteiro}</span>
+                      <span className="text-[13px] font-medium mt-1">{centavos}</span>
+                    </div>
+
+                    <div className="space-y-0.5 mt-1">
+                      <p className="text-[13px] text-[#0F1111]">Entrega <span className="font-bold">GRÁTIS: Amanhã</span></p>
+                      <p className="text-[13px] text-[#565959]">Envia para Angola</p>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 mt-2 mb-3">
+                      <span className="material-symbols-outlined text-green-700 text-[18px]">recycling</span>
+                      <span className="text-[12px] text-green-800 font-bold border-b border-green-800 leading-none">1 certificação de sustentabilidade</span>
+                    </div>
+
+                    {/* Action Button */}
                     <button
                       onClick={() => handleOpenModal(product)}
-                      disabled={product.purchase_limit <= 0}
-                      className={`w-full mt-5 py-4 rounded-2xl text-sm font-black uppercase tracking-widest transition-all shadow-lg active:scale-95 ${product.purchase_limit > 0
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-200'
-                        : 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
+                      disabled={isPurchased}
+                      className={`w-full py-2.5 rounded-full text-[13px] font-medium shadow-sm transition-all active:scale-[0.98] ${isPurchased
+                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
+                          : 'bg-[#FFD814] hover:bg-[#F7CA00] text-black border border-[#FCD200]'
                         }`}
                     >
-                      Comprar Agora
+                      {isPurchased ? 'Já adquirido' : 'Adicionar ao carrinho'}
                     </button>
+
+                    {isPurchased && (
+                      <p className="text-[11px] text-red-600 font-bold mt-1 animate-pulse">Apenas 1 unidade por cliente</p>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>
 
-      {/* Purchase Modal */}
+      {/* Confirmation Modal - Simplified */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-          <div className="absolute inset-0" onClick={() => !isBuying && setSelectedProduct(null)}></div>
-          <div className="relative w-full max-w-[320px] bg-white rounded-[40px] p-8 shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500 border border-slate-100 flex flex-col items-center">
-
-            <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mb-6 border border-slate-100 overflow-hidden">
-              {selectedProduct.image_url ? (
-                <img src={selectedProduct.image_url} alt={selectedProduct.name} className="w-3/4 h-3/4 object-contain" />
-              ) : (
-                <span className="material-symbols-outlined text-4xl text-slate-200">shopping_bag</span>
-              )}
-            </div>
-
-            <h3 className="text-xl font-black text-slate-900 mb-2 uppercase tracking-tight text-center">{selectedProduct.name}</h3>
-
-            <p className="text-sm text-slate-400 font-medium mb-8 px-2 text-center">
-              Confirme a quantidade que deseja adquirir para iniciar seus rendimentos.
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-6">
+          <div
+            className="absolute inset-0"
+            onClick={() => !isBuying && setSelectedProduct(null)}
+          />
+          <div className="relative w-full max-w-sm bg-white rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">Confirmar Compra</h3>
+            <p className="text-gray-600 text-[14px] leading-relaxed mb-6">
+              Deseja adquirir o item <span className="font-bold">"{selectedProduct.name}"</span> pelo valor de <span className="font-bold text-black">Kz {selectedProduct.price.toLocaleString()}</span>?
+              Esta operação não pode ser desfeita.
             </p>
 
-            <div className="flex items-center justify-center gap-8 mb-8 w-full">
+            <div className="flex flex-col gap-2">
               <button
-                onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
-                className="size-12 rounded-2xl border-2 border-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-50 active:scale-90 transition-all font-bold text-xl"
-              >
-                <span className="material-symbols-outlined text-[24px]">remove</span>
-              </button>
-              <div className="flex flex-col items-center">
-                <span className="text-3xl font-black text-slate-900 leading-none">{quantity}</span>
-                <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-2">unid</span>
-              </div>
-              <button
-                onClick={() => setQuantity(prev => {
-                  const available = selectedProduct.purchase_limit - (selectedProduct.bought_count || 0);
-                  return prev < available ? prev + 1 : prev;
-                })}
-                className="size-12 rounded-2xl border-2 border-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-50 active:scale-90 transition-all font-bold text-xl bg-slate-50"
-              >
-                <span className="material-symbols-outlined text-[24px]">add</span>
-              </button>
-            </div>
-
-            <div className="bg-[#F8FAFC] rounded-3xl p-5 border border-slate-100 mb-8 w-full flex justify-between items-center shadow-inner">
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total do Investimento:</span>
-              <span className="text-xl font-black text-blue-600">{(selectedProduct.price * quantity).toLocaleString()} <span className="text-xs">Kz</span></span>
-            </div>
-
-            <div className="flex flex-col w-full gap-3">
-              <button
-                disabled={isBuying || balance < selectedProduct.price * quantity}
+                disabled={isBuying}
                 onClick={handlePurchase}
-                className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition-all active:scale-95 shadow-lg ${balance >= selectedProduct.price * quantity
-                  ? 'bg-blue-600 text-white shadow-blue-200'
-                  : 'bg-slate-100 text-slate-300 cursor-not-allowed'
-                  }`}
+                className="w-full h-12 bg-[#FFD814] hover:bg-[#F7CA00] rounded-full font-bold text-[14px] shadow-sm transition-all active:scale-95 flex items-center justify-center"
               >
-                {isBuying ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <SpokeSpinner size="w-4 h-4" />
-                    <span>Processando...</span>
-                  </div>
-                ) : balance < selectedProduct.price * quantity ? 'Saldo Insuficiente' : 'Confirmar Compra'}
+                {isBuying ? <SpokeSpinner size="w-5 h-5" color="text-black" /> : 'Confirmar e Pagar'}
               </button>
               <button
                 disabled={isBuying}
                 onClick={() => setSelectedProduct(null)}
-                className="w-full py-3 text-slate-400 font-bold text-xs uppercase tracking-widest hover:text-slate-600 transition-colors"
+                className="w-full h-12 bg-white hover:bg-gray-50 border border-gray-300 rounded-full font-bold text-[14px] transition-colors"
               >
                 Cancelar
               </button>
             </div>
+            <p className="text-[10px] text-center text-gray-400 mt-4 uppercase tracking-widest font-bold">Compra Segura Amazon</p>
           </div>
         </div>
       )}

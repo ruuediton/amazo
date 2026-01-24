@@ -63,18 +63,19 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
 
       const { data: productData, error: productError } = await supabase
         .from('products')
-        .select('name, image_url');
+        .select('name, image_url, category');
 
       if (productError) throw productError;
 
-      const imageMap: Record<string, string> = {};
+      const imageMap: Record<string, { url: string, cat: string }> = {};
       productData?.forEach(p => {
-        imageMap[p.name.trim().toLowerCase()] = p.image_url;
+        imageMap[p.name.trim().toLowerCase()] = { url: p.image_url, cat: p.category };
       });
 
       const purchasesWithImages = purchaseData?.map(p => ({
         ...p,
-        image_url: imageMap[p.nome_produto.trim().toLowerCase()] || null
+        image_url: imageMap[p.nome_produto.trim().toLowerCase()]?.url || null,
+        category: imageMap[p.nome_produto.trim().toLowerCase()]?.cat || 'Eletrônicos'
       }));
 
       setPurchases(purchasesWithImages || []);
@@ -87,111 +88,107 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
   };
 
   const statusMap: any = {
-    'pendente': { icon: 'history', color: 'text-amber-500', bg: 'bg-amber-50', border: 'border-amber-100', label: 'Pendente' },
-    'confirmado': { icon: 'verified', color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100', label: 'Ativo' },
-    'cancelado': { icon: 'cancel', color: 'text-red-500', bg: 'bg-red-50', border: 'border-red-100', label: 'Cancelado' }
+    'pendente': { label: 'Pendente', color: 'text-amber-600' },
+    'confirmado': { label: 'Ativo', color: 'text-green-600' },
+    'cancelado': { label: 'Cancelado', color: 'text-red-600' }
+  };
+
+  const formatPrice = (price: number) => {
+    const [inteiro, centavos] = (price || 0).toFixed(2).split('.');
+    return { inteiro, centavos };
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC] font-sans text-slate-900 antialiased">
+    <div className="bg-white min-h-screen text-[#0F1111] font-sans selection:bg-amber-100 pb-32">
       {/* Header */}
-      <header className="sticky top-0 z-50 flex items-center bg-white/80 backdrop-blur-xl p-4 border-b border-slate-100">
+      <header className="sticky top-0 z-50 flex items-center bg-white border-b border-gray-100 px-4 py-4">
         <button
           onClick={() => onNavigate('profile')}
-          className="size-10 flex items-center justify-center bg-slate-50 rounded-full hover:bg-slate-100 transition-all active:scale-90"
+          className="size-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-all active:scale-90"
         >
-          <span className="material-symbols-outlined text-[20px] text-slate-600">arrow_back</span>
+          <span className="material-symbols-outlined text-[24px] text-[#0F1111]">arrow_back</span>
         </button>
-        <h2 className="text-slate-900 text-base font-black uppercase tracking-widest flex-1 text-center pr-10">
-          Meus Investimentos
+        <h2 className="text-[#0F1111] text-[16px] font-bold flex-1 text-center pr-10">
+          Meus Pedidos
         </h2>
       </header>
 
-      <main className="flex-1 flex flex-col px-4 pt-6 pb-32 max-w-md mx-auto w-full">
+      <main className="max-w-md mx-auto bg-white">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <SpokeSpinner size="w-10 h-10" />
-            <p className="text-slate-400 font-bold text-xs uppercase tracking-widest animate-pulse">Sincronizando...</p>
+          <div className="flex flex-col items-center justify-center py-40 gap-4">
+            <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
           </div>
         ) : purchases.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center px-10 animate-in fade-in zoom-in duration-700">
-            <div className="size-20 rounded-[32px] bg-white flex items-center justify-center mb-6 shadow-xl border border-slate-50">
-              <span className="material-symbols-outlined text-slate-300 text-4xl">inventory</span>
+            <div className="size-20 rounded-full bg-gray-50 flex items-center justify-center mb-6">
+              <span className="material-symbols-outlined text-gray-300 text-4xl">receipt_long</span>
             </div>
-            <h3 className="text-slate-900 font-black text-lg mb-2 uppercase tracking-tight">Sem Ativos</h3>
-            <p className="text-slate-400 text-sm leading-relaxed mb-8 font-medium">
-              Você ainda não possui investimentos ativos em sua carteira.
+            <h3 className="text-[#0F1111] font-bold text-lg mb-2">Nenhum pedido</h3>
+            <p className="text-[#565959] text-sm leading-relaxed mb-8">
+              Você ainda não realizou nenhuma compra em nossa loja.
             </p>
             <button
               onClick={() => onNavigate('shop')}
-              className="w-full h-14 bg-blue-600 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-blue-700 active:scale-95 transition-all shadow-lg shadow-blue-100"
+              className="w-full py-3 bg-[#FFD814] hover:bg-[#F7CA00] rounded-full font-medium text-[14px] shadow-sm border border-[#FCD200]"
             >
-              Explorar Loja
+              Começar a comprar
             </button>
           </div>
         ) : (
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col divide-y divide-gray-100">
             {purchases.map((purchase, index) => {
-              const status = statusMap[purchase.status] || statusMap['pendente'];
+              const { inteiro, centavos } = formatPrice(Number(purchase.preco) || 0);
+              const status = statusMap[purchase.status] || statusMap['confirmado'];
+
               return (
-                <div
-                  key={purchase.id}
-                  className="bg-white rounded-[32px] p-5 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] border border-slate-100 animate-in slide-in-from-bottom-10 fade-in duration-500"
-                  style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
-                >
-                  <div className="flex gap-5">
-                    {/* Image Box */}
-                    <div className="size-20 shrink-0 rounded-2xl bg-[#F8FAFC] flex items-center justify-center border border-slate-50 overflow-hidden shadow-inner group">
-                      {purchase.image_url ? (
-                        <img
-                          src={purchase.image_url}
-                          alt={purchase.nome_produto}
-                          className="w-4/5 h-4/5 object-contain scale-110 group-hover:scale-125 transition-transform"
-                        />
-                      ) : (
-                        <span className="material-symbols-outlined text-3xl text-slate-200">devices</span>
-                      )}
-                    </div>
-
-                    <div className="flex-1 min-w-0 flex flex-col justify-center">
-                      <div className="flex justify-between items-start w-full mb-1">
-                        <h3 className="text-slate-900 text-[13px] font-black uppercase tracking-tight truncate pr-2">{purchase.nome_produto}</h3>
-                        <div className={`flex items-center gap-1 px-3 py-1 rounded-full ${status.bg} border ${status.border}`}>
-                          <span className={`material-symbols-outlined text-[14px] ${status.color}`}>{status.icon}</span>
-                          <span className={`${status.color} text-[9px] font-black uppercase tracking-widest`}>{status.label}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col">
-                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Valor Investido</span>
-                        <span className="text-lg font-black text-slate-900 tracking-tighter">
-                          {(Number(purchase.preco) || 0).toLocaleString()} <span className="text-xs">Kz</span>
-                        </span>
-                      </div>
+                <div key={purchase.id} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors animate-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${index * 50}ms` }}>
+                  {/* Left Side: Image */}
+                  <div className="relative w-36 h-36 bg-gray-50 rounded-lg overflow-hidden shrink-0 flex items-center justify-center p-2 border border-gray-100">
+                    <img
+                      src={purchase.image_url || "/placeholder_product.png"}
+                      alt={purchase.nome_produto}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                    <div className="absolute top-0 right-0 bg-[#0F1111]/10 px-2 py-0.5 rounded-bl-sm">
+                      <span className="text-[9px] font-bold text-[#0F1111]">PID: {purchase.id.toString().slice(-4)}</span>
                     </div>
                   </div>
 
-                  <div className="mt-5 grid grid-cols-2 gap-4">
-                    <div className="bg-[#F8FAFC] rounded-2xl p-3 border border-slate-50">
-                      <span className="text-[9px] text-slate-400 uppercase font-black tracking-widest block mb-0.5">Retorno Diário</span>
-                      <span className="text-sm text-green-600 font-extrabold">
-                        +{(Number(purchase.rendimento_diario) || 0).toLocaleString()} Kz
-                      </span>
-                    </div>
-                    <div className="bg-[#F8FAFC] rounded-2xl p-3 border border-slate-50">
-                      <span className="text-[9px] text-slate-400 uppercase font-black tracking-widest block mb-0.5">Expiração</span>
-                      <span className="text-sm text-slate-900 font-extrabold">
-                        {new Date(purchase.data_expiracao).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit' })}
-                      </span>
-                    </div>
-                  </div>
+                  {/* Right Side: Info */}
+                  <div className="flex-1 min-w-0 flex flex-col gap-1 pb-1">
+                    <p className="text-[12px] text-[#565959] font-medium mb-0.5">
+                      Comprado em: {new Date(purchase.data_compra).toLocaleDateString('pt-PT', { day: '2-digit', month: 'long' })}
+                    </p>
 
-                  <div className="mt-4 flex items-center justify-between px-1">
-                    <span className="text-[10px] text-slate-300 font-bold">Ref: #AMZ-{purchase.id}</span>
-                    <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[14px]">event</span>
-                      {new Date(purchase.data_compra).toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' })}
-                    </span>
+                    <h3 className="text-[15px] font-medium leading-tight line-clamp-2 text-[#0F1111]">
+                      {purchase.nome_produto}
+                    </h3>
+
+                    {/* Status Badge Style Amazon */}
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className={`text-[12px] font-bold ${status.color}`}>Pedido {status.label}</span>
+                      <span className="size-1 bg-[#565959]/30 rounded-full"></span>
+                      <span className="text-[12px] text-[#565959] font-medium">Ref: #AMZ-{purchase.id.toString().slice(0, 5)}</span>
+                    </div>
+
+                    {/* Price Section */}
+                    <div className="flex items-start mt-1">
+                      <span className="text-[13px] font-medium mt-1 pr-0.5 text-[#0F1111]">Kz</span>
+                      <span className="text-[24px] font-bold leading-none text-[#0F1111]">{inteiro}</span>
+                      <span className="text-[13px] font-medium mt-1 text-[#0F1111]">{centavos}</span>
+                    </div>
+
+                    {/* Yield Info Box */}
+                    <div className="mt-2 p-2.5 rounded-lg bg-gray-50 border border-gray-100 space-y-1">
+                      <div className="flex justify-between items-center">
+                        <span className="text-[11px] text-[#565959] font-medium">Rendimento Diário:</span>
+                        <span className="text-[11px] text-green-700 font-bold">+ Kz {Number(purchase.rendimento_diario || 0).toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-[11px] text-[#565959] font-medium">Vencimento:</span>
+                        <span className="text-[11px] text-[#0F1111] font-bold">{new Date(purchase.data_expiracao).toLocaleDateString('pt-PT')}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -200,8 +197,14 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
         )}
 
         {purchases.length > 0 && (
-          <div className="mt-12 text-center pb-10">
-            <span className="text-slate-300 text-[9px] font-black uppercase tracking-[0.3em]">Cofre Digital Criptografado</span>
+          <div className="p-8 text-center bg-gray-50 border-t border-gray-100">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="material-symbols-outlined text-green-700 text-xl">shield</span>
+              <p className="text-[12px] font-bold text-green-800">Pagamento Protegido Amazon</p>
+            </div>
+            <p className="text-[11px] text-[#565959] leading-relaxed">
+              Suas informações de compra estão seguras. Se tiver problemas com o rendimento, entre em contato com o suporte.
+            </p>
           </div>
         )}
       </main>
