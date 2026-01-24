@@ -110,14 +110,14 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     if (step === 'amount') {
         return (
             <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 selection:bg-amber-100 animate-in fade-in duration-300">
-                <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-                    <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
-                        <span className="material-symbols-outlined">arrow_back</span>
+                <header className="sticky top-0 z-10 bg-[#FFD814] border-b border-[#FCD200] px-4 py-3 flex items-center justify-between shadow-sm">
+                    <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+                        <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
                     </button>
-                    <span className="font-bold text-[16px]">Depositar Kwanza</span>
+                    <span className="font-bold text-[16px] text-[#0F1111]">Depositar Kwanza</span>
                     <button
                         onClick={() => onNavigate('deposit-history')}
-                        className="size-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                        className="size-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
                     >
                         <span className="material-symbols-outlined text-[#0F1111]">history</span>
                     </button>
@@ -178,9 +178,9 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     // VIEW: SELECT BANK (Full Screen matching Image Layout)
     return (
         <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased animate-in slide-in-from-right duration-300">
-            {/* Header (Inspired by Image Title Bar) */}
-            <header className="bg-[#E77600] text-white p-4 flex items-center justify-center relative shadow-md">
-                <button onClick={() => setStep('amount')} className="absolute left-4 top-1/2 -translate-y-1/2 text-white">
+            {/* Header Amarelo */}
+            <header className="bg-[#FFD814] text-[#0F1111] p-4 flex items-center justify-center relative shadow-md border-b border-[#FCD200]">
+                <button onClick={() => setStep('amount')} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0F1111]">
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
                 <h1 className="text-[18px] font-bold tracking-tight">Informações da Conta</h1>
