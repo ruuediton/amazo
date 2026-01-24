@@ -184,9 +184,9 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
             <button
               key={val}
               onClick={() => handleQuickAmount(val)}
-              className="py-2.5 bg-white border border-[#D5D9D9] rounded-lg text-[13px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
+              className="py-2.5 bg-white border border-[#D5D9D9] rounded-lg text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
             >
-              {val >= 1000 ? `${val / 1000}k` : val}
+              {val.toLocaleString('pt-AO')}
             </button>
           ))}
         </div>
