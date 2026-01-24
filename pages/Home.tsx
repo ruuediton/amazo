@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 
@@ -6,6 +5,13 @@ interface HomeProps {
   onNavigate: (page: any) => void;
   onOpenSupport?: () => void;
   profile: any;
+}
+
+interface MarketingItem {
+  id: string;
+  url_image: string;
+  descricao_nome: string;
+  data: string;
 }
 
 const carouselImages = [
@@ -18,6 +24,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   const [activeFilter, setActiveFilter] = useState('Todas');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cheapestProduct, setCheapestProduct] = useState<any>(null);
+  const [marketingItems, setMarketingItems] = useState<MarketingItem[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -46,7 +53,24 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       }
     };
 
+    const fetchMarketing = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('marketing')
+          .select('*')
+          .order('data', { ascending: false })
+          .limit(4); // Limit to 4 items for grid
+
+        if (data && !error) {
+          setMarketingItems(data);
+        }
+      } catch (err) {
+        console.error("Marketing fetch error:", err);
+      }
+    };
+
     fetchCheapest();
+    fetchMarketing();
   }, [profile?.id]);
 
   const filters = [
@@ -160,26 +184,44 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
         </section>
       )}
 
+      {/* Marketing Section */}
       <section className="mt-2 bg-white px-4 pt-4 pb-2 border-t border-gray-100">
         <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Ofertas que podem te interessar</h2>
-        <div className="grid grid-cols-2 gap-3">
-          {[
-            { tag: '23% off', label: 'Oferta', img: '/placeholder_product.png' },
-            { tag: '15% off', label: 'Termina logo', img: '/placeholder_product.png' },
-            { tag: '18% off', label: 'Oferta', img: '/placeholder_product.png' },
-            { tag: '31% off', label: 'Oferta', img: '/placeholder_product.png' },
-          ].map((item, i) => (
-            <div key={i} onClick={() => onNavigate('shop')} className="cursor-pointer group">
-              <div className="bg-[#F7F8F8] h-32 p-4 flex items-center justify-center border border-gray-100 rounded-lg mb-2 group-hover:bg-gray-100 transition-colors">
-                <img src={item.img} className="max-h-full max-w-full object-contain mix-blend-multiply opacity-80" />
+
+        {marketingItems.length > 0 ? (
+          <div className="grid grid-cols-2 gap-3">
+            {marketingItems.map((item, i) => (
+              <div key={item.id} onClick={() => onNavigate('shop')} className="cursor-pointer group">
+                <div className="bg-[#F7F8F8] h-32 p-4 flex items-center justify-center border border-gray-100 rounded-lg mb-2 group-hover:bg-gray-100 transition-colors">
+                  <img src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" alt={item.descricao_nome} />
+                </div>
+                <div className="flex flex-wrap gap-1.5 items-center">
+                  <span className="bg-[#CC0C39] text-white text-[11px] font-bold px-1.5 py-0.5 rounded-[2px]">Oferta</span>
+                  <span className="text-[#0F1111] text-[12px] font-medium leading-tight line-clamp-2">{item.descricao_nome}</span>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-1.5 items-center">
-                <span className="bg-[#CC0C39] text-white text-[11px] font-bold px-1.5 py-0.5 rounded-[2px]">{item.tag}</span>
-                <span className="text-[#CC0C39] text-[11px] font-bold tracking-tight">{item.label}</span>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-3">
+            {/* Fallback items if table is empty */}
+            {[
+              { tag: '23% off', label: 'Carregando ofertas...', img: '/placeholder_product.png' },
+              { tag: '15% off', label: 'Carregando ofertas...', img: '/placeholder_product.png' },
+            ].map((item, i) => (
+              <div key={i} className="cursor-pointer group opacity-50">
+                <div className="bg-[#F7F8F8] h-32 p-4 flex items-center justify-center border border-gray-100 rounded-lg mb-2">
+                  <img src={item.img} className="max-h-full max-w-full object-contain mix-blend-multiply opacity-80" />
+                </div>
+                <div className="flex flex-wrap gap-1.5 items-center">
+                  <span className="bg-gray-200 text-gray-500 text-[11px] font-bold px-1.5 py-0.5 rounded-[2px]">{item.tag}</span>
+                  <span className="text-gray-400 text-[11px] font-bold tracking-tight">{item.label}</span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
         <button onClick={() => onNavigate('shop')} className="mt-4 mb-2 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Ver todas as ofertas</button>
       </section>
 
@@ -231,20 +273,4 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   );
 };
 
-const OfferCard = ({ title, desc, reward, image, onClick }: any) => (
-  <div className="flex gap-4 p-4 bg-white border border-gray-200 rounded-xl active:bg-gray-50 transition-colors" onClick={onClick}>
-    <div className="size-20 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-gray-100 flex items-center justify-center p-2">
-      <img src={image} alt="" className="max-w-full max-h-full object-contain opacity-80" />
-    </div>
-    <div className="flex-1 min-w-0 flex flex-col justify-center">
-      <div className="flex justify-between items-start">
-        <h3 className="text-[15px] font-bold text-[#0F1111] leading-tight truncate">{title}</h3>
-        <span className="text-[10px] font-bold text-[#007600] uppercase">{reward}</span>
-      </div>
-      <p className="text-[12px] text-[#565959] mt-1 line-clamp-2">{desc}</p>
-    </div>
-  </div>
-);
-
 export default Home;
-
