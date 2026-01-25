@@ -98,7 +98,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
               <input
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Digite sua senha atual"
                 type={showCurrent ? "text" : "password"}
               />
@@ -124,7 +124,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                   setNewPassword(val);
                 }}
-                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Crie uma nova senha (6 dígitos)"
                 type={showNew ? "text" : "password"}
                 maxLength={6}
@@ -141,22 +141,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
               </button>
             </div>
 
-            {/* Password Strength Meter */}
-            <div className="p-4 mt-2 rounded-xl bg-surface-dark/50 border border-gray-100">
-              <p className="text-xs font-semibold text-[text-gray-400] uppercase tracking-wider mb-3">Requisitos da senha</p>
-              <ul className="space-y-2">
-                <li className={`flex items-center gap-3 text-sm transition-colors ${isSixDigits ? 'text-primary font-medium' : 'text-[text-gray-400]'}`}>
-                  <div className={`size-4 rounded-full flex items-center justify-center ${isSixDigits ? 'bg-primary text-black' : 'border border-current'}`}>
-                    {isSixDigits ? (
-                      <span className="material-symbols-outlined" style={{ fontSize: '12px', fontWeight: 'bold' }}>check</span>
-                    ) : (
-                      <div className="size-2 rounded-full bg-transparent"></div>
-                    )}
-                  </div>
-                  Exatamente 6 dígitos numéricos
-                </li>
-              </ul>
-            </div>
           </div>
 
           <div className="flex flex-col gap-1">
@@ -168,7 +152,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                   setConfirmPassword(val);
                 }}
-                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Repita a nova senha"
                 type={showConfirm ? "text" : "password"}
                 maxLength={6}

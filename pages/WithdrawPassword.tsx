@@ -89,7 +89,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
                 onChange={(e) => setPassword(e.target.value.replace(/\D/g, ''))}
                 maxLength={4}
                 inputMode="numeric"
-                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Crie uma nova senha (4 dígitos)"
                 type={showNew ? "text" : "password"}
               />
@@ -116,7 +116,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
                 onChange={(e) => setConfirmPassword(e.target.value.replace(/\D/g, ''))}
                 maxLength={4}
                 inputMode="numeric"
-                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Repita a nova senha"
                 type={showConfirm ? "text" : "password"}
               />
