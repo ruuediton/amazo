@@ -21,7 +21,7 @@ const ChangeLoginPassword: React.FC<ChangeLoginPasswordProps> = ({ onBack }) => 
         }
 
         if (newPassword.length < 6) {
-            showToast('A nova senha deve ter pelo menos 6 caracteres.', 'error');
+            showToast('Por favor digite senha de 6 caracteres', 'error');
             return;
         }
 
@@ -33,7 +33,7 @@ const ChangeLoginPassword: React.FC<ChangeLoginPasswordProps> = ({ onBack }) => 
 
             if (error) throw error;
 
-            showToast('Senha de login atualizada com sucesso!', 'success');
+            showToast('Atualização sucedida!', 'success');
             onBack();
         } catch (error: any) {
             console.error('Error updating password:', error);

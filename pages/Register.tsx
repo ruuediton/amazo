@@ -34,11 +34,11 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
     e.preventDefault();
 
     if (!agreedToTerms) {
-      showToast?.("Você deve concordar com os Termos de Serviço.", "warning");
+      showToast?.("Você deve concordar com os Termos de Serviço, para continuar.", "warning");
       return;
     }
     if (password.length !== 6) {
-      showToast?.("A senha deve ter 6 dígitos.", "error");
+      showToast?.("Por favor difite senha de dígitos.", "error");
       return;
     }
     if (password !== confirmPassword) {
@@ -46,7 +46,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
       return;
     }
     if (phoneNumber.length < 9) {
-      showToast?.("Número de telefone inválido.", "error");
+      showToast?.("Número celular icorreto.", "error");
       return;
     }
 
@@ -77,7 +77,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
           }
           throw error;
         }
-      }, "Registro realizado com sucesso!");
+      }, "Registro sucedido!");
 
       // Wait a moment for the success message to be seen before navigating
       setTimeout(() => {

@@ -69,7 +69,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
       });
 
       if (error) {
-        throw new Error("Não foi possível processar o pedido. Tente novamente.");
+        throw new Error("Não foi possível processar o pedido. Tente novamente");
       }
 
       if (!data.success) {

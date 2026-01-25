@@ -52,7 +52,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const handleNextToBank = () => {
         const val = parseFloat(amount);
         if (!amount || isNaN(val) || val < 3000) {
-            showToast?.("Valor mínimo de depósito: 3.000 KZ", "warning");
+            showToast?.("Valor mínimo, 3.000 KZ", "warning");
             return;
         }
         if (val > 1000000) {
@@ -96,7 +96,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 }
             }, "Gerando dados de depósito...");
         } catch (err: any) {
-            showToast?.(err.message || "Erro ao processar depósito", "error");
+            showToast?.(err.message || "Opah algo deu errado", "error");
         }
     };
 

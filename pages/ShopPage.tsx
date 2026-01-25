@@ -61,7 +61,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
 
   const handleOpenModal = (product: any) => {
     if (purchasedIds.includes(product.id)) {
-      showToast?.("Você já adquiriu este produto anteriormente.", "warning");
+      showToast?.("Limite excedido, compre outro!", "warning");
       return;
     }
     setSelectedProduct(product);
@@ -76,7 +76,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
       if (!user) throw new Error("Sessão expirada");
 
       if (balance < selectedProduct.price) {
-        throw new Error("Saldo insuficiente");
+        throw new Error("Balance insuficiente");
       }
 
       const { data, error } = await supabase.rpc('purchase_product', {
@@ -88,7 +88,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
       if (data?.success === false) throw new Error(data.message);
 
       setSelectedProduct(null);
-      showToast?.(data?.message || `Compra realizada com sucesso!`, "success");
+      showToast?.(data?.message || `Compra sucedida!`, "success");
       setPurchasedIds(prev => [...prev, selectedProduct.id]);
 
       setTimeout(() => onNavigate('purchase-history'), 1000);

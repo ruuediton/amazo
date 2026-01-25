@@ -49,7 +49,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
         setMode('view');
       }
     } catch (err) {
-      console.error('Erro ao buscar conta:', err);
+      console.error('Erro, no servidor', err);
     } finally {
       setLoading(false);
     }
@@ -75,7 +75,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
         if (error) throw error;
 
-        showToast?.('Conta removida com sucesso!', 'success');
+        showToast?.('Apagada sucesso!', 'success');
         setExistingBank(null);
         setBankName('');
         setHolderName('');

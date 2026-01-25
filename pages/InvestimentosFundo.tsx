@@ -73,8 +73,8 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
     if (!selectedFund || !investmentAmount) return;
     const amountNum = Number(investmentAmount);
 
-    if (isNaN(amountNum) || amountNum < 100) {
-      if (showToast) showToast('Valor mínimo de fundo 100 Kz.', 'warning');
+    if (isNaN(amountNum) || amountNum < 200) {
+      if (showToast) showToast('Valor mínimo de fundo 200 Kz.', 'warning');
       return;
     }
 
@@ -97,7 +97,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
           p_auto_reinvest: autoReinvest
         });
 
-        if (error) throw new Error("Erro de conexão com o banco.");
+        if (error) throw new Error("Operação não sucedida");
 
         if (data && !data.success) {
           throw new Error(data.message || "Não foi possível realizar o investimento.");

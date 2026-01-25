@@ -80,12 +80,12 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
     }
 
     if (val < 300) { // Exemplo de mínimo
-      showToast?.("O valor mínimo para saque é 300 Kz.", "warning");
+      showToast?.("Valor mínimo 300 Kz.", "warning");
       return;
     }
 
     if (val > balance) {
-      showToast?.("Saldo insuficiente.", "error");
+      showToast?.("balance insuficiente.", "error");
       return;
     }
 
@@ -105,7 +105,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
         if (error) throw error;
 
-        showToast?.("Saque solicitado com sucesso!", "success");
+        showToast?.("Retirada sucedida!", "success");
         setShowPinModal(false);
         setPin('');
         setAmount('');
@@ -113,7 +113,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         fetchData();
       }, "Processando saque...");
     } catch (error: any) {
-      showToast?.(error.message || "Erro ao processar saque.", "error");
+      showToast?.(error.message || "Operação não sucedida.", "error");
     }
   };
 

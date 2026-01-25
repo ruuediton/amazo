@@ -90,7 +90,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
   const handleSubmit = async () => {
     if (!userName) {
-      showToast?.("Por favor, insira o seu nome.", "warning");
+      showToast?.("Por favor, digite nome", "warning");
       return;
     }
     try {

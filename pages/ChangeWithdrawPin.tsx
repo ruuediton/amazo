@@ -20,7 +20,7 @@ const ChangeWithdrawPin: React.FC<ChangeWithdrawPinProps> = ({ onBack }) => {
         }
 
         if (!/^\d{4}$/.test(newPin)) {
-            showToast('O PIN deve ter exatamente 4 dígitos numéricos.', 'error');
+            showToast('Por favor digite 4 dígitos numéricos', 'error');
             return;
         }
 
@@ -32,11 +32,11 @@ const ChangeWithdrawPin: React.FC<ChangeWithdrawPinProps> = ({ onBack }) => {
 
             if (error) throw error;
 
-            showToast('PIN de retirada atualizado com sucesso!', 'success');
+            showToast('PIN, atualização sucedida!', 'success');
             onBack();
         } catch (error: any) {
             console.error('Error updating PIN:', error);
-            showToast(error.message || 'Erro ao atualizar PIN.', 'error');
+            showToast(error.message || 'Erro, algo deu errado', 'error');
         } finally {
             hideLoading();
         }
