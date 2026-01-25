@@ -97,27 +97,31 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
   const handleSaveBank = async () => {
     try {
       setLocalError(null);
-      const cleanIban = iban.replace(/[^A-Z0-9]/g, '');
+      let cleanIban = iban.replace(/[^0-9]/g, ''); // Apenas números
 
-      // 1. Validação de Tamanho e prefixo AO06
-      if (cleanIban.length < 21) {
-        setLocalError("IBAN inválido. Mínimo 21 caracteres.");
+      // 1. Validação de Tamanho (21 ou 25 dígitos)
+      if (cleanIban.length !== 21 && cleanIban.length !== 25) {
+        setLocalError("O IBAN deve ter exatamente 21 ou 25 dígitos.");
         return;
       }
 
-      if (!cleanIban.startsWith('AO06')) {
-        setLocalError("IBAN deve começar com AO06.");
-        return;
+      // 2. Formatação Automática
+      let finalIban = '';
+      if (cleanIban.length === 21) {
+        finalIban = `AO06${cleanIban}`;
+      } else if (cleanIban.length === 25) {
+        // Se já tem 25 dígitos, assume que são os números incluindo o 06
+        finalIban = `AO${cleanIban}`;
       }
 
-      // 2. Validação de Prefixo do Banco
+      // 3. Validação de Prefixo do Banco (Opcional/Flexível)
       if (bankName && BANK_PREFIXES[bankName]) {
         const expectedPrefix = BANK_PREFIXES[bankName];
-        // O prefixo vem logo após o AO06 (índices 4 a 8)
-        const currentPrefix = cleanIban.substring(4, 8);
+        // O prefixo do banco são os dígitos da posição 4 a 8 no IBAN final (AO06XXXX...)
+        const currentPrefix = finalIban.substring(4, 8);
 
         if (currentPrefix !== expectedPrefix) {
-          setLocalError(`IBAN não corresponde ao ${bankName} (Prefixo ${expectedPrefix}).`);
+          setLocalError(`Este IBAN não parece ser do ${bankName}.`);
           return;
         }
       }
@@ -132,7 +136,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
         const payload = {
           p_bank_name: bankName,
           p_holder_name: holderName,
-          p_iban: cleanIban
+          p_iban: finalIban
         };
 
         const { error } = await supabase.rpc(
@@ -155,9 +159,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
   };
 
   const currentBankPrefix = bankName ? BANK_PREFIXES[bankName] : '';
-  const ibanPlaceholder = bankName
-    ? `Digite o IBAN do ${bankName} (Ex: AO06 ${currentBankPrefix || '....'} ...)`
-    : "AO06 0000 0000...";
+  const ibanPlaceholder = "Digite apenas os 21 números do seu IBAN";
 
   const maskIban = (val: string) => {
     if (!val) return '';
