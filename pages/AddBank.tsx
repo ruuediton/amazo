@@ -238,7 +238,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               <p className="text-[#565959] text-[13px]">Certifique-se que o titular da conta corresponde ao seu BI.</p>
             </div>
 
-            <div className="space-y-5 flex-1">
+            <div className="space-y-3 flex-1">
               <div className="space-y-2">
                 <label className="block text-[13px] font-bold text-[#0F1111]">
                   Banco Destinatário
@@ -303,10 +303,10 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               <button
                 onClick={handleSaveBank}
                 disabled={loading}
-                className="w-full h-[44px] bg-white border border-gray-200 rounded-[8px] flex items-center justify-center font-normal text-[#0F1111] text-[15px] shadow-sm hover:bg-gray-50 active:scale-[0.99] transition-all"
+                className="w-full h-[48px] bg-primary hover:bg-primary-hover border border-[#FCD200] rounded-[8px] flex items-center justify-center font-bold text-[#0F1111] text-[15px] shadow-sm active:scale-[0.99] transition-all"
               >
                 {loading ? (
-                  'Salvando...'
+                  <SpokeSpinner size="w-5 h-5" color="text-black" />
                 ) : (
                   mode === 'edit' ? 'Salvar Alterações' : 'Vincular Conta'
                 )}
