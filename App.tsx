@@ -69,6 +69,7 @@ const App: React.FC = () => {
   const [lastAction, setLastAction] = useState<() => void>(() => { });
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<any>(null);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const timerRef = useRef<any>(null);
 
 
@@ -159,9 +160,8 @@ const App: React.FC = () => {
     const sessionDuration = 45 * 60 * 1000; // 45 minutos para melhor UX
 
     timerRef.current = setTimeout(async () => {
-      await supabase.auth.signOut();
+      await performFullLogout();
       showError('Sessão expirada. Por favor, entre novamente para sua segurança.');
-      setCurrentPage('login');
     }, sessionDuration);
   }, [session, showError]);
 
@@ -199,9 +199,45 @@ const App: React.FC = () => {
     }
   }, [currentPage, withLoading]);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setCurrentPage('login');
+  const handleLogout = () => {
+    setShowLogoutModal(true);
+  };
+
+  const performFullLogout = async () => {
+    try {
+      showLoading('Limpando dados e saindo...');
+
+      // 1. Sign out from Supabase
+      await supabase.auth.signOut();
+
+      // 2. Clear LocalStorage and SessionStorage
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // 3. Clear Cookies (Standard Browser Cookies)
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+      }
+
+      // 4. Reset UI State
+      setProfile(null);
+      setSession(null);
+      setShowLogoutModal(false);
+      setCurrentPage('login');
+
+      // 5. Force reload to clear remaining memory caches if needed, 
+      // but usually page redirect is enough. 
+      // window.location.reload(); 
+
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      hideLoading();
+    }
   };
 
   const PageComponent = () => {
@@ -332,6 +368,38 @@ const App: React.FC = () => {
 
 
 
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 animate-in fade-in duration-200">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowLogoutModal(false)}></div>
+          <div className="bg-white w-full max-w-sm rounded-[32px] p-8 relative z-10 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center text-center">
+              <div className="size-20 rounded-full bg-red-50 flex items-center justify-center mb-6">
+                <span className="material-symbols-outlined text-red-500 text-4xl">logout</span>
+              </div>
+              <h3 className="text-2xl font-black text-[#0F1111] mb-2">Deseja sair?</h3>
+              <p className="text-gray-500 mb-8 leading-relaxed">
+                Você precisará entrar novamente para acessar sua conta Amazon. Seus dados de navegação serão limpos.
+              </p>
+
+              <div className="flex flex-col gap-3 w-full">
+                <button
+                  onClick={performFullLogout}
+                  className="w-full py-4 bg-black text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-gray-900 active:scale-[0.98] transition-all"
+                >
+                  Confirmar e Sair
+                </button>
+                <button
+                  onClick={() => setShowLogoutModal(false)}
+                  className="w-full py-4 bg-gray-50 text-gray-500 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-gray-100 active:scale-[0.98] transition-all"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
