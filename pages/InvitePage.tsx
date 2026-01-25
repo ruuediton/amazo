@@ -53,7 +53,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
 
     const handleCopyLink = () => {
         if (!inviteCode) return;
-        const link = `https://ama-zon.vercel.app/register?ref=${inviteCode}`;
+        const link = `https://vendas-online-app.vercel.app/register?ref=${inviteCode}`;
         navigator.clipboard.writeText(link).then(() => {
             showToast?.("Link copiado com sucesso!", "success");
         });
