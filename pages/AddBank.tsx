@@ -90,7 +90,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
   };
 
   const handleIbanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    let value = e.target.value.replace(/\D/g, ''); // Apenas números
     setIban(value);
   };
 
