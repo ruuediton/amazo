@@ -82,15 +82,15 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
 
       <main className="flex-1 px-5 py-2 flex flex-col">
         {/* Headline Section */}
-        <div className="mb-4 mt-2">
-          <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-2">Alterar Senha de Acesso</h2>
-          <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
+        <div className="mb-2 mt-2">
+          <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-1">Alterar Senha de Acesso</h2>
+          <p className="text-[text-gray-400] text-sm font-normal leading-relaxed">
             Para sua segurança, crie uma senha forte que você não use em outros sites.
           </p>
         </div>
 
         {/* Form Section */}
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           {/* Current Password */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-bold text-black ml-1">Senha atual</label>
@@ -98,7 +98,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
               <input
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Digite sua senha atual"
                 type={showCurrent ? "text" : "password"}
               />
@@ -112,18 +112,10 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                 </span>
               </button>
             </div>
-            <div className="flex justify-end pt-1">
-              <button
-                type="button"
-                className="text-sm font-medium text-[text-gray-400] hover:text-primary transition-colors underline decoration-primary/30 underline-offset-4"
-              >
-                Esqueceu sua senha?
-              </button>
-            </div>
           </div>
 
           {/* New Password */}
-          <div className="flex flex-col gap-1 pt-2">
+          <div className="flex flex-col gap-1">
             <label className="text-sm font-bold text-black ml-1">Nova senha</label>
             <div className="relative flex items-center">
               <input
@@ -132,7 +124,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                   setNewPassword(val);
                 }}
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Crie uma nova senha (6 dígitos)"
                 type={showNew ? "text" : "password"}
                 maxLength={6}
@@ -150,7 +142,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
             </div>
 
             {/* Password Strength Meter */}
-            <div className="p-4 mt-3 rounded-xl bg-surface-dark/50 border border-[#423f30]/50">
+            <div className="p-4 mt-2 rounded-xl bg-surface-dark/50 border border-gray-100">
               <p className="text-xs font-semibold text-[text-gray-400] uppercase tracking-wider mb-3">Requisitos da senha</p>
               <ul className="space-y-2">
                 <li className={`flex items-center gap-3 text-sm transition-colors ${isSixDigits ? 'text-primary font-medium' : 'text-[text-gray-400]'}`}>
@@ -167,7 +159,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
             </div>
           </div>
 
-          {/* Confirm New Password */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-bold text-black ml-1">Confirmar nova senha</label>
             <div className="relative flex items-center">
@@ -177,7 +168,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                   setConfirmPassword(val);
                 }}
-                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                 placeholder="Repita a nova senha"
                 type={showConfirm ? "text" : "password"}
                 maxLength={6}
@@ -195,7 +186,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
             </div>
           </div>
 
-          <div className="flex-1 min-h-[30px]"></div>
+          <div className="flex-1 min-h-[10px]"></div>
 
           {/* Action Button */}
           <button
