@@ -139,12 +139,6 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
         )}
       </main>
 
-      {/* Info Note */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-white/80 backdrop-blur-md border-t border-gray-100 text-center z-50">
-        <p className="text-[10px] text-[#565959] leading-relaxed italic max-w-[280px] mx-auto">
-          Esta lista exibe todos os usuários que se cadastraram utilizando seu código de convite Amazon exclusivo.
-        </p>
-      </div>
     </div>
   );
 };
