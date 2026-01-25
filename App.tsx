@@ -307,7 +307,7 @@ const App: React.FC = () => {
       <main className="flex-1 overflow-y-auto no-scrollbar">
         <Suspense fallback={
           <div className="flex h-screen items-center justify-center bg-background-dark">
-            <SpokeSpinner size="w-12 h-12" className="text-white" />
+            <SpokeSpinner size="w-12 h-12" className="text-primary" />
           </div>
         }>
           <PageComponent />
