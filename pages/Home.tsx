@@ -102,12 +102,12 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   }, [profile?.id]);
 
   const filters = [
-    { label: 'Todas', icon: 'star' },
-    { label: 'Shopping', icon: 'shopping_bag' },
-    { label: 'Banco', icon: 'account_balance' },
-    { label: 'Parceiros', icon: 'handshake' },
-    { label: 'Promoção', icon: 'local_offer' },
-    { label: 'Suporte', icon: 'contact_support' }
+    { label: 'Geral', icon: 'star', page: 'historico-conta' },
+    { label: 'Retiradas', icon: 'shopping_bag', page: 'withdrawal-history' },
+    { label: 'Compras', icon: 'account_balance', page: 'purchase-history' },
+    { label: 'Recargas', icon: 'handshake', page: 'deposit-history' },
+    { label: 'Promoção', icon: 'local_offer', page: 'shop' },
+    { label: 'Suporte', icon: 'contact_support', page: 'support' }
   ];
 
   return (
@@ -169,8 +169,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       {/* Sticky Filters - Amazon style */}
       <div className="sticky top-0 z-40 bg-white border-b border-gray-100 py-3 mt-4">
         <div className="flex gap-2.5 px-4 overflow-x-auto no-scrollbar scroll-smooth">
-          {filters.map((f) => (
-            <button key={f.label} onClick={() => setActiveFilter(f.label)} className={`flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg px-4 transition-all active:scale-95 ${activeFilter === f.label ? 'bg-[#F0F2F2] border border-gray-300' : 'bg-white border border-gray-200'}`}>
+          {filters.map((f: any) => (
+            <button key={f.label} onClick={() => f.page ? onNavigate(f.page) : setActiveFilter(f.label)} className={`flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg px-4 transition-all active:scale-95 ${activeFilter === f.label ? 'bg-[#F0F2F2] border border-gray-300' : 'bg-white border border-gray-200'}`}>
               <span className={`material-symbols-outlined text-[18px] ${activeFilter === f.label ? 'text-[#0F1111]' : 'text-[#565959]'}`} style={{ fontVariationSettings: activeFilter === f.label ? "'FILL' 1" : "'FILL' 0" }}>{f.icon}</span>
               <p className={`text-[13px] ${activeFilter === f.label ? 'text-[#0F1111] font-bold' : 'text-[#565959] font-medium'}`}>{f.label}</p>
             </button>
