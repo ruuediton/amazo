@@ -99,7 +99,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setCurrentPassword(e.target.value.replace(/\D/g, ''))}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                                 placeholder="Digite a senha atual"
                                 type={showCurrent ? "text" : "password"}
                             />
@@ -125,7 +125,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setNewPassword(e.target.value.replace(/\D/g, ''))}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                                 placeholder="Crie uma nova senha (4 dígitos)"
                                 type={showNew ? "text" : "password"}
                             />
@@ -152,7 +152,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setConfirmPassword(e.target.value.replace(/\D/g, ''))}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-14 rounded-xl border border-[#423f30] bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                                 placeholder="Repita a nova senha"
                                 type={showConfirm ? "text" : "password"}
                             />
