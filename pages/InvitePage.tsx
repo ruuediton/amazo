@@ -12,6 +12,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
     const { withLoading } = useLoading();
     const [inviteCode, setInviteCode] = useState<string | null>(null);
     const [stats, setStats] = useState({ total_invited: 0, total_earned: 0 });
+    const [inviteLinkBase, setInviteLinkBase] = useState<string>('vendas-online.vercel.app');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -39,6 +40,17 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                 .select('*', { count: 'exact', head: true })
                 .eq('uuid_dono', user.id);
 
+            // Buscar link atualizado do app
+            const { data: linkData } = await supabase
+                .from('atendimento_links')
+                .select('link_app_atualizado')
+                .limit(1)
+                .single();
+
+            if (linkData?.link_app_atualizado) {
+                setInviteLinkBase(linkData.link_app_atualizado);
+            }
+
             setStats({
                 total_invited: count || 0,
                 total_earned: 0 // Placeholder logic for now
@@ -53,7 +65,20 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
 
     const handleCopyLink = () => {
         if (!inviteCode) return;
-        const link = `https://vendas-online.vercel.app/register?ref=${inviteCode}`;
+
+        // Garantir formatação do link
+        let baseUrl = inviteLinkBase.trim();
+        // Remover protocolo se existir para garantir padronização (ou adicionar se faltar, mas aqui vamos assumir que o usuário pode ter colocado 'domain.com' ou 'https://domain.com')
+        // Melhor abordagem: garantir que começa com https://
+        if (!baseUrl.startsWith('http')) {
+            baseUrl = `https://${baseUrl}`;
+        }
+        // Remover barra final se existir
+        if (baseUrl.endsWith('/')) {
+            baseUrl = baseUrl.slice(0, -1);
+        }
+
+        const link = `${baseUrl}/register?ref=${inviteCode}`;
         navigator.clipboard.writeText(link).then(() => {
             showToast?.("Link copiado com sucesso!", "success");
         });
