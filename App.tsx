@@ -84,22 +84,25 @@ const App: React.FC = () => {
   useEffect(() => {
     let profileSubscription: any = null;
 
-    const setupAuth = async () => {
+    const initializeApp = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
 
       if (session) {
-        fetchProfile(session.user.id);
+        await fetchProfile(session.user.id);
         profileSubscription = setupRealtimeSubscription(session.user.id);
       } else {
         const params = new URLSearchParams(window.location.search);
-        if (params.get('ref') || window.location.pathname === '/reg') {
+        if (params.get('ref')) {
           setCurrentPage('register');
         }
       }
+
+      // Signal that basic initialization is done
+      document.body.classList.add('app-loaded');
     };
 
-    setupAuth();
+    initializeApp();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
@@ -108,7 +111,6 @@ const App: React.FC = () => {
         if (!profileSubscription) {
           profileSubscription = setupRealtimeSubscription(session.user.id);
         }
-        resetSessionTimer();
       } else {
         setProfile(null);
         if (profileSubscription) {
@@ -181,21 +183,21 @@ const App: React.FC = () => {
   const [navigationData, setNavigationData] = useState<any>(null);
 
   const handleNavigate = useCallback((page: any, data: any = null) => {
+    if (page === currentPage) return; // Prevent redundant navigation re-renders
     setNavigationData(data);
 
-    // Otimização: Apenas processos pesados ou explicitamente solicitados mostram loading
-    const heavyPages = ['historico-conta', 'withdrawal-history'];
+    // Dynamic prioritization
+    const heavyPages = ['historico-conta', 'withdrawal-history', 'purchase-history', 'shop'];
 
     if (heavyPages.includes(page)) {
       withLoading(async () => {
-        // Simulação curta para garantir que o usuário perceba a transição
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 150));
         setCurrentPage(page);
       });
     } else {
       setCurrentPage(page);
     }
-  }, [withLoading]);
+  }, [currentPage, withLoading]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

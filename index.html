@@ -81,14 +81,79 @@
     .material-symbols-filled {
       font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
+
+    /* Immediate Splash Screen */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.4s ease-out, visibility 0.4s;
+    }
+
+    .splash-logo {
+      width: 140px;
+      margin-bottom: 24px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .loading-bar-container {
+      width: 120px;
+      height: 3px;
+      background: #F0F2F2;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .loading-bar {
+      width: 40%;
+      height: 100%;
+      background: #FFD814;
+      border-radius: 10px;
+      animation: shift 1.5s infinite linear;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes shift {
+      0% { transform: translateX(-150%); }
+      100% { transform: translateX(250%); }
+    }
+
+    .app-loaded #splash-screen {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
   </style>
 
   <link rel="stylesheet" href="/index.css">
 </head>
 
 <body class="antialiased">
+  <div id="splash-screen">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="splash-logo" alt="Amazon">
+    <div class="loading-bar-container">
+      <div class="loading-bar"></div>
+    </div>
+  </div>
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
+  <script>
+    window.addEventListener('load', function() {
+      // Small delay to ensure React has started mounting
+      setTimeout(() => {
+        document.body.classList.add('app-loaded');
+      }, 500);
+    });
+  </script>
 </body>
 
 </html>

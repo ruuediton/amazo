@@ -27,12 +27,15 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
 
   const fetchData = async () => {
     try {
-      const { data: statsData, error: statsError } = await supabase.rpc('get_profile_stats');
-      if (!statsError && statsData) {
-        setStats(statsData);
+      const [statsResult] = await Promise.all([
+        supabase.rpc('get_profile_stats')
+      ]);
+
+      if (!statsResult.error && statsResult.data) {
+        setStats(statsResult.data);
       }
 
-      let displayPhone = profile?.phone || "";
+      let displayPhone = currentProfile?.phone || "";
       if (displayPhone && !displayPhone.startsWith('+')) {
         displayPhone = `+244 ${displayPhone}`;
       }

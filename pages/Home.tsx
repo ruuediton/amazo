@@ -26,6 +26,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   const [cheapestProduct, setCheapestProduct] = useState<any>(null);
   const [marketingItems, setMarketingItems] = useState<MarketingItem[]>([]);
   const [recentPurchases, setRecentPurchases] = useState<any[]>([]);
+  const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -87,9 +88,17 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       }
     };
 
-    fetchCheapest();
-    fetchMarketing();
-    fetchRecentPurchases();
+    const loadAll = async () => {
+      setLoadingData(true);
+      await Promise.all([
+        fetchCheapest(),
+        fetchMarketing(),
+        fetchRecentPurchases()
+      ]);
+      setLoadingData(false);
+    };
+
+    loadAll();
   }, [profile?.id]);
 
   const filters = [
@@ -128,7 +137,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       </section>
 
       {/* Marquee Banner */}
-      <div className="bg-[#FEF9E7] py-2 overflow-hidden border-b border-gray-100">
+      <div className="bg-[#FEF9E7] py-2 overflow-hidden border-b border-gray-100 flex items-center h-8">
         <div className="flex whitespace-nowrap animate-marquee">
           <span className="text-[10px] font-bold text-[#0F1111] uppercase tracking-widest px-8">
             • APROVEITE AS OFERTAS EXCLUSIVAS amazon • GANHE 5% DE CASHBACK EM ELETRÔNICOS • SUPORTE 24H DISPONÍVEL •
@@ -207,7 +216,17 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <section className="mt-2 bg-white px-4 pt-4 pb-2 border-t border-gray-100">
         <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Ofertas que podem te interessar</h2>
 
-        {marketingItems.slice(0, 4).length > 0 ? (
+        {loadingData ? (
+          <div className="grid grid-cols-2 gap-3">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-gray-100 h-32 rounded-lg mb-2"></div>
+                <div className="h-3 bg-gray-100 rounded w-3/4 mb-1.5"></div>
+                <div className="h-3 bg-gray-100 rounded w-1/2"></div>
+              </div>
+            ))}
+          </div>
+        ) : marketingItems.slice(0, 4).length > 0 ? (
           <div className="grid grid-cols-2 gap-3">
             {marketingItems.slice(0, 4).map((item, i) => (
               <div key={item.id} onClick={() => onNavigate('shop')} className="cursor-pointer group">
@@ -223,19 +242,12 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">
-            {/* Fallback items if table is empty */}
-            {[
-              { tag: '23% off', label: 'Carregando ofertas...', img: '/placeholder_product.png' },
-              { tag: '15% off', label: 'Carregando ofertas...', img: '/placeholder_product.png' },
-            ].map((item, i) => (
+            {[1, 2].map((item, i) => (
               <div key={i} className="cursor-pointer group opacity-50">
                 <div className="bg-[#F7F8F8] h-32 p-4 flex items-center justify-center border border-gray-100 rounded-lg mb-2">
-                  <img src={item.img} className="max-h-full max-w-full object-contain mix-blend-multiply opacity-80" />
+                  <span className="material-symbols-outlined text-gray-200 text-4xl">image</span>
                 </div>
-                <div className="flex flex-wrap gap-1.5 items-center">
-                  <span className="bg-gray-200 text-gray-500 text-[11px] font-bold px-1.5 py-0.5 rounded-[2px]">{item.tag}</span>
-                  <span className="text-gray-400 text-[11px] font-bold tracking-tight">{item.label}</span>
-                </div>
+                <div className="h-3 bg-gray-100 rounded w-3/4 mb-1.5"></div>
               </div>
             ))}
           </div>
