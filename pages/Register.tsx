@@ -108,14 +108,14 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
           <div className="px-5">
             {/* Title & Subtitle */}
-            <div className="mb-8 pt-2">
-              <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-2">Crie sua conta</h1>
+            <div className="mb-4 pt-2">
+              <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-1">Crie sua conta</h1>
               <p className="text-text-secondary text-base font-normal">Junte-se ao futuro dos serviços bancários e compras.</p>
             </div>
 
-            <form className="flex flex-col gap-6" onSubmit={handleRegister}>
+            <form className="flex flex-col gap-4" onSubmit={handleRegister}>
               {/* Phone Number Field */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <label className="text-[13px] font-bold text-[#0F1111]">Número de telefone</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -135,7 +135,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               </div>
 
               {/* Password Field */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <label className="text-[13px] font-bold text-[#0F1111]">Senha</label>
                 <div className="relative">
                   <input
@@ -163,7 +163,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               </div>
 
               {/* Confirm Password Field */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <label className="text-[13px] font-bold text-[#0F1111]">Confirmar Senha</label>
                 <div className="relative">
                   <input
@@ -191,7 +191,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               </div>
 
               {/* Invitation Code Field */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <label className="text-[13px] font-bold text-[#0F1111]">
                   Código de convite <span className="text-[#C40000]">*</span>
                 </label>
@@ -240,9 +240,9 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               <button
                 type="submit"
                 disabled={loading}
-                className={`mt-4 flex w-full items-center justify-center rounded-[8px] bg-[#FFD814] py-3 text-[15px] font-normal text-[#0F1111] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`mt-4 flex w-full items-center justify-center rounded-[8px] bg-[#FFD814] h-[48px] text-[15px] font-bold text-[#0F1111] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {loading ? 'Criando Conta...' : 'Criar Conta'}
+                {loading ? <div className="flex items-center gap-2"><SpokeSpinner size="w-5 h-5" color="text-black" /> Aguarde...</div> : 'Criar Conta'}
               </button>
 
               {/* Footer Link */}

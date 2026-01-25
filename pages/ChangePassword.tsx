@@ -82,18 +82,18 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
 
       <main className="flex-1 px-5 py-2 flex flex-col">
         {/* Headline Section */}
-        <div className="mb-6 mt-2">
-          <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-3">Alterar Senha de Acesso</h2>
+        <div className="mb-4 mt-2">
+          <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-2">Alterar Senha de Acesso</h2>
           <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
             Para sua segurança, crie uma senha forte que você não use em outros sites.
           </p>
         </div>
 
         {/* Form Section */}
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           {/* Current Password */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium leading-normal text-black ml-1">Senha atual</label>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-bold text-black ml-1">Senha atual</label>
             <div className="relative flex items-center">
               <input
                 value={currentPassword}
@@ -123,8 +123,8 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
           </div>
 
           {/* New Password */}
-          <div className="space-y-1 pt-2">
-            <label className="text-sm font-medium leading-normal text-black ml-1">Nova senha</label>
+          <div className="flex flex-col gap-1 pt-2">
+            <label className="text-sm font-bold text-black ml-1">Nova senha</label>
             <div className="relative flex items-center">
               <input
                 value={newPassword}
@@ -168,8 +168,8 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
           </div>
 
           {/* Confirm New Password */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium leading-normal text-black ml-1">Confirmar nova senha</label>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-bold text-black ml-1">Confirmar nova senha</label>
             <div className="relative flex items-center">
               <input
                 value={confirmPassword}
@@ -195,18 +195,18 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
             </div>
           </div>
 
-          <div className="flex-1 min-h-[40px]"></div>
+          <div className="flex-1 min-h-[30px]"></div>
 
           {/* Action Button */}
           <button
             type="submit"
             disabled={loading}
-            className={`w-full h-14 rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center shadow-lg shadow-primary/20 mb-6 ${loading ? 'opacity-50' : ''}`}
+            className={`w-full h-[48px] rounded-[12px] bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center shadow-md shadow-primary/10 mb-6 ${loading ? 'opacity-50' : ''}`}
           >
             {loading ? (
               <SpokeSpinner size="w-6 h-6" className="text-black" />
             ) : (
-              <span className="text-[#181711] text-base font-bold tracking-wide">Confirmar Alteração</span>
+              <span className="text-[#181711] text-[15px] font-bold tracking-wide">Confirmar Alteração</span>
             )}
           </button>
         </form>
