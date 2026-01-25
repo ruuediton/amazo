@@ -185,7 +185,7 @@ const App: React.FC = () => {
     setNavigationData(data);
 
     // Otimização: Apenas processos pesados ou explicitamente solicitados mostram loading
-    const heavyPages = ['historico-conta', 'purchase-history', 'withdrawal-history'];
+    const heavyPages = ['historico-conta', 'withdrawal-history'];
 
     if (heavyPages.includes(page)) {
       withLoading(async () => {
@@ -222,7 +222,7 @@ const App: React.FC = () => {
       'withdraw-password': <WithdrawPassword onNavigate={handleNavigate} showToast={showToast} />,
       'update-withdraw-password': <UpdateWithdrawPassword onNavigate={handleNavigate} showToast={showToast} />,
       'deposit': <Deposit onNavigate={handleNavigate} showToast={showToast} />,
-      'purchase-history': <PurchaseHistory onNavigate={handleNavigate} showToast={showToast} />,
+      'purchase-history': <PurchaseHistory onNavigate={handleNavigate} showToast={showToast} profile={profile} />,
       'change-password': <ChangePassword onNavigate={handleNavigate} />,
       'tutoriais-falar-com-gerente': <TutoriaisFalarComGerente onNavigate={handleNavigate} />,
       'tutoriais-como-convidar': <TutoriaisComoConvidar onNavigate={handleNavigate} />,

@@ -5,55 +5,54 @@ import SpokeSpinner from '../components/SpokeSpinner';
 interface PurchaseHistoryProps {
   onNavigate: (page: any) => void;
   showToast?: (message: string, type: any) => void;
+  profile: any;
 }
 
-const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast }) => {
+const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast, profile }) => {
   const [purchases, setPurchases] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const isInitialMount = React.useRef(true);
 
   const fetchPurchases = useCallback(async (showSpinner = false) => {
+    if (!profile?.id) return;
     if (showSpinner) setLoading(true);
     else setIsRefreshing(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        onNavigate('login');
-        return;
-      }
-
       // 1. Buscar histórico de compras
       const { data: purchaseData, error: purchaseError } = await supabase
         .from('historico_compras')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', profile.id)
         .order('data_compra', { ascending: false });
 
       if (purchaseError) throw purchaseError;
 
-      // 2. Buscar dados dos produtos para as imagens (Cache-like lookup)
-      const { data: productData, error: productError } = await supabase
-        .from('products')
-        .select('name, image_url, category');
+      // 2. Buscar dados dos produtos para as imagens (Opcional)
+      let imageMap: Record<string, string> = {};
+      try {
+        const { data: productData } = await supabase
+          .from('products')
+          .select('name, image_url');
 
-      if (productError) throw productError;
-
-      const imageMap: Record<string, { url: string, cat: string }> = {};
-      productData?.forEach(p => {
-        if (p?.name) {
-          imageMap[p.name.trim().toLowerCase()] = { url: p.image_url, cat: p.category };
-        }
-      });
+        productData?.forEach(p => {
+          if (p?.name) {
+            imageMap[p.name.trim().toLowerCase()] = p.image_url;
+          }
+        });
+      } catch (e) {
+        console.warn("Product images fetch failed", e);
+      }
 
       // 3. Cruzar os dados de forma segura
       const processed = (purchaseData || []).map(p => {
         const nameKey = p?.nome_produto?.trim().toLowerCase();
-        const productInfo = nameKey ? imageMap[nameKey] : null;
+        const productImageUrl = nameKey ? imageMap[nameKey] : null;
         return {
           ...p,
-          image_url: productInfo?.url || null,
-          category: productInfo?.cat || 'Eletrônicos'
+          image_url: productImageUrl || null,
+          category: 'Shop'
         };
       });
 
@@ -65,21 +64,30 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
       setLoading(false);
       setIsRefreshing(false);
     }
-  }, [onNavigate, showToast]);
+  }, [profile?.id, showToast]);
 
   useEffect(() => {
-    fetchPurchases(true);
+    if (isInitialMount.current) {
+      fetchPurchases(true);
+      isInitialMount.current = false;
+    } else {
+      fetchPurchases(false);
+    }
 
     let subscription: any;
     const initRealtime = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!profile?.id) return;
 
       subscription = supabase
-        .channel(`purchases-history-sync-${user.id}`)
+        .channel(`purchases-history-sync-${profile.id}`)
         .on(
           'postgres_changes',
-          { event: '*', schema: 'public', table: 'historico_compras', filter: `user_id=eq.${user.id}` },
+          {
+            event: '*',
+            schema: 'public',
+            table: 'historico_compras',
+            filter: `user_id=eq.${profile.id}`
+          },
           () => fetchPurchases(false)
         )
         .subscribe();
@@ -88,7 +96,9 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
     initRealtime();
 
     return () => {
-      if (subscription) subscription.unsubscribe();
+      if (subscription) {
+        supabase.removeChannel(subscription);
+      }
     };
   }, [fetchPurchases]);
 

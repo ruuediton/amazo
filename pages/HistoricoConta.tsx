@@ -66,7 +66,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       const [depositsRes, withdrawalsRes, purchasesRes] = await Promise.all([
         supabase.from('deposits').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
         supabase.from('retirada_clientes').select('*').eq('user_id', user.id).order('data_de_criacao', { ascending: false }),
-        supabase.from('historico_compras').select('*').eq('user_id', user.id).order('created_at', { ascending: false })
+        supabase.from('historico_compras').select('*').eq('user_id', user.id).order('data_compra', { ascending: false })
       ]);
 
       const combined: Transaction[] = [];
@@ -106,12 +106,12 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       });
 
       purchasesRes.data?.forEach(p => {
-        const date = new Date(p.created_at);
+        const date = new Date(p.data_compra);
         combined.push({
           id: `pur-${p.id}`,
           title: p.nome_produto || 'Compra de Pacote',
           subtitle: `Investimento amazon`,
-          amount: -Number(p.preco_pago || p.preco_unitario || 0),
+          amount: -Number(p.preco || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),

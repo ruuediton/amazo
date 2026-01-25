@@ -60,7 +60,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
           .from('marketing')
           .select('*')
           .order('data', { ascending: false })
-          .limit(4); // Limit to 4 items for grid
+          .limit(15);
 
         if (data && !error) {
           setMarketingItems(data);
@@ -207,9 +207,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <section className="mt-2 bg-white px-4 pt-4 pb-2 border-t border-gray-100">
         <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Ofertas que podem te interessar</h2>
 
-        {marketingItems.length > 0 ? (
+        {marketingItems.slice(0, 4).length > 0 ? (
           <div className="grid grid-cols-2 gap-3">
-            {marketingItems.map((item, i) => (
+            {marketingItems.slice(0, 4).map((item, i) => (
               <div key={item.id} onClick={() => onNavigate('shop')} className="cursor-pointer group">
                 <div className="bg-[#F7F8F8] h-32 p-4 flex items-center justify-center border border-gray-100 rounded-lg mb-2 group-hover:bg-gray-100 transition-colors">
                   <img src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" alt={item.descricao_nome} />
@@ -249,7 +249,17 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <section className="bg-white px-4 pt-4 pb-2">
         <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Continuar comprando</h2>
         <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-          {recentPurchases.length > 0 ? (
+          {marketingItems.slice(4, 8).length > 0 ? (
+            marketingItems.slice(4, 8).map((item) => (
+              <div key={item.id} onClick={() => onNavigate('shop')} className="min-w-[130px] cursor-pointer group">
+                <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5 group-hover:bg-gray-100 transition-colors">
+                  <img src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <p className="text-[13px] text-[#0F1111] font-medium leading-tight truncate">{item.descricao_nome}</p>
+                <p className="text-[11px] text-[#565959] truncate">Visualizado recentemente</p>
+              </div>
+            ))
+          ) : recentPurchases.length > 0 ? (
             recentPurchases.map((purchase) => (
               <div key={purchase.id} onClick={() => onNavigate('purchase-history')} className="min-w-[130px] cursor-pointer group">
                 <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5 group-hover:bg-gray-100 transition-colors">
@@ -279,19 +289,30 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <section className="bg-white px-4 pt-4 pb-6">
         <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Conquiste os melhores PCs e acessórios</h2>
         <div className="grid grid-cols-2 gap-3">
-          {[
-            { title: 'Desktops', img: '/placeholder_product.png' },
-            { title: 'Laptops', img: '/placeholder_product.png' },
-            { title: 'Discos rígidos', img: '/placeholder_product.png' },
-            { title: 'PC e acessórios', img: '/placeholder_product.png' }
-          ].map((cat, i) => (
-            <div key={i} onClick={() => onNavigate('shop')} className="cursor-pointer">
-              <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">
-                <img src={cat.img} className="max-h-full max-w-full object-contain opacity-80" />
+          {marketingItems.slice(8, 12).length > 0 ? (
+            marketingItems.slice(8, 12).map((item) => (
+              <div key={item.id} onClick={() => onNavigate('shop')} className="cursor-pointer group">
+                <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5 group-hover:bg-gray-100 transition-colors">
+                  <img src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <p className="text-[12px] text-[#0F1111] font-medium truncate">{item.descricao_nome}</p>
               </div>
-              <p className="text-[12px] text-[#0F1111] font-medium">{cat.title}</p>
-            </div>
-          ))}
+            ))
+          ) : (
+            [
+              { title: 'Desktops', img: '/placeholder_product.png' },
+              { title: 'Laptops', img: '/placeholder_product.png' },
+              { title: 'Discos rígidos', img: '/placeholder_product.png' },
+              { title: 'PC e acessórios', img: '/placeholder_product.png' }
+            ].map((cat, i) => (
+              <div key={i} onClick={() => onNavigate('shop')} className="cursor-pointer">
+                <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">
+                  <img src={cat.img} className="max-h-full max-w-full object-contain opacity-80" />
+                </div>
+                <p className="text-[12px] text-[#0F1111] font-medium">{cat.title}</p>
+              </div>
+            ))
+          )}
         </div>
         <button onClick={() => onNavigate('shop')} className="mt-4 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Ver mais</button>
       </section>

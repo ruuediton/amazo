@@ -34,7 +34,6 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
             if (profile) setInviteCode(profile.invite_code);
 
             // Buscar estatísticas (se existirem tabelas para isso ou contar na my_equipe)
-            // Por enquanto, placeholder ou contar
             const { count } = await supabase
                 .from('my_equipe')
                 .select('*', { count: 'exact', head: true })
@@ -142,6 +141,17 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                             </div>
                         </div>
 
+                        {/* View Team Button - New Action */}
+                        <div className="pt-2">
+                            <button
+                                onClick={() => onNavigate('subordinate-list')}
+                                className="w-full h-14 bg-white border-2 border-[#0F1111] text-[#0F1111] rounded-2xl flex items-center justify-center gap-3 font-black text-sm active:scale-95 transition-all shadow-sm"
+                            >
+                                <span className="material-symbols-outlined">group</span>
+                                VISUALIZAR MINHA EQUIPE
+                            </button>
+                        </div>
+
                         {/* Instructions - Flat */}
                         <div className="space-y-4 pt-4 border-t border-gray-50">
                             <h4 className="font-bold text-[13px] uppercase tracking-widest text-[#565959] px-2">Como Funciona</h4>
@@ -171,49 +181,69 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                             </div>
                         </div>
 
-                        {/* Recompensas por Metas - New Section */}
-                        <div className="pt-6 border-t border-gray-50">
-                            <div className="flex items-center gap-2 mb-4 px-2">
-                                <span className="material-symbols-outlined text-[#E47911]">emoji_events</span>
-                                <h4 className="font-bold text-[14px] text-[#0F1111] uppercase tracking-wider">Metas de Bônus</h4>
+                        {/* Recompensas por Metas - Premium Section */}
+                        <div className="pt-8 border-t border-gray-100">
+                            <div className="flex items-center justify-between mb-6 px-2">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="size-10 rounded-xl bg-amber-50 flex items-center justify-center border border-amber-100">
+                                        <span className="material-symbols-outlined text-[#E47911] text-[24px]">workspace_premium</span>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-black text-[15px] text-[#0F1111] leading-none">Metas de Equipe</h4>
+                                        <p className="text-[10px] text-[#565959] font-bold uppercase tracking-tighter mt-1">Conquiste bônus exclusivos</p>
+                                    </div>
+                                </div>
+                                <div className="px-3 py-1 bg-gray-50 rounded-full border border-gray-200">
+                                    <span className="text-[10px] font-black text-[#565959]">{stats.total_invited} GESTÕES</span>
+                                </div>
                             </div>
 
-                            <div className="space-y-3">
+                            <div className="space-y-4">
                                 {[
-                                    { level: 1, target: 50, reward: 4000, title: 'Bronze' },
-                                    { level: 2, target: 100, reward: 8000, title: 'Prata' },
-                                    { level: 3, target: 500, reward: 50000, title: 'Ouro' },
-                                    { level: 4, target: 1000, reward: 100000, title: 'Diamante' },
+                                    { level: 1, target: 50, reward: 4000, title: 'Bronze', color: '#B12704', bg: 'bg-[#FFF5F2]', icon: 'military_tech' },
+                                    { level: 2, target: 100, reward: 8000, title: 'Prata', color: '#565959', bg: 'bg-[#F7F8F8]', icon: 'stars' },
+                                    { level: 3, target: 500, reward: 50000, title: 'Ouro', color: '#856404', bg: 'bg-[#FFFBF0]', icon: 'emoji_events' },
+                                    { level: 4, target: 1000, reward: 100000, title: 'Diamante', color: '#007185', bg: 'bg-[#F0F9FB]', icon: 'diamond' },
                                 ].map((meta) => {
                                     const progress = Math.min((stats.total_invited / meta.target) * 100, 100);
                                     const isReached = stats.total_invited >= meta.target;
 
                                     return (
-                                        <div key={meta.level} className={`relative overflow-hidden rounded-xl border ${isReached ? 'bg-[#F0FDF4] border-green-200' : 'bg-white border-gray-200'}`}>
-                                            <div className="p-4 relative z-10">
-                                                <div className="flex justify-between items-center mb-2">
-                                                    <div>
-                                                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${isReached ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
-                                                            Nível {meta.level} • {meta.title}
-                                                        </span>
-                                                        <h5 className="font-bold text-[15px] mt-1 text-[#0F1111]">{meta.target} Convites</h5>
+                                        <div key={meta.level} className={`group relative overflow-hidden rounded-[24px] border transition-all duration-300 ${isReached ? 'border-green-200 bg-white shadow-lg shadow-green-500/5' : 'bg-white border-gray-100'}`}>
+                                            <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform`} style={{ backgroundColor: meta.color }}></div>
+                                            <div className="p-5 relative z-10">
+                                                <div className="flex justify-between items-start mb-4">
+                                                    <div className="flex gap-3">
+                                                        <div className={`size-12 rounded-2xl flex items-center justify-center border shadow-sm ${isReached ? 'bg-green-50 border-green-100 text-green-600' : `${meta.bg} border-gray-100`}`} style={{ color: isReached ? undefined : meta.color }}>
+                                                            <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>{isReached ? 'verified' : meta.icon}</span>
+                                                        </div>
+                                                        <div>
+                                                            <p className={`text-[10px] font-black uppercase tracking-widest ${isReached ? 'text-green-600' : 'text-[#565959]'}`}>NÍVEL {meta.level} • {meta.title}</p>
+                                                            <h5 className="font-black text-[18px] text-[#0F1111] leading-tight">{meta.target} <span className="text-[13px] font-bold text-[#565959]">Indicações</span></h5>
+                                                        </div>
                                                     </div>
-                                                    <div className="text-right">
-                                                        <p className="text-[10px] text-gray-500 font-bold uppercase">Prêmio</p>
-                                                        <p className="text-[16px] font-black text-[#B12704]">Kz {meta.reward.toLocaleString('pt-AO')}</p>
+                                                    <div className="flex flex-col items-end">
+                                                        <span className="text-[9px] font-black text-[#565959] uppercase tracking-tighter opacity-60">Prêmio Amazon</span>
+                                                        <div className="flex items-baseline gap-0.5">
+                                                            <span className="text-[10px] font-black text-[#B12704]">Kz</span>
+                                                            <span className="text-[20px] font-black text-[#B12704] tracking-tighter">{meta.reward.toLocaleString('pt-AO')}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                {/* Progress Bar */}
-                                                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                                                    <div
-                                                        className={`h-full transition-all duration-500 ${isReached ? 'bg-green-500' : 'bg-[#FFD814]'}`}
-                                                        style={{ width: `${progress}%` }}
-                                                    ></div>
+                                                <div className="space-y-2">
+                                                    <div className="flex justify-between items-end mb-1 px-0.5">
+                                                        <p className="text-[10px] font-bold text-[#565959]">
+                                                            {isReached ? <span className="flex items-center gap-1 text-green-600 font-black"><span className="material-symbols-outlined text-[14px]">check_circle</span> META ATINGIDA</span> : <>Progresso: <span className="text-[#0F1111]">{stats.total_invited}</span> de {meta.target}</>}
+                                                        </p>
+                                                        <span className={`text-[11px] font-black ${isReached ? 'text-green-600' : 'text-[#0F1111]'}`}>{Math.floor(progress)}%</span>
+                                                    </div>
+                                                    <div className="relative w-full h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-50 shadow-inner">
+                                                        <div className={`h-full transition-all duration-1000 ease-out relative ${isReached ? 'bg-green-500' : 'bg-[#FFD814]'}`} style={{ width: `${progress}%` }}></div>
+                                                    </div>
                                                 </div>
-                                                <div className="flex justify-between mt-1">
-                                                    <span className="text-[10px] font-medium text-gray-500">{stats.total_invited} / {meta.target}</span>
-                                                    {isReached && <span className="text-[10px] font-bold text-green-600 flex items-center gap-1"><span className="material-symbols-outlined text-[12px]">check_circle</span> Conquistado</span>}
+                                                <div className="mt-4 flex items-center justify-between pt-3 border-t border-gray-50">
+                                                    <p className="text-[9px] font-bold text-[#565959] italic opacity-60">* Válido para usuários ativos na rede</p>
+                                                    <button onClick={handleCopyLink} disabled={isReached} className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg transition-all ${isReached ? 'bg-green-50 text-green-600 border border-green-100' : 'bg-[#00A8E1]/10 text-[#007185] border border-[#00A8E1]/20 active:scale-95'}`}>{isReached ? 'RESGATADO' : 'CONVIDAR AGORA'}</button>
                                                 </div>
                                             </div>
                                         </div>
