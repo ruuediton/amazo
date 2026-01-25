@@ -17,7 +17,6 @@ const ChangePassword = lazy(() => import('./pages/ChangePassword'));
 const TutoriaisFalarComGerente = lazy(() => import('./pages/TutoriaisFalarComGerente'));
 const TutoriaisComoConvidar = lazy(() => import('./pages/TutoriaisComoConvidar'));
 const ComoComprar = lazy(() => import('./pages/ComoComprar'));
-const TutoriaisAlterarSenhaRetirada = lazy(() => import('./pages/TutoriaisAlterarSenhaRetirada'));
 const DetalhesConta = lazy(() => import('./pages/DetalhesConta'));
 const UpdateWithdrawPassword = lazy(() => import('./pages/UpdateWithdrawPassword'));
 const HistoricoConta = lazy(() => import('./pages/HistoricoConta'));
@@ -66,7 +65,7 @@ import { useNetwork } from './contexts/NetworkContext';
 const App: React.FC = () => {
   const { showLoading, hideLoading, withLoading, showSuccess, showError, showWarning, reset } = useLoading();
   const { runWithTimeout } = useNetwork();
-  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'wallet' | 'profile' | 'invite' | 'support' | 'tutorials' | 'about' | 'report' | 'add-bank' | 'withdraw-password' | 'deposit' | 'purchase-history' | 'change-password' | 'tutoriais-falar-com-gerente' | 'tutoriais-como-convidar' | 'como-comprar' | 'tutoriais-alterar-senha-retirada' | 'detalhes-conta' | 'update-withdraw-password' | 'historico-conta' | 'register' | 'confirmar-deposito' | 'como-retirar-fundos' | 'tutoriais-depositos' | 'retirada' | 'login' | 'security-auth' | 'security-verify' | 'splash-ads' | 'campaigns' | 'como-enviar-comprovante' | 'tutoriais-definir-senha' | 'tutoriais-adicionar-conta' | 'tutoriais-ganhos-tarefas' | 'ganhos-tarefas' | 'gift-chest' | 'reward-claim' | 'info' | 'terms-of-use' | 'privacy-policy' | 'system-rules' | 'subordinate-list' | 'deposit-usdt' | 'deposit-history' | 'tutoriais-adicionar-conta' | 'investimentos-fundo' | 'historico-fundos' | 'settings' | 'withdrawal-history' | 'invite-page'>('register');
+  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'wallet' | 'profile' | 'invite' | 'support' | 'tutorials' | 'about' | 'report' | 'add-bank' | 'withdraw-password' | 'deposit' | 'purchase-history' | 'change-password' | 'tutoriais-falar-com-gerente' | 'tutoriais-como-convidar' | 'como-comprar' | 'detalhes-conta' | 'update-withdraw-password' | 'historico-conta' | 'register' | 'confirmar-deposito' | 'como-retirar-fundos' | 'tutoriais-depositos' | 'retirada' | 'login' | 'security-auth' | 'security-verify' | 'splash-ads' | 'campaigns' | 'como-enviar-comprovante' | 'tutoriais-definir-senha' | 'tutoriais-adicionar-conta' | 'tutoriais-ganhos-tarefas' | 'ganhos-tarefas' | 'gift-chest' | 'reward-claim' | 'info' | 'terms-of-use' | 'privacy-policy' | 'system-rules' | 'subordinate-list' | 'deposit-usdt' | 'deposit-history' | 'tutoriais-adicionar-conta' | 'investimentos-fundo' | 'historico-fundos' | 'settings' | 'withdrawal-history' | 'invite-page'>('register');
   const [lastAction, setLastAction] = useState<() => void>(() => { });
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<any>(null);
@@ -227,7 +226,6 @@ const App: React.FC = () => {
       'tutoriais-falar-com-gerente': <TutoriaisFalarComGerente onNavigate={handleNavigate} />,
       'tutoriais-como-convidar': <TutoriaisComoConvidar onNavigate={handleNavigate} />,
       'como-comprar': <ComoComprar onNavigate={handleNavigate} />,
-      'tutoriais-alterar-senha-retirada': <TutoriaisAlterarSenhaRetirada onNavigate={handleNavigate} />,
       'detalhes-conta': <DetalhesConta onNavigate={handleNavigate} showToast={showToast} />,
       'historico-conta': <HistoricoConta onNavigate={handleNavigate} />,
       'register': <Register onNavigate={handleNavigate} showToast={showToast} />,

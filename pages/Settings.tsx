@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
-import ChangeLoginPassword from './ChangeLoginPassword';
-import ChangeWithdrawPin from './ChangeWithdrawPin';
 
 interface Props {
     onNavigate: (page: any) => void;
@@ -16,7 +14,6 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
     const [fullName, setFullName] = useState(profile?.full_name || '');
     const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url || '');
     const [saving, setSaving] = useState(false);
-    const [subPage, setSubPage] = useState<'main' | 'password' | 'pin'>('main');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -103,13 +100,6 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
         "https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0",
     ];
 
-    if (subPage === 'password') {
-        return <ChangeLoginPassword onBack={() => setSubPage('main')} />;
-    }
-
-    if (subPage === 'pin') {
-        return <ChangeWithdrawPin onBack={() => setSubPage('main')} />;
-    }
 
     return (
         <div className="flex flex-col min-h-screen bg-background-dark font-display text-black antialiased">

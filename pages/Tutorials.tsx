@@ -56,12 +56,6 @@ const tutorialsData: TutorialSection[] = [
         subtitle: 'Criar senha de transação',
         route: 'tutoriais-definir-senha',
       },
-      {
-        icon: 'lock_reset',
-        title: 'Tutoriais Alterar Senha de Retirada',
-        subtitle: 'Atualizar senha de transação',
-        route: 'tutoriais-alterar-senha-retirada',
-      },
     ],
   },
   {
