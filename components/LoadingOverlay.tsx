@@ -48,17 +48,17 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ status, message }) => {
                     <SpokeSpinner size="w-10 h-10" color="text-[#FF9900]" />
                 </div>
             ) : (
-                <div className="bg-white/95 backdrop-blur-md rounded-3xl p-6 flex flex-col items-center justify-center min-w-[200px] max-w-[80vw] border border-white/20 shadow-2xl animate-in zoom-in-95 duration-300">
-                    <div className="flex flex-col items-center justify-center text-center gap-4">
+                <div className="bg-white/80 backdrop-blur-lg rounded-[24px] p-5 flex flex-col items-center justify-center w-fit max-w-[85vw] border border-white/30 shadow-2xl animate-in zoom-in-95 duration-300">
+                    <div className="flex flex-col items-center justify-center text-center gap-3">
                         {config && (
-                            <div className={`size-14 rounded-full ${config.bgColor} flex items-center justify-center`}>
-                                <span className={`material-symbols-outlined text-4xl ${config.iconColor}`}>
+                            <div className={`size-12 rounded-full ${config.bgColor} flex items-center justify-center`}>
+                                <span className={`material-symbols-outlined text-[28px] ${config.iconColor}`}>
                                     {config.icon}
                                 </span>
                             </div>
                         )}
                         {message && (
-                            <p className="text-slate-900 text-sm font-bold leading-snug animate-in fade-in slide-in-from-bottom-2 duration-500">
+                            <p className="text-slate-900 text-[13px] font-bold leading-snug px-2 animate-in fade-in slide-in-from-bottom-2 duration-500 max-w-[240px]">
                                 {message}
                             </p>
                         )}

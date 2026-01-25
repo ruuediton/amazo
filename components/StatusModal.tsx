@@ -74,14 +74,14 @@ const StatusModal: React.FC<StatusModalProps> = ({
     const config = getStatusConfig();
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-[200] px-4 bg-black/40 backdrop-blur-sm">
+        <div className="fixed inset-0 flex items-center justify-center z-[200] px-4 bg-black/40 backdrop-blur-[2px]">
             <div
-                className="w-full max-w-[280px] flex flex-col items-center justify-center text-center bg-surface-dark border border-amazon-border rounded-3xl p-6 animate-in zoom-in-95 duration-300 shadow-2xl"
+                className="w-fit max-w-[300px] flex flex-col items-center justify-center text-center bg-white/80 backdrop-blur-lg border border-white/30 rounded-[28px] p-6 animate-in zoom-in-95 duration-300 shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Status Icon */}
-                <div className={`size-16 rounded-full flex items-center justify-center mb-4 ${config.color} ${config.shadow}`}>
-                    <span className={`material-symbols-outlined text-[32px] font-bold ${config.iconColor}`}>
+                <div className={`size-12 rounded-full flex items-center justify-center mb-4 ${config.color} ${config.shadow}`}>
+                    <span className={`material-symbols-outlined text-[24px] font-bold ${config.iconColor}`}>
                         {config.icon}
                     </span>
                 </div>
@@ -92,7 +92,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                 </h2>
 
                 {/* Message */}
-                <p className="text-text-secondary text-sm font-medium leading-relaxed mb-6 px-2">
+                <p className="text-slate-700 text-[13px] font-bold leading-relaxed mb-6 px-2 max-w-[240px]">
                     {message}
                 </p>
 
