@@ -100,7 +100,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
           <form className="flex flex-col gap-4" onSubmit={handleLogin}>
             {/* Phone Number Field */}
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Número de Telefone</label>
+              <label className="text-[13px] font-bold text-[#0F1111]">Número de telefone</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                   <span className="text-xl mr-2">🇦🇴</span>
