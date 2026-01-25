@@ -54,31 +54,54 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       });
 
       // Fetch parallel data for speed
-      const [depositsRes, withdrawalsRes, purchasesRes] = await Promise.all([
-        supabase.from('deposits').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+      const [depositsRes, depositsUsdtRes, withdrawalsRes, purchasesRes, bonusRes, p2pRes] = await Promise.all([
+        supabase.from('depositos_clientes').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('depositos_usdt').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
         supabase.from('retirada_clientes').select('*').eq('user_id', user.id).order('data_de_criacao', { ascending: false }),
-        supabase.from('historico_compras').select('*').eq('user_id', user.id).order('data_compra', { ascending: false })
+        supabase.from('historico_compras').select('*').eq('user_id', user.id).order('data_compra', { ascending: false }),
+        supabase.from('bonus_transacoes').select('*').eq('user_id', user.id).order('data_recebimento', { ascending: false }),
+        supabase.from('transacoes_p2p').select('*').or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`).order('created_at', { ascending: false })
       ]);
 
       const combined: Transaction[] = [];
 
+      // 1. Bank Deposits
       depositsRes.data?.forEach(d => {
         const date = new Date(d.created_at);
         combined.push({
           id: `dep-${d.id}`,
-          title: 'Depósito de Saldo',
-          subtitle: `${d.nome_banco || d.method || 'Transferência'} - ${d.status_playment || 'Pendente'}`,
-          amount: Number(d.amount),
+          title: 'Depósito Bancário',
+          subtitle: `${d.nome_do_banco || 'Transferência'} - ${d.estado_de_pagamento || 'Pendente'}`,
+          amount: Number(d.valor_deposito || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'incoming',
           category: 'Depósito',
-          status: d.status_playment
+          status: d.estado_de_pagamento
         });
       });
 
+      // 2. USDT Deposits
+      depositsUsdtRes.data?.forEach(d => {
+        const date = new Date(d.created_at);
+        combined.push({
+          id: `usdt-${d.id}`,
+          title: 'Depósito USDT',
+          subtitle: `Cripto - ${d.status || 'Pendente'}`,
+          amount: Number(d.amount_kz || 0),
+          time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
+          dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
+          monthIndex: date.getMonth(),
+          year: date.getFullYear(),
+          type: 'incoming',
+          category: 'Depósito',
+          status: d.status
+        });
+      });
+
+      // 3. Withdrawals
       withdrawalsRes.data?.forEach(w => {
         const date = w.data_de_criacao ? new Date(w.data_de_criacao) : new Date();
         combined.push({
@@ -96,6 +119,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         });
       });
 
+      // 4. Purchases
       purchasesRes.data?.forEach(p => {
         const date = new Date(p.data_compra);
         combined.push({
@@ -112,11 +136,48 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         });
       });
 
+      // 5. Bonuses
+      bonusRes.data?.forEach(b => {
+        const date = new Date(b.data_recebimento);
+        combined.push({
+          id: `bon-${b.id}`,
+          title: 'Bônus Recebido',
+          subtitle: b.origem_bonus || 'Promoção/Evento',
+          amount: Number(b.valor_recebido || 0),
+          time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
+          dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
+          monthIndex: date.getMonth(),
+          year: date.getFullYear(),
+          type: 'incoming',
+          category: 'Bônus'
+        });
+      });
+
+      // 6. P2P Transfers
+      p2pRes.data?.forEach(t => {
+        const date = new Date(t.created_at);
+        const isSender = t.sender_id === user.id;
+        combined.push({
+          id: `p2p-${t.id}`,
+          title: isSender ? 'Transferência Enviada' : 'Transferência Recebida',
+          subtitle: isSender ? `Para outro usuário` : `De outro usuário`,
+          amount: isSender ? -Number(t.amount) : Number(t.amount),
+          time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
+          dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
+          monthIndex: date.getMonth(),
+          year: date.getFullYear(),
+          type: isSender ? 'outgoing' : 'incoming',
+          category: 'Misto'
+        });
+      });
+
       setTransactions(combined.sort((a, b) => {
-        // Sort by actual date for reliability
-        const dateA = new Date(a.year, a.monthIndex, parseInt(a.dateLabel)).getTime();
-        const dateB = new Date(b.year, b.monthIndex, parseInt(b.dateLabel)).getTime();
-        return dateB - dateA;
+        // Sort by year, then monthIndex, then day from dateLabel
+        if (b.year !== a.year) return b.year - a.year;
+        if (b.monthIndex !== a.monthIndex) return b.monthIndex - a.monthIndex;
+        const dayA = parseInt(a.dateLabel.split(' ')[0]);
+        const dayB = parseInt(b.dateLabel.split(' ')[0]);
+        return dayB - dayA;
       }));
     } catch (err) {
       console.error('Erro ao buscar histórico:', err);
@@ -143,6 +204,17 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         </button>
         <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">Histórico de Conta</h2>
       </header>
+
+      {/* User Identifier Tag */}
+      {userProfile && (
+        <div className="bg-surface-dark/40 px-6 py-2 flex items-center justify-between border-b border-gray-200/50">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary text-[16px]">person</span>
+            <span className="text-[11px] font-bold text-black opacity-80 uppercase tracking-wider">ID: {userProfile.code}</span>
+          </div>
+          <span className="text-[10px] font-medium text-[text-gray-400]">{userProfile.phone}</span>
+        </div>
+      )}
 
 
       <main className="flex-1 overflow-y-auto no-scrollbar pb-24 touch-pan-y">
