@@ -92,14 +92,14 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
 
         <main className="flex-1 px-5 pb-8">
           {/* Title & Subtitle */}
-          <div className="mb-8 pt-2">
-            <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-2">Bem-vindo de volta</h1>
+          <div className="mb-5 pt-2">
+            <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-1">Bem-vindo de volta</h1>
             <p className="text-text-secondary text-base font-normal">Faça login para gerir suas finanças e compras.</p>
           </div>
 
-          <form className="flex flex-col gap-6" onSubmit={handleLogin}>
+          <form className="flex flex-col gap-4" onSubmit={handleLogin}>
             {/* Phone Number Field */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Número de Telefone</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -119,7 +119,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             </div>
 
             {/* Password Field */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <label className="text-[13px] font-bold text-[#0F1111]">Senha</label>
               <div className="relative">
                 <input
@@ -150,13 +150,13 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <button
               type="submit"
               disabled={loading}
-              className={`mt-4 flex w-full items-center justify-center rounded-[8px] bg-[#FFD814] py-3 text-[15px] font-normal text-[#0F1111] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`mt-2 flex w-full items-center justify-center rounded-[8px] bg-[#FFD814] h-[48px] text-[15px] font-bold text-[#0F1111] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {loading ? 'Entrando...' : 'Fazer Login'}
+              {loading ? <div className="flex items-center gap-2">Entrando...</div> : 'Fazer Login'}
             </button>
 
             {/* Footer Link */}
-            <div className="text-center mt-6 relative">
+            <div className="text-center mt-4 relative">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
               <div className="relative flex justify-center text-sm">
                 <span className="bg-[#FFFFFF] px-2 text-[#565959] text-[12px]">Novo na Amazon?</span>
