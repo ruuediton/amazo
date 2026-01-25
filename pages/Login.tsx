@@ -38,8 +38,8 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
-    if (!cleanPassword || cleanPassword.length < 6) {
-      showToast?.("A senha deve ter 6 dígitos.", "error");
+    if (!cleanPassword || cleanPassword.length < 6 || cleanPassword.length > 8) {
+      showToast?.("A senha deve ter entre 6 e 8 caracteres.", "error");
       return;
     }
 
@@ -127,10 +127,9 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
                   placeholder="Sua senha Amazon"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  inputMode="numeric"
                   onChange={(e) => {
-                    const cleanVal = e.target.value.replace(/\D/g, '').slice(0, 6);
-                    setPassword(cleanVal);
+                    const val = e.target.value.slice(0, 8);
+                    setPassword(val);
                   }}
                   required
                 />
