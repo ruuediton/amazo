@@ -249,7 +249,11 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
                         )}
                       </div>
                       <p className="text-black/50 text-xs text-left">
-                        {new Date(item.data_recebimento).toLocaleTimeString()} • {item.codigo_presente}
+                        {new Date(item.data_recebimento).toLocaleTimeString()} • {(() => {
+                          const code = item.codigo_presente || '';
+                          if (code.length <= 4) return code;
+                          return code.slice(0, 2) + "**" + code.slice(-2);
+                        })()}
                       </p>
                     </div>
                   </div>
