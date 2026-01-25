@@ -118,13 +118,27 @@
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 0.8; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1); }
+
+      0%,
+      100% {
+        opacity: 0.8;
+        transform: scale(0.98);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @keyframes shift {
-      0% { transform: translateX(-150%); }
-      100% { transform: translateX(250%); }
+      0% {
+        transform: translateX(-150%);
+      }
+
+      100% {
+        transform: translateX(250%);
+      }
     }
 
     .app-loaded #splash-screen {
@@ -139,7 +153,10 @@
 
 <body class="antialiased">
   <div id="splash-screen">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="splash-logo" alt="Amazon">
+    <div class="splash-logo"
+      style="display: flex; align-items: center; justify-content: center; width: 140px; height: 140px; background: #FFD814; border-radius: 50%;">
+      <span class="material-symbols-outlined" style="font-size: 80px; color: #000;">shopping_bag</span>
+    </div>
     <div class="loading-bar-container">
       <div class="loading-bar"></div>
     </div>
@@ -147,7 +164,7 @@
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
   <script>
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
       // Small delay to ensure React has started mounting
       setTimeout(() => {
         document.body.classList.add('app-loaded');

@@ -84,7 +84,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <span className="material-symbols-outlined text-2xl text-primary">arrow_back</span>
           </button>
           <div className="flex items-center gap-1">
-            <span className="text-xl font-bold tracking-tight text-text-primary">amazon</span>
+            <span className="text-xl font-bold tracking-tight text-text-primary">Loja VIP</span>
             <div className="size-1.5 rounded-full bg-primary mt-3"></div>
           </div>
           <div className="size-10"></div>
@@ -124,7 +124,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
               <div className="relative">
                 <input
                   className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white px-4 pr-12 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] focus:outline-none transition-all placeholder:text-gray-500"
-                  placeholder="Sua senha Amazon"
+                  placeholder="Sua senha"
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => {
@@ -158,7 +158,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <div className="text-center mt-4 relative">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-[#FFFFFF] px-2 text-[#565959] text-[12px]">Novo na Amazon?</span>
+                <span className="bg-[#FFFFFF] px-2 text-[#565959] text-[12px]">Novo Usuário?</span>
               </div>
             </div>
 
@@ -167,7 +167,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
               onClick={() => onNavigate('register')}
               className="w-full py-3 rounded-[8px] bg-white border border-[#D5D9D9] text-[#0F1111] text-[14px] font-medium hover:bg-gray-50 active:scale-[0.99] shadow-sm transition-all"
             >
-              Criar sua conta Amazon
+              Criar sua conta
             </button>
           </form>
         </main>
