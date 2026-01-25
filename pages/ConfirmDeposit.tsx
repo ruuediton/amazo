@@ -137,7 +137,7 @@ NOME DO PAGADOR: ${userName}`.trim();
           <div className="w-10"></div>
         </header>
 
-        <main className="flex-1 space-y-7 px-6 pt-4">
+        <main className="flex-1 space-y-4 px-6 pt-4">
 
           {/* Amount & Time Badges */}
           <div className="flex items-center justify-center gap-2">
@@ -153,7 +153,7 @@ NOME DO PAGADOR: ${userName}`.trim();
           </div>
 
           {/* Data Fields */}
-          <div className="space-y-4">
+          <div className="space-y-2">
 
             {/* Bank Name */}
             <div className="space-y-1">
@@ -162,7 +162,7 @@ NOME DO PAGADOR: ${userName}`.trim();
                 <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden">
                   {deposit.nome_banco || deposit.nome_do_banco || "N/A"}
                 </div>
-                <button onClick={() => handleCopy(deposit.nome_banco || deposit.nome_do_banco, "Banco")} className="w-[84px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[13px]">
+                <button onClick={() => handleCopy(deposit.nome_banco || deposit.nome_do_banco, "Banco")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
                   Cópia
                 </button>
               </div>
@@ -175,7 +175,7 @@ NOME DO PAGADOR: ${userName}`.trim();
                 <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden whitespace-nowrap">
                   {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
                 </div>
-                <button onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario, "Nome")} className="w-[84px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[13px]">
+                <button onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario, "Nome")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
                   Cópia
                 </button>
               </div>
@@ -188,7 +188,7 @@ NOME DO PAGADOR: ${userName}`.trim();
                 <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-mono font-bold text-[#0F1111] text-[11px] overflow-hidden">
                   {deposit.iban}
                 </div>
-                <button onClick={() => handleCopy(deposit.iban, "IBAN")} className="w-[84px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[13px]">
+                <button onClick={() => handleCopy(deposit.iban, "IBAN")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
                   Cópia
                 </button>
               </div>
