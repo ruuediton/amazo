@@ -93,17 +93,17 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
   return (
     <div className="bg-background-dark text-black min-h-screen flex flex-col font-display antialiased">
       {/* TopAppBar */}
-      <div className="flex items-center bg-background-dark p-4 pb-2 justify-between sticky top-0 z-50">
+      <div className="flex items-center bg-background-dark px-4 py-2 justify-between sticky top-0 z-50">
         <div
           onClick={() => onNavigate('home')}
-          className="text-primary flex size-12 shrink-0 items-center cursor-pointer hover:bg-white/10 rounded-full justify-center transition-colors"
+          className="text-primary flex size-10 shrink-0 items-center cursor-pointer hover:bg-white/10 rounded-full justify-center transition-colors"
         >
-          <span className="material-symbols-outlined">arrow_back</span>
+          <span className="material-symbols-outlined text-[20px]">arrow_back</span>
         </div>
-        <h2 className="text-black text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">amazon</h2>
-        <div className="flex w-12 items-center justify-end">
-          <button onClick={() => onOpenSupport?.()} className="flex cursor-pointer items-center justify-center rounded-lg h-12 bg-transparent text-black p-0">
-            <span className="material-symbols-outlined">help_outline</span>
+        <h2 className="text-black text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">amazon</h2>
+        <div className="flex w-10 items-center justify-end">
+          <button onClick={() => onOpenSupport?.()} className="flex cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-black p-0">
+            <span className="material-symbols-outlined text-[20px]">help_outline</span>
           </button>
         </div>
       </div>
@@ -116,32 +116,32 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
         </div>
 
         {/* HeadlineText */}
-        <h1 className="text-black tracking-tight text-[28px] font-extrabold leading-tight px-4 text-center pb-1">
+        <h1 className="text-black tracking-tight text-[24px] font-extrabold leading-tight px-4 text-center pb-1">
           {isOpen ? 'Presente Aberto!' : 'Tens um presente para abrir!'}
         </h1>
 
         {/* BodyText */}
-        <p className="text-black/70 text-sm font-medium leading-relaxed pb-6 px-10 text-center">
+        <p className="text-black/70 text-[13px] font-medium leading-relaxed pb-4 px-10 text-center">
           {isOpen
-            ? `Parabéns! Acabaste de resgatar Kz ${lastReward?.toLocaleString()}. O valor já foi adicionado ao teu saldo.`
-            : 'Tens um código? Introduz abaixo para resgatar o teu presente agora.'
+            ? `Acabaste de resgatar Kz ${lastReward?.toLocaleString()}.`
+            : 'Introduz o teu código abaixo para resgatar agora.'
           }
         </p>
 
         {/* Redemption Input Area - Only show if not open */}
         {!isOpen && (
-          <div className="w-full px-6 mb-6">
-            <div className="flex flex-col gap-4">
+          <div className="w-full px-6 mb-4">
+            <div className="flex flex-col">
               <div className="relative group">
                 <input
-                  className="flex w-full rounded-xl border border-gray-200 bg-gray-50 px-4 h-12 text-base font-bold focus:border-primary focus:ring-0 focus:outline-none transition-all placeholder:text-gray-400 text-black shadow-inner"
+                  className="flex w-full rounded-xl border border-gray-200 bg-gray-50 px-4 h-11 text-sm font-bold focus:border-primary focus:ring-0 focus:outline-none transition-all placeholder:text-gray-400 text-black shadow-inner"
                   placeholder="Insira o seu código aqui"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                   disabled={loading}
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary">
-                  <span className="material-symbols-outlined text-[20px]">redeem</span>
+                  <span className="material-symbols-outlined text-[18px]">redeem</span>
                 </div>
               </div>
             </div>
@@ -149,43 +149,37 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
         )}
 
         {/* Treasure Chest Visual - Redimensionado para caber o input */}
-        <div className="relative w-full aspect-square max-w-[220px] mb-6 flex items-center justify-center">
+        <div className="relative w-full aspect-square max-w-[180px] mb-4 flex items-center justify-center">
 
           {/* Glow background */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(244,209,37,0.15)_0%,_rgba(24,23,17,0)_70%)] rounded-full"></div>
 
           {/* Metallic Chest Container */}
-          <div className={`relative w-48 h-48 bg-[#2a2820] rounded-xl border-2 transition-all duration-700 ${isOpen ? 'border-primary shadow-[0_0_80px_rgba(244,209,37,0.4)] scale-110' : 'border-[#3a3830] shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)]'} flex flex-col overflow-hidden`}>
+          <div className={`relative w-40 h-40 bg-[#2a2820] rounded-xl border-2 transition-all duration-500 ${isOpen ? 'border-primary shadow-[0_0_80px_rgba(244,209,37,0.4)] scale-110' : 'border-[#3a3830] shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)]'} flex flex-col overflow-hidden`}>
             {/* Top lid detail */}
-            <div className={`h-1/3 bg-[#323028] border-b-4 transition-all duration-700 ${isOpen ? 'border-primary/60 -translate-y-4' : 'border-primary/30'} flex items-center justify-center shadow-inner`}>
-              <div className={`w-16 h-2 rounded-full transition-colors ${isOpen ? 'bg-primary' : 'bg-primary/10'}`}></div>
+            <div className={`h-1/3 bg-[#323028] border-b-2 transition-all duration-500 ${isOpen ? 'border-primary/60 -translate-y-4' : 'border-primary/30'} flex items-center justify-center shadow-inner`}>
+              <div className={`w-12 h-1.5 rounded-full transition-colors ${isOpen ? 'bg-primary' : 'bg-primary/10'}`}></div>
             </div>
 
             {/* Body / Lock detail */}
             <div className="flex-1 flex flex-col items-center justify-center relative bg-gradient-to-b from-[#2d2b22] to-[#1e1c14]">
               {/* Lock Circle */}
-              <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-700 ${isOpen ? 'bg-green-500 shadow-[0_0_30px_rgba(34,197,94,0.6)]' : 'bg-primary shadow-[0_0_20px_rgba(244,209,37,0.5)] animate-pulse'}`}>
-                <span className="material-symbols-outlined text-[#181711] text-3xl font-black transition-all" style={{ fontVariationSettings: "'FILL' 1" }}>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-green-500 shadow-[0_0_30px_rgba(34,197,94,0.6)]' : 'bg-primary shadow-[0_0_20px_rgba(244,209,37,0.5)] animate-pulse'}`}>
+                <span className="material-symbols-outlined text-[#181711] text-2xl font-black transition-all" style={{ fontVariationSettings: "'FILL' 1" }}>
                   {isOpen ? 'lock_open' : 'lock'}
                 </span>
               </div>
 
               {/* Reward Reveal - Only if open */}
               {isOpen && (
-                <div className="absolute inset-x-0 bottom-4 flex flex-col items-center animate-bounce">
-                  <p className="text-primary text-2xl font-black tracking-tighter shadow-sm">+ Kz {lastReward}</p>
+                <div className="absolute inset-x-0 bottom-2 flex flex-col items-center animate-bounce">
+                  <p className="text-primary text-sm font-black tracking-tighter shadow-sm">+ Kz {lastReward}</p>
                 </div>
               )}
-
-              {/* Metallic rivets */}
-              <div className="absolute top-4 left-4 w-2 h-2 rounded-full bg-white/10 shadow-inner"></div>
-              <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-white/10 shadow-inner"></div>
-              <div className="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-white/10 shadow-inner"></div>
-              <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-white/10 shadow-inner"></div>
             </div>
 
             {/* Bottom detail */}
-            <div className={`h-6 transition-colors ${isOpen ? 'bg-primary/20' : 'bg-black/20'}`}></div>
+            <div className={`h-4 transition-colors ${isOpen ? 'bg-primary/20' : 'bg-black/20'}`}></div>
           </div>
 
           {/* Currency Badge Kz */}
@@ -195,12 +189,11 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
           </div>
         </div>
 
-        {/* Call to Action Buttons */}
-        <div className="w-full space-y-4 px-4">
+        <div className="w-full space-y-3 px-6">
           {isOpen ? (
             <button
               onClick={() => setIsOpen(false)}
-              className="flex w-full items-center justify-center overflow-hidden rounded-xl h-12 bg-white border border-primary text-text-primary text-lg font-black leading-normal tracking-wide active:scale-95 transition-all shadow-md"
+              className="flex w-full items-center justify-center overflow-hidden rounded-xl h-11 bg-white border border-primary text-text-primary text-base font-black leading-normal tracking-wide active:scale-95 transition-all shadow-md"
             >
               <span>Resgatar Outro</span>
             </button>
@@ -208,16 +201,15 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
             <button
               onClick={handleRedeem}
               disabled={loading}
-              className={`flex w-full items-center justify-center overflow-hidden rounded-xl h-12 bg-primary text-[#181711] text-lg font-black leading-normal tracking-wide shadow-[0_8px_30px_rgba(244,209,37,0.3)] active:scale-95 transition-all ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`flex w-full items-center justify-center overflow-hidden rounded-xl h-11 bg-primary text-[#181711] text-base font-black leading-normal tracking-wide shadow-lg active:scale-95 transition-all ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
-              <span className="truncate">{loading ? 'A processar...' : 'Abrir Presente Agora'}</span>
+              <span className="truncate">{loading ? 'Processando...' : 'Abrir Presente Agora'}</span>
             </button>
           )}
 
-
           <button
             onClick={() => onNavigate('home')}
-            className="w-full text-center text-black/50 text-sm font-bold py-2 tracking-widest uppercase hover:text-black transition-colors"
+            className="w-full text-center text-black/40 text-[11px] font-bold py-1 tracking-widest uppercase hover:text-black transition-colors"
           >
             Guardar para mais tarde
           </button>
