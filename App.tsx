@@ -303,11 +303,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background-dark max-w-md mx-auto shadow-2xl overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-background-light max-w-md mx-auto shadow-premium overflow-x-hidden">
       <main className="flex-1 overflow-y-auto no-scrollbar">
         <Suspense fallback={
-          <div className="flex h-screen items-center justify-center bg-background-dark">
-            <SpokeSpinner size="w-12 h-12" className="text-primary" />
+          <div className="flex h-screen items-center justify-center bg-background-light">
+            <SpokeSpinner size="w-12 h-12" className="text-secondary" />
           </div>
         }>
           <PageComponent />
@@ -317,46 +317,46 @@ const App: React.FC = () => {
 
       {/* Bottom Navigation */}
       {session && ['home', 'shop', 'profile', 'ganhos-tarefas', 'invite-page'].includes(currentPage) && (
-        <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-surface-dark/95 backdrop-blur-lg border-t border-brand-border pb-1.5 pt-1.5 px-2 z-50">
+        <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-xl border-t border-border pb-6 pt-3 px-4 z-50 rounded-t-[32px] shadow-[0_-8px_30px_rgba(0,0,0,0.04)]">
           <div className="flex justify-between items-center">
             <button
               onClick={() => setCurrentPage('home')}
-              className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'home' ? 'text-primary' : 'text-gray-500'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'home' ? 'text-secondary scale-110' : 'text-gray-400'}`}
             >
               <span className={`material-symbols-outlined text-[23px] ${currentPage === 'home' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'home' ? 1 : 0}` }}>home</span>
               <span className="text-[9px] font-bold">Início</span>
             </button>
 
             <button
-              onClick={() => setCurrentPage('invite-page')}
-              className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'invite-page' ? 'text-primary' : 'text-gray-500'}`}
+              onClick={() => setCurrentPage('shop')}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'shop' ? 'text-secondary scale-110' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'invite-page' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'invite-page' ? 1 : 0}` }}>group_add</span>
-              <span className="text-[9px] font-medium">Convidar</span>
+              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'shop' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'shop' ? 1 : 0}` }}>pets</span>
+              <span className="text-[10px] font-bold">Mercado</span>
             </button>
 
             <button
               onClick={() => setCurrentPage('ganhos-tarefas')}
-              className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'ganhos-tarefas' ? 'text-primary' : 'text-gray-500'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'ganhos-tarefas' ? 'text-secondary scale-110' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'ganhos-tarefas' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'ganhos-tarefas' ? 1 : 0}` }}>bolt</span>
-              <span className="text-[9px] font-medium">Ganhos</span>
+              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'ganhos-tarefas' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'ganhos-tarefas' ? 1 : 0}` }}>agriculture</span>
+              <span className="text-[10px] font-bold">Fazenda</span>
             </button>
 
             <button
-              onClick={() => setCurrentPage('shop')}
-              className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'shop' ? 'text-primary' : 'text-gray-500'}`}
+              onClick={() => setCurrentPage('invite-page')}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'invite-page' ? 'text-secondary scale-110' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'shop' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'shop' ? 1 : 0}` }}>shopping_bag</span>
-              <span className="text-[9px] font-medium">Loja</span>
+              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'invite-page' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'invite-page' ? 1 : 0}` }}>group</span>
+              <span className="text-[10px] font-bold">Convite</span>
             </button>
 
             <button
               onClick={() => setCurrentPage('profile')}
-              className={`flex flex-col items-center gap-0.5 w-full transition-colors ${currentPage === 'profile' ? 'text-primary' : 'text-gray-500'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'profile' ? 'text-secondary scale-110' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'profile' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'profile' ? 1 : 0}` }}>person</span>
-              <span className="text-[9px] font-medium">Conta</span>
+              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'profile' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'profile' ? 1 : 0}` }}>person</span>
+              <span className="text-[10px] font-bold">Perfil</span>
             </button>
           </div>
         </nav>
@@ -379,7 +379,7 @@ const App: React.FC = () => {
               </div>
               <h3 className="text-2xl font-black text-[#0F1111] mb-2">Deseja sair?</h3>
               <p className="text-gray-500 mb-8 leading-relaxed">
-                Você precisará entrar novamente para acessar sua conta SmartBuy. Seus dados de navegação serão limpos.
+                Você precisará entrar novamente para acessar sua conta Silver Creek Ranch. Seus dados de navegação serão limpos.
               </p>
 
               <div className="flex flex-col gap-3 w-full">

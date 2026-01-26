@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SmartBuy - Electronics Megastore</title>
+  <title>Silver Creek Ranch</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
@@ -15,37 +15,29 @@
       theme: {
         extend: {
           colors: {
-            primary: '#FFD814',
-            'primary-hover': '#F7CA00',
-            secondary: '#F0F2F2',
-            black: '#0F1111',
-            gray: {
-              50: '#FDFDFD',
-              100: '#F0F2F2',
-              200: '#E6E6E6',
-              300: '#D1D1D6',
-              400: '#A1A1A1',
-              500: '#565959',
-              600: '#404040',
-              700: '#333333',
-              800: '#262626',
-              900: '#111111',
-            },
-            'brand-green': '#007600',
-            'brand-blue': '#007185',
-            'background-dark': '#FFFFFF',
-            'surface-dark': '#FFFFFF',
-            'brand-border': '#F0F2F2',
-            'success-bg': '#E7F4E7',
-            'success-text': '#007600',
-            'error-bg': '#FDE8EB',
-            'error-text': '#CC0C39',
-            'warning-bg': '#FEF9E7',
-            'warning-text': '#854D0E'
+            primary: '#2D7A2D', // Deep Forest Green
+            secondary: '#4CAF50', // Growth Green
+            wealth: '#FFC107', // Gold/Amarelo
+            'background-light': '#F8F9FA', // Fundo Neutro
+            'background-dark': '#F0F2F2', // Slightly darker for contrast if needed
+            'text-primary': '#263238', // Typography color
+            'text-secondary': '#546E7A', // Lighter Typography
+            surface: '#FFFFFF',
+            border: '#ECEFF1',
+            alert: '#EF5350',
           },
           fontFamily: {
             display: ['Manrope', 'sans-serif'],
             sans: ['Manrope', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+            '3xl': '2rem',
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 10px -2px rgba(0, 0, 0, 0.03)',
+            'premium': '0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 15px -5px rgba(0, 0, 0, 0.05)',
           }
         }
       }
@@ -53,16 +45,25 @@
   </script>
   <style>
     body {
-      background-color: #FFFFFF;
-      color: #0F1111;
+      background-color: #F8F9FA;
+      color: #263238;
       font-family: 'Manrope', sans-serif;
       margin: 0;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Global Flat Style - No Shadows */
-    * {
-      box-shadow: none !important;
+    /* Global Rounded Corners & Smooth Shadows */
+    .card-premium {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+      border: 1px solid #ECEFF1;
+      transition: all 0.3s ease;
+    }
+
+    .card-premium:hover {
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
     }
 
     .no-scrollbar::-webkit-scrollbar {
@@ -153,9 +154,10 @@
 
 <body class="antialiased">
   <div id="splash-screen">
-    <img src="/smartbuy_logo.png" alt="SmartBuy" class="splash-logo" style="width: 140px; height: 140px; border-radius: 20px;" />
+    <img src="/smartbuy_logo.png" alt="Silver Creek Ranch" class="splash-logo"
+      style="width: 140px; height: 140px; border-radius: 20px;" />
     <div class="loading-bar-container">
-      <div class="loading-bar"></div>
+      <div class="loading-bar" style="background: #2D7A2D;"></div>
     </div>
   </div>
   <div id="root"></div>

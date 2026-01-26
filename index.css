@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+:root {
+  --primary: #2D7A2D;
+  --secondary: #4CAF50;
+  --wealth: #FFC107;
+  --bg-neutral: #F8F9FA;
+  --text-main: #263238;
+  --text-secondary: #546E7A;
+}
+
+body {
+  background-color: var(--bg-neutral);
+  color: var(--text-main);
+  font-family: 'Manrope', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Card Styles */
+.premium-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ECEFF1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:hover {
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Custom Buttons */
+.btn-wealth {
+  background-color: var(--wealth);
+  color: #263238;
+  font-weight: 700;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+}
+
+.btn-wealth:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 193, 7, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 700;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+/* Progress Bars and Indicators */
+.progress-growth {
+  background-color: var(--secondary);
+  border-radius: 99px;
+}
+
+.text-growth {
+  color: var(--secondary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

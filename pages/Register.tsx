@@ -23,7 +23,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
   const [invitationCode, setInvitationCode] = useState('');
 
-  // Extração automática do código da URL (apenas preenchimento)
+  // Extraï¿½ï¿½o automï¿½tica do cï¿½digo da URL (apenas preenchimento)
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('ref');
@@ -34,26 +34,26 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
     e.preventDefault();
 
     if (!agreedToTerms) {
-      showToast?.("Você deve concordar com os Termos de Serviço, para continuar.", "warning");
+      showToast?.("Vocï¿½ deve concordar com os Termos de Serviï¿½o, para continuar.", "warning");
       return;
     }
     if (password.length !== 6) {
-      showToast?.("Por favor difite senha de dígitos.", "error");
+      showToast?.("Por favor difite senha de dï¿½gitos.", "error");
       return;
     }
     if (password !== confirmPassword) {
-      showToast?.("As senhas não coincidem.", "error");
+      showToast?.("As senhas nï¿½o coincidem.", "error");
       return;
     }
     if (phoneNumber.length < 9) {
-      showToast?.("Número celular icorreto.", "error");
+      showToast?.("Nï¿½mero celular icorreto.", "error");
       return;
     }
 
     try {
       await withLoading(async () => {
         if (!invitationCode) {
-          throw new Error("Código de convite é obrigatório.");
+          throw new Error("Cï¿½digo de convite ï¿½ obrigatï¿½rio.");
         }
 
         const email = `${phoneNumber.replace(/\s/g, '')}@deepbank.user`;
@@ -71,7 +71,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
         if (error) {
           if (error.message.includes('already registered')) {
-            showToast?.("Este número já está cadastrado. Faça login.", "info");
+            showToast?.("Este nï¿½mero jï¿½ estï¿½ cadastrado. Faï¿½a login.", "info");
             onNavigate('login');
             return;
           }
@@ -91,7 +91,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
   };
 
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen">
+    <div className="bg-background-light font-display text-text-primary antialiased min-h-screen">
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto">
 
 
@@ -111,22 +111,22 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
           <div className="px-5">
             {/* Title & Subtitle */}
             <div className="mb-4 pt-2">
-              <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-1">Crie sua conta</h1>
-              <p className="text-text-secondary text-base font-normal">Junte-se ao futuro dos serviços bancários e compras.</p>
+              <h1 className="text-[32px] font-extrabold leading-tight tracking-tight mb-1">Crie sua conta</h1>
+              <p className="text-text-secondary text-base font-medium">Junte-se ao futuro dos serviÃ§os bancÃ¡rios e investimentos.</p>
             </div>
 
             <form className="flex flex-col gap-4" onSubmit={handleRegister}>
               {/* Phone Number Field */}
               <div className="flex flex-col gap-1">
-                <label className="text-[13px] font-bold text-[#0F1111]">Número de telefone</label>
+                <label className="text-[13px] font-bold text-text-primary">NÃºmero de telefone</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                     <span className="text-xl mr-2">????</span>
-                    <span className="text-base font-medium text-[#0F1111]">+244</span>
+                    <span className="text-base font-medium text-text-primary">+244</span>
                     <div className="ml-3 h-6 w-px bg-gray-200"></div>
                   </div>
                   <input
-                    className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white pl-[7.5rem] pr-4 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:outline-none transition-all placeholder:text-gray-500"
+                    className="flex w-full rounded-2xl border border-border bg-white pl-[7.5rem] pr-4 h-[52px] text-[15px] focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all placeholder:text-gray-400"
                     placeholder="9XX XXX XXX"
                     type="tel"
                     value={phoneNumber}
@@ -138,11 +138,11 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
               {/* Password Field */}
               <div className="flex flex-col gap-1">
-                <label className="text-[13px] font-bold text-[#0F1111]">Senha</label>
+                <label className="text-[13px] font-bold text-text-primary">Senha</label>
                 <div className="relative">
                   <input
-                    className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white pl-4 pr-12 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:outline-none transition-all placeholder:text-gray-500"
-                    placeholder="6 dígitos numéricos"
+                    className="flex w-full rounded-2xl border border-border bg-white pl-4 pr-12 h-[52px] text-[15px] focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all placeholder:text-gray-400"
+                    placeholder="6 dÃ­gitos numÃ©ricos"
                     type={showPassword ? "text" : "password"}
                     inputMode="numeric"
                     value={password}
@@ -166,10 +166,10 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
               {/* Confirm Password Field */}
               <div className="flex flex-col gap-1">
-                <label className="text-[13px] font-bold text-[#0F1111]">Confirmar Senha</label>
+                <label className="text-[13px] font-bold text-text-primary">Confirmar Senha</label>
                 <div className="relative">
                   <input
-                    className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white pl-4 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:outline-none transition-all placeholder:text-gray-500"
+                    className="flex w-full rounded-2xl border border-border bg-white pl-4 h-[52px] text-[15px] focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all placeholder:text-gray-400"
                     placeholder="Repita a senha"
                     type={showConfirmPassword ? "text" : "password"}
                     inputMode="numeric"
@@ -194,17 +194,17 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
               {/* Invitation Code Field */}
               <div className="flex flex-col gap-1">
-                <label className="text-[13px] font-bold text-[#0F1111]">
-                  Código de convite <span className="text-[#C40000]">*</span>
+                <label className="text-[13px] font-bold text-text-primary">
+                  CÃ³digo de convite <span className="text-alert">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                     <span className="material-symbols-outlined text-[20px] text-gray-500">group_add</span>
                   </div>
                   <input
-                    className={`flex w-full rounded-[8px] border border-[#D5D9D9] bg-white pl-12 pr-4 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:outline-none transition-all placeholder:text-gray-500 ${new URLSearchParams(window.location.search).get('ref') ? 'bg-gray-50 cursor-not-allowed' : ''
+                    className={`flex w-full rounded-2xl border border-border bg-white pl-12 pr-4 h-[52px] text-[15px] focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all placeholder:text-gray-400 ${new URLSearchParams(window.location.search).get('ref') ? 'bg-gray-50 cursor-not-allowed' : ''
                       }`}
-                    placeholder="Código de convite"
+                    placeholder="CÃ³digo de convite"
                     type="text"
                     value={invitationCode}
                     onChange={(e) => {
@@ -223,7 +223,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               <div className="flex items-start gap-3 mt-2">
                 <div className="flex h-6 items-center">
                   <input
-                    className="size-5 rounded border-gray-300 text-[#E77600] focus:ring-[#E77600] cursor-pointer"
+                    className="size-5 rounded border-gray-300 text-secondary focus:ring-secondary cursor-pointer"
                     id="terms"
                     name="terms"
                     type="checkbox"
@@ -232,8 +232,8 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                   />
                 </div>
                 <div className="text-[13px] leading-snug">
-                  <label className="font-normal text-[#0F1111]" htmlFor="terms">
-                    Eu concordo com os <a className="text-[#007185] hover:text-[#C7511F] hover:underline" href="#">Termos de Serviço</a> e a <a className="text-[#007185] hover:text-[#C7511F] hover:underline" href="#">Política de Privacidade</a>.
+                  <label className="font-normal text-text-primary" htmlFor="terms">
+                    Eu concordo com os <a className="text-secondary font-bold hover:underline" href="#">Termos de ServiÃ§o</a> e a <a className="text-secondary font-bold hover:underline" href="#">PolÃ­tica de Privacidade</a>.
                   </label>
                 </div>
               </div>
@@ -242,14 +242,14 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               <button
                 type="submit"
                 disabled={loading}
-                className={`mt-4 flex w-full items-center justify-center rounded-[8px] bg-[#FFD814] h-[48px] text-[15px] font-bold text-[#0F1111] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`mt-4 flex w-full items-center justify-center rounded-2xl bg-wealth h-[56px] text-[16px] font-black text-text-primary shadow-soft hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {loading ? <div className="flex items-center gap-2"><SpokeSpinner size="w-5 h-5" color="text-black" /> Aguarde...</div> : 'Criar Conta'}
+                {loading ? <div className="flex items-center gap-2"><SpokeSpinner size="w-5 h-5" color="text-text-primary" /> Aguarde...</div> : 'CRIAR MINHA CONTA'}
               </button>
 
               {/* Footer Link */}
-              <p className="text-center text-[13px] text-[#565959] mt-2">
-                Já tem uma conta? <button type="button" onClick={() => onNavigate('login')} className="text-[#007185] hover:text-[#C7511F] hover:underline ml-1">Entrar</button>
+              <p className="text-center text-[13px] text-text-secondary mt-2">
+                JÃ¡ tem uma conta? <button type="button" onClick={() => onNavigate('login')} className="text-secondary font-bold hover:underline ml-1">Entrar</button>
               </p>
             </form>
           </div>
