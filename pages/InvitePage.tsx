@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -113,7 +113,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                             </div>
 
                             <h3 className="text-2xl font-black mb-1 leading-tight tracking-tighter">Indique e Ganhe</h3>
-                            <p className="text-[13px] font-bold opacity-80 mb-6 max-w-[200px]">Compartilhe a experiência Amazon e ganhe comissões ilimitadas.</p>
+                            <p className="text-[13px] font-bold opacity-80 mb-6 max-w-[200px]">Compartilhe a experiência SmartBuy e ganhe comissões ilimitadas.</p>
 
                             <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 flex items-center justify-between border border-white/20">
                                 <div>
@@ -160,7 +160,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 <p className="text-[10px] font-bold text-[#565959] uppercase tracking-widest">Indicados</p>
                             </div>
                             <div className="bg-white rounded-[24px] p-5 border border-gray-100 flex flex-col items-center justify-center text-center">
-                                <span className="material-symbols-outlined text-3xl text-amazon-green mb-2">account_balance_wallet</span>
+                                <span className="material-symbols-outlined text-3xl text-brand-green mb-2">account_balance_wallet</span>
                                 <p className="text-2xl font-black">Kz {stats.total_earned}</p>
                                 <p className="text-[10px] font-bold text-[#565959] uppercase tracking-widest">Saldo Recebido</p>
                             </div>
@@ -248,7 +248,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-col items-end">
-                                                        <span className="text-[9px] font-black text-[#565959] uppercase tracking-tighter opacity-60">Prêmio Amazon</span>
+                                                        <span className="text-[9px] font-black text-[#565959] uppercase tracking-tighter opacity-60">Prêmio SmartBuy</span>
                                                         <div className="flex items-baseline gap-0.5">
                                                             <span className="text-[10px] font-black text-[#B12704]">Kz</span>
                                                             <span className="text-[20px] font-black text-[#B12704] tracking-tighter">{meta.reward.toLocaleString('pt-AO')}</span>

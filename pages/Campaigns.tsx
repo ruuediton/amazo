@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -49,7 +49,7 @@ const Campaigns: React.FC<Props> = ({ onNavigate }) => {
               </div>
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-bold text-black">Cashback Amazon</h3>
+              <h3 className="text-lg font-bold text-black">Cashback SmartBuy</h3>
               <p className="mt-1 text-sm text-gray-600 font-medium leading-relaxed line-clamp-2">5% de volta em eletrônicos e acessórios comprados pelo app.</p>
               <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-4">
                 <div className="flex flex-col">

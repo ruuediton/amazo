@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import TutorialSlider from '../components/TutorialSlider';
 
@@ -66,7 +66,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           <div className="flex gap-3 items-start p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-left">
             <span className="material-symbols-outlined text-blue-400 text-sm mt-0.5">info</span>
             <p className="text-xs text-blue-300 font-medium leading-relaxed">
-              Guarde o comprovativo digital. O saldo deve aparecer na sua conta amazon em menos de 5 minutos.
+              Guarde o comprovativo digital. O saldo deve aparecer na sua conta SmartBuy em menos de 5 minutos.
             </p>
           </div>
         </div>

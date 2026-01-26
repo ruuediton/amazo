@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -232,7 +232,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                 Cancelar
               </button>
             </div>
-            <p className="text-[10px] text-center text-gray-400 mt-4 uppercase tracking-widest font-bold">Compra Segura Amazon</p>
+            <p className="text-[10px] text-center text-gray-400 mt-4 uppercase tracking-widest font-bold">Compra Segura SmartBuy</p>
           </div>
         </div>
       )}

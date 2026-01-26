@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -32,7 +32,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
               backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(34, 31, 16, 0.95) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuB46nRMkIPkmlVFyVpwFF-SRgylOZzKtzc_JOrBP1wctiWaFtWWOH8y2LNy9LR4j5visSJz4HW9ZQDU8mgQW-3t086JJiiPJxRxtx_XT066spjlxH_hCw6QEI5fhgH5498knw4kNL62jcC55GCWzvmAoHXPfzF8p-byF6KsxWrVYsUm5cSdjTt9TwPlG4TZEOBNJaoyxI-iOi0RS5IxCI7Y-y9_-lMC2aiyylBCPaw_hXzBO-hF1VhpSN3tUoQftIDXGMAWKNHlPkS9")'
             }}
           >
-            {/* Subtle Amazon-esque decorative element */}
+            {/* Subtle SmartBuy-esque decorative element */}
             <div className="absolute top-4 right-4 opacity-20">
               <span className="material-symbols-outlined text-black text-5xl">savings</span>
             </div>

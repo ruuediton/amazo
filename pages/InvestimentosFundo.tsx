@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+﻿import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -125,12 +125,12 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 selection:bg-amber-100 antialiased">
-      {/* Header Area: Amazon Style */}
+      {/* Header Area: SmartBuy Style */}
       <div className="relative h-[220px] w-full overflow-hidden bg-[#232F3E]">
         <div className="absolute inset-0 bg-[#232F3E]/80 mix-blend-multiply transition-opacity" />
         <img
           src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1000"
-          alt="Amazon Wealth Header"
+          alt="SmartBuy Wealth Header"
           className="absolute inset-0 w-full h-full object-cover opacity-30 grayscale"
         />
 
@@ -327,7 +327,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
             </div>
             <div className="space-y-1">
               <p className="text-[#0F1111] font-black text-[16px]">Segurança Grantida</p>
-              <p className="text-gray-500 text-[11px] max-w-[200px] font-medium leading-relaxed italic">Seus investimentos são protegidos por fundos de reserva Amazon Wealth.</p>
+              <p className="text-gray-500 text-[11px] max-w-[200px] font-medium leading-relaxed italic">Seus investimentos são protegidos por fundos de reserva SmartBuy Wealth.</p>
             </div>
           </div>
         </section>

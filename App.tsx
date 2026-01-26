@@ -317,7 +317,7 @@ const App: React.FC = () => {
 
       {/* Bottom Navigation */}
       {session && ['home', 'shop', 'profile', 'ganhos-tarefas', 'invite-page'].includes(currentPage) && (
-        <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-surface-dark/95 backdrop-blur-lg border-t border-amazon-border pb-1.5 pt-1.5 px-2 z-50">
+        <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-surface-dark/95 backdrop-blur-lg border-t border-brand-border pb-1.5 pt-1.5 px-2 z-50">
           <div className="flex justify-between items-center">
             <button
               onClick={() => setCurrentPage('home')}

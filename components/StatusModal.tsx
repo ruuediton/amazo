@@ -97,7 +97,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                 </p>
 
                 {/* Branding Pill */}
-                <div className="bg-background-dark rounded-full px-4 py-1.5 border border-amazon-border">
+                <div className="bg-background-dark rounded-full px-4 py-1.5 border border-brand-border">
                     <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">
                         {config.branding}
                     </p>

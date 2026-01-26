@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 import { jsPDF } from 'jspdf';
@@ -57,12 +57,12 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
 
       // --- COVER PAGE ---
-      doc.setFillColor(255, 216, 20); // Amazon Yellow
+      doc.setFillColor(255, 216, 20); // SmartBuy Yellow
       doc.rect(0, 0, 210, 297, 'F');
 
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(40);
-      doc.setTextColor(15, 17, 17); // Amazon Black
+      doc.setTextColor(15, 17, 17); // SmartBuy Black
       doc.text('APRENDE', 105, 100, { align: 'center' });
       doc.text('AMAZON', 105, 115, { align: 'center' });
 
@@ -79,11 +79,11 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       doc.rect(0, 0, 210, 297, 'F');
 
       // Header Bar
-      doc.setFillColor(35, 47, 62); // Amazon Dark Blue
+      doc.setFillColor(35, 47, 62); // SmartBuy Dark Blue
       doc.rect(0, 0, 210, 30, 'F');
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(18);
-      doc.text('Bem-vindo ao Amazoning', 10, 20);
+      doc.text('Bem-vindo ao SmartBuy App', 10, 20);
 
       // Content
       doc.setTextColor(15, 17, 17);
@@ -114,7 +114,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(14);
-        doc.setTextColor(228, 121, 17); // Amazon Orange
+        doc.setTextColor(228, 121, 17); // SmartBuy Orange
         doc.text(title, 10, yPos);
         yPos += 8;
 
@@ -156,7 +156,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         "Siga os passos para enviar seu comprovante com segurança:\n" +
         "1. Localizar Comprovante: Acesse seu histórico de transações, encontre o depósito recente e toque em 'Ver Comprovante'.\n" +
         "2. Acessar WhatsApp: Toque no botão oficial para abrir o WhatsApp.\n" +
-        "3. Falar com Gerente: Inicie uma conversa com seu Gerente de Conta Amazon (verifique o selo de verificação).\n" +
+        "3. Falar com Gerente: Inicie uma conversa com seu Gerente de conta SmartBuy (verifique o selo de verificação).\n" +
         "4. Anexar e Enviar: No chat, toque no anexo (clipe) e envie a imagem do comprovante.");
 
       addSection('6. Maximizar Ganhos',
@@ -187,7 +187,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         "04. Segurança\nO utilizador é o único responsável por manter o sigilo de sua senha. A amazon nunca solicitará sua senha por WhatsApp ou e-mail.");
 
       addSection('DECLARAÇÃO DE PRIVACIDADE',
-        "A Amazon Angola Digital Services, SA assume o compromisso de proteger a privacidade dos seus utilizadores em conformidade com a Lei n.º 22/11 – Lei da Protecção de Dados Pessoais da República de Angola.\n\n" +
+        "A SmartBuy Angola Digital Services, SA assume o compromisso de proteger a privacidade dos seus utilizadores em conformidade com a Lei n.º 22/11 – Lei da Protecção de Dados Pessoais da República de Angola.\n\n" +
         "01. Recolha de Informação\nRecolhemos dados essenciais para a prestação de serviços financeiros: Nome, BI, IBAN, contacto telefónico e metadados de transação. Estes dados são processados exclusivamente para fins de segurança bancária.\n\n" +
         "02. Finalidade do Tratamento\nAs informações destinam-se à gestão da conta, processamento de depósitos/retiradas e prevenção contra branqueamento de capitais (AML).\n\n" +
         "03. Criptografia e Armazenamento\nTodos os dados são armazenados em servidores com criptografia militar. O acesso é restrito a pessoal autorizado.\n\n" +
@@ -205,7 +205,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       } else {
         yPos += 10;
       }
-      doc.text("Amazon Angola Digital Services, SA", 10, yPos);
+      doc.text("SmartBuy Angola Digital Services, SA", 10, yPos);
       doc.text("Luanda, República de Angola - Regulamentado pela APD", 10, yPos + 5);
 
 
@@ -216,7 +216,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'Manual_Amazon_Guia.pdf'; // Simplified, sure-fire extension
+      link.download = 'Manual_SmartBuy_Guia.pdf'; // Simplified, sure-fire extension
       document.body.appendChild(link);
       link.click();
 
@@ -402,7 +402,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
               <div className="size-16 rounded-2xl bg-[#FFD814] flex items-center justify-center mb-4 shadow-lg shadow-[#FFD814]/20 border border-[#FCD200]">
                 <span className="material-symbols-outlined text-black text-4xl">library_books</span>
               </div>
-              <h3 className="text-xl font-black text-[#0F1111] mb-2 leading-tight">Baixar Manual Aprende Amazon?</h3>
+              <h3 className="text-xl font-black text-[#0F1111] mb-2 leading-tight">Baixar Manual Aprende SmartBuy?</h3>
               <p className="text-sm text-gray-500 mb-6 leading-relaxed">
                 Você está prestes a baixar o guia oficial em PDF com todos os tutoriais passo a passo.
               </p>

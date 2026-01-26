@@ -76,7 +76,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
     <div className="bg-background-dark font-display text-black antialiased min-h-screen">
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto">
         {/* Header */}
-        <header className="flex items-center justify-between p-4 sticky top-0 z-10 bg-background-dark/95 backdrop-blur-sm border-b border-amazon-border">
+        <header className="flex items-center justify-between p-4 sticky top-0 z-10 bg-background-dark/95 backdrop-blur-sm border-b border-brand-border">
           <button
             onClick={() => onNavigate('home')}
             className="flex size-10 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
@@ -105,10 +105,10 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                   <span className="text-xl mr-2">🇦🇴</span>
                   <span className="text-base font-medium text-text-primary">+244</span>
-                  <div className="ml-3 h-6 w-px bg-amazon-border"></div>
+                  <div className="ml-3 h-6 w-px bg-brand-border"></div>
                 </div>
                 <input
-                  className="flex w-full rounded-lg border border-amazon-border bg-surface-dark pl-[7.5rem] pr-4 h-12 text-base focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-text-secondary/30"
+                  className="flex w-full rounded-lg border border-brand-border bg-surface-dark pl-[7.5rem] pr-4 h-12 text-base focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-text-secondary/30"
                   placeholder="9XX XXX XXX"
                   type="tel"
                   value={phoneNumber}

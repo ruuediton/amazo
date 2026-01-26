@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -35,10 +35,10 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
       <div className="flex flex-col gap-4 px-4 pb-4">
         {/* Information Group */}
         <div className="flex flex-col bg-surface-dark rounded-2xl overflow-hidden shadow-sm border border-gray-200">
-          {/* Item: Sobre a Amazon */}
+          {/* Item: Sobre a SmartBuy */}
           <InfoItem
             icon="info"
-            label="Sobre a Amazon"
+            label="Sobre a SmartBuy"
             onClick={() => onNavigate('about')}
           />
           <div className="h-[1px] bg-gray-200 mx-4"></div>

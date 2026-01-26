@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -98,7 +98,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
       <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col p-6 items-center justify-center text-center">
         <span className="material-symbols-outlined text-gray-700 text-6xl mb-4">no_accounts</span>
         <h2 className="text-xl font-bold mb-2">Nenhuma conta vinculada</h2>
-        <p className="text-gray-500 text-sm mb-8">Você ainda não adicionou um cartão bancário à sua conta Amazon.</p>
+        <p className="text-gray-500 text-sm mb-8">Você ainda não adicionou um cartão bancário à sua conta SmartBuy.</p>
         <button
           onClick={() => onNavigate('add-bank')}
           className="w-full h-14 bg-primary text-black font-black rounded-2xl"

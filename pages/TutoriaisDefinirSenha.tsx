@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -83,7 +83,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
         <div className="flex gap-3 items-start px-2 py-2 rounded-lg bg-red-900/10 border border-red-900/20 mb-4">
           <span className="material-symbols-outlined text-red-400 shrink-0" style={{ fontSize: '20px', marginTop: '2px' }}>shield</span>
           <p className="text-red-200 text-xs font-medium leading-relaxed">
-            Nunca partilhe esta senha com ninguém, nem mesmo com a equipa de suporte Amazon.
+            Nunca partilhe esta senha com ninguém, nem mesmo com a equipa de suporte SmartBuy.
           </p>
         </div>
       </main>

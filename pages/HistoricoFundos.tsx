@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 import { jsPDF } from 'jspdf';
@@ -118,17 +118,17 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
         doc.text('CERTIFICADO DE INVESTIMENTO', 105, 25, { align: 'center' });
         doc.setFontSize(10);
         doc.setTextColor(86, 89, 89);
-        doc.text('AMAZON WEALTH MANAGEMENT', 105, 32, { align: 'center' });
+        doc.text('SmartBuy Wealth MANAGEMENT', 105, 32, { align: 'center' });
         doc.setDrawColor(230, 230, 230);
         doc.line(40, 38, 170, 38);
         doc.setFontSize(12);
         doc.setTextColor(86, 89, 89);
-        doc.text('Certificamos a aplicação bem-sucedida no fundo Amazon.', 105, 50, { align: 'center' });
+        doc.text('Certificamos a aplicação bem-sucedida no fundo SmartBuy.', 105, 50, { align: 'center' });
         doc.setFillColor(243, 243, 243);
         doc.roundedRect(40, 60, 130, 50, 3, 3, 'F');
         doc.setFontSize(14);
         doc.setTextColor(15, 17, 17);
-        doc.text(inv.fund?.nome_fundo || 'Fundo Amazon', 105, 75, { align: 'center' });
+        doc.text(inv.fund?.nome_fundo || 'fundo SmartBuy', 105, 75, { align: 'center' });
         doc.setFontSize(30);
         doc.setTextColor(0, 118, 0);
         doc.text(`Kz ${Number(inv.valor_aplicado).toLocaleString('pt-AO')}`, 105, 90, { align: 'center' });
@@ -137,7 +137,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
         doc.text(`Início: ${formatDate(inv.data_inicio)}`, 105, 102, { align: 'center' });
         doc.setFontSize(8);
         doc.text(`Contrato: ${inv.id_usuario_fundo}`, 105, 130, { align: 'center' });
-        doc.save(`Certificado_Amazon_${inv.id_usuario_fundo.slice(0, 8)}.pdf`);
+        doc.save(`Certificado_SmartBuy_${inv.id_usuario_fundo.slice(0, 8)}.pdf`);
         showToast?.('Certificado gerado com sucesso!', 'success');
     };
 
@@ -210,7 +210,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                                             </div>
 
                                             <h3 className="text-[14px] font-black leading-tight line-clamp-1 text-[#0F1111] uppercase tracking-tighter mt-1">
-                                                {inv.fund?.nome_fundo || 'Fundo Amazon'}
+                                                {inv.fund?.nome_fundo || 'fundo SmartBuy'}
                                             </h3>
 
                                             <div className="flex items-center gap-1.5">

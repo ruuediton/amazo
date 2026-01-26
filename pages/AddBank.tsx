@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -314,7 +314,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
               <div className="flex items-center justify-center gap-1.5 pt-2 opacity-60">
                 <span className="material-symbols-outlined text-[16px] text-[#565959]">lock</span>
-                <p className="text-[11px] text-[#565959]">Ambiente seguro Amazon</p>
+                <p className="text-[11px] text-[#565959]">Ambiente seguro SmartBuy</p>
               </div>
             </div>
           </div>

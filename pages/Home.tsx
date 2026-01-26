@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 
 interface HomeProps {
@@ -140,10 +140,10 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <div className="bg-[#FEF9E7] py-2 overflow-hidden border-b border-gray-100 flex items-center h-8">
         <div className="flex whitespace-nowrap animate-marquee">
           <span className="text-[10px] font-bold text-[#0F1111] uppercase tracking-widest px-8">
-            • APROVEITE AS OFERTAS EXCLUSIVAS amazon • GANHE 5% DE CASHBACK EM ELETRÔNICOS • SUPORTE 24H DISPONÍVEL •
+            • APROVEITE AS OFERTAS EXCLUSIVAS SmartBuy • GANHE 5% DE CASHBACK EM ELETRÔNICOS • SUPORTE 24H DISPONÍVEL •
           </span>
           <span className="text-[10px] font-bold text-[#0F1111] uppercase tracking-widest px-8">
-            • APROVEITE AS OFERTAS EXCLUSIVAS amazon • GANHE 5% DE CASHBACK EM ELETRÔNICOS • SUPORTE 24H DISPONÍVEL •
+            • APROVEITE AS OFERTAS EXCLUSIVAS SmartBuy • GANHE 5% DE CASHBACK EM ELETRÔNICOS • SUPORTE 24H DISPONÍVEL •
           </span>
         </div>
       </div>
@@ -166,7 +166,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
         </div>
       </div>
 
-      {/* Sticky Filters - Amazon style */}
+      {/* Sticky Filters - SmartBuy Style */}
       <div className="sticky top-0 z-40 bg-white border-b border-gray-100 py-3 mt-4">
         <div className="flex gap-2.5 px-4 overflow-x-auto no-scrollbar scroll-smooth">
           {filters.map((f: any) => (
@@ -182,7 +182,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
         <section className="mt-6">
           <div className="flex items-center justify-between px-4 pb-3">
             <h2 className="text-[18px] font-bold leading-tight text-[#0F1111]">Ofertas do Dia</h2>
-            <button onClick={() => onNavigate('shop')} className="text-[13px] font-bold text-amazon-blue hover:underline">Ver todas</button>
+            <button onClick={() => onNavigate('shop')} className="text-[13px] font-bold text-brand-blue hover:underline">Ver todas</button>
           </div>
           <div className="px-4">
             <div className="relative w-full overflow-hidden rounded-2xl bg-gray-50 border border-gray-100 group">
@@ -253,7 +253,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
           </div>
         )}
 
-        <button onClick={() => onNavigate('shop')} className="mt-4 mb-2 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Ver todas as ofertas</button>
+        <button onClick={() => onNavigate('shop')} className="mt-4 mb-2 text-[13px] font-medium text-brand-blue hover:text-[#C7511F] hover:underline">Ver todas as ofertas</button>
       </section>
 
       <div className="h-2 bg-[#F0F2F2]"></div>
@@ -293,7 +293,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             ))
           )}
         </div>
-        <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Visualize seu histórico</button>
+        <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-brand-blue hover:text-[#C7511F] hover:underline">Visualize seu histórico</button>
       </section>
 
       <div className="h-2 bg-[#F0F2F2]"></div>
@@ -326,7 +326,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             ))
           )}
         </div>
-        <button onClick={() => onNavigate('shop')} className="mt-4 text-[13px] font-medium text-amazon-blue hover:text-[#C7511F] hover:underline">Ver mais</button>
+        <button onClick={() => onNavigate('shop')} className="mt-4 text-[13px] font-medium text-brand-blue hover:text-[#C7511F] hover:underline">Ver mais</button>
       </section>
 
       <style>{`

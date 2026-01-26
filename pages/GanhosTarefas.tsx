@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
@@ -103,7 +103,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           </div>
         </div>
 
-        {/* Action Button - Amazon Hub Style */}
+        {/* Action Button - SmartBuy Hub Style */}
         <div className="flex flex-col items-center justify-center py-10">
           <button
             onClick={handleCheckIn}

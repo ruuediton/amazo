@@ -10,7 +10,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
     <div className="bg-background-dark font-display text-black antialiased min-h-screen">
       <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
         {/* Top App Bar */}
-        <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-amazon-border">
+        <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-brand-border">
           <button
             onClick={() => onNavigate('profile')}
             className="text-primary flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
@@ -53,7 +53,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
             <span className="material-symbols-outlined text-success-text text-[20px]">check_circle</span>
             <p className="text-success-text text-sm font-bold">Instituição Verificada</p>
           </div>
-          <div className="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-dark border border-amazon-border px-4 shadow-sm">
+          <div className="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-dark border border-brand-border px-4 shadow-sm">
             <span className="material-symbols-outlined text-text-secondary text-[20px]">account_balance</span>
             <p className="text-text-primary text-sm font-bold">BFA Partner</p>
           </div>
@@ -61,11 +61,11 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
         {/* Quick Info Grid */}
         <div className="px-6 grid grid-cols-2 gap-3 mb-6">
-          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-amazon-border shadow-sm">
+          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border shadow-sm">
             <p className="text-text-secondary text-[10px] uppercase font-bold tracking-widest">NIF</p>
             <p className="text-text-primary text-base font-bold">5417382910</p>
           </div>
-          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-amazon-border shadow-sm">
+          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border shadow-sm">
             <p className="text-text-secondary text-[10px] uppercase font-bold tracking-widest">REGISTRO</p>
             <p className="text-text-primary text-base font-bold">0284/2024</p>
           </div>
@@ -73,7 +73,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
         {/* Headquarter Card */}
         <div className="px-6 mb-6">
-          <div className="flex items-stretch justify-between gap-4 rounded-xl bg-surface-dark p-4 shadow-lg border border-amazon-border">
+          <div className="flex items-stretch justify-between gap-4 rounded-xl bg-surface-dark p-4 shadow-lg border border-brand-border">
             <div className="flex flex-col justify-center gap-1 flex-[2_2_0px]">
               <p className="text-text-primary text-lg font-extrabold leading-tight tracking-tight">Sede Social</p>
               <p className="text-text-secondary text-sm font-medium leading-normal">Edifício Chicala, Luanda, Angola</p>
@@ -130,7 +130,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
 
         {/* Sticky Footer CTA */}
-        <div className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 backdrop-blur-lg border-t border-amazon-border z-40">
+        <div className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 backdrop-blur-lg border-t border-brand-border z-40">
           <button
             className="w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 px-6 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
@@ -144,7 +144,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 };
 
 const DocumentItem = ({ title, subtitle, img }: { title: string, subtitle: string, img: string }) => (
-  <div className="group relative overflow-hidden rounded-xl bg-surface-dark border border-amazon-border p-3 transition-all active:scale-[0.98] shadow-sm">
+  <div className="group relative overflow-hidden rounded-xl bg-surface-dark border border-brand-border p-3 transition-all active:scale-[0.98] shadow-sm">
     <div className="flex gap-4">
       <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-background-dark shadow-md">
         <div className="absolute inset-0 bg-gradient-to-tr from-text-primary/10 to-transparent"></div>
@@ -158,7 +158,7 @@ const DocumentItem = ({ title, subtitle, img }: { title: string, subtitle: strin
         <p className="text-text-secondary text-xs mt-1">{subtitle}</p>
         <div className="mt-3 flex gap-2">
           <button className="bg-primary px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-black hover:bg-primary-hover transition-colors shadow-sm">VISUALIZAR</button>
-          <button className="bg-background-dark px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-bold border border-amazon-border hover:bg-surface-dark transition-colors">DOWNLOAD</button>
+          <button className="bg-background-dark px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-bold border border-brand-border hover:bg-surface-dark transition-colors">DOWNLOAD</button>
         </div>
       </div>
     </div>

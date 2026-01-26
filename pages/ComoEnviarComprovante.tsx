@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -103,7 +103,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
               <div className="flex flex-col gap-2 pb-2 pt-1">
                 <h3 className="text-lg font-bold text-black">Falar com Gerente</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Inicie uma conversa com seu Gerente de Conta Amazon. Verifique se o contato tem o selo de verificação.
+                  Inicie uma conversa com seu Gerente de conta SmartBuy. Verifique se o contato tem o selo de verificação.
                 </p>
                 <div className="mt-2 flex items-center gap-3 p-3 rounded-lg bg-surface-dark border border-gray-700/50">
                   <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-700">
@@ -112,7 +112,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-bold text-black flex items-center gap-1">
-                      Gerente Amazon
+                      Gerente SmartBuy
                       <span className="material-symbols-outlined text-green-500 text-[16px] fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
                     </span>
                     <span className="text-xs text-gray-500">Online agora</span>

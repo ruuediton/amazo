@@ -1,12 +1,12 @@
-
+﻿
 import React from 'react';
 import { Transaction } from '../types';
 
 const transactions: Transaction[] = [
-  { id: '1', title: 'Sony Headphones', subtitle: 'Amazon Marketplace', amount: -33500, date: 'Hoje, 14:30', type: 'outgoing', icon: 'shopping_bag' },
+  { id: '1', title: 'Sony Headphones', subtitle: 'SmartBuy Marketplace', amount: -33500, date: 'Hoje, 14:30', type: 'outgoing', icon: 'shopping_bag' },
   { id: '2', title: 'Transferência Recebida', subtitle: 'De: João Silva', amount: 5000, date: 'Hoje, 10:15', type: 'incoming', icon: 'arrow_downward' },
-  { id: '3', title: 'Amazon Prime Video', subtitle: 'Assinatura Mensal', amount: -2490, date: 'Ontem, 09:00', type: 'outgoing', icon: 'smart_display' },
-  { id: '4', title: 'Pagamento de Fatura', subtitle: 'Cartão Amazon Prime', amount: -80000, date: 'Ontem', type: 'outgoing', icon: 'receipt_long' },
+  { id: '3', title: 'SmartBuy Prime Video', subtitle: 'Assinatura Mensal', amount: -2490, date: 'Ontem, 09:00', type: 'outgoing', icon: 'smart_display' },
+  { id: '4', title: 'Pagamento de Fatura', subtitle: 'Cartão SmartBuy Prime', amount: -80000, date: 'Ontem', type: 'outgoing', icon: 'receipt_long' },
 ];
 
 interface WalletProps {
@@ -35,7 +35,7 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
             <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
             <div className="flex flex-col z-10">
               <div className="flex justify-between items-start mb-2">
-                <p className="text-gray-400 text-sm font-medium">Saldo Amazon Pay</p>
+                <p className="text-gray-400 text-sm font-medium">Saldo SmartBuy Pay</p>
                 <span className="material-symbols-outlined text-primary">account_balance_wallet</span>
               </div>
               <p className="text-black text-3xl font-bold tracking-tight mb-4">Kz 142.250,00</p>

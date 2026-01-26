@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 
@@ -216,7 +216,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
           <div className="p-10 text-center bg-[#F7F8F8] border-t border-gray-100">
             <div className="flex items-center justify-center gap-2 mb-2">
               <span className="material-symbols-outlined text-[#007600] text-xl">verified_user</span>
-              <p className="text-[12px] font-bold text-[#007600]">Proteção ao Consumidor Amazon</p>
+              <p className="text-[12px] font-bold text-[#007600]">Proteção ao Consumidor SmartBuy</p>
             </div>
             <p className="text-[11px] text-[#565959] leading-relaxed max-w-[240px] mx-auto">
               Sua segurança é nossa prioridade. Em caso de dúvidas sobre seus rendimentos, consulte o suporte 24h.

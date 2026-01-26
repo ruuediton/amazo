@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -117,7 +117,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                         </div>
                         <div>
                             <p className="text-[#565959] text-[10px] font-bold uppercase tracking-widest mb-1">Transferência P2P</p>
-                            <p className="text-[13px] font-bold text-[#0F1111] leading-tight">Envie saldo instantaneamente para qualquer conta Amazon.</p>
+                            <p className="text-[13px] font-bold text-[#0F1111] leading-tight">Envie saldo instantaneamente para qualquer conta SmartBuy.</p>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     </button>
                     
                     <p className="text-center text-[11px] text-gray-400 font-medium px-4 leading-relaxed italic">
-                        O envio de saldo entre contas Amazon é instantâneo e seguro. Verifique os dados antes de confirmar.
+                        O envio de saldo entre contas SmartBuy é instantâneo e seguro. Verifique os dados antes de confirmar.
                     </p>
                 </div>
             </main>

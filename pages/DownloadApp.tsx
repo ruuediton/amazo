@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 
 interface DownloadAppProps {
     onNavigate: (page: any) => void;
@@ -44,7 +44,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
         // Fallback: download APK for Android devices (or any other platform)
         const link = document.createElement('a');
         link.href = '/app-release.apk';
-        link.download = 'Amazoning.apk';
+        link.download = 'SmartBuy App.apk';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -69,7 +69,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
                 </div>
 
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-black mb-3 text-black tracking-tight">Leve o Amazoning com você</h2>
+                    <h2 className="text-3xl font-black mb-3 text-black tracking-tight">Leve o SmartBuy App com você</h2>
                     <p className="text-gray-600 text-sm max-w-[280px] mx-auto leading-relaxed">
                         Acesse seus investimentos de qualquer lugar com nossa experiência nativa.
                     </p>

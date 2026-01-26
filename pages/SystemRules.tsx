@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -90,7 +90,7 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
                 className="h-12 opacity-80 grayscale"
               />
               <p className="text-[10px] text-gray-400 leading-relaxed text-center font-bold uppercase tracking-[0.2em]">
-                Amazon Angola Digital Services, SA<br />
+                SmartBuy Angola Digital Services, SA<br />
                 Registo n.º 0284/2024
               </p>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -147,7 +147,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       </header>
 
       <main className="p-5 space-y-6">
-        {/* Balance Card - Amazon Style */}
+        {/* Balance Card - SmartBuy Style */}
         <div className="bg-[#FFD814] rounded-xl p-6 border border-[#FCD200] shadow-sm relative overflow-hidden">
           <div className="absolute right-[-20px] top-[-20px] opacity-10">
             <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>

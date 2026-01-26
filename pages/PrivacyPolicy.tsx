@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -23,7 +23,7 @@ const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
 
         {/* Conteúdo Legal */}
         <main className="flex-1 overflow-y-auto px-6 pt-8 pb-32 no-scrollbar">
-          {/* Logo Amazon */}
+          {/* Logo SmartBuy */}
           <div className="flex justify-center mb-8">
             <img
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0"
@@ -58,7 +58,7 @@ const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
             <section>
               <h1 className="text-2xl font-black mb-4 leading-tight">Declaração de Privacidade</h1>
               <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                A Amazon Angola Digital Services, SA (adiante "amazon") assume o compromisso de proteger a privacidade dos seus utilizadores em conformidade com a <span className="text-black font-bold italic underline decoration-primary/40">Lei n.º 22/11 – Lei da Protecção de Dados Pessoais</span> da República de Angola.
+                A SmartBuy Angola Digital Services, SA (adiante "amazon") assume o compromisso de proteger a privacidade dos seus utilizadores em conformidade com a <span className="text-black font-bold italic underline decoration-primary/40">Lei n.º 22/11 – Lei da Protecção de Dados Pessoais</span> da República de Angola.
               </p>
             </section>
 
@@ -101,7 +101,7 @@ const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
             {/* Rodapé Legal */}
             <section className="pb-12 pt-6">
               <p className="text-[10px] text-gray-400 leading-relaxed text-center font-bold uppercase tracking-widest">
-                Amazon Angola Digital Services, SA<br />
+                SmartBuy Angola Digital Services, SA<br />
                 Luanda, República de Angola<br />
                 Regulamentado pela APD (Agência de Proteção de Dados)
               </p>

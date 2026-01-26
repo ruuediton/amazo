@@ -144,7 +144,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
         </div>
 
         {/* Amount Input Section */}
-        <div className="bg-surface-dark rounded-2xl p-6 mb-6 border border-amazon-border shadow-md">
+        <div className="bg-surface-dark rounded-2xl p-6 mb-6 border border-brand-border shadow-md">
           <div className="flex flex-col gap-4">
             <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Quantia (USDT)</label>
             <div className="relative flex items-center">
@@ -155,7 +155,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
                 placeholder="Mínimo 4 USDT"
                 min="4"
                 max="1090"
-                className="w-full bg-surface-dark border border-amazon-border rounded-xl h-16 px-5 text-2xl font-black text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-text-secondary/30"
+                className="w-full bg-surface-dark border border-brand-border rounded-xl h-16 px-5 text-2xl font-black text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-text-secondary/30"
               />
               <span className="absolute right-5 text-sm font-bold text-[#26a17b]">USDT</span>
             </div>
@@ -180,7 +180,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
         </div>
 
         {/* Payment Details Section */}
-        <div className="bg-surface-dark rounded-2xl p-6 border border-amazon-border shadow-md">
+        <div className="bg-surface-dark rounded-2xl p-6 border border-brand-border shadow-md">
           <h3 className="text-xs font-bold text-gray-800 uppercase tracking-widest mb-6 text-center">Dados para Transferência</h3>
 
           {/* Recipient Name */}
@@ -209,7 +209,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
           {/* Wallet Address */}
           <div className="flex flex-col gap-2">
             <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Endereço da Carteira (TRC20)</label>
-            <div className="flex items-center gap-2 bg-background-dark p-3 rounded-xl border border-amazon-border">
+            <div className="flex items-center gap-2 bg-background-dark p-3 rounded-xl border border-brand-border">
               <p className="flex-1 text-[13px] font-mono font-bold text-text-primary truncate text-center select-all">{walletAddress}</p>
               <button
                 onClick={handleCopy}
@@ -238,7 +238,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
       </main>
 
       {/* Footer Confirm */}
-      <footer className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 backdrop-blur-lg border-t border-amazon-border z-50">
+      <footer className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 backdrop-blur-lg border-t border-brand-border z-50">
         <button
           onClick={handleConfirm}
           disabled={isSubmitting || isFetching}

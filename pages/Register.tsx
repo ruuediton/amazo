@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
@@ -100,7 +100,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
           <div className="w-full overflow-hidden mb-6 relative">
             <img
               src="/banner_register.png"
-              alt="Amazon Banner"
+              alt="SmartBuy Banner"
               className="w-full h-auto block object-contain"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
