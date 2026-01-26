@@ -83,9 +83,9 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
           >
             <span className="material-symbols-outlined text-2xl text-primary">arrow_back</span>
           </button>
-          <div className="flex items-center gap-1">
-            <span className="text-xl font-bold tracking-tight text-text-primary">Loja VIP</span>
-            <div className="size-1.5 rounded-full bg-primary mt-3"></div>
+          <div className="flex items-center gap-2">
+            <img src="/smartbuy_logo.png" alt="SmartBuy" className="w-8 h-8 rounded-lg shadow-sm" />
+            <span className="text-xl font-bold tracking-tight text-text-primary">SmartBuy</span>
           </div>
           <div className="size-10"></div>
         </header>

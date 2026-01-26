@@ -1,4 +1,4 @@
-ï»¿
+
 import React from 'react';
 
 interface Props {
@@ -16,17 +16,17 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
         >
           <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back</span>
         </button>
-        <h2 className="text-black text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">InformaÃ§Ãµes</h2>
+        <h2 className="text-black text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Informações</h2>
       </div>
 
       {/* Hero / Brand Section */}
       <div className="flex flex-col gap-3 p-4">
         <div
           className="w-full bg-center bg-no-repeat aspect-[3/1] bg-cover rounded-2xl shadow-lg relative overflow-hidden border border-gray-200"
-          style={{ backgroundImage: 'url("/amazon_info_hero.png")' }}
+          style={{ backgroundImage: 'url("/SmartBuy_info_hero.png")' }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-5">
-            <p className="text-white text-sm font-bold opacity-90 tracking-wide uppercase">amazon secure</p>
+            <p className="text-white text-sm font-bold opacity-90 tracking-wide uppercase">SmartBuy secure</p>
           </div>
         </div>
       </div>
@@ -59,10 +59,10 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
           />
           <div className="h-[1px] bg-gray-800/50 mx-4"></div>
 
-          {/* Item: PolÃ­tica de privacidade */}
+          {/* Item: Política de privacidade */}
           <InfoItem
             icon="policy"
-            label="PolÃ­tica de privacidade"
+            label="Política de privacidade"
             onClick={() => onNavigate('privacy-policy')}
           />
         </div>
@@ -92,7 +92,7 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
       {/* Footer */}
       <div className="mt-auto pb-10 pt-6">
         <p className="text-center text-xs font-bold text-gray-600 tracking-widest uppercase">
-          VersÃ£o 2.4.1
+          Versão 2.4.1
         </p>
       </div>
     </div>

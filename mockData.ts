@@ -9,6 +9,6 @@ export const mockTransactions: Transaction[] = [
 
     // Setembro
     { id: '5', title: 'Tentativa de Saque Bloqueada', subtitle: 'Erro de Senha (x2)', amount: 0, time: '11:00', dateLabel: '28 de Setembro', monthIndex: 8, year: 2025, type: 'warning', category: 'Segurança' },
-    { id: '6', title: 'Bônus de Boas-vindas', subtitle: 'Promoção amazon', amount: 2000, time: '08:45', dateLabel: '10 de Setembro', monthIndex: 8, year: 2025, type: 'incoming', category: 'Bônus' },
+    { id: '6', title: 'Bônus de Boas-vindas', subtitle: 'Promoção SmartBuy', amount: 2000, time: '08:45', dateLabel: '10 de Setembro', monthIndex: 8, year: 2025, type: 'incoming', category: 'Bônus' },
     { id: '7', title: 'Compra de Pacote Shop', subtitle: 'Plano Plus', amount: -25000, time: '12:30', dateLabel: '05 de Setembro', monthIndex: 8, year: 2025, type: 'outgoing', category: 'Compras' },
 ];

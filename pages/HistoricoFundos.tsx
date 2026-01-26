@@ -1,4 +1,4 @@
-ï»¿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 import { jsPDF } from 'jspdf';
@@ -81,7 +81,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
             setStats({ totalApplied: applied, totalProfit: profit });
         } catch (err: any) {
             console.error('Error fetching investments:', err);
-            if (showToast) showToast('Erro ao carregar seu histÃ³rico.', 'error');
+            if (showToast) showToast('Erro ao carregar seu histórico.', 'error');
         }
     };
 
@@ -123,7 +123,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
         doc.line(40, 38, 170, 38);
         doc.setFontSize(12);
         doc.setTextColor(86, 89, 89);
-        doc.text('Certificamos a aplicaÃ§Ã£o bem-sucedida no fundo SmartBuy.', 105, 50, { align: 'center' });
+        doc.text('Certificamos a aplicação bem-sucedida no fundo SmartBuy.', 105, 50, { align: 'center' });
         doc.setFillColor(243, 243, 243);
         doc.roundedRect(40, 60, 130, 50, 3, 3, 'F');
         doc.setFontSize(14);
@@ -134,7 +134,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
         doc.text(`Kz ${Number(inv.valor_aplicado).toLocaleString('pt-AO')}`, 105, 90, { align: 'center' });
         doc.setFontSize(10);
         doc.setTextColor(86, 89, 89);
-        doc.text(`InÃ­cio: ${formatDate(inv.data_inicio)}`, 105, 102, { align: 'center' });
+        doc.text(`Início: ${formatDate(inv.data_inicio)}`, 105, 102, { align: 'center' });
         doc.setFontSize(8);
         doc.text(`Contrato: ${inv.id_usuario_fundo}`, 105, 130, { align: 'center' });
         doc.save(`Certificado_SmartBuy_${inv.id_usuario_fundo.slice(0, 8)}.pdf`);
@@ -158,7 +158,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
             <main className="max-w-md mx-auto">
                 <div className="p-6 bg-[#FFD814] border-b border-[#FCD200]">
                     <div className="space-y-1">
-                        <p className="text-[11px] text-[#0F1111]/60 font-bold uppercase tracking-widest">PatrimÃ´nio em Fundo</p>
+                        <p className="text-[11px] text-[#0F1111]/60 font-bold uppercase tracking-widest">Patrimônio em Fundo</p>
                         <div className="flex items-baseline gap-1">
                             <span className="text-xl font-bold">Kz</span>
                             <h1 className="text-3xl font-black tracking-tighter">
@@ -205,7 +205,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
 
                                         <div className="flex-1 min-w-0 flex flex-col gap-1">
                                             <div className="flex justify-between items-start">
-                                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">InÃ­c. {formatDate(inv.data_inicio)}</p>
+                                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Iníc. {formatDate(inv.data_inicio)}</p>
                                                 {inv.estado_ativo && <span className="text-[#e77600] font-black px-2 py-0.5 bg-amber-50 rounded text-[9px] uppercase tracking-tighter">Operando</span>}
                                             </div>
 
@@ -251,7 +251,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                             <div className="flex flex-col items-center justify-center py-20 text-center px-10">
                                 <span className="material-symbols-outlined text-gray-200 text-6xl mb-4">folder_open</span>
                                 <h3 className="text-[#0F1111] font-bold text-lg mb-1">Nenhum contrato</h3>
-                                <p className="text-[#565959] text-sm mb-8">VocÃª ainda nÃ£o possui aplicaÃ§Ãµes em fundos de investimento.</p>
+                                <p className="text-[#565959] text-sm mb-8">Você ainda não possui aplicações em fundos de investimento.</p>
                                 <button
                                     onClick={() => onNavigate('investimentos-fundo')}
                                     className="w-full py-3 bg-[#FFD814] hover:bg-[#F7CA00] rounded-full font-medium text-[14px] border border-[#FCD200]"

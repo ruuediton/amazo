@@ -1,4 +1,4 @@
-Ôªøimport React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -74,7 +74,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
     const amountNum = Number(investmentAmount);
 
     if (isNaN(amountNum) || amountNum < 200) {
-      if (showToast) showToast('Valor m√≠nimo de fundo 200 Kz.', 'warning');
+      if (showToast) showToast('Valor mÌnimo de fundo 200 Kz.', 'warning');
       return;
     }
 
@@ -84,11 +84,11 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
           onNavigate('login');
-          throw new Error("Sess√£o expirada. Entre novamente.");
+          throw new Error("Sess„o expirada. Entre novamente.");
         }
 
         if (amountNum > Number(selectedFund.total_fundos_disponivel)) {
-          throw new Error(`‚ö†Ô∏è O valor dispon√≠vel √© de ${Number(selectedFund.total_fundos_disponivel).toLocaleString('pt-AO')} Kz.`);
+          throw new Error(`?? O valor disponÌvel È de ${Number(selectedFund.total_fundos_disponivel).toLocaleString('pt-AO')} Kz.`);
         }
 
         const { data, error } = await supabase.rpc('purchase_fund', {
@@ -97,14 +97,14 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
           p_auto_reinvest: autoReinvest
         });
 
-        if (error) throw new Error("Opera√ß√£o n√£o sucedida");
+        if (error) throw new Error("OperaÁ„o n„o sucedida");
 
         if (data && !data.success) {
-          throw new Error(data.message || "N√£o foi poss√≠vel realizar o investimento.");
+          throw new Error(data.message || "N„o foi possÌvel realizar o investimento.");
         }
 
         return data.message;
-      }, "Aplica√ß√£o realizada com sucesso!");
+      }, "AplicaÁ„o realizada com sucesso!");
 
       setSelectedFund(null);
       setInvestmentAmount('');
@@ -155,7 +155,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
         </div>
       </div>
 
-      {/* Profile/Wallet Card - Amazon Flat Style */}
+      {/* Profile/Wallet Card - SmartBuy Flat Style */}
       <div className="px-5 -mt-8 mb-4 relative z-20">
         <div className="bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between shadow-lg">
           <div className="flex items-center gap-3">
@@ -178,7 +178,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       <div className="px-5 pt-4 space-y-2">
         <h2 className="text-[18px] font-extrabold text-[#0F1111]">Oportunidades do Dia</h2>
-        <p className="text-[12px] text-gray-500 font-medium">Selecione um fundo de investimento para come√ßar a renderizar lucros.</p>
+        <p className="text-[12px] text-gray-500 font-medium">Selecione um fundo de investimento para comeÁar a renderizar lucros.</p>
       </div>
 
       {/* Funds Carousel */}
@@ -224,7 +224,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                         : 'bg-[#FFD814] border border-[#FCD200] text-[#0F1111] hover:bg-[#F7CA00]'
                         }`}
                     >
-                      {isExhausted ? 'Indispon√≠vel' : 'Aplicar Agora'}
+                      {isExhausted ? 'IndisponÌvel' : 'Aplicar Agora'}
                     </button>
                   </div>
                 </div>
@@ -233,7 +233,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
           ) : (
             <div className="w-[85vw] py-16 flex flex-col items-center justify-center text-gray-300 border-2 border-dashed border-gray-100 rounded-2xl">
               <span className="material-symbols-outlined text-4xl mb-2">cloud_off</span>
-              <p className="font-bold text-[11px] uppercase">Nenhum investimento dispon√≠vel</p>
+              <p className="font-bold text-[11px] uppercase">Nenhum investimento disponÌvel</p>
             </div>
           )}
         </div>
@@ -250,7 +250,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 </div>
                 <div>
                   <h3 className="text-[17px] font-black text-[#0F1111]">{selectedFund.nome_fundo}</h3>
-                  <p className="text-green-600 text-[11px] font-bold">Rendimento Di√°rio Otimizado</p>
+                  <p className="text-green-600 text-[11px] font-bold">Rendimento Di·rio Otimizado</p>
                 </div>
               </div>
               <button
@@ -267,7 +267,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <span className="text-[20px] font-black text-green-600">{selectedFund.taxa_retorno}%</span>
               </div>
               <div className="bg-white p-4 rounded-xl border border-gray-100 flex flex-col items-center">
-                <span className="text-[9px] font-bold text-gray-400 uppercase">Dura√ß√£o</span>
+                <span className="text-[9px] font-bold text-gray-400 uppercase">DuraÁ„o</span>
                 <span className="text-[20px] font-black text-[#0F1111]">{selectedFund.duration_days} <span className="text-[12px]">Dias</span></span>
               </div>
             </div>
@@ -300,7 +300,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 onChange={() => setAutoReinvest(!autoReinvest)}
               />
               <div className="flex-1">
-                <p className="text-[12px] font-bold text-[#0F1111]">Reinvestimento Autom√°tico</p>
+                <p className="text-[12px] font-bold text-[#0F1111]">Reinvestimento Autom·tico</p>
                 <p className="text-[10px] text-gray-400">Ative para maximizar seus lucros mensais.</p>
               </div>
             </label>
@@ -313,7 +313,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 : 'bg-[#FFD814] border border-[#FCD200] text-[#0F1111] hover:bg-[#F7CA00] active:scale-[0.98]'
                 }`}
             >
-              {applying ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar Aplica√ß√£o'}
+              {applying ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar AplicaÁ„o'}
             </button>
           </div>
         </section>
@@ -326,8 +326,8 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
               <span className="material-symbols-outlined text-[#e47911] text-2xl">verified_user</span>
             </div>
             <div className="space-y-1">
-              <p className="text-[#0F1111] font-black text-[16px]">Seguran√ßa Grantida</p>
-              <p className="text-gray-500 text-[11px] max-w-[200px] font-medium leading-relaxed italic">Seus investimentos s√£o protegidos por fundos de reserva SmartBuy Wealth.</p>
+              <p className="text-[#0F1111] font-black text-[16px]">SeguranÁa Grantida</p>
+              <p className="text-gray-500 text-[11px] max-w-[200px] font-medium leading-relaxed italic">Seus investimentos s„o protegidos por fundos de reserva SmartBuy Wealth.</p>
             </div>
           </div>
         </section>

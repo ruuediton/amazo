@@ -1,4 +1,4 @@
-Ôªøimport React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -25,7 +25,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) return;
 
-            // Buscar c√≥digo de convite do perfil
+            // Buscar cÛdigo de convite do perfil
             const { data: profile } = await supabase
                 .from('profiles')
                 .select('invite_code')
@@ -34,7 +34,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
 
             if (profile) setInviteCode(profile.invite_code);
 
-            // Buscar estat√≠sticas (se existirem tabelas para isso ou contar na my_equipe)
+            // Buscar estatÌsticas (se existirem tabelas para isso ou contar na my_equipe)
             const { count } = await supabase
                 .from('my_equipe')
                 .select('*', { count: 'exact', head: true })
@@ -66,10 +66,10 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
     const handleCopyLink = () => {
         if (!inviteCode) return;
 
-        // Garantir formata√ß√£o do link
+        // Garantir formataÁ„o do link
         let baseUrl = inviteLinkBase.trim();
-        // Remover protocolo se existir para garantir padroniza√ß√£o (ou adicionar se faltar, mas aqui vamos assumir que o usu√°rio pode ter colocado 'domain.com' ou 'https://domain.com')
-        // Melhor abordagem: garantir que come√ßa com https://
+        // Remover protocolo se existir para garantir padronizaÁ„o (ou adicionar se faltar, mas aqui vamos assumir que o usu·rio pode ter colocado 'domain.com' ou 'https://domain.com')
+        // Melhor abordagem: garantir que comeÁa com https://
         if (!baseUrl.startsWith('http')) {
             baseUrl = `https://${baseUrl}`;
         }
@@ -87,7 +87,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
     const handleCopyCode = () => {
         if (!inviteCode) return;
         navigator.clipboard.writeText(inviteCode).then(() => {
-            showToast?.("C√≥digo copiado!", "success");
+            showToast?.("CÛdigo copiado!", "success");
         });
     };
 
@@ -113,11 +113,11 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                             </div>
 
                             <h3 className="text-2xl font-black mb-1 leading-tight tracking-tighter">Indique e Ganhe</h3>
-                            <p className="text-[13px] font-bold opacity-80 mb-6 max-w-[200px]">Compartilhe a experi√™ncia SmartBuy e ganhe comiss√µes ilimitadas.</p>
+                            <p className="text-[13px] font-bold opacity-80 mb-6 max-w-[200px]">Compartilhe a experiÍncia SmartBuy e ganhe comissıes ilimitadas.</p>
 
                             <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 flex items-center justify-between border border-white/20">
                                 <div>
-                                    <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">Seu C√≥digo</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">Seu CÛdigo</p>
                                     <p className="text-3xl font-black tracking-wider font-mono">{inviteCode || '---'}</p>
                                 </div>
                                 <button
@@ -137,7 +137,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 </div>
                                 <div className="flex-1">
                                     <h4 className="font-bold text-[16px]">Link de Convite</h4>
-                                    <p className="text-[12px] text-[#565959] font-medium">Divulgue seu link para novos usu√°rios</p>
+                                    <p className="text-[12px] text-[#565959] font-medium">Divulgue seu link para novos usu·rios</p>
                                 </div>
                             </div>
 
@@ -193,15 +193,15 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 <div className="size-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center font-black text-xs shrink-0 text-[#0F1111]">2</div>
                                 <div>
                                     <p className="font-bold text-[14px]">Eles se cadastram</p>
-                                    <p className="text-[12px] text-[#565959] mt-0.5">Seus amigos criam contas na Amazon usando seu ref.</p>
+                                    <p className="text-[12px] text-[#565959] mt-0.5">Seus amigos criam contas na SmartBuy usando seu ref.</p>
                                 </div>
                             </div>
 
                             <div className="flex gap-4 items-start px-2">
                                 <div className="size-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center font-black text-xs shrink-0 text-[#0F1111]">3</div>
                                 <div>
-                                    <p className="font-bold text-[14px]">Voc√™ lucra</p>
-                                    <p className="text-[12px] text-[#565959] mt-0.5">Receba comiss√µes autom√°ticas por cada opera√ß√£o deles.</p>
+                                    <p className="font-bold text-[14px]">VocÍ lucra</p>
+                                    <p className="text-[12px] text-[#565959] mt-0.5">Receba comissıes autom·ticas por cada operaÁ„o deles.</p>
                                 </div>
                             </div>
                         </div>
@@ -215,11 +215,11 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                     </div>
                                     <div>
                                         <h4 className="font-black text-[15px] text-[#0F1111] leading-none">Metas de Equipe</h4>
-                                        <p className="text-[10px] text-[#565959] font-bold uppercase tracking-tighter mt-1">Conquiste b√¥nus exclusivos</p>
+                                        <p className="text-[10px] text-[#565959] font-bold uppercase tracking-tighter mt-1">Conquiste bÙnus exclusivos</p>
                                     </div>
                                 </div>
                                 <div className="px-3 py-1 bg-gray-50 rounded-full border border-gray-200">
-                                    <span className="text-[10px] font-black text-[#565959]">{stats.total_invited} GEST√ïES</span>
+                                    <span className="text-[10px] font-black text-[#565959]">{stats.total_invited} GEST’ES</span>
                                 </div>
                             </div>
 
@@ -243,12 +243,12 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                             <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>{isReached ? 'verified' : meta.icon}</span>
                                                         </div>
                                                         <div>
-                                                            <p className={`text-[10px] font-black uppercase tracking-widest ${isReached ? 'text-green-600' : 'text-[#565959]'}`}>N√çVEL {meta.level} ‚Ä¢ {meta.title}</p>
-                                                            <h5 className="font-black text-[18px] text-[#0F1111] leading-tight">{meta.target} <span className="text-[13px] font-bold text-[#565959]">Indica√ß√µes</span></h5>
+                                                            <p className={`text-[10px] font-black uppercase tracking-widest ${isReached ? 'text-green-600' : 'text-[#565959]'}`}>NÕVEL {meta.level} ï {meta.title}</p>
+                                                            <h5 className="font-black text-[18px] text-[#0F1111] leading-tight">{meta.target} <span className="text-[13px] font-bold text-[#565959]">IndicaÁıes</span></h5>
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-col items-end">
-                                                        <span className="text-[9px] font-black text-[#565959] uppercase tracking-tighter opacity-60">Pr√™mio SmartBuy</span>
+                                                        <span className="text-[9px] font-black text-[#565959] uppercase tracking-tighter opacity-60">PrÍmio SmartBuy</span>
                                                         <div className="flex items-baseline gap-0.5">
                                                             <span className="text-[10px] font-black text-[#B12704]">Kz</span>
                                                             <span className="text-[20px] font-black text-[#B12704] tracking-tighter">{meta.reward.toLocaleString('pt-AO')}</span>
@@ -267,7 +267,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                     </div>
                                                 </div>
                                                 <div className="mt-4 flex items-center justify-between pt-3 border-t border-gray-50">
-                                                    <p className="text-[9px] font-bold text-[#565959] italic opacity-60">* V√°lido para usu√°rios ativos na rede</p>
+                                                    <p className="text-[9px] font-bold text-[#565959] italic opacity-60">* V·lido para usu·rios ativos na rede</p>
                                                     <button onClick={handleCopyLink} disabled={isReached} className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg transition-all ${isReached ? 'bg-green-50 text-green-600 border border-green-100' : 'bg-[#00A8E1]/10 text-[#007185] border border-[#00A8E1]/20 active:scale-95'}`}>{isReached ? 'RESGATADO' : 'CONVIDAR AGORA'}</button>
                                                 </div>
                                             </div>

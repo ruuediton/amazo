@@ -1,4 +1,4 @@
-Ôªø
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -73,7 +73,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
     setIsBuying(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Sess√£o expirada");
+      if (!user) throw new Error("Sess„o expirada");
 
       if (balance < selectedProduct.price) {
         throw new Error("Balance insuficiente");
@@ -93,7 +93,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
 
       setTimeout(() => onNavigate('purchase-history'), 1000);
     } catch (error: any) {
-      showToast?.(error.message || "Falha na transa√ß√£o", "error");
+      showToast?.(error.message || "Falha na transaÁ„o", "error");
     } finally {
       setIsBuying(false);
     }
@@ -106,7 +106,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
 
   return (
     <div className="bg-white min-h-screen text-[#0F1111] font-sans selection:bg-amber-100 pb-32">
-      {/* Header fake similar a amazon opcional se necess√°rio */}
+      {/* Header fake similar a SmartBuy opcional se necess·rio */}
 
       <main className="max-w-md mx-auto bg-white">
         {loading ? (
@@ -160,7 +160,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                       <span className="text-[14px] text-[#007185] font-medium">(3,5 mil)</span>
                     </div>
 
-                    <p className="text-[13px] text-[#565959] font-medium">Mais de 50 compras no m√™s passado</p>
+                    <p className="text-[13px] text-[#565959] font-medium">Mais de 50 compras no mÍs passado</p>
 
                     {/* Price Section */}
                     <div className="flex items-start mt-1">
@@ -170,13 +170,13 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                     </div>
 
                     <div className="space-y-0.5 mt-1">
-                      <p className="text-[13px] text-[#0F1111]">Entrega <span className="font-bold">GR√ÅTIS: Amanh√£</span></p>
+                      <p className="text-[13px] text-[#0F1111]">Entrega <span className="font-bold">GR¡TIS: Amanh„</span></p>
                       <p className="text-[13px] text-[#565959]">Envia para Angola</p>
                     </div>
 
                     <div className="flex items-center gap-1.5 mt-2 mb-3">
                       <span className="material-symbols-outlined text-green-700 text-[18px]">recycling</span>
-                      <span className="text-[12px] text-green-800 font-bold border-b border-green-800 leading-none">1 certifica√ß√£o de sustentabilidade</span>
+                      <span className="text-[12px] text-green-800 font-bold border-b border-green-800 leading-none">1 certificaÁ„o de sustentabilidade</span>
                     </div>
 
                     {/* Action Button */}
@@ -188,7 +188,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                         : 'bg-[#FFD814] hover:bg-[#F7CA00] text-black border border-[#FCD200]'
                         }`}
                     >
-                      {isPurchased ? 'J√° adquirido' : 'Adicionar ao carrinho'}
+                      {isPurchased ? 'J· adquirido' : 'Adicionar ao carrinho'}
                     </button>
 
                     {isPurchased && (
@@ -213,7 +213,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
             <h3 className="text-lg font-bold text-gray-900 mb-2">Confirmar Compra</h3>
             <p className="text-gray-600 text-[14px] leading-relaxed mb-6">
               Deseja adquirir o item <span className="font-bold">"{selectedProduct.name}"</span> pelo valor de <span className="font-bold text-black">Kz {selectedProduct.price.toLocaleString()}</span>?
-              Esta opera√ß√£o n√£o pode ser desfeita.
+              Esta operaÁ„o n„o pode ser desfeita.
             </p>
 
             <div className="flex flex-col gap-2">

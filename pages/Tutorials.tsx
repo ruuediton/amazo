@@ -64,7 +64,7 @@ const tutorialsData: TutorialSection[] = [
       {
         icon: 'shopping_bag',
         title: 'Tutoriais Comprar na Loja',
-        subtitle: 'Usando saldo na amazon',
+        subtitle: 'Usando saldo na SmartBuy',
         route: 'como-comprar',
       },
       {

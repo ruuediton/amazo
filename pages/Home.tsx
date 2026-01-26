@@ -1,4 +1,4 @@
-Ôªøimport React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 
 interface HomeProps {
@@ -17,7 +17,7 @@ interface MarketingItem {
 const carouselImages = [
   "/carousel1.png",
   "/carousel2.png",
-  "/carousel3.jpg"
+  "/carousel3.png"
 ];
 
 const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
@@ -106,7 +106,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
     { label: 'Retiradas', icon: 'shopping_bag', page: 'withdrawal-history' },
     { label: 'Compras', icon: 'account_balance', page: 'purchase-history' },
     { label: 'Recargas', icon: 'handshake', page: 'deposit-history' },
-    { label: 'Promo√ß√£o', icon: 'local_offer', page: 'shop' },
+    { label: 'PromoÁ„o', icon: 'local_offer', page: 'shop' },
     { label: 'Suporte', icon: 'contact_support', page: 'support' }
   ];
 
@@ -126,7 +126,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
           <div className="size-6 rounded-full bg-primary flex items-center justify-center">
             <span className="material-symbols-outlined text-[14px] text-black font-bold">person</span>
           </div>
-          <span className="text-black text-[11px] font-bold">Ol√°, {profile?.code || 'Usu√°rio'}</span>
+          <span className="text-black text-[11px] font-bold">Ol·, {profile?.code || 'Usu·rio'}</span>
         </div>
 
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
@@ -140,10 +140,10 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <div className="bg-[#FEF9E7] py-2 overflow-hidden border-b border-gray-100 flex items-center h-8">
         <div className="flex whitespace-nowrap animate-marquee">
           <span className="text-[10px] font-bold text-[#0F1111] uppercase tracking-widest px-8">
-            ‚Ä¢ APROVEITE AS OFERTAS EXCLUSIVAS SmartBuy ‚Ä¢ GANHE 5% DE CASHBACK EM ELETR√îNICOS ‚Ä¢ SUPORTE 24H DISPON√çVEL ‚Ä¢
+            ï APROVEITE AS OFERTAS EXCLUSIVAS SmartBuy ï GANHE 5% DE CASHBACK EM ELETR‘NICOS ï SUPORTE 24H DISPONÕVEL ï
           </span>
           <span className="text-[10px] font-bold text-[#0F1111] uppercase tracking-widest px-8">
-            ‚Ä¢ APROVEITE AS OFERTAS EXCLUSIVAS SmartBuy ‚Ä¢ GANHE 5% DE CASHBACK EM ELETR√îNICOS ‚Ä¢ SUPORTE 24H DISPON√çVEL ‚Ä¢
+            ï APROVEITE AS OFERTAS EXCLUSIVAS SmartBuy ï GANHE 5% DE CASHBACK EM ELETR‘NICOS ï SUPORTE 24H DISPONÕVEL ï
           </span>
         </div>
       </div>
@@ -293,13 +293,13 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             ))
           )}
         </div>
-        <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-brand-blue hover:text-[#C7511F] hover:underline">Visualize seu hist√≥rico</button>
+        <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-brand-blue hover:text-[#C7511F] hover:underline">Visualize seu histÛrico</button>
       </section>
 
       <div className="h-2 bg-[#F0F2F2]"></div>
 
       <section className="bg-white px-4 pt-4 pb-6">
-        <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Conquiste os melhores PCs e acess√≥rios</h2>
+        <h2 className="text-[16px] font-bold text-[#0F1111] mb-3 leading-tight">Conquiste os melhores PCs e acessÛrios</h2>
         <div className="grid grid-cols-2 gap-3">
           {marketingItems.slice(8, 12).length > 0 ? (
             marketingItems.slice(8, 12).map((item) => (
@@ -314,8 +314,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             [
               { title: 'Desktops', img: '/placeholder_product.png' },
               { title: 'Laptops', img: '/placeholder_product.png' },
-              { title: 'Discos r√≠gidos', img: '/placeholder_product.png' },
-              { title: 'PC e acess√≥rios', img: '/placeholder_product.png' }
+              { title: 'Discos rÌgidos', img: '/placeholder_product.png' },
+              { title: 'PC e acessÛrios', img: '/placeholder_product.png' }
             ].map((cat, i) => (
               <div key={i} onClick={() => onNavigate('shop')} className="cursor-pointer">
                 <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">

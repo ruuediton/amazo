@@ -125,7 +125,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         combined.push({
           id: `pur-${p.id}`,
           title: p.nome_produto || 'Compra de Pacote',
-          subtitle: `Investimento amazon`,
+          subtitle: `Investimento SmartBuy`,
           amount: -Number(p.preco || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,

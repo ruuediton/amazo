@@ -1,4 +1,4 @@
-ï»¿import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 
@@ -20,7 +20,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
     else setIsRefreshing(true);
 
     try {
-      // 1. Buscar histÃ³rico de compras
+      // 1. Buscar histórico de compras
       const { data: purchaseData, error: purchaseError } = await supabase
         .from('historico_compras')
         .select('*')
@@ -59,7 +59,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
       setPurchases(processed);
     } catch (error: any) {
       console.error("Erro no fetchPurchases:", error);
-      showToast?.("Erro ao carregar histÃ³rico", "error");
+      showToast?.("Erro ao carregar histórico", "error");
     } finally {
       setLoading(false);
       setIsRefreshing(false);
@@ -141,7 +141,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
             </div>
             <h3 className="text-[#0F1111] font-bold text-lg mb-2">Sem pedidos</h3>
             <p className="text-[#565959] text-sm leading-relaxed mb-8">
-              VocÃª ainda nÃ£o realizou nenhuma compra. Visite a loja para ver as ofertas.
+              Você ainda não realizou nenhuma compra. Visite a loja para ver as ofertas.
             </p>
             <button
               onClick={() => onNavigate('shop')}
@@ -178,7 +178,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
                       <span className={`text-[11px] font-bold ${status.color}`}>Pedido {status.label}</span>
                       <span className="size-1 bg-gray-300 rounded-full"></span>
                       <span className="text-[11px] text-[#565959] font-medium">
-                        {isNaN(dateObj.getTime()) ? 'Data indisponÃ­vel' : dateObj.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' })}
+                        {isNaN(dateObj.getTime()) ? 'Data indisponível' : dateObj.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' })}
                       </span>
                     </div>
 
@@ -216,10 +216,10 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
           <div className="p-10 text-center bg-[#F7F8F8] border-t border-gray-100">
             <div className="flex items-center justify-center gap-2 mb-2">
               <span className="material-symbols-outlined text-[#007600] text-xl">verified_user</span>
-              <p className="text-[12px] font-bold text-[#007600]">ProteÃ§Ã£o ao Consumidor SmartBuy</p>
+              <p className="text-[12px] font-bold text-[#007600]">Proteção ao Consumidor SmartBuy</p>
             </div>
             <p className="text-[11px] text-[#565959] leading-relaxed max-w-[240px] mx-auto">
-              Sua seguranÃ§a Ã© nossa prioridade. Em caso de dÃºvidas sobre seus rendimentos, consulte o suporte 24h.
+              Sua segurança é nossa prioridade. Em caso de dúvidas sobre seus rendimentos, consulte o suporte 24h.
             </p>
           </div>
         )}

@@ -100,7 +100,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
         >
           <span className="material-symbols-outlined text-[20px]">arrow_back</span>
         </div>
-        <h2 className="text-black text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">amazon</h2>
+        <h2 className="text-black text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">SmartBuy</h2>
         <div className="flex w-10 items-center justify-end">
           <button onClick={() => onOpenSupport?.()} className="flex cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-black p-0">
             <span className="material-symbols-outlined text-[20px]">help_outline</span>

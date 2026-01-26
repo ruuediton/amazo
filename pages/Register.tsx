@@ -1,4 +1,4 @@
-ï»¿
+
 import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
@@ -23,7 +23,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
   const [invitationCode, setInvitationCode] = useState('');
 
-  // ExtraÃ§Ã£o automÃ¡tica do cÃ³digo da URL (apenas preenchimento)
+  // Extração automática do código da URL (apenas preenchimento)
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('ref');
@@ -34,26 +34,26 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
     e.preventDefault();
 
     if (!agreedToTerms) {
-      showToast?.("VocÃª deve concordar com os Termos de ServiÃ§o, para continuar.", "warning");
+      showToast?.("Você deve concordar com os Termos de Serviço, para continuar.", "warning");
       return;
     }
     if (password.length !== 6) {
-      showToast?.("Por favor difite senha de dÃ­gitos.", "error");
+      showToast?.("Por favor difite senha de dígitos.", "error");
       return;
     }
     if (password !== confirmPassword) {
-      showToast?.("As senhas nÃ£o coincidem.", "error");
+      showToast?.("As senhas não coincidem.", "error");
       return;
     }
     if (phoneNumber.length < 9) {
-      showToast?.("NÃºmero celular icorreto.", "error");
+      showToast?.("Número celular icorreto.", "error");
       return;
     }
 
     try {
       await withLoading(async () => {
         if (!invitationCode) {
-          throw new Error("CÃ³digo de convite Ã© obrigatÃ³rio.");
+          throw new Error("Código de convite é obrigatório.");
         }
 
         const email = `${phoneNumber.replace(/\s/g, '')}@deepbank.user`;
@@ -71,7 +71,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
         if (error) {
           if (error.message.includes('already registered')) {
-            showToast?.("Este nÃºmero jÃ¡ estÃ¡ cadastrado. FaÃ§a login.", "info");
+            showToast?.("Este número já está cadastrado. Faça login.", "info");
             onNavigate('login');
             return;
           }
@@ -96,30 +96,32 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
 
         <main className="flex-1 px-0 pb-8">
-          {/* Top Banner Image - Mostrando a imagem completa */}
-          <div className="w-full overflow-hidden mb-6 relative">
-            <img
-              src="/banner_register.png"
-              alt="SmartBuy Banner"
-              className="w-full h-auto block object-contain"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
+          {/* Logo Header */}
+          <div className="flex flex-col items-center pt-10 pb-6 bg-gradient-to-b from-primary/10 to-transparent">
+            <div className="relative">
+              <div className="absolute -inset-1 bg-primary/20 rounded-[28px] blur-sm"></div>
+              <img
+                src="/smartbuy_logo.png"
+                alt="SmartBuy Logo"
+                className="relative w-28 h-28 rounded-[24px] shadow-2xl border-2 border-white/10"
+              />
+            </div>
           </div>
 
           <div className="px-5">
             {/* Title & Subtitle */}
             <div className="mb-4 pt-2">
               <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-1">Crie sua conta</h1>
-              <p className="text-text-secondary text-base font-normal">Junte-se ao futuro dos serviÃ§os bancÃ¡rios e compras.</p>
+              <p className="text-text-secondary text-base font-normal">Junte-se ao futuro dos serviços bancários e compras.</p>
             </div>
 
             <form className="flex flex-col gap-4" onSubmit={handleRegister}>
               {/* Phone Number Field */}
               <div className="flex flex-col gap-1">
-                <label className="text-[13px] font-bold text-[#0F1111]">NÃºmero de telefone</label>
+                <label className="text-[13px] font-bold text-[#0F1111]">Número de telefone</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                    <span className="text-xl mr-2">ðŸ‡¦ðŸ‡´</span>
+                    <span className="text-xl mr-2">????</span>
                     <span className="text-base font-medium text-[#0F1111]">+244</span>
                     <div className="ml-3 h-6 w-px bg-gray-200"></div>
                   </div>
@@ -140,7 +142,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                 <div className="relative">
                   <input
                     className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white pl-4 pr-12 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:outline-none transition-all placeholder:text-gray-500"
-                    placeholder="6 dÃ­gitos numÃ©ricos"
+                    placeholder="6 dígitos numéricos"
                     type={showPassword ? "text" : "password"}
                     inputMode="numeric"
                     value={password}
@@ -193,7 +195,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               {/* Invitation Code Field */}
               <div className="flex flex-col gap-1">
                 <label className="text-[13px] font-bold text-[#0F1111]">
-                  CÃ³digo de convite <span className="text-[#C40000]">*</span>
+                  Código de convite <span className="text-[#C40000]">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -202,7 +204,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                   <input
                     className={`flex w-full rounded-[8px] border border-[#D5D9D9] bg-white pl-12 pr-4 h-[44px] text-[15px] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:outline-none transition-all placeholder:text-gray-500 ${new URLSearchParams(window.location.search).get('ref') ? 'bg-gray-50 cursor-not-allowed' : ''
                       }`}
-                    placeholder="CÃ³digo de convite"
+                    placeholder="Código de convite"
                     type="text"
                     value={invitationCode}
                     onChange={(e) => {
@@ -231,7 +233,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                 </div>
                 <div className="text-[13px] leading-snug">
                   <label className="font-normal text-[#0F1111]" htmlFor="terms">
-                    Eu concordo com os <a className="text-[#007185] hover:text-[#C7511F] hover:underline" href="#">Termos de ServiÃ§o</a> e a <a className="text-[#007185] hover:text-[#C7511F] hover:underline" href="#">PolÃ­tica de Privacidade</a>.
+                    Eu concordo com os <a className="text-[#007185] hover:text-[#C7511F] hover:underline" href="#">Termos de Serviço</a> e a <a className="text-[#007185] hover:text-[#C7511F] hover:underline" href="#">Política de Privacidade</a>.
                   </label>
                 </div>
               </div>
@@ -247,7 +249,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
 
               {/* Footer Link */}
               <p className="text-center text-[13px] text-[#565959] mt-2">
-                JÃ¡ tem uma conta? <button type="button" onClick={() => onNavigate('login')} className="text-[#007185] hover:text-[#C7511F] hover:underline ml-1">Entrar</button>
+                Já tem uma conta? <button type="button" onClick={() => onNavigate('login')} className="text-[#007185] hover:text-[#C7511F] hover:underline ml-1">Entrar</button>
               </p>
             </form>
           </div>

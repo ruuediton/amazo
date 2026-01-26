@@ -30,12 +30,12 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
           <div
             className="relative bg-cover bg-center flex flex-col justify-end overflow-hidden h-[250px]"
             style={{
-              backgroundImage: 'linear-gradient(180deg, rgba(28, 28, 28, 0) 0%, rgba(28, 28, 28, 0.4) 50%, rgba(28, 28, 28, 0.8) 100%), url("/amazon_legal_hero.png")'
+              backgroundImage: 'linear-gradient(180deg, rgba(28, 28, 28, 0) 0%, rgba(28, 28, 28, 0.4) 50%, rgba(28, 28, 28, 0.8) 100%), url("/SmartBuy_legal_hero.png")'
             }}
           >
             <div className="flex flex-col p-6 z-10">
               <span className="inline-block px-3 py-1 mb-3 text-xs font-black tracking-widest text-text-primary uppercase bg-primary rounded-full w-fit">Institucional</span>
-              <h1 className="text-white tracking-tight text-4xl font-black leading-tight drop-shadow-md">amazon</h1>
+              <h1 className="text-white tracking-tight text-4xl font-black leading-tight drop-shadow-md">SmartBuy</h1>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         {/* Introduction Text */}
         <div className="px-6 py-4">
           <p className="text-text-secondary text-base font-normal leading-relaxed">
-            Documentação oficial e registros regulatórios da amazon. Garantindo a máxima segurança e conformidade em todas as operações em Kz.
+            Documentação oficial e registros regulatórios da SmartBuy. Garantindo a máxima segurança e conformidade em todas as operações em Kz.
           </p>
         </div>
 
@@ -125,7 +125,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         {/* Footer Compliance Text */}
         <div className="mt-4 px-6 pb-40">
           <p className="text-text-secondary text-[11px] leading-relaxed text-center italic">
-            A amazon é uma entidade regulada conforme a legislação em vigor na República de Angola. Para mais informações, contacte compliance@amazon.co.ao
+            A SmartBuy é uma entidade regulada conforme a legislação em vigor na República de Angola. Para mais informações, contacte compliance@SmartBuy.co.ao
           </p>
         </div>
 

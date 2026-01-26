@@ -379,7 +379,7 @@ const App: React.FC = () => {
               </div>
               <h3 className="text-2xl font-black text-[#0F1111] mb-2">Deseja sair?</h3>
               <p className="text-gray-500 mb-8 leading-relaxed">
-                Você precisará entrar novamente para acessar sua conta Amazon. Seus dados de navegação serão limpos.
+                Você precisará entrar novamente para acessar sua conta SmartBuy. Seus dados de navegação serão limpos.
               </p>
 
               <div className="flex flex-col gap-3 w-full">

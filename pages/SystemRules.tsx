@@ -1,4 +1,4 @@
-Ôªø
+
 import React from 'react';
 
 interface Props {
@@ -18,10 +18,10 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
           >
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>
-          <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10 uppercase text-[12px] tracking-[0.15em]">Normas de Opera√ß√£o</h2>
+          <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10 uppercase text-[12px] tracking-[0.15em]">Normas de OperaÁ„o</h2>
         </header>
 
-        {/* Conte√∫do Rigoroso */}
+        {/* Conte˙do Rigoroso */}
         <main className="flex-1 overflow-y-auto px-6 pt-8 pb-32 no-scrollbar">
 
           {/* Selos de Compliance */}
@@ -42,7 +42,7 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
               <div className="size-10 rounded-lg bg-green-50 border border-green-100 flex items-center justify-center">
                 <span className="material-symbols-outlined text-green-500 text-[20px]">shield_check</span>
               </div>
-              <span className="text-[8px] font-black text-gray-500 uppercase text-center leading-tight">Opera√ß√£o<br />Protegida</span>
+              <span className="text-[8px] font-black text-gray-500 uppercase text-center leading-tight">OperaÁ„o<br />Protegida</span>
             </div>
           </div>
 
@@ -50,54 +50,54 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
             <section>
               <h1 className="text-2xl font-black mb-4 leading-tight tracking-tight border-l-4 border-primary pl-4">Regulamento Interno</h1>
               <p className="text-gray-500 text-sm leading-relaxed mb-6 italic">
-                O descumprimento de qualquer uma das normas abaixo poder√° resultar na suspens√£o imediata das atividades do utilizador e bloqueio preventivo de fundos para an√°lise.
+                O descumprimento de qualquer uma das normas abaixo poder· resultar na suspens„o imediata das atividades do utilizador e bloqueio preventivo de fundos para an·lise.
               </p>
             </section>
 
             {/* Regra 1 */}
             <RuleBlock
               id="01"
-              title="Opera√ß√µes de Caixa"
-              content="Os dep√≥sitos via Multicaixa Express s√£o processados automaticamente 24/7. Pedidos de retirada s√£o processados em dias √∫teis, das 09:00 √†s 18:00 (Hora de Luanda), com prazo de liquida√ß√£o de at√© 24 horas √∫teis."
+              title="OperaÁıes de Caixa"
+              content="Os depÛsitos via Multicaixa Express s„o processados automaticamente 24/7. Pedidos de retirada s„o processados em dias ˙teis, das 09:00 ‡s 18:00 (Hora de Luanda), com prazo de liquidaÁ„o de atÈ 24 horas ˙teis."
             />
 
             {/* Regra 2 */}
             <RuleBlock
               id="02"
               title="Limites e Taxas"
-              content="O valor m√≠nimo de saque √© de 1.000 Kz. A amazon reserva-se o direito de aplicar taxas administrativas sobre transa√ß√µes de acordo com o n√≠vel da conta do utilizador e as parcerias interbanc√°rias vigentes."
+              content="O valor mÌnimo de saque È de 1.000 Kz. A SmartBuy reserva-se o direito de aplicar taxas administrativas sobre transaÁıes de acordo com o nÌvel da conta do utilizador e as parcerias interbanc·rias vigentes."
             />
 
             {/* Regra 3 */}
             <RuleBlock
               id="03"
               title="Propriedade de Conta"
-              content="Cada conta √© pessoal e intransfer√≠vel. A verifica√ß√£o de identidade (BI) √© obrigat√≥ria para movimenta√ß√µes acima do limite b√°sico. O uso de contas de terceiros para saques resultar√° em rejei√ß√£o autom√°tica da transa√ß√£o."
+              content="Cada conta È pessoal e intransferÌvel. A verificaÁ„o de identidade (BI) È obrigatÛria para movimentaÁıes acima do limite b·sico. O uso de contas de terceiros para saques resultar· em rejeiÁ„o autom·tica da transaÁ„o."
             />
 
             {/* Regra 4 */}
             <RuleBlock
               id="04"
               title="Sistema de Ganhos"
-              content="A remunera√ß√£o por tarefas e cashback √© baseada em performance sist√©mica. Manipula√ß√µes de software ou uso de bots para automatizar cliques violam as pol√≠ticas de uso e levam ao encerramento definitivo da conta sem aviso pr√©vio."
+              content="A remuneraÁ„o por tarefas e cashback È baseada em performance sistÈmica. ManipulaÁıes de software ou uso de bots para automatizar cliques violam as polÌticas de uso e levam ao encerramento definitivo da conta sem aviso prÈvio."
             />
 
-            {/* Nota de Rodap√© Oficial */}
+            {/* Nota de RodapÈ Oficial */}
             <div className="mt-6 flex flex-col items-center gap-4 py-8 border-t border-gray-100">
               <img
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX1nZQgiOTx5eDY9az3IDpQxwq_xV55MjgvXJXONNRdsEThtofBf4cQ4HsSMhjnPHjVXbszEBW3mCQVuCQ2y-P0l1unQR2pNSCUhmhyKL3gJ6P3P8N5KlKVx5gToFfYvygunNhf9O8u5gMKPMytTu6s2CyUGsrz3F_qOQ_WpHb6jImikbGi4ZciIi16FgBYvSa-NmtEbWfOZkTAOnX--ev6DldHY6b0R7j-1utVDZ9g7ww5tdCA9u5r-7lF5q2G2FoNTuDPzAbIkT9"
-                alt="amazon Seal"
+                alt="SmartBuy Seal"
                 className="h-12 opacity-80 grayscale"
               />
               <p className="text-[10px] text-gray-400 leading-relaxed text-center font-bold uppercase tracking-[0.2em]">
                 SmartBuy Angola Digital Services, SA<br />
-                Registo n.¬∫ 0284/2024
+                Registo n.∫ 0284/2024
               </p>
             </div>
           </div>
         </main>
 
-        {/* Bot√£o de Fechar */}
+        {/* Bot„o de Fechar */}
         <div className="fixed bottom-0 max-w-md w-full p-6 bg-white/95 backdrop-blur-xl border-t border-gray-100 z-20">
           <button
             onClick={() => onNavigate('info')}

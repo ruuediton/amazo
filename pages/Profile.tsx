@@ -1,4 +1,4 @@
-Ôªøimport React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 import { jsPDF } from 'jspdf';
@@ -64,14 +64,14 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       doc.setFontSize(40);
       doc.setTextColor(15, 17, 17); // SmartBuy Black
       doc.text('APRENDE', 105, 100, { align: 'center' });
-      doc.text('AMAZON', 105, 115, { align: 'center' });
+      doc.text('SmartBuy', 105, 115, { align: 'center' });
 
       doc.setFontSize(16);
       doc.setTextColor(50, 50, 50);
-      doc.text('GUIA OFICIAL DO USU√ÅRIO', 105, 130, { align: 'center' });
+      doc.text('GUIA OFICIAL DO USU¡RIO', 105, 130, { align: 'center' });
 
       doc.setFontSize(12);
-      doc.text('Vers√£o 4.2.0', 105, 280, { align: 'center' });
+      doc.text('Vers„o 4.2.0', 105, 280, { align: 'center' });
 
       // --- PAGE 2: WELCOME ---
       doc.addPage();
@@ -88,11 +88,11 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       // Content
       doc.setTextColor(15, 17, 17);
       doc.setFontSize(14);
-      doc.text('Ol√°, Investidor!', 10, 50);
+      doc.text('Ol·, Investidor!', 10, 50);
 
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      const welcomeText = "Parab√©ns por fazer parte da maior plataforma de investimentos simplificados. Este manual foi criado para ajudar voc√™ a dominar todas as funcionalidades do app e maximizar seus lucros.";
+      const welcomeText = "ParabÈns por fazer parte da maior plataforma de investimentos simplificados. Este manual foi criado para ajudar vocÍ a dominar todas as funcionalidades do app e maximizar seus lucros.";
       const splitWelcome = doc.splitTextToSize(welcomeText, 190);
       doc.text(splitWelcome, 10, 60);
 
@@ -126,73 +126,73 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       };
 
       addSection('1. Como Recarregar sua Conta',
-        "Para come√ßar a investir, voc√™ precisa adicionar saldo:\n" +
-        "- V√° at√© a aba 'Conta' e clique em 'Recarregar'.\n" +
-        "- Escolha o m√©todo (Multicaixa ou USDT).\n" +
-        "- Fa√ßa a transfer√™ncia para os dados banc√°rios exibidos.\n" +
-        "- Envie o comprovante no app e aguarde a verifica√ß√£o em poucos minutos.");
+        "Para comeÁar a investir, vocÍ precisa adicionar saldo:\n" +
+        "- V· atÈ a aba 'Conta' e clique em 'Recarregar'.\n" +
+        "- Escolha o mÈtodo (Multicaixa ou USDT).\n" +
+        "- FaÁa a transferÍncia para os dados banc·rios exibidos.\n" +
+        "- Envie o comprovante no app e aguarde a verificaÁ„o em poucos minutos.");
 
       addSection('2. Aplicando em Fundos',
-        "Fa√ßa seu dinheiro render:\n" +
-        "- Acesse a op√ß√£o 'Aplicar Fundo' no menu.\n" +
-        "- Escolha um fundo dispon√≠vel (ex: Eletr√¥nicos, Livros).\n" +
+        "FaÁa seu dinheiro render:\n" +
+        "- Acesse a opÁ„o 'Aplicar Fundo' no menu.\n" +
+        "- Escolha um fundo disponÌvel (ex: EletrÙnicos, Livros).\n" +
         "- Digite o valor que deseja investir e confirme.\n" +
-        "- Acompanhe seus lucros di√°rios na aba 'Meus Fundos'.");
+        "- Acompanhe seus lucros di·rios na aba 'Meus Fundos'.");
 
       addSection('3. Realizando Saques (Retirada)',
         "Retire seus lucros com facilidade:\n" +
-        "- Primeiro, configure sua Senha de Retirada em 'Configura√ß√µes'.\n" +
-        "- V√° em 'Retirar Fundo' no perfil.\n" +
-        "- Insira o valor e sua senha de retirada seis d√≠gitos.\n" +
-        "- O valor ser√° processado e enviado para sua conta banc√°ria cadastrada (IBAN) dentro de 24 horas √∫teis.");
+        "- Primeiro, configure sua Senha de Retirada em 'ConfiguraÁıes'.\n" +
+        "- V· em 'Retirar Fundo' no perfil.\n" +
+        "- Insira o valor e sua senha de retirada seis dÌgitos.\n" +
+        "- O valor ser· processado e enviado para sua conta banc·ria cadastrada (IBAN) dentro de 24 horas ˙teis.");
 
       addSection('4. Programa de Convites',
         "Ganhe mais convidando amigos:\n" +
-        "- V√° em 'Convidar Amigos' no seu perfil.\n" +
-        "- Copie seu link ou c√≥digo exclusivo.\n" +
-        "- Quando seus amigos se cadastram e investem, voc√™ ganha comiss√µes autom√°ticas.");
+        "- V· em 'Convidar Amigos' no seu perfil.\n" +
+        "- Copie seu link ou cÛdigo exclusivo.\n" +
+        "- Quando seus amigos se cadastram e investem, vocÍ ganha comissıes autom·ticas.");
 
       addSection('5. Como Enviar Comprovante',
-        "Siga os passos para enviar seu comprovante com seguran√ßa:\n" +
-        "1. Localizar Comprovante: Acesse seu hist√≥rico de transa√ß√µes, encontre o dep√≥sito recente e toque em 'Ver Comprovante'.\n" +
-        "2. Acessar WhatsApp: Toque no bot√£o oficial para abrir o WhatsApp.\n" +
-        "3. Falar com Gerente: Inicie uma conversa com seu Gerente de conta SmartBuy (verifique o selo de verifica√ß√£o).\n" +
+        "Siga os passos para enviar seu comprovante com seguranÁa:\n" +
+        "1. Localizar Comprovante: Acesse seu histÛrico de transaÁıes, encontre o depÛsito recente e toque em 'Ver Comprovante'.\n" +
+        "2. Acessar WhatsApp: Toque no bot„o oficial para abrir o WhatsApp.\n" +
+        "3. Falar com Gerente: Inicie uma conversa com seu Gerente de conta SmartBuy (verifique o selo de verificaÁ„o).\n" +
         "4. Anexar e Enviar: No chat, toque no anexo (clipe) e envie a imagem do comprovante.");
 
       addSection('6. Maximizar Ganhos',
         "Dicas para aumentar seus rendimentos:\n" +
-        "- Acesse a P√°gina de Ganhos (√≠cone de Raio) para visualizar seu painel.\n" +
+        "- Acesse a P·gina de Ganhos (Ìcone de Raio) para visualizar seu painel.\n" +
         "- Acompanhe seu Saldo: Atualizado em tempo real na moeda local (Kz).\n" +
-        "- Controle a Opera√ß√£o: Use o bot√£o 'Check-in Di√°rio' para coletar recompensas e mantenha o sistema ativo.");
+        "- Controle a OperaÁ„o: Use o bot„o 'Check-in Di·rio' para coletar recompensas e mantenha o sistema ativo.");
 
-      addSection('7. Seguran√ßa',
-        "Sua seguran√ßa √© prioridade. Nunca compartilhe sua senha de retirada com ningu√©m. " +
-        "Se tiver problemas, use a op√ß√£o 'Suporte' nas 'Configura√ß√µes' para falar com nossa equipe.");
+      addSection('7. SeguranÁa',
+        "Sua seguranÁa È prioridade. Nunca compartilhe sua senha de retirada com ninguÈm. " +
+        "Se tiver problemas, use a opÁ„o 'Suporte' nas 'ConfiguraÁıes' para falar com nossa equipe.");
 
       // --- LEGAL & REGULATION SECTIONS ---
 
       addSection('REGULAMENTO INTERNO',
-        "O descumprimento de qualquer uma das normas abaixo poder√° resultar na suspens√£o imediata das atividades do utilizador e bloqueio preventivo de fundos para an√°lise.\n\n" +
-        "01. Opera√ß√µes de Caixa\nOs dep√≥sitos via Multicaixa Express s√£o processados automaticamente 24/7. Pedidos de retirada s√£o processados em dias √∫teis, das 09:00 √†s 18:00 (Hora de Luanda), com prazo de liquida√ß√£o de at√© 24 horas √∫teis.\n\n" +
-        "02. Limites e Taxas\nO valor m√≠nimo de saque √© de 1.000 Kz. A amazon reserva-se o direito de aplicar taxas administrativas sobre transa√ß√µes de acordo com o n√≠vel da conta do utilizador e as parcerias interbanc√°rias vigentes.\n\n" +
-        "03. Propriedade de Conta\nCada conta √© pessoal e intransfer√≠vel. A verifica√ß√£o de identidade (BI) √© obrigat√≥ria para movimenta√ß√µes acima do limite b√°sico. O uso de contas de terceiros para saques resultar√° em rejei√ß√£o autom√°tica da transa√ß√£o.\n\n" +
-        "04. Sistema de Ganhos\nA remunera√ß√£o por tarefas e cashback √© baseada em performance sist√©mica. Manipula√ß√µes de software ou uso de bots para automatizar cliques violam as pol√≠ticas de uso e levam ao encerramento definitivo da conta sem aviso pr√©vio.");
+        "O descumprimento de qualquer uma das normas abaixo poder· resultar na suspens„o imediata das atividades do utilizador e bloqueio preventivo de fundos para an·lise.\n\n" +
+        "01. OperaÁıes de Caixa\nOs depÛsitos via Multicaixa Express s„o processados automaticamente 24/7. Pedidos de retirada s„o processados em dias ˙teis, das 09:00 ‡s 18:00 (Hora de Luanda), com prazo de liquidaÁ„o de atÈ 24 horas ˙teis.\n\n" +
+        "02. Limites e Taxas\nO valor mÌnimo de saque È de 1.000 Kz. A SmartBuy reserva-se o direito de aplicar taxas administrativas sobre transaÁıes de acordo com o nÌvel da conta do utilizador e as parcerias interbanc·rias vigentes.\n\n" +
+        "03. Propriedade de Conta\nCada conta È pessoal e intransferÌvel. A verificaÁ„o de identidade (BI) È obrigatÛria para movimentaÁıes acima do limite b·sico. O uso de contas de terceiros para saques resultar· em rejeiÁ„o autom·tica da transaÁ„o.\n\n" +
+        "04. Sistema de Ganhos\nA remuneraÁ„o por tarefas e cashback È baseada em performance sistÈmica. ManipulaÁıes de software ou uso de bots para automatizar cliques violam as polÌticas de uso e levam ao encerramento definitivo da conta sem aviso prÈvio.");
 
-      addSection('TERMOS E CONDI√á√ïES',
-        "√öltima atualiza√ß√£o: 24 de Outubro de 2023.\n\n" +
-        "Bem-vindo √† amazon. Ao utilizar o nosso aplicativo e servi√ßos banc√°rios integrados, voc√™ concorda com os termos descritos abaixo.\n\n" +
-        "01. Introdu√ß√£o\nAo criar uma conta na plataforma amazon, o utilizador declara ter capacidade jur√≠dica e concorda integralmente com as regras de opera√ß√£o financeira, prazos de processamento e pol√≠ticas de cashback vigentes.\n\n" +
-        "02. Servi√ßos Financeiros\nTodas as transa√ß√µes s√£o efetuadas em Kwanzas (Kz). Dep√≥sitos via Multicaixa Express possuem tempo m√©dio de compensa√ß√£o de 5 minutos, enquanto retiradas banc√°rias podem levar at√© 24 horas √∫teis. *A amazon n√£o se responsabiliza por dados de IBAN inseridos incorretamente.\n\n" +
-        "03. Marketplace e Ganhos\nA aquisi√ß√£o de dispositivos na loja amazon integrada concede ao utilizador o direito de participar de campanhas de recompensas por tarefas. Os rendimentos di√°rios s√£o vari√°veis.\n\n" +
-        "04. Seguran√ßa\nO utilizador √© o √∫nico respons√°vel por manter o sigilo de sua senha. A amazon nunca solicitar√° sua senha por WhatsApp ou e-mail.");
+      addSection('TERMOS E CONDI«’ES',
+        "⁄ltima atualizaÁ„o: 24 de Outubro de 2023.\n\n" +
+        "Bem-vindo ‡ SmartBuy. Ao utilizar o nosso aplicativo e serviÁos banc·rios integrados, vocÍ concorda com os termos descritos abaixo.\n\n" +
+        "01. IntroduÁ„o\nAo criar uma conta na plataforma SmartBuy, o utilizador declara ter capacidade jurÌdica e concorda integralmente com as regras de operaÁ„o financeira, prazos de processamento e polÌticas de cashback vigentes.\n\n" +
+        "02. ServiÁos Financeiros\nTodas as transaÁıes s„o efetuadas em Kwanzas (Kz). DepÛsitos via Multicaixa Express possuem tempo mÈdio de compensaÁ„o de 5 minutos, enquanto retiradas banc·rias podem levar atÈ 24 horas ˙teis. *A SmartBuy n„o se responsabiliza por dados de IBAN inseridos incorretamente.\n\n" +
+        "03. Marketplace e Ganhos\nA aquisiÁ„o de dispositivos na loja SmartBuy integrada concede ao utilizador o direito de participar de campanhas de recompensas por tarefas. Os rendimentos di·rios s„o vari·veis.\n\n" +
+        "04. SeguranÁa\nO utilizador È o ˙nico respons·vel por manter o sigilo de sua senha. A SmartBuy nunca solicitar· sua senha por WhatsApp ou e-mail.");
 
-      addSection('DECLARA√á√ÉO DE PRIVACIDADE',
-        "A SmartBuy Angola Digital Services, SA assume o compromisso de proteger a privacidade dos seus utilizadores em conformidade com a Lei n.¬∫ 22/11 ‚Äì Lei da Protec√ß√£o de Dados Pessoais da Rep√∫blica de Angola.\n\n" +
-        "01. Recolha de Informa√ß√£o\nRecolhemos dados essenciais para a presta√ß√£o de servi√ßos financeiros: Nome, BI, IBAN, contacto telef√≥nico e metadados de transa√ß√£o. Estes dados s√£o processados exclusivamente para fins de seguran√ßa banc√°ria.\n\n" +
-        "02. Finalidade do Tratamento\nAs informa√ß√µes destinam-se √† gest√£o da conta, processamento de dep√≥sitos/retiradas e preven√ß√£o contra branqueamento de capitais (AML).\n\n" +
-        "03. Criptografia e Armazenamento\nTodos os dados s√£o armazenados em servidores com criptografia militar. O acesso √© restrito a pessoal autorizado.\n\n" +
-        "04. Direitos do Titular\nAo abrigo da lei angolana, o utilizador tem o direito de aceder, retificar e solicitar a elimina√ß√£o dos seus dados pessoais.\n\n" +
-        "AUDITORIA INDEPENDENTE\nEste sistema de tratamento de dados √© auditado periodicamente por entidades externas para garantir a resili√™ncia contra ciberataques.");
+      addSection('DECLARA«√O DE PRIVACIDADE',
+        "A SmartBuy Angola Digital Services, SA assume o compromisso de proteger a privacidade dos seus utilizadores em conformidade com a Lei n.∫ 22/11 ñ Lei da ProtecÁ„o de Dados Pessoais da Rep˙blica de Angola.\n\n" +
+        "01. Recolha de InformaÁ„o\nRecolhemos dados essenciais para a prestaÁ„o de serviÁos financeiros: Nome, BI, IBAN, contacto telefÛnico e metadados de transaÁ„o. Estes dados s„o processados exclusivamente para fins de seguranÁa banc·ria.\n\n" +
+        "02. Finalidade do Tratamento\nAs informaÁıes destinam-se ‡ gest„o da conta, processamento de depÛsitos/retiradas e prevenÁ„o contra branqueamento de capitais (AML).\n\n" +
+        "03. Criptografia e Armazenamento\nTodos os dados s„o armazenados em servidores com criptografia militar. O acesso È restrito a pessoal autorizado.\n\n" +
+        "04. Direitos do Titular\nAo abrigo da lei angolana, o utilizador tem o direito de aceder, retificar e solicitar a eliminaÁ„o dos seus dados pessoais.\n\n" +
+        "AUDITORIA INDEPENDENTE\nEste sistema de tratamento de dados È auditado periodicamente por entidades externas para garantir a resiliÍncia contra ciberataques.");
 
       // Footer line if space permits on the last page, otherwise just let it flow
       doc.setFont('helvetica', 'bold');
@@ -206,7 +206,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         yPos += 10;
       }
       doc.text("SmartBuy Angola Digital Services, SA", 10, yPos);
-      doc.text("Luanda, Rep√∫blica de Angola - Regulamentado pela APD", 10, yPos + 5);
+      doc.text("Luanda, Rep˙blica de Angola - Regulamentado pela APD", 10, yPos + 5);
 
 
       // Forced manual download to ensure correct MIME type and filename
@@ -245,7 +245,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <h1 className="text-2xl font-extrabold tracking-tight text-[#111418]">
-              {currentProfile.full_name || 'Usu√°rio amazon'}
+              {currentProfile.full_name || 'Usu·rio SmartBuy'}
             </h1>
             <div className="flex flex-col mt-1 space-y-0.5">
               <p className="text-[#637381] text-sm font-medium">{userPhone || '+244 000 000 000'}</p>
@@ -279,10 +279,10 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           <div className="relative z-10">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-[#637381] text-xs font-bold uppercase tracking-widest mb-1">Saldo Dispon√≠vel</p>
+                <p className="text-[#637381] text-xs font-bold uppercase tracking-widest mb-1">Saldo DisponÌvel</p>
                 <div className="flex items-center gap-2">
                   <h3 className="text-3xl font-extrabold text-[#111418] tracking-tight">
-                    Kz {showBalance ? (stats.balance || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 }) : '‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢'}
+                    Kz {showBalance ? (stats.balance || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 }) : 'ïïïïïï'}
                   </h3>
                   <button onClick={() => setShowBalance(!showBalance)} className="text-[#637381]/60">
                     <span className="material-symbols-outlined text-[20px]">
@@ -312,7 +312,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
               </div>
             </div>
             <div className="text-center">
-              <p className="text-[9px] uppercase text-[#637381] font-bold tracking-wider">Renda Di√°ria</p>
+              <p className="text-[9px] uppercase text-[#637381] font-bold tracking-wider">Renda Di·ria</p>
               <p className="text-[13px] font-bold text-green-600 mt-1">+Kz {(stats.renda_diaria || 0).toLocaleString('pt-AO')}</p>
               <div className="mt-4 pt-3 border-t border-[#f4d125]/5">
                 <p className="text-[9px] uppercase text-[#637381] font-bold tracking-wider">Renda Mensal</p>
@@ -326,7 +326,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       {/* Main Content Sections */}
       <div className="px-4 space-y-6">
         <section>
-          <h3 className="text-[11px] font-extrabold text-[#637381] uppercase tracking-[0.05em] mb-2.5 ml-1">Servi√ßos</h3>
+          <h3 className="text-[11px] font-extrabold text-[#637381] uppercase tracking-[0.05em] mb-2.5 ml-1">ServiÁos</h3>
           <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
             {[
               { label: 'Retirar fundo', icon: 'account_balance_wallet', page: 'retirada' },
@@ -336,7 +336,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
               { label: 'Campanhas', icon: 'campaign', page: 'campaigns' },
               { label: 'Enviar Saldo (P2P)', icon: 'send_money', page: 'p2p-transfer' },
               { label: 'Baixar App', icon: 'download', page: 'download-app' },
-              { label: 'Resgatar pr√™mios', icon: 'assignment', page: 'gift-chest' },
+              { label: 'Resgatar prÍmios', icon: 'assignment', page: 'gift-chest' },
             ].map((item, i, arr) => (
               <div
                 key={item.label}
@@ -359,7 +359,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           <h3 className="text-[11px] font-extrabold text-[#637381] uppercase tracking-[0.05em] mb-2.5 ml-1">Outros</h3>
           <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
             {[
-              { label: 'Configura√ß√µes', icon: 'settings', page: 'settings' },
+              { label: 'ConfiguraÁıes', icon: 'settings', page: 'settings' },
               { label: 'Sobre a Empresa', icon: 'domain', page: 'info' },
               { label: 'Baixar Manual', icon: 'menu_book', action: () => setShowManualModal(true) },
             ].map((item, i, arr) => (
@@ -388,7 +388,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
             Sair da Conta
           </button>
           <p className="text-center text-[10px] font-bold text-[#637381]/40 mt-6 uppercase tracking-widest">
-            Vers√£o 2.4.0
+            Vers„o 2.4.0
           </p>
         </div>
       </div>
@@ -404,7 +404,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
               </div>
               <h3 className="text-xl font-black text-[#0F1111] mb-2 leading-tight">Baixar Manual Aprende SmartBuy?</h3>
               <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-                Voc√™ est√° prestes a baixar o guia oficial em PDF com todos os tutoriais passo a passo.
+                VocÍ est· prestes a baixar o guia oficial em PDF com todos os tutoriais passo a passo.
               </p>
 
               <div className="flex gap-3 w-full">

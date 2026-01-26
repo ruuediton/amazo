@@ -31,7 +31,7 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
                 Última atualização: 24 de Outubro de 2023.
               </p>
               <p className="text-black text-base font-medium leading-relaxed">
-                Bem-vindo à amazon. Ao utilizar o nosso aplicativo e serviços bancários integrados, você concorda com os termos descritos abaixo. Por favor, leia-os com atenção.
+                Bem-vindo à SmartBuy. Ao utilizar o nosso aplicativo e serviços bancários integrados, você concorda com os termos descritos abaixo. Por favor, leia-os com atenção.
               </p>
             </section>
 
@@ -43,7 +43,7 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
               <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">01. Introdução</h3>
               <h4 className="text-lg font-bold mb-3 text-black">Aceitação dos Termos</h4>
               <p className="text-text-secondary text-sm leading-relaxed">
-                Ao criar uma conta na plataforma amazon, o utilizador declara ter capacidade jurídica e concorda integralmente com as regras de operação financeira, prazos de processamento e políticas de cashback vigentes.
+                Ao criar uma conta na plataforma SmartBuy, o utilizador declara ter capacidade jurídica e concorda integralmente com as regras de operação financeira, prazos de processamento e políticas de cashback vigentes.
               </p>
             </section>
 
@@ -56,7 +56,7 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
               </p>
               <div className="mt-4 p-4 rounded-xl bg-surface-dark border border-gray-200">
                 <p className="text-xs text-text-secondary italic">
-                  *A amazon não se responsabiliza por dados de IBAN inseridos incorretamente pelo utilizador.
+                  *A SmartBuy não se responsabiliza por dados de IBAN inseridos incorretamente pelo utilizador.
                 </p>
               </div>
             </section>
@@ -66,7 +66,7 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
               <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">03. Marketplace e Ganhos</h3>
               <h4 className="text-lg font-bold mb-3 text-black">Produtos Eletrônicos</h4>
               <p className="text-text-secondary text-sm leading-relaxed">
-                A aquisição de dispositivos na loja amazon integrada concede ao utilizador o direito de participar de campanhas de recompensas por tarefas. Os rendimentos diários são variáveis e dependem da eficiência do sistema e do tipo de dispositivo adquirido.
+                A aquisição de dispositivos na loja SmartBuy integrada concede ao utilizador o direito de participar de campanhas de recompensas por tarefas. Os rendimentos diários são variáveis e dependem da eficiência do sistema e do tipo de dispositivo adquirido.
               </p>
             </section>
 
@@ -75,7 +75,7 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
               <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">04. Segurança</h3>
               <h4 className="text-lg font-bold mb-3 text-black">Privacidade de Dados</h4>
               <p className="text-text-secondary text-sm leading-relaxed">
-                O utilizador é o único responsável por manter o sigilo de sua senha de acesso e senha de retirada. A amazon nunca solicitará sua senha por WhatsApp ou e-mail. Ative sempre a verificação em duas etapas quando disponível.
+                O utilizador é o único responsável por manter o sigilo de sua senha de acesso e senha de retirada. A SmartBuy nunca solicitará sua senha por WhatsApp ou e-mail. Ative sempre a verificação em duas etapas quando disponível.
               </p>
             </section>
 

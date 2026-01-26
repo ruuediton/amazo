@@ -1,4 +1,4 @@
-Ôªø
+
 import React from 'react';
 
 interface Props {
@@ -41,7 +41,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
             </div>
           </div>
           <p className="text-gray-600 text-sm leading-relaxed">
-            Siga os passos abaixo para enviar seu comprovante de dep√≥sito com seguran√ßa para seu gerente via WhatsApp.
+            Siga os passos abaixo para enviar seu comprovante de depÛsito com seguranÁa para seu gerente via WhatsApp.
           </p>
         </section>
 
@@ -61,7 +61,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
               <div className="flex flex-col gap-2 pb-2 pt-1">
                 <h3 className="text-lg font-bold text-black">Localizar Comprovante</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Acesse seu hist√≥rico de transa√ß√µes no app, encontre o dep√≥sito recente e toque em <span className="font-bold text-black">"Ver Comprovante"</span>.
+                  Acesse seu histÛrico de transaÁıes no app, encontre o depÛsito recente e toque em <span className="font-bold text-black">"Ver Comprovante"</span>.
                 </p>
                 <div className="mt-3 overflow-hidden rounded-lg bg-surface-dark border border-gray-700/50">
                   <div className="flex items-center p-3 gap-3">
@@ -88,7 +88,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
               <div className="flex flex-col gap-2 pb-2 pt-1">
                 <h3 className="text-lg font-bold text-black">Acessar WhatsApp</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Toque no bot√£o oficial abaixo para abrir o WhatsApp ou abra o aplicativo manualmente em seu telefone.
+                  Toque no bot„o oficial abaixo para abrir o WhatsApp ou abra o aplicativo manualmente em seu telefone.
                 </p>
               </div>
             </div>
@@ -103,7 +103,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
               <div className="flex flex-col gap-2 pb-2 pt-1">
                 <h3 className="text-lg font-bold text-black">Falar com Gerente</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Inicie uma conversa com seu Gerente de conta SmartBuy. Verifique se o contato tem o selo de verifica√ß√£o.
+                  Inicie uma conversa com seu Gerente de conta SmartBuy. Verifique se o contato tem o selo de verificaÁ„o.
                 </p>
                 <div className="mt-2 flex items-center gap-3 p-3 rounded-lg bg-surface-dark border border-gray-700/50">
                   <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-700">
@@ -131,7 +131,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
               <div className="flex flex-col gap-2 pb-2 pt-1">
                 <h3 className="text-lg font-bold text-black">Anexar e Enviar</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  No chat, toque no √≠cone de clipe (anexo), selecione o comprovante na sua galeria e envie a imagem.
+                  No chat, toque no Ìcone de clipe (anexo), selecione o comprovante na sua galeria e envie a imagem.
                 </p>
               </div>
             </div>
@@ -152,7 +152,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
             </summary>
             <div className="px-4 pl-[3.25rem]">
               <p className="text-xs text-gray-500 leading-relaxed">
-                Certifique-se de que a imagem do comprovante esteja leg√≠vel e contenha a data, valor da transa√ß√£o e ID. Se o WhatsApp n√£o abrir, verifique se o app est√° instalado.
+                Certifique-se de que a imagem do comprovante esteja legÌvel e contenha a data, valor da transaÁ„o e ID. Se o WhatsApp n„o abrir, verifique se o app est· instalado.
               </p>
             </div>
           </details>

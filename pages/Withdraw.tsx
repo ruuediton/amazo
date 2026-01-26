@@ -1,4 +1,4 @@
-Ôªøimport React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -68,19 +68,19 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
   const handleInitiateWithdraw = () => {
     if (!bankAccount) {
-      showToast?.("Voc√™ precisa vincular uma conta banc√°ria.", "warning");
+      showToast?.("VocÍ precisa vincular uma conta banc·ria.", "warning");
       onNavigate('add-bank');
       return;
     }
 
     const val = parseFloat(amount);
     if (!amount || isNaN(val) || val <= 0) {
-      showToast?.("Digite um valor v√°lido.", "error");
+      showToast?.("Digite um valor v·lido.", "error");
       return;
     }
 
-    if (val < 300) { // Exemplo de m√≠nimo
-      showToast?.("Valor m√≠nimo 300 Kz.", "warning");
+    if (val < 300) { // Exemplo de mÌnimo
+      showToast?.("Valor mÌnimo 300 Kz.", "warning");
       return;
     }
 
@@ -113,7 +113,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         fetchData();
       }, "Processando saque...");
     } catch (error: any) {
-      showToast?.(error.message || "Opera√ß√£o n√£o sucedida.", "error");
+      showToast?.(error.message || "OperaÁ„o n„o sucedida.", "error");
     }
   };
 
@@ -152,7 +152,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
           <div className="absolute right-[-20px] top-[-20px] opacity-10">
             <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>
           </div>
-          <p className="text-[12px] font-bold uppercase tracking-widest text-[#0F1111]/70 mb-1">Saldo Dispon√≠vel</p>
+          <p className="text-[12px] font-bold uppercase tracking-widest text-[#0F1111]/70 mb-1">Saldo DisponÌvel</p>
           <h1 className="text-4xl font-extrabold text-[#0F1111]">Kz {balance.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</h1>
         </div>
 
@@ -173,7 +173,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
           {amount && !isNaN(parseFloat(amount)) && (
             <div className="flex justify-between items-center text-[11px] bg-gray-50 p-2 rounded-lg border border-gray-100">
               <span className="text-gray-500">Taxa (12%): <span className="font-bold text-red-500">- Kz {calculateFee().toLocaleString()}</span></span>
-              <span className="font-bold text-green-600">Receber√°: Kz {calculateLiquid().toLocaleString()}</span>
+              <span className="font-bold text-green-600">Receber·: Kz {calculateLiquid().toLocaleString()}</span>
             </div>
           )}
         </div>
@@ -215,7 +215,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               className="w-full py-4 border-2 border-dashed border-[#D5D9D9] rounded-xl flex items-center justify-center gap-2 text-[#565959] font-bold text-[13px] hover:bg-gray-50 transition-colors"
             >
               <span className="material-symbols-outlined text-[18px]">add</span>
-              Adicionar Conta Banc√°ria
+              Adicionar Conta Banc·ria
             </button>
           )}
         </div>
@@ -248,7 +248,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               maxLength={4}
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
-              placeholder="‚Ä¢‚Ä¢‚Ä¢‚Ä¢"
+              placeholder="ïïïï"
               className="w-full h-14 text-center text-3xl tracking-[8px] font-bold border border-[#D5D9D9] rounded-xl focus:border-[#E77600] outline-none mb-6"
               autoFocus
             />

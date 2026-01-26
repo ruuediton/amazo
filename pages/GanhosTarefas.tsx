@@ -1,4 +1,4 @@
-Ôªø
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
@@ -52,11 +52,11 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
     try {
       await withLoading(async () => {
         const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error("Sess√£o expirada.");
+        if (!user) throw new Error("Sess„o expirada.");
 
         const { data, error } = await supabase.rpc('collect_daily_income');
 
-        if (error) throw new Error("Erro de comunica√ß√£o. Tente novamente.");
+        if (error) throw new Error("Erro de comunicaÁ„o. Tente novamente.");
 
         if (!data.success) {
           throw new Error(data.message || "Erro ao coletar renda.");
@@ -64,7 +64,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
 
         setHasCollectedToday(true);
         return data.message;
-      }, "Tarefa di√°ria conclu√≠da!");
+      }, "Tarefa di·ria concluÌda!");
 
     } catch (error: any) {
       showError(error);
@@ -93,7 +93,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           </button>
         </header>
 
-        {/* 6Ô∏è‚É£ Rendimento Di√°rio Badge */}
+        {/* 6?? Rendimento Di·rio Badge */}
         <div className="flex flex-col items-center pt-8 pb-4">
           <div className="flex items-center gap-2 bg-[#F0F2F2] border border-gray-200 px-5 py-2 rounded-full">
             <span className="material-symbols-outlined text-[#007600] text-[18px]">trending_up</span>
@@ -136,8 +136,8 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           <span className="material-symbols-outlined text-[#0F1111] text-[20px] shrink-0">info</span>
           <div className="flex-1 overflow-hidden relative h-5">
             <div className="absolute whitespace-nowrap animate-marquee flex items-center text-[13px] text-[#0F1111] font-medium">
-              <span className="mr-12">üëâ Realize seu check-in diariamente para receber seus lucros.</span>
-              <span className="mr-12">üëâ Seus dispositivos ativos geram renda 24 horas por dia.</span>
+              <span className="mr-12">?? Realize seu check-in diariamente para receber seus lucros.</span>
+              <span className="mr-12">?? Seus dispositivos ativos geram renda 24 horas por dia.</span>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           <div className="bg-white p-4 rounded-xl border border-gray-100">
             <div className="flex items-center gap-2 mb-2">
               <span className="material-symbols-outlined text-[20px] text-[#565959]">calendar_month</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#565959]">Proje√ß√£o Semanal</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#565959]">ProjeÁ„o Semanal</span>
             </div>
             <p className="text-[18px] font-bold text-[#0F1111]">
               Kz {(potentialIncome * 7).toLocaleString()}
@@ -183,7 +183,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           ) : purchases.length === 0 ? (
             <div className="bg-gray-50 p-8 rounded-xl border border-dashed border-gray-200 text-center">
               <p className="text-[#565959] text-[13px] font-medium leading-relaxed mb-6">
-                Voc√™ ainda n√£o possui eletr√¥nicos geradores de renda. Visite a loja para come√ßar.
+                VocÍ ainda n„o possui eletrÙnicos geradores de renda. Visite a loja para comeÁar.
               </p>
               <button
                 onClick={() => onNavigate('shop')}

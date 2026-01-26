@@ -38,7 +38,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     icon: 'check',
                     iconColor: 'text-success-text',
                     title: 'Sucesso!',
-                    branding: 'AMAZON SUCCESS'
+                    branding: 'SmartBuy SUCCESS'
                 };
             case 'warning':
                 return {
@@ -47,7 +47,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     icon: 'warning',
                     iconColor: 'text-warning-text',
                     title: 'Aviso!',
-                    branding: 'AMAZON WARNING'
+                    branding: 'SmartBuy WARNING'
                 };
             case 'info':
                 return {
@@ -56,7 +56,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     icon: 'info',
                     iconColor: 'text-primary',
                     title: 'Informação',
-                    branding: 'AMAZON INFO'
+                    branding: 'SmartBuy INFO'
                 };
             case 'error':
             default:
@@ -66,7 +66,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     icon: 'priority_high',
                     iconColor: 'text-error-text',
                     title: 'Erro!',
-                    branding: 'AMAZON ERROR'
+                    branding: 'SmartBuy ERROR'
                 };
         }
     };
