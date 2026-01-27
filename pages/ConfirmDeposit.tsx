@@ -147,7 +147,7 @@ NOME DO PAGADOR: ${userName}`.trim();
 
           {/* Large Amount */}
           <div className="text-center">
-            <h1 className="text-[36px] font-black text-[#E77600] tracking-tight">
+            <h1 className="text-[36px] font-black text-[#00C853] tracking-tight">
               KZ {(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
             </h1>
           </div>

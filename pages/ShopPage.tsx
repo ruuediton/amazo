@@ -1,4 +1,4 @@
-﻿
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -140,27 +140,27 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
 
                   {/* Right Side: Info */}
                   <div className="flex-1 min-w-0 flex flex-col gap-1">
-                    <p className="text-[12px] text-gray-500 font-medium mb-1">
-                      {product.category || 'Escolha geral'}
-                      <span className="material-symbols-outlined text-[14px] align-middle ml-1">info</span>
-                    </p>
-
-                    <h3 className="text-[15px] font-medium leading-tight line-clamp-3 text-[#0F1111]">
+                    <h3 className="text-[17px] font-bold leading-tight text-[#0F1111]">
                       {product.name}
                     </h3>
 
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mt-1">
-                      <span className="text-[14px] font-bold text-[#565959] leading-none">4,7</span>
-                      <div className="flex text-[#00C853]">
-                        {Array(5).fill(0).map((_, i) => (
-                          <span key={i} className="material-symbols-filled text-[14px]">star</span>
-                        ))}
+                    <div className="flex flex-col gap-0.5 my-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[13px] font-bold text-[#00C853]">Renda:</span>
+                        <span className="text-[13px] font-black text-black">Kz {product.daily_income?.toLocaleString()} / dia</span>
                       </div>
-                      <span className="text-[14px] text-[#007185] font-medium">(3,5 mil)</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[13px] font-bold text-[#00C853]">Duração:</span>
+                        <span className="text-[13px] font-black text-black">{product.duration_days} dias</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[13px] font-bold text-[#00C853]">Limite:</span>
+                        <span className="text-[13px] font-black text-black">{product.purchase_limit} por cliente</span>
+                      </div>
+                      <p className="text-[12px] text-gray-500 line-clamp-2 mt-1 leading-relaxed">
+                        {product.description || 'Produto oficial BP ENERGY.'}
+                      </p>
                     </div>
-
-                    <p className="text-[13px] text-[#565959] font-medium">Mais de 50 compras no mês passado</p>
 
                     {/* Price Section */}
                     <div className="flex items-start mt-1">
@@ -169,30 +169,25 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                       <span className="text-[13px] font-medium mt-1">{centavos}</span>
                     </div>
 
-                    <div className="space-y-0.5 mt-1">
-                      <p className="text-[13px] text-[#0F1111]">Entrega <span className="font-bold">GRÁTIS: Amanhã</span></p>
-                      <p className="text-[13px] text-[#565959]">Envia para Angola</p>
-                    </div>
-
                     <div className="flex items-center gap-1.5 mt-2 mb-3">
-                      <span className="material-symbols-outlined text-green-700 text-[18px]">recycling</span>
-                      <span className="text-[12px] text-green-800 font-bold border-b border-green-800 leading-none">1 certificação de sustentabilidade</span>
+                      <span className="material-symbols-outlined text-[#00C853] text-[18px]">verified</span>
+                      <span className="text-[12px] text-[#00C853] font-bold">Disponível em Luanda</span>
                     </div>
 
                     {/* Action Button */}
                     <button
                       onClick={() => handleOpenModal(product)}
                       disabled={isPurchased}
-                      className={`w-full py-2.5 rounded-full text-[13px] font-medium shadow-sm transition-all active:scale-[0.98] ${isPurchased
+                      className={`w-full py-3 rounded-xl text-[14px] font-black shadow-lg transition-all active:scale-[0.98] ${isPurchased
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
-                        : 'bg-[#00C853] hover:bg-[#00C853] text-black border border-[#00C853]'
+                        : 'bg-[#00C853] hover:brightness-110 text-black border border-[#00C853]'
                         }`}
                     >
-                      {isPurchased ? 'Já adquirido' : 'Adicionar ao carrinho'}
+                      {isPurchased ? 'JÁ ADQUIRIDO' : 'COMPRAR AGORA'}
                     </button>
 
                     {isPurchased && (
-                      <p className="text-[11px] text-red-600 font-bold mt-1 animate-pulse">Apenas 1 unidade por cliente</p>
+                      <p className="text-[10px] text-red-600 font-bold mt-1 text-center">ITEM ESGOTADO PARA SUA CONTA</p>
                     )}
                   </div>
                 </div>

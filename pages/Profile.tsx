@@ -57,7 +57,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
 
       // --- COVER PAGE ---
-      doc.setFillColor(255, 216, 20); // BP Yellow
+      doc.setFillColor(0, 200, 83); // BP Green #00C853
       doc.rect(0, 0, 210, 297, 'F');
 
       doc.setFont('helvetica', 'bold');
@@ -250,7 +250,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
             <div className="flex flex-col mt-1 space-y-0.5">
               <p className="text-[#637381] text-sm font-medium">{userPhone || '+244 000 000 000'}</p>
             </div>
-            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-[#f4d125] rounded-full">
+            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-[#00C853] rounded-full">
               <span className="material-symbols-outlined text-[#111418] text-[16px] font-bold">verified</span>
               <span className="text-[#111418] text-[10px] font-extrabold uppercase tracking-wider">
                 INVESTIDOR
@@ -259,7 +259,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           </div>
           <div className="relative shrink-0 ml-4">
             <div
-              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 border-2 border-[#f4d125] shadow-sm"
+              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 border-2 border-[#00C853] shadow-sm"
               style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0")' }}
             ></div>
             <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md border border-gray-100">
@@ -271,9 +271,9 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
 
       {/* Balance Card Section */}
       <div className="px-4 mb-6">
-        <div className="rounded-2xl bg-[#fefce8] p-6 border border-[#f4d125]/20 shadow-sm relative overflow-hidden">
+        <div className="rounded-2xl bg-[#f0fff4] p-6 border border-[#00C853]/20 shadow-sm relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none translate-x-4 -translate-y-4">
-            <span className="material-symbols-outlined text-[120px] text-[#f4d125]">account_balance_wallet</span>
+            <span className="material-symbols-outlined text-[120px] text-[#00C853]">account_balance_wallet</span>
           </div>
 
           <div className="relative z-10">
@@ -294,7 +294,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-y-6 gap-x-1 mt-8 pt-4 border-t border-[#f4d125]/10">
+          <div className="grid grid-cols-3 gap-y-6 gap-x-1 mt-8 pt-4 border-t border-[#00C853]/10">
             <div className="text-center">
               <p className="text-[9px] uppercase text-[#637381] font-bold tracking-wider">Recarga Total</p>
               <p className="text-[13px] font-bold text-[#111418] mt-1">Kz {(stats.reloaded_amount || 0).toLocaleString('pt-AO')}</p>
@@ -343,7 +343,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
                 onClick={() => item.page ? onNavigate(item.page) : null}
                 className={`flex items-center gap-3 p-3.5 ${i !== arr.length - 1 ? 'border-b-[0.5px] border-[#F3F4F6]' : ''} active:bg-gray-50 cursor-pointer`}
               >
-                <div className="flex items-center justify-center rounded-lg bg-[#FFF9DB] text-[#f4d125] shrink-0 size-9">
+                <div className="flex items-center justify-center rounded-lg bg-[#e6ffed] text-[#00C853] shrink-0 size-9">
                   <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
                 </div>
                 <div className="flex-1">
@@ -368,7 +368,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
                 onClick={() => item.action ? item.action() : (item.page ? onNavigate(item.page) : null)}
                 className={`flex items-center gap-3 p-3.5 ${i !== arr.length - 1 ? 'border-b-[0.5px] border-[#F3F4F6]' : ''} active:bg-gray-50 cursor-pointer`}
               >
-                <div className="flex items-center justify-center rounded-lg bg-[#FFF9DB] text-[#f4d125] shrink-0 size-9">
+                <div className="flex items-center justify-center rounded-lg bg-[#e6ffed] text-[#00C853] shrink-0 size-9">
                   <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
                 </div>
                 <div className="flex-1">

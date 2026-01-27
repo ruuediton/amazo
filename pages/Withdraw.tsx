@@ -166,7 +166,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0,00"
-              className="w-full h-14 pl-12 pr-4 bg-white border border-[#D5D9D9] rounded-xl text-xl font-bold focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] outline-none transition-all placeholder:text-gray-300"
+              className="w-full h-14 pl-12 pr-4 bg-white border border-[#D5D9D9] rounded-xl text-xl font-bold focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all placeholder:text-gray-300"
             />
           </div>
           {/* Fee Info - Flat */}
@@ -249,7 +249,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
               placeholder="••••"
-              className="w-full h-14 text-center text-3xl tracking-[8px] font-bold border border-[#D5D9D9] rounded-xl focus:border-[#E77600] outline-none mb-6"
+              className="w-full h-14 text-center text-3xl tracking-[8px] font-bold border border-[#D5D9D9] rounded-xl focus:border-[#00C853] outline-none mb-6"
               autoFocus
             />
 

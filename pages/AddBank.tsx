@@ -247,7 +247,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   <select
                     value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
-                    className="w-full h-[44px] pl-4 pr-10 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] focus:outline-none focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all appearance-none"
+                    className="w-full h-[44px] pl-4 pr-10 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all appearance-none"
                   >
                     <option value="">Selecione o banco...</option>
                     <option value="Banco BAI">Banco BAI</option>
@@ -270,7 +270,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                 <input
                   value={holderName}
                   onChange={(e) => setHolderName(e.target.value)}
-                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
+                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
                   placeholder="Ex: João Manuel Silva"
                   type="text"
                 />
@@ -284,7 +284,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   value={iban}
                   onChange={handleIbanChange}
                   maxLength={25}
-                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] font-mono placeholder:text-[#565959] focus:outline-none focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
+                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] font-mono placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
                   placeholder={ibanPlaceholder}
                   type="text"
                 />

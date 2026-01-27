@@ -124,7 +124,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
 
         {/* User Greeting Overlay */}
         <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
-          <div className="size-6 rounded-full bg-primary flex items-center justify-center">
+          <div className="size-6 rounded-full bg-[#00C853] flex items-center justify-center">
             <span className="material-symbols-outlined text-[14px] text-black font-bold">person</span>
           </div>
           <span className="text-black text-[11px] font-bold">Olá, {profile?.code || 'Usuário'}</span>
@@ -152,7 +152,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       {/* Quick Actions - Flat Border Style */}
       <div className="px-4 pt-6 mb-2">
         <div className="grid grid-cols-3 gap-3">
-          <button onClick={() => onNavigate('deposit')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-primary text-black rounded-2xl border border-[#00C853] active:scale-95 transition-all group">
+          <button onClick={() => onNavigate('deposit')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-[#00C853] text-black rounded-2xl border border-[#00C853] active:scale-95 transition-all group">
             <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>add_card</span>
             <span className="text-[11px] font-bold uppercase tracking-tight">Recarregar</span>
           </button>
@@ -202,7 +202,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
                   </div>
                   <button
                     onClick={() => onNavigate('shop')}
-                    className="bg-primary hover:bg-primary-hover text-black text-[14px] font-medium py-2.5 rounded-full w-full mt-4 transition-all border border-[#00C853]"
+                    className="bg-[#00C853] hover:brightness-110 text-black text-[14px] font-medium py-2.5 rounded-full w-full mt-4 transition-all border border-[#00C853]"
                   >
                     Comprar Agora
                   </button>
@@ -294,7 +294,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             ))
           )}
         </div>
-        <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-brand-blue hover:text-[#C7511F] hover:underline">Visualize seu histórico</button>
+        <button onClick={() => onNavigate('purchase-history')} className="mt-2 mb-2 text-[13px] font-medium text-[#00C853] hover:underline">Visualize seu histórico</button>
       </section>
 
       <div className="h-2 bg-[#F0F2F2]"></div>
@@ -327,7 +327,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             ))
           )}
         </div>
-        <button onClick={() => onNavigate('shop')} className="mt-4 text-[13px] font-medium text-brand-blue hover:text-[#C7511F] hover:underline">Ver mais</button>
+        <button onClick={() => onNavigate('shop')} className="mt-4 text-[13px] font-medium text-[#00C853] hover:underline">Ver mais</button>
       </section>
 
       <style>{`

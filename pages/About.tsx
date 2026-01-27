@@ -17,7 +17,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
           >
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>
-          <h2 className="text-text-primary text-lg font-bold leading-tight tracking-tight flex-1 text-center">TransparÃªncia Legal</h2>
+          <h2 className="text-text-primary text-lg font-bold leading-tight tracking-tight flex-1 text-center">Transparência Legal</h2>
           <div className="flex w-12 items-center justify-end">
             <button className="flex items-center justify-center rounded-lg h-12 bg-transparent text-primary">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
@@ -43,7 +43,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         {/* Introduction Text */}
         <div className="px-6 py-4">
           <p className="text-text-secondary text-base font-normal leading-relaxed">
-            DocumentaÃ§Ã£o oficial e registros regulatÃ³rios da BP. Garantindo a mÃ¡xima seguranÃ§a e conformidade em todas as operaÃ§Ãµes em Kz.
+            Documentação oficial e registros regulatórios da BP. Garantindo a máxima segurança e conformidade em todas as operações em Kz.
           </p>
         </div>
 
@@ -51,7 +51,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         <div className="flex gap-3 px-6 pb-6 flex-wrap">
           <div className="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-success-bg border border-success-text/10 px-4">
             <span className="material-symbols-outlined text-success-text text-[20px]">check_circle</span>
-            <p className="text-success-text text-sm font-bold">InstituiÃ§Ã£o Verificada</p>
+            <p className="text-success-text text-sm font-bold">Instituição Verificada</p>
           </div>
           <div className="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-dark border border-brand-border px-4 shadow-sm">
             <span className="material-symbols-outlined text-text-secondary text-[20px]">account_balance</span>
@@ -76,7 +76,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
           <div className="flex items-stretch justify-between gap-4 rounded-xl bg-surface-dark p-4 shadow-lg border border-brand-border">
             <div className="flex flex-col justify-center gap-1 flex-[2_2_0px]">
               <p className="text-text-primary text-lg font-extrabold leading-tight tracking-tight">Sede Social</p>
-              <p className="text-text-secondary text-sm font-medium leading-normal">EdifÃ­cio Chicala, Luanda, Angola</p>
+              <p className="text-text-secondary text-sm font-medium leading-normal">Edifício Chicala, Luanda, Angola</p>
               <div className="mt-2 flex items-center gap-1 text-primary text-sm font-black uppercase tracking-wider text-[10px]">
                 <span className="material-symbols-outlined text-[14px]">location_on</span>
                 <span>Ver no mapa</span>
@@ -99,7 +99,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         <div className="flex flex-col gap-4 px-6 pb-8">
           <DocumentItem
             title="Certificado de Admissibilidade"
-            subtitle="Emitido pela ConservatÃ³ria"
+            subtitle="Emitido pela Conservatória"
             img="https://lh3.googleusercontent.com/aida-public/AB6AXuD3h28KhuHm7RXiwQJZaPqCQP-vNy-t3rSkl54D2dGOKLrstCQ31yFOmUmTR5oM_p51UFn_iFiWhdoIkoxPV_B62Y7xcobeMglq77XoKQTntn9Uw-EJgO0Aakb66h8OU9FGl64bpxL8VyANil-K5Mxw5PLVvLuaPUF76MmjY2B5A1FjLsmyfjLxmiWwrEKPNSBWT4n9QaHixtCfUji29byHOP38SniFshFn1043bLn0LNfvsmcMNwdYP6K116vUBMaxk2W0kMyzLA75"
           />
           <DocumentItem
@@ -115,9 +115,9 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
             <div className="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4">
               <span className="material-symbols-outlined text-9xl text-black" style={{ fontVariationSettings: "'FILL' 1" }}>rocket_launch</span>
             </div>
-            <h3 className="text-text-primary text-xl font-black mb-2 relative z-10">A Nossa MissÃ£o</h3>
+            <h3 className="text-text-primary text-xl font-black mb-2 relative z-10">A Nossa Missão</h3>
             <p className="text-text-primary/80 font-bold leading-tight relative z-10">
-              Democratizar o acesso a serviÃ§os financeiros de qualidade e produtos globais, conectando cada angolano Ã  economia digital.
+              Democratizar o acesso a serviços financeiros de qualidade e produtos globais, conectando cada angolano à economia digital.
             </p>
           </div>
         </div>
@@ -125,7 +125,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         {/* Footer Compliance Text */}
         <div className="mt-4 px-6 pb-40">
           <p className="text-text-secondary text-[11px] leading-relaxed text-center italic">
-            A BP Ã© uma entidade regulada conforme a legislaÃ§Ã£o em vigor na RepÃºblica de Angola. Para mais informaÃ§Ãµes, contacte compliance@BP.co.ao
+            A BP é uma entidade regulada conforme a legislação em vigor na República de Angola. Para mais informações, contacte compliance@BP.co.ao
           </p>
         </div>
 
@@ -135,7 +135,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
             className="w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 px-6 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
             <span className="material-symbols-outlined text-[20px]">ios_share</span>
-            <span>Exportar DossiÃª Legal</span>
+            <span>Exportar Dossiê Legal</span>
           </button>
         </div>
       </div>

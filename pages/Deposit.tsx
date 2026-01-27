@@ -132,7 +132,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                             type="number"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
-                            className="w-full h-[52px] px-4 rounded-[12px] bg-white border border-[#D5D9D9] text-[18px] font-bold text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
+                            className="w-full h-[52px] px-4 rounded-[12px] bg-white border border-[#D5D9D9] text-[18px] font-bold text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
                             placeholder="Digite o valor..."
                             autoFocus
                         />
@@ -220,7 +220,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     <button
                         onClick={handleFinalConfirm}
                         disabled={!selectedBank}
-                        className="w-full h-14 bg-[#E77600] text-white font-bold rounded-lg shadow-lg active:scale-[0.98] transition-all flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300"
+                        className="w-full h-14 bg-[#00C853] text-white font-bold rounded-lg shadow-lg active:scale-[0.98] transition-all flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300"
                     >
                         PRÃ“XIMO
                     </button>
