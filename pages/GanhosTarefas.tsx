@@ -198,7 +198,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
                 <div key={purchase.id} className="flex items-center gap-4 py-4 active:bg-gray-50 transition-colors">
                   <div className="relative w-16 h-16 shrink-0 rounded-lg bg-gray-50 flex items-center justify-center p-2 border border-gray-100">
                     {purchase.url_produtos ? (
-                      <img alt={purchase.nome} className="object-contain w-full h-full" src={purchase.url_produtos} />
+                      <img loading="lazy" decoding="async" alt={purchase.nome} className="object-contain w-full h-full" src={purchase.url_produtos} />
                     ) : (
                       <span className="material-symbols-outlined text-[#565959] text-[32px]">devices</span>
                     )}

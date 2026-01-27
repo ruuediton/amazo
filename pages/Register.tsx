@@ -100,10 +100,10 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
           <div className="flex flex-col items-center pt-10 pb-6 bg-gradient-to-b from-primary/10 to-transparent">
             <div className="relative">
               <div className="absolute -inset-1 bg-primary/20 rounded-[28px] blur-sm"></div>
-              <img
+              <img loading="lazy" decoding="async"
                 src="/bp_logo.png"
                 alt="BP ENERGY (SUL) LDA"
-                className="relative w-32 h-32 rounded-[24px] shadow-2xl border-2 border-white/10 object-cover"
+                className="relative w-32 h-32 rounded-[24px] shadow-2xl border-2 border-white/10 object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]"
               />
               <div className="mt-2 text-center">
                 <span className="text-2xl font-black tracking-tighter text-text-primary">BP</span>

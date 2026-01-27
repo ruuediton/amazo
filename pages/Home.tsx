@@ -189,7 +189,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             <div className="relative w-full overflow-hidden rounded-2xl bg-gray-50 border border-gray-100 group">
               <div className="p-5 flex flex-col sm:flex-row gap-5">
                 <div className="w-full sm:w-32 h-32 bg-white rounded-lg p-2 flex items-center justify-center border border-gray-100">
-                  <img src={cheapestProduct.image_url || "/placeholder_product.png"} alt="" className="max-w-full max-h-full object-contain" />
+                  <img loading="lazy" decoding="async" src={cheapestProduct.image_url || "/placeholder_product.png"} alt="" className="max-w-full max-h-full object-contain" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -232,7 +232,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             {marketingItems.slice(0, 4).map((item, i) => (
               <div key={item.id} onClick={() => onNavigate('shop')} className="cursor-pointer group">
                 <div className="bg-[#F7F8F8] h-32 p-4 flex items-center justify-center border border-gray-100 rounded-lg mb-2 group-hover:bg-gray-100 transition-colors">
-                  <img src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" alt={item.descricao_nome} />
+                  <img loading="lazy" decoding="async" src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" alt={item.descricao_nome} />
                 </div>
                 <div className="flex flex-wrap gap-1.5 items-center">
                   <span className="bg-[#CC0C39] text-white text-[11px] font-bold px-1.5 py-0.5 rounded-[2px]">Oferta</span>
@@ -266,7 +266,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             marketingItems.slice(4, 8).map((item) => (
               <div key={item.id} onClick={() => onNavigate('shop')} className="min-w-[130px] cursor-pointer group">
                 <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5 group-hover:bg-gray-100 transition-colors">
-                  <img src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
+                  <img loading="lazy" decoding="async" src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <p className="text-[13px] text-[#0F1111] font-medium leading-tight truncate">{item.descricao_nome}</p>
                 <p className="text-[11px] text-[#565959] truncate">Visualizado recentemente</p>
@@ -276,7 +276,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             recentPurchases.map((purchase) => (
               <div key={purchase.id} onClick={() => onNavigate('purchase-history')} className="min-w-[130px] cursor-pointer group">
                 <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5 group-hover:bg-gray-100 transition-colors">
-                  <img src="/placeholder_product.png" className="max-h-full max-w-full object-contain opacity-80 mix-blend-multiply" />
+                  <img loading="lazy" decoding="async" src="/placeholder_product.png" className="max-h-full max-w-full object-contain opacity-80 mix-blend-multiply" />
                 </div>
                 <p className="text-[13px] text-[#0F1111] font-medium leading-tight truncate">{purchase.nome_produto}</p>
                 <p className="text-[11px] text-[#565959] truncate">{purchase.status === 'pendente' ? 'Processando' : 'Comprado recentemente'}</p>
@@ -306,7 +306,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             marketingItems.slice(8, 12).map((item) => (
               <div key={item.id} onClick={() => onNavigate('shop')} className="cursor-pointer group">
                 <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5 group-hover:bg-gray-100 transition-colors">
-                  <img src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
+                  <img loading="lazy" decoding="async" src={item.url_image} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <p className="text-[12px] text-[#0F1111] font-medium truncate">{item.descricao_nome}</p>
               </div>
@@ -320,7 +320,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             ].map((cat, i) => (
               <div key={i} onClick={() => onNavigate('shop')} className="cursor-pointer">
                 <div className="bg-[#F7F8F8] h-28 p-3 flex items-center justify-center border border-gray-100 rounded-lg mb-1.5">
-                  <img src={cat.img} className="max-h-full max-w-full object-contain opacity-80" />
+                  <img loading="lazy" decoding="async" src={cat.img} className="max-h-full max-w-full object-contain opacity-80" />
                 </div>
                 <p className="text-[12px] text-[#0F1111] font-medium">{cat.title}</p>
               </div>

@@ -148,7 +148,7 @@ const DocumentItem = ({ title, subtitle, img }: { title: string, subtitle: strin
     <div className="flex gap-4">
       <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-background-dark shadow-md">
         <div className="absolute inset-0 bg-gradient-to-tr from-text-primary/10 to-transparent"></div>
-        <img className="h-full w-full object-cover" src={img} alt={title} />
+        <img loading="lazy" decoding="async" className="h-full w-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" src={img} alt={title} />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-text-primary/20">
           <span className="material-symbols-outlined text-white">zoom_in</span>
         </div>

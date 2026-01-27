@@ -188,7 +188,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                                     <div key={inv.id_usuario_fundo} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors bg-white rounded-xl my-1 border border-transparent">
                                         <div className="relative w-28 h-28 bg-gray-50 rounded-xl overflow-hidden shrink-0 flex items-center justify-center border border-gray-100">
                                             {inv.fund?.url_imagem ? (
-                                                <img src={inv.fund.url_imagem} alt={inv.fund.nome_fundo} className="w-full h-full object-cover" />
+                                                <img loading="lazy" decoding="async" src={inv.fund.url_imagem} alt={inv.fund.nome_fundo} className="w-full h-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
                                             ) : (
                                                 <div className="flex flex-col items-center">
                                                     <span className={`material-symbols-outlined text-3xl ${isFinalized ? 'text-green-600' : 'text-[#00C853]'}`}>

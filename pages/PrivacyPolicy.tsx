@@ -25,7 +25,7 @@ const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
         <main className="flex-1 overflow-y-auto px-6 pt-8 pb-32 no-scrollbar">
           {/* Logo BP */}
           <div className="flex justify-center mb-8">
-            <img
+            <img loading="lazy" decoding="async"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0"
               alt="BP"
               className="h-16 w-16 rounded-2xl shadow-lg border border-gray-100"

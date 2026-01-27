@@ -73,9 +73,9 @@ const Report: React.FC<ReportProps> = ({ onNavigate }) => {
             </button>
             {/* Preview Item 1 */}
             <div className="relative h-24 w-24 shrink-0 rounded-xl overflow-hidden group">
-              <img
+              <img loading="lazy" decoding="async"
                 alt="Screenshot preview 1"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_w8Y1HFtPRYFT_ab96b1E1I5YCqAAmHFY-MRe9d8xnzgcrcWCw7GJNTxs1SBx-SK4h6uaoK8isWNuogvm7PhR0v4tQ8fnsgg3NXqhsIsbHGLjRTpNkYm9c-eKz7omZS3tIxdRfGF0ySxuPIIedKtIa7sHIDEyc-TLDfUTDr4LxlF2XHeqb9Nn8kCS5u5ja8XAdkfWVoqRqBi-aHnHw6TNPsi2a2GIwYyOEPLjNvAAdSyMFL7zlIdY2b25ZQmJ4mcNDtkiIlPKOnFT"
               />
               <button className="absolute top-1 right-1 bg-black/60 text-black rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -84,9 +84,9 @@ const Report: React.FC<ReportProps> = ({ onNavigate }) => {
             </div>
             {/* Preview Item 2 */}
             <div className="relative h-24 w-24 shrink-0 rounded-xl overflow-hidden group">
-              <img
+              <img loading="lazy" decoding="async"
                 alt="Screenshot preview 2"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7BGwxeVYHoxuTS7KncwwH2r2aPLRB5iLpMifrNYjl2bjhitrnzdCjy4Ha_kcmWN8CSG2uIbbbeZ67nsv7CidIAJVdnyiRsgo953ca2W-qFkoUIIVw75pdgJjWzM5I1T2CtvsME-LTAbyGkdPXHXYthbLQnLKxWYHoJ0OcWfcmIc1YY3aWabV1YpRGCTBbtL1tb9wyP5DnpQjaq6lvUlIE_kKIyoSYfB3FSngIth9tPJ8H71yf0fsINVJHtNpM0HmoS5ZpA1QuVvht"
               />
               <button className="absolute top-1 right-1 bg-black/60 text-black rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">

@@ -123,7 +123,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                 <div key={product.id} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors">
                   {/* Left Side: Image Container */}
                   <div className="relative w-36 h-36 bg-gray-50 rounded-lg overflow-hidden shrink-0 flex items-center justify-center p-2">
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={product.image_url || "/placeholder_product.png"}
                       alt={product.name}
                       className="max-w-full max-h-full object-contain"

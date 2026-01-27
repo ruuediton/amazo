@@ -194,10 +194,10 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
             <div className="p-3 bg-white rounded-2xl shadow-2xl relative group">
               <div className="size-48 bg-gray-100 flex items-center justify-center overflow-hidden rounded-xl border border-gray-200">
                 {/* Replying with a real-looking QR from a public URL for aesthetics */}
-                <img
+                <img loading="lazy" decoding="async"
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${walletAddress}`}
                   alt="USDT TRC20 QR Code"
-                  className="size-full object-cover"
+                  className="size-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]"
                 />
               </div>
               <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-2xl flex items-center justify-center">

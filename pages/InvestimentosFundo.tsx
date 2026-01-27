@@ -128,10 +128,10 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
       {/* Header Area: BP Style */}
       <div className="relative h-[220px] w-full overflow-hidden bg-[#232F3E]">
         <div className="absolute inset-0 bg-[#232F3E]/80 mix-blend-multiply transition-opacity" />
-        <img
+        <img loading="lazy" decoding="async"
           src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1000"
           alt="BP Wealth Header"
-          className="absolute inset-0 w-full h-full object-cover opacity-30 grayscale"
+          className="absolute inset-0 w-full h-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05] opacity-30 grayscale"
         />
 
         <div className="absolute top-6 left-5 right-5 z-10 flex items-center justify-between">

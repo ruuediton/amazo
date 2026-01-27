@@ -108,7 +108,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
                 <div className="mt-2 flex items-center gap-3 p-3 rounded-lg bg-surface-dark border border-gray-700/50">
                   <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-700">
                     {/* Fixed 'class' to 'className' in the img tag below */}
-                    <img alt="Manager" className="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcwFydBne7VizYPMGVotVwmDnOqYyQInyepZHmPXZPjiw4XCv2h3bYr70mLhgayqZml3KW8F4P0aIIIBA1o28WZortjn2-KETMm8PLPc75cpgwtE_QjNJ1mQ5R9aVZ2_ul2NE1zQ0lLCZ71b-twNpfHlvUzNgTVAwg8S_DDA6STerWujt8veb1rO8Xt01i6r6cqps22WAmrEnrKVoTbsPvzUKPGArA91sxFSjef8eo52D-fXowfUdcNY-bjbvXiD54x1nuZlPSp6hO" />
+                    <img loading="lazy" decoding="async" alt="Manager" className="h-full w-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcwFydBne7VizYPMGVotVwmDnOqYyQInyepZHmPXZPjiw4XCv2h3bYr70mLhgayqZml3KW8F4P0aIIIBA1o28WZortjn2-KETMm8PLPc75cpgwtE_QjNJ1mQ5R9aVZ2_ul2NE1zQ0lLCZ71b-twNpfHlvUzNgTVAwg8S_DDA6STerWujt8veb1rO8Xt01i6r6cqps22WAmrEnrKVoTbsPvzUKPGArA91sxFSjef8eo52D-fXowfUdcNY-bjbvXiD54x1nuZlPSp6hO" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-bold text-black flex items-center gap-1">

@@ -161,7 +161,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
                 <div key={`${purchase.id}-${index}`} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors animate-in slide-in-from-bottom-2 duration-300">
                   {/* Image Container - Flat */}
                   <div className="relative w-32 h-32 bg-gray-50 rounded-lg overflow-hidden shrink-0 flex items-center justify-center p-2 border border-gray-100">
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={purchase.image_url || "/placeholder_product.png"}
                       alt=""
                       className="max-w-full max-h-full object-contain"

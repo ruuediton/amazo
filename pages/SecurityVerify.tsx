@@ -229,7 +229,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
               <p className="text-left text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">BI Frente</p>
               <div className={`aspect-[1.6/1] rounded-2xl overflow-hidden border-2 border-gray-200 bg-surface-dark transition-all duration-700 ${isBlurred ? 'blur-xl scale-95 opacity-50' : ''}`}>
                 {biUrls?.frente ? (
-                  <img src={biUrls.frente} alt="Frente" className="w-full h-full object-cover" />
+                  <img loading="lazy" decoding="async" src={biUrls.frente} alt="Frente" className="w-full h-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <SpokeSpinner size="w-6 h-6" />
@@ -242,7 +242,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
               <p className="text-left text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">BI Verso</p>
               <div className={`aspect-[1.6/1] rounded-2xl overflow-hidden border-2 border-gray-200 bg-surface-dark transition-all duration-700 ${isBlurred ? 'blur-xl scale-95 opacity-50' : ''}`}>
                 {biUrls?.verso ? (
-                  <img src={biUrls.verso} alt="Verso" className="w-full h-full object-cover" />
+                  <img loading="lazy" decoding="async" src={biUrls.verso} alt="Verso" className="w-full h-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <SpokeSpinner size="w-6 h-6" />
@@ -310,7 +310,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
             <h3 className="text-lg font-bold leading-tight tracking-tight">BI Frente</h3>
             <label className="group relative flex flex-col items-center justify-center w-full h-48 rounded-2xl border-2 border-dashed border-gray-700 bg-surface-dark/50 hover:bg-primary/5 hover:border-primary transition-all cursor-pointer overflow-hidden">
               {frentePreview ? (
-                <img src={frentePreview} alt="Preview" className="w-full h-full object-cover" />
+                <img loading="lazy" decoding="async" src={frentePreview} alt="Preview" className="w-full h-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
               ) : (
                 <div className="flex flex-col items-center gap-4 z-10">
                   <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -336,7 +336,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
             <h3 className="text-lg font-bold leading-tight tracking-tight">BI Verso</h3>
             <label className="group relative flex flex-col items-center justify-center w-full h-48 rounded-2xl border-2 border-dashed border-gray-700 bg-surface-dark/50 hover:bg-primary/5 hover:border-primary transition-all cursor-pointer overflow-hidden">
               {versoPreview ? (
-                <img src={versoPreview} alt="Preview" className="w-full h-full object-cover" />
+                <img loading="lazy" decoding="async" src={versoPreview} alt="Preview" className="w-full h-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
               ) : (
                 <div className="flex flex-col items-center gap-4 z-10">
                   <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">

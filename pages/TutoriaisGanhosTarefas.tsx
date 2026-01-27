@@ -45,7 +45,7 @@ const TutoriaisGanhosTarefas: React.FC<Props> = ({ onNavigate }) => {
         <div className="flex items-center gap-4 p-4 bg-surface-dark rounded-3xl border border-gray-200 opacity-90 text-left">
           <div className="relative size-14 shrink-0 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1">
             <div className="absolute top-1 right-1 size-2.5 bg-green-500 rounded-full border-2 border-white z-10"></div>
-            <img alt="Item" className="object-contain w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlk7FIH9Fbmd2_EjOKGTAG7uhAvatv7BV3PL8P2XQ9Kxv-crFxTOoqZv4qnsFIkMb4abs_2S0sZ5KYvrVAm_lkO7w9kXvMLKDyZ7_33jJmyrJxiI7BYWZkT9y_5ZlCztmm9vsRf9zBnbqt50mihcm-bE4OsaGODnZeN-WaD-eyWAR1NxBlG-exEeqXZJwu_cugCnJGuJ1Tk98YQwuhH9Qc2JM492_pRAL2H40EWgN1pqi5k-yRbXYgSyZJtGJQh4xNKtk4GNq8K1h9" />
+            <img loading="lazy" decoding="async" alt="Item" className="object-contain w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlk7FIH9Fbmd2_EjOKGTAG7uhAvatv7BV3PL8P2XQ9Kxv-crFxTOoqZv4qnsFIkMb4abs_2S0sZ5KYvrVAm_lkO7w9kXvMLKDyZ7_33jJmyrJxiI7BYWZkT9y_5ZlCztmm9vsRf9zBnbqt50mihcm-bE4OsaGODnZeN-WaD-eyWAR1NxBlG-exEeqXZJwu_cugCnJGuJ1Tk98YQwuhH9Qc2JM492_pRAL2H40EWgN1pqi5k-yRbXYgSyZJtGJQh4xNKtk4GNq8K1h9" />
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="text-sm font-bold text-black truncate">PlayStation 5</h4>

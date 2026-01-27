@@ -84,7 +84,7 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
 
             {/* Nota de Rodapé Oficial */}
             <div className="mt-6 flex flex-col items-center gap-4 py-8 border-t border-gray-100">
-              <img
+              <img loading="lazy" decoding="async"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX1nZQgiOTx5eDY9az3IDpQxwq_xV55MjgvXJXONNRdsEThtofBf4cQ4HsSMhjnPHjVXbszEBW3mCQVuCQ2y-P0l1unQR2pNSCUhmhyKL3gJ6P3P8N5KlKVx5gToFfYvygunNhf9O8u5gMKPMytTu6s2CyUGsrz3F_qOQ_WpHb6jImikbGi4ZciIi16FgBYvSa-NmtEbWfOZkTAOnX--ev6DldHY6b0R7j-1utVDZ9g7ww5tdCA9u5r-7lF5q2G2FoNTuDPzAbIkT9"
                 alt="BP Seal"
                 className="h-12 opacity-80 grayscale"
