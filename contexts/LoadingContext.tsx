@@ -1,4 +1,4 @@
-
+﻿
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import LoadingOverlay from '../components/LoadingOverlay';
 
@@ -57,24 +57,24 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
             return "Por favor, confirme seu cadastro.";
         }
         if (lowMsg.includes('token') || lowMsg.includes('jwt') || lowMsg.includes('auth') || lowMsg.includes('unauthorized') || lowMsg.includes('session expired') || lowMsg.includes('not logged in')) {
-            return "Sessão expirada. Por favor, acesse sua conta novamente.";
+            return "SessÃ£o expirada. Por favor, acesse sua conta novamente.";
         }
 
         // 2. Business Logic
         if (lowMsg.includes('insufficient') || lowMsg.includes('balance') || lowMsg.includes('funds')) {
-            return "Saldo insuficiente para esta operação.";
+            return "Saldo insuficiente para esta operaÃ§Ã£o.";
         }
         if (lowMsg.includes('duplicate') || lowMsg.includes('already exists') || lowMsg.includes('already processed')) {
-            return "Esta ação já foi realizada anteriormente.";
+            return "Esta aÃ§Ã£o jÃ¡ foi realizada anteriormente.";
         }
         if (lowMsg.includes('user already registered')) {
-            return "Este número de telefone já está em uso.";
+            return "Este nÃºmero de telefone jÃ¡ estÃ¡ em uso.";
         }
         if (lowMsg.includes('limit') || lowMsg.includes('exceeded')) {
             return "Limite operacional atingido. Tente mais tarde.";
         }
         if (lowMsg.includes('invalid') && (lowMsg.includes('deposit') || lowMsg.includes('withdrawal'))) {
-            return "Os dados informados para a transação são inválidos.";
+            return "Os dados informados para a transaÃ§Ã£o sÃ£o invÃ¡lidos.";
         }
 
         // 3. Technical Error Masking (Crucial for Security)
@@ -85,7 +85,7 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children })
         ];
 
         if (technicalPatterns.some(p => p.test(errorMessage))) {
-            return "Serviço temporariamente indisponível. Nossa equipe técnica já foi notificada.";
+            return "ServiÃ§o temporariamente indisponÃ­vel. Nossa equipe tÃ©cnica jÃ¡ foi notificada.";
         }
 
         // Safe Fallback
@@ -175,4 +175,5 @@ export const useLoading = () => {
     }
     return context;
 };
+
 

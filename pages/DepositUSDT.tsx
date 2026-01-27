@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 
@@ -17,10 +17,10 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Fallback to avoid crashes, but logic requires data
-  const walletAddress = data?.bank?.iban || data?.bank?.wallet_address || "Endereço indisponível";
-  const recipientName = data?.bank?.nome_destinatario || "Destinatário desconhecido";
+  const walletAddress = data?.bank?.iban || data?.bank?.wallet_address || "EndereÃ§o indisponÃ­vel";
+  const recipientName = data?.bank?.nome_destinatario || "DestinatÃ¡rio desconhecido";
 
-  // Função para buscar taxa em tempo real
+  // FunÃ§Ã£o para buscar taxa em tempo real
   const fetchRate = useCallback(async (background = false) => {
     const action = async () => {
       const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
@@ -31,7 +31,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
         setExchangeRate(rate);
         setLastUpdate(new Date());
       } else {
-        throw new Error("Taxa não disponível");
+        throw new Error("Taxa nÃ£o disponÃ­vel");
       }
     };
 
@@ -53,7 +53,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
   // Busca inicial e efeito ao digitar
   useEffect(() => {
     fetchRate(false); // Carregamento inicial com spinner
-    // Atualiza a cada 2 minutos se o usuário estiver na página (background)
+    // Atualiza a cada 2 minutos se o usuÃ¡rio estiver na pÃ¡gina (background)
     const interval = setInterval(() => fetchRate(true), 120000);
     return () => clearInterval(interval);
   }, [fetchRate]);
@@ -61,7 +61,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(walletAddress);
-    showToast?.('Endereço copiado!', 'success');
+    showToast?.('EndereÃ§o copiado!', 'success');
   };
 
   const kzEquivalent = amount && exchangeRate
@@ -71,43 +71,43 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
   const handleConfirm = async () => {
     const numAmount = parseFloat(amount);
     if (!amount || isNaN(numAmount) || numAmount < 4) {
-      showToast?.("Recarga mínima 4 USDT.", "warning");
+      showToast?.("Recarga mÃ­nima 4 USDT.", "warning");
       return;
     }
 
     // UX Validation only
     if (numAmount > 1090) {
-      showToast?.("Recarga máxima 1090 USDT.", "warning");
+      showToast?.("Recarga mÃ¡xima 1090 USDT.", "warning");
       return;
     }
 
     setIsSubmitting(true);
     try {
       await withLoading(async () => {
-        // Validação de Sessão
+        // ValidaÃ§Ã£o de SessÃ£o
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
           onNavigate('login');
-          throw new Error("Sessão expirada.");
+          throw new Error("SessÃ£o expirada.");
         }
 
-        // RPC Seguro: Valida limites, duplicidade e registra transação
+        // RPC Seguro: Valida limites, duplicidade e registra transaÃ§Ã£o
         const { data, error } = await supabase.rpc('create_usdt_deposit', {
           p_amount_usdt: numAmount,
           p_exchange_rate: exchangeRate
         });
 
         if (error) {
-          throw new Error("Erro de conexão com servidor.");
+          throw new Error("Erro de conexÃ£o com servidor.");
         }
 
         if (data && !data.success) {
-          throw new Error(data.message || "Falha ao criar depósito.");
+          throw new Error(data.message || "Falha ao criar depÃ³sito.");
         }
 
         // Sucesso
         return data.message;
-      }, 'Solicitação criada com sucesso!');
+      }, 'SolicitaÃ§Ã£o criada com sucesso!');
 
       onNavigate('home');
     } catch (error: any) {
@@ -137,7 +137,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
           <div className="size-16 bg-[#26a17b]/10 rounded-full flex items-center justify-center mb-4 ring-2 ring-[#26a17b]/20">
             <span className="material-symbols-outlined text-[#26a17b]" style={{ fontSize: '32px', fontVariationSettings: "'FILL' 1" }}>currency_bitcoin</span>
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight mb-2 text-black">Depósito Cripto</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight mb-2 text-black">DepÃ³sito Cripto</h1>
           <p className="text-text-secondary text-sm leading-relaxed max-w-[280px]">
             Recarregue sua conta usando USDT na rede <span className="text-black font-bold">TRON (TRC20)</span>.
           </p>
@@ -152,7 +152,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                placeholder="Mínimo 4 USDT"
+                placeholder="MÃ­nimo 4 USDT"
                 min="4"
                 max="1090"
                 className="w-full bg-surface-dark border border-brand-border rounded-xl h-16 px-5 text-2xl font-black text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-text-secondary/30"
@@ -162,13 +162,13 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
             <div className="flex justify-between items-center px-1">
               <p className="text-xs text-text-secondary font-medium">Equivalente em Kz (Moeda de Destino)</p>
               <div className="flex flex-col items-end">
-                <p className="text-sm font-black text-primary">≈ Kz {kzEquivalent}</p>
+                <p className="text-sm font-black text-primary">â‰ˆ Kz {kzEquivalent}</p>
                 {isFetching && <span className="text-[9px] text-text-secondary animate-pulse">Atualizando taxa...</span>}
               </div>
             </div>
             <div className="p-3 rounded-lg bg-[#26a17b]/5 border border-[#26a17b]/10 flex flex-col items-center gap-1">
               <p className="text-[10px] text-[#26a17b] font-black uppercase tracking-widest">
-                TAXA DE CÂMBIO: 1 USDT = {exchangeRate > 0 ? exchangeRate.toFixed(2) : '---'} Kz
+                TAXA DE CÃ‚MBIO: 1 USDT = {exchangeRate > 0 ? exchangeRate.toFixed(2) : '---'} Kz
               </p>
               {lastUpdate && (
                 <p className="text-[8px] text-text-secondary/60">
@@ -181,11 +181,11 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
 
         {/* Payment Details Section */}
         <div className="bg-surface-dark rounded-2xl p-6 border border-brand-border shadow-md">
-          <h3 className="text-xs font-bold text-gray-800 uppercase tracking-widest mb-6 text-center">Dados para Transferência</h3>
+          <h3 className="text-xs font-bold text-gray-800 uppercase tracking-widest mb-6 text-center">Dados para TransferÃªncia</h3>
 
           {/* Recipient Name */}
           <div className="flex flex-col gap-1 mb-4 text-center">
-            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Destinatário</label>
+            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">DestinatÃ¡rio</label>
             <p className="text-black font-bold text-sm tracking-wide">{recipientName}</p>
           </div>
 
@@ -208,7 +208,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
 
           {/* Wallet Address */}
           <div className="flex flex-col gap-2">
-            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Endereço da Carteira (TRC20)</label>
+            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">EndereÃ§o da Carteira (TRC20)</label>
             <div className="flex items-center gap-2 bg-background-dark p-3 rounded-xl border border-brand-border">
               <p className="flex-1 text-[13px] font-mono font-bold text-text-primary truncate text-center select-all">{walletAddress}</p>
               <button
@@ -228,7 +228,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
             <div className="flex flex-col">
               <p className="text-black text-xs font-bold uppercase tracking-tight">Aviso Importante</p>
               <p className="text-gray-900/80 text-[11px] leading-relaxed mt-1">
-                Envie apenas <span className="font-bold text-black underline">USDT via rede TRC20</span>. O envio para outras redes ou moedas resultará na perda definitiva dos fundos.
+                Envie apenas <span className="font-bold text-black underline">USDT via rede TRC20</span>. O envio para outras redes ou moedas resultarÃ¡ na perda definitiva dos fundos.
               </p>
             </div>
           </div>
@@ -244,7 +244,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
           disabled={isSubmitting || isFetching}
           className={`w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${isSubmitting || isFetching ? 'opacity-50' : ''}`}
         >
-          <span>Confirmar Depósito</span>
+          <span>Confirmar DepÃ³sito</span>
           <span className="material-symbols-outlined font-bold text-[20px]">send_money</span>
         </button>
       </footer>
@@ -253,3 +253,4 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
 };
 
 export default DepositUSDT;
+

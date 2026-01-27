@@ -1,4 +1,4 @@
-
+ï»¿
 import React from 'react';
 
 interface Props {
@@ -49,12 +49,12 @@ const Campaigns: React.FC<Props> = ({ onNavigate }) => {
               </div>
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-bold text-black">Cashback SmartBuy</h3>
-              <p className="mt-1 text-sm text-gray-600 font-medium leading-relaxed line-clamp-2">5% de volta em eletrônicos e acessórios comprados pelo app.</p>
+              <h3 className="text-lg font-bold text-black">Cashback BP</h3>
+              <p className="mt-1 text-sm text-gray-600 font-medium leading-relaxed line-clamp-2">5% de volta em eletrÃ´nicos e acessÃ³rios comprados pelo app.</p>
               <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-4">
                 <div className="flex flex-col">
                   <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Recompensa</span>
-                  <span className="text-primary font-bold">Até 10.000 Kz</span>
+                  <span className="text-primary font-bold">AtÃ© 10.000 Kz</span>
                 </div>
                 <button
                   onClick={() => onNavigate('gift-chest')}
@@ -72,3 +72,4 @@ const Campaigns: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default Campaigns;
+

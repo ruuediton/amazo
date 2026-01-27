@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 
 interface Props {
     onNavigate: (page: string) => void;
@@ -21,7 +21,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
             case 1:
                 return {
                     title: 'Selecione seu Banco',
-                    description: 'Escolha seu banco na nossa lista de parceiros suportados em Angola para começar a integração segura.',
+                    description: 'Escolha seu banco na nossa lista de parceiros suportados em Angola para comeÃ§ar a integraÃ§Ã£o segura.',
                     visual: (
                         <div className="relative w-full h-full flex items-center justify-center">
                             {/* Abstract Bank UI Representation */}
@@ -57,7 +57,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
             case 2:
                 return {
                     title: 'Preencha os Dados',
-                    description: 'Insira o número da conta e o nome do titular com atenção. Os dados devem corresponder exatamente ao seu banco.',
+                    description: 'Insira o nÃºmero da conta e o nome do titular com atenÃ§Ã£o. Os dados devem corresponder exatamente ao seu banco.',
                     visual: (
                         <div className="relative w-full h-full flex items-center justify-center">
                             <div className="w-4/5 bg-white dark:bg-[#1a180e] rounded-xl shadow-lg border border-slate-100 dark:border-white/10 p-5 flex flex-col gap-4 relative z-10">
@@ -82,7 +82,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
             case 3:
                 return {
                     title: 'Confirme e Salve',
-                    description: 'Revise todas as informações. Se estiverem corretas, clique no botão abaixo para finalizar o vínculo.',
+                    description: 'Revise todas as informaÃ§Ãµes. Se estiverem corretas, clique no botÃ£o abaixo para finalizar o vÃ­nculo.',
                     visual: (
                         <div className="relative w-full h-full flex items-center justify-center">
                             <div className="w-64 h-40 bg-white dark:bg-[#1a180e] rounded-xl shadow-lg border border-slate-100 dark:border-white/10 flex flex-col items-center justify-center gap-3 relative z-10">
@@ -92,8 +92,8 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
                                 <div className="h-2 w-32 bg-slate-100 dark:bg-white/10 rounded-full"></div>
                             </div>
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center pointer-events-none">
-                                <span className="absolute top-10 right-10 text-xl">✨</span>
-                                <span className="absolute bottom-10 left-10 text-xl">🚀</span>
+                                <span className="absolute top-10 right-10 text-xl">âœ¨</span>
+                                <span className="absolute bottom-10 left-10 text-xl">ðŸš€</span>
                             </div>
                         </div>
                     )
@@ -169,7 +169,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
                             onClick={handleNext}
                             className="w-full h-12 bg-primary hover:bg-primary-dark text-background-dark font-bold text-base rounded-xl flex items-center justify-center transition-all active:scale-[0.98]"
                         >
-                            {currentStep === totalSteps ? 'Ir adicionar' : 'Próximo'}
+                            {currentStep === totalSteps ? 'Ir adicionar' : 'PrÃ³ximo'}
                         </button>
                     </div>
                 </main>
@@ -182,3 +182,4 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default TutoriaisAdicionarConta;
+

@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import SpokeSpinner from './SpokeSpinner';
 import { FeedbackStatus } from '../contexts/LoadingContext';
@@ -70,4 +70,5 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ status, message }) => {
 };
 
 export default LoadingOverlay;
+
 

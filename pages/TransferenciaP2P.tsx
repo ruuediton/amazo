@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ï»¿import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -58,11 +58,11 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
         }
 
         if (amountNum < 1000) {
-            showToast?.('Mínimo de transferência é 1.000 Kz.', 'warning');
+            showToast?.('MÃ­nimo de transferÃªncia Ã© 1.000 Kz.', 'warning');
             return;
         }
         if (amountNum > 10000) {
-            showToast?.('Máximo de transferência é 10.000 Kz.', 'warning');
+            showToast?.('MÃ¡ximo de transferÃªncia Ã© 10.000 Kz.', 'warning');
             return;
         }
 
@@ -82,11 +82,11 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     showToast?.(data.message || "Tranferencia sucedida", 'success');
                     onNavigate('historico-conta');
                 } else {
-                    throw new Error(data?.message || 'Erro na transferência.');
+                    throw new Error(data?.message || 'Erro na transferÃªncia.');
                 }
             });
         } catch (error: any) {
-            showToast?.(error.message || 'Erro ao processar transferência.', 'error');
+            showToast?.(error.message || 'Erro ao processar transferÃªncia.', 'error');
         } finally {
             setLoading(false);
         }
@@ -116,8 +116,8 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                             <span className="material-symbols-outlined text-[#e47911] text-3xl">currency_exchange</span>
                         </div>
                         <div>
-                            <p className="text-[#565959] text-[10px] font-bold uppercase tracking-widest mb-1">Transferência P2P</p>
-                            <p className="text-[13px] font-bold text-[#0F1111] leading-tight">Envie saldo instantaneamente para qualquer conta SmartBuy.</p>
+                            <p className="text-[#565959] text-[10px] font-bold uppercase tracking-widest mb-1">TransferÃªncia P2P</p>
+                            <p className="text-[13px] font-bold text-[#0F1111] leading-tight">Envie saldo instantaneamente para qualquer conta BP.</p>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     {/* Receiver Input */}
                     <div className="space-y-2">
                         <div className="flex justify-between">
-                            <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Telefone do Destinatário</label>
+                            <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Telefone do DestinatÃ¡rio</label>
                             {isValidatingPhone && <span className="text-[10px] text-[#e77600] animate-pulse">Verificando...</span>}
                             {receiverName && !isValidatingPhone && <span className="text-[10px] text-green-600 font-bold truncate max-w-[150px]">{receiverName}</span>}
                         </div>
@@ -136,7 +136,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                             </span>
                             <input
                                 type="tel"
-                                placeholder="Nº do destinatário"
+                                placeholder="NÂº do destinatÃ¡rio"
                                 value={receiverPhone}
                                 onChange={handlePhoneChange}
                                 className="w-full bg-transparent border-none p-0 text-[16px] font-bold text-[#0F1111] placeholder:text-gray-400 focus:ring-0"
@@ -183,7 +183,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                             <span className="material-symbols-outlined text-gray-400 mr-3">lock</span>
                             <input
                                 type="password"
-                                placeholder="••••"
+                                placeholder="â€¢â€¢â€¢â€¢"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full bg-transparent border-none p-0 text-[20px] font-bold text-[#0F1111] tracking-[0.4em] placeholder:text-gray-300 focus:ring-0"
@@ -201,7 +201,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     </button>
                     
                     <p className="text-center text-[11px] text-gray-400 font-medium px-4 leading-relaxed italic">
-                        O envio de saldo entre contas SmartBuy é instantâneo e seguro. Verifique os dados antes de confirmar.
+                        O envio de saldo entre contas BP Ã© instantÃ¢neo e seguro. Verifique os dados antes de confirmar.
                     </p>
                 </div>
             </main>
@@ -210,3 +210,4 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
 };
 
 export default TransferenciaP2P;
+

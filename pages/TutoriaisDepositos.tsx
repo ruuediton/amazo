@@ -1,4 +1,4 @@
-
+ï»¿
 import React, { useState } from 'react';
 import TutorialSlider from '../components/TutorialSlider';
 
@@ -13,12 +13,12 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
   const multicaixaSteps = [
     {
       title: "Aceda ao App",
-      description: "Abra a aplicação Multicaixa Express no seu telemóvel e faça login com o seu código PIN.",
+      description: "Abra a aplicaÃ§Ã£o Multicaixa Express no seu telemÃ³vel e faÃ§a login com o seu cÃ³digo PIN.",
       icon: "touch_app"
     },
     {
       title: "Selecione Pagamentos",
-      description: 'No menu principal, escolha "Pagamentos" e de seguida a opção "Pagamento por Referência".',
+      description: 'No menu principal, escolha "Pagamentos" e de seguida a opÃ§Ã£o "Pagamento por ReferÃªncia".',
       icon: "payments",
       content: (
         <div className="w-full h-32 rounded-3xl bg-gradient-to-br from-surface-highlight to-surface-dark border border-gray-200 flex items-center justify-center relative overflow-hidden">
@@ -39,7 +39,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
     },
     {
       title: "Insira os Dados",
-      description: "Utilize a Entidade e Referência abaixo para concluir o depósito. O valor mínimo é 2.000 Kz.",
+      description: "Utilize a Entidade e ReferÃªncia abaixo para concluir o depÃ³sito. O valor mÃ­nimo Ã© 2.000 Kz.",
       icon: "input",
       content: (
         <div className="space-y-4">
@@ -55,7 +55,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
             </div>
             <div className="flex items-center justify-between p-4 bg-surface-highlight/20">
               <div className="flex flex-col">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500 mb-1">Referência</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500 mb-1">ReferÃªncia</span>
                 <span className="font-mono text-xl font-bold tracking-wide text-black">923 411 882</span>
               </div>
               <button className="size-10 flex items-center justify-center rounded-xl bg-primary/10 hover:bg-primary/20 text-primary transition-colors active:scale-95">
@@ -66,7 +66,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           <div className="flex gap-3 items-start p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-left">
             <span className="material-symbols-outlined text-blue-400 text-sm mt-0.5">info</span>
             <p className="text-xs text-blue-300 font-medium leading-relaxed">
-              Guarde o comprovativo digital. O saldo deve aparecer na sua conta SmartBuy em menos de 5 minutos.
+              Guarde o comprovativo digital. O saldo deve aparecer na sua conta BP em menos de 5 minutos.
             </p>
           </div>
         </div>
@@ -76,8 +76,8 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
 
   const bankSteps = [
     {
-      title: "Dados Bancários",
-      description: "Utilize o IBAN abaixo para realizar a transferência a partir do seu banco.",
+      title: "Dados BancÃ¡rios",
+      description: "Utilize o IBAN abaixo para realizar a transferÃªncia a partir do seu banco.",
       icon: "account_balance",
       content: (
         <div className="bg-surface-dark border border-gray-200 rounded-2xl overflow-hidden shadow-sm text-left mt-4">
@@ -94,19 +94,19 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       )
     },
     {
-      title: "Realizar Transferência",
-      description: "Faça a transferência do valor desejado no aplicativo do seu banco ou balcão.",
+      title: "Realizar TransferÃªncia",
+      description: "FaÃ§a a transferÃªncia do valor desejado no aplicativo do seu banco ou balcÃ£o.",
       icon: "payments"
     },
     {
       title: "Enviar Comprovativo",
-      description: "É obrigatório enviar o comprovativo da transferência para a validação do saldo.",
+      description: "Ã‰ obrigatÃ³rio enviar o comprovativo da transferÃªncia para a validaÃ§Ã£o do saldo.",
       icon: "upload_file",
       content: (
         <div className="flex gap-3 items-start p-4 rounded-2xl bg-primary/10 border border-yellow-500/20 text-left mt-2">
           <span className="material-symbols-outlined text-yellow-400 text-sm mt-0.5">warning</span>
           <p className="text-xs text-yellow-300 font-medium leading-relaxed">
-            Sim, é estritamente necessário enviar a foto/PDF do comprovativo.
+            Sim, Ã© estritamente necessÃ¡rio enviar a foto/PDF do comprovativo.
           </p>
         </div>
       )
@@ -124,7 +124,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <h1 className="text-base font-bold tracking-tight">Depósito Passo a Passo</h1>
+          <h1 className="text-base font-bold tracking-tight">DepÃ³sito Passo a Passo</h1>
           <button className="flex items-center justify-center size-10 -mr-2 rounded-full hover:bg-white/10 transition-colors text-black" onClick={() => onOpenSupport?.()}>
             <span className="material-symbols-outlined">help</span>
           </button>
@@ -151,7 +151,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
               }`}
           >
             <p className={`text-sm font-bold leading-normal ${activeTab === 'bank' ? 'text-black' : 'text-gray-700'}`}>
-              Transferência Bancária
+              TransferÃªncia BancÃ¡ria
             </p>
           </button>
         </div>
@@ -162,11 +162,11 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         <div className="pt-8 mb-10 text-center">
           <h2 className="text-2xl font-black leading-tight mb-3 tracking-tight italic">
             Como depositar com <span className="text-primary">
-              {activeTab === 'multicaixa' ? 'Multicaixa' : 'Transferência'}
+              {activeTab === 'multicaixa' ? 'Multicaixa' : 'TransferÃªncia'}
             </span>
           </h2>
           <p className="text-gray-600 text-sm font-medium leading-relaxed max-w-[280px] mx-auto">
-            Siga estes passos simples para adicionar fundos {activeTab === 'multicaixa' ? 'instantaneamente' : 'com segurança'}.
+            Siga estes passos simples para adicionar fundos {activeTab === 'multicaixa' ? 'instantaneamente' : 'com seguranÃ§a'}.
           </p>
         </div>
 
@@ -175,14 +175,14 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           key={activeTab} // Reset slider when tab changes
           steps={activeTab === 'multicaixa' ? multicaixaSteps : bankSteps}
           onFinish={() => onNavigate('deposit')}
-          finishText="Fazer Depósito"
+          finishText="Fazer DepÃ³sito"
         />
 
         {/* FAQ Section */}
         <div className="mt-12 mb-6 border-t border-gray-200 pt-10">
           <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-black">
             <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>help_center</span>
-            Dúvidas Comuns
+            DÃºvidas Comuns
           </h3>
           <div className="space-y-4">
             <details className="group bg-surface-dark/50 rounded-2xl border border-gray-200 overflow-hidden transition-all duration-300">
@@ -193,8 +193,8 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
               <div className="px-5 pb-5 pt-0">
                 <p className="text-sm text-gray-600 leading-relaxed text-left">
                   {activeTab === 'multicaixa'
-                    ? "Não é necessário. O sistema valida automaticamente via MultiCaixa assim que o pagamento é processado."
-                    : "Sim, é necessário enviar o comprovativo para que a validação seja realizada."}
+                    ? "NÃ£o Ã© necessÃ¡rio. O sistema valida automaticamente via MultiCaixa assim que o pagamento Ã© processado."
+                    : "Sim, Ã© necessÃ¡rio enviar o comprovativo para que a validaÃ§Ã£o seja realizada."}
                 </p>
               </div>
             </details>
@@ -206,8 +206,8 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
               <div className="px-5 pb-5 pt-0">
                 <p className="text-sm text-gray-600 leading-relaxed text-left">
                   {activeTab === 'multicaixa'
-                    ? "Normalmente o saldo entra em menos de 5 minutos após a confirmação no app MultiCaixa Express."
-                    : "Para transferências bancárias, o tempo médio de confirmação é de cerca de 10 minutos após o envio do comprovativo."}
+                    ? "Normalmente o saldo entra em menos de 5 minutos apÃ³s a confirmaÃ§Ã£o no app MultiCaixa Express."
+                    : "Para transferÃªncias bancÃ¡rias, o tempo mÃ©dio de confirmaÃ§Ã£o Ã© de cerca de 10 minutos apÃ³s o envio do comprovativo."}
                 </p>
               </div>
             </details>
@@ -238,3 +238,4 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
 };
 
 export default TutoriaisDepositos;
+

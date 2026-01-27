@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface InternetErrorModalProps {
@@ -17,7 +17,7 @@ const InternetErrorModal: React.FC<InternetErrorModalProps> = ({ isOpen, onClose
         className="w-full max-w-[340px] bg-white rounded-t-[24px] sm:rounded-[24px] overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500 p-6 pb-8 mx-4 mb-4 sm:mb-0"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Conteúdo do Erro */}
+        {/* ConteÃºdo do Erro */}
         <div className="flex flex-col items-center">
           <div className="mb-5 flex items-center justify-center size-20 rounded-full bg-[#FFFBEB]">
             <span className="material-symbols-outlined text-[#FCD34D] text-5xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48" }}>
@@ -29,12 +29,12 @@ const InternetErrorModal: React.FC<InternetErrorModalProps> = ({ isOpen, onClose
             Erro de Internet
           </h3>
           <p className="text-[#64748B] text-sm font-medium leading-relaxed text-center px-2 mb-8">
-            A ligação demorou demasiado tempo. Verifique a sua rede e tente novamente.
+            A ligaÃ§Ã£o demorou demasiado tempo. Verifique a sua rede e tente novamente.
           </p>
 
           {/* Divisor Decorativo (Opcional, removido para limpar o design light) */}
 
-          {/* Grupo de Botões */}
+          {/* Grupo de BotÃµes */}
           <div className="flex flex-col gap-3 w-full">
             <button
               onClick={onRetry}
@@ -56,3 +56,4 @@ const InternetErrorModal: React.FC<InternetErrorModalProps> = ({ isOpen, onClose
 };
 
 export default InternetErrorModal;
+

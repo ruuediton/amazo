@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 
@@ -20,21 +20,21 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
   const fetchNetwork = async () => {
     setLoading(true);
     try {
-      // 1. Validar Sessão
+      // 1. Validar SessÃ£o
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         onNavigate('login');
         return;
       }
 
-      // 2. Buscar perfil para pegar o invite_code do usuário logado
+      // 2. Buscar perfil para pegar o invite_code do usuÃ¡rio logado
       const { data: profile } = await supabase
         .from('profiles')
         .select('invite_code')
         .eq('id', user.id)
         .single();
 
-      if (!profile) throw new Error("Perfil não encontrado");
+      if (!profile) throw new Error("Perfil nÃ£o encontrado");
 
       // 3. Buscar na tabela my_equipe com as colunas corretas
       // Corrigido: usando codigo_convite e telefone_subordinado
@@ -144,3 +144,4 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default SubordinateList;
+

@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface SupportProps {
@@ -21,8 +21,8 @@ const Support: React.FC<SupportProps> = ({ onNavigate }) => {
 
       {/* Hero Text */}
       <div className="px-4 pt-4 pb-6">
-        <h1 className="text-black tracking-tight text-[28px] font-extrabold leading-tight mb-2">Como podemos ajudar você hoje?</h1>
-        <p className="text-gray-600 text-base font-medium leading-normal">Escolha um canal abaixo para falar com nosso time ou tire suas dúvidas.</p>
+        <h1 className="text-black tracking-tight text-[28px] font-extrabold leading-tight mb-2">Como podemos ajudar vocÃª hoje?</h1>
+        <p className="text-gray-600 text-base font-medium leading-normal">Escolha um canal abaixo para falar com nosso time ou tire suas dÃºvidas.</p>
       </div>
 
       {/* Primary Action Cards */}
@@ -37,11 +37,11 @@ const Support: React.FC<SupportProps> = ({ onNavigate }) => {
               </div>
               <div>
                 <p className="text-black text-lg font-bold leading-tight">Suporte Oficial</p>
-                <p className="text-gray-500 text-sm">Disponível 24/7 para você</p>
+                <p className="text-gray-500 text-sm">DisponÃ­vel 24/7 para vocÃª</p>
               </div>
             </div>
             <p className="text-gray-600 text-sm font-normal leading-relaxed mb-6">
-              Precisa de ajuda com depósitos, retiradas ou dúvidas sobre a plataforma? Nosso time especializado está pronto para atender você agora.
+              Precisa de ajuda com depÃ³sitos, retiradas ou dÃºvidas sobre a plataforma? Nosso time especializado estÃ¡ pronto para atender vocÃª agora.
             </p>
             <button
               onClick={() => window.open('https://wa.me/244933850746', '_blank')}
@@ -62,7 +62,7 @@ const Support: React.FC<SupportProps> = ({ onNavigate }) => {
           {[
             { label: 'Problemas com Pagamentos (Kz)', icon: 'payments' },
             { label: 'Rastreio de Pedidos', icon: 'local_shipping' },
-            { label: 'Segurança da Conta', icon: 'shield' },
+            { label: 'SeguranÃ§a da Conta', icon: 'shield' },
           ].map((item, idx, arr) => (
             <button
               key={item.label}
@@ -84,12 +84,13 @@ const Support: React.FC<SupportProps> = ({ onNavigate }) => {
       <div className="mt-auto pb-32 pt-4 px-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">Disponível 24h por dia</p>
+          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">DisponÃ­vel 24h por dia</p>
         </div>
-        <p className="text-xs text-black/30">Versão do App 4.2.0 • ID: 893-KZA</p>
+        <p className="text-xs text-black/30">VersÃ£o do App 4.2.0 â€¢ ID: 893-KZA</p>
       </div>
     </div>
   );
 };
 
 export default Support;
+

@@ -1,4 +1,4 @@
-
+Ôªø
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -29,8 +29,8 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
       const { data, error } = await supabase.rpc('get_my_bank_accounts');
 
       if (error) {
-        console.error('Erro ao buscar dados banc·rios:', error);
-        // Se der erro, pode ser que n„o exista conta ainda
+        console.error('Erro ao buscar dados banc√°rios:', error);
+        // Se der erro, pode ser que n√£o exista conta ainda
       } else if (data && data.length > 0) {
         setBankInfo(data[0]);
       }
@@ -61,8 +61,8 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
     // BIC -> Vermelho
     if (n.includes('BIC')) return 'from-[#d00000] via-[#ff0000] to-[#9a0000]';
 
-    // ATL¬NTICO -> Azul Claro
-    if (n.includes('ATL¬NTICO') || n.includes('ATL')) return 'from-[#0070c0] via-[#008ae6] to-[#005691]';
+    // ATL√ÇNTICO -> Azul Claro
+    if (n.includes('ATL√ÇNTICO') || n.includes('ATL')) return 'from-[#0070c0] via-[#008ae6] to-[#005691]';
 
     // SOL -> Verde
     if (n.includes('SOL')) return 'from-[#15803d] via-[#16a34a] to-[#14532d]';
@@ -70,14 +70,14 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
     // BNI -> Roxo
     if (n.includes('BNI')) return 'from-[#4b0082] via-[#6a0dad] to-[#310055]';
 
-    // Padr„o (Cinza/Azul Neutro)
+    // Padr√£o (Cinza/Azul Neutro)
     return 'from-[#334155] via-[#475569] to-[#1e293b]';
   };
 
   const handleDeleteBank = async () => {
     if (!bankInfo) return;
 
-    if (confirm('Tem certeza que deseja remover esta conta banc·ria?')) {
+    if (confirm('Tem certeza que deseja remover esta conta banc√°ria?')) {
       const { error } = await supabase
         .from('bancos_clientes')
         .delete()
@@ -86,24 +86,24 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
       if (error) {
         showToast?.('Erro ao remover conta: ' + error.message, 'error');
       } else {
-        showToast?.('Conta banc·ria removida com sucesso.', 'success');
+        showToast?.('Conta banc√°ria removida com sucesso.', 'success');
         onNavigate('profile');
       }
     }
   };
 
-  // Se n„o carregar nada, mostra bot„o para adicionar
+  // Se n√£o carregar nada, mostra bot√£o para adicionar
   if (!loading && !bankInfo) {
     return (
       <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col p-6 items-center justify-center text-center">
         <span className="material-symbols-outlined text-gray-700 text-6xl mb-4">no_accounts</span>
         <h2 className="text-xl font-bold mb-2">Nenhuma conta vinculada</h2>
-        <p className="text-gray-500 text-sm mb-8">VocÍ ainda n„o adicionou um cart„o banc·rio ‡ sua conta SmartBuy.</p>
+        <p className="text-gray-500 text-sm mb-8">Voc√™ ainda n√£o adicionou um cart√£o banc√°rio √† sua conta BP.</p>
         <button
           onClick={() => onNavigate('add-bank')}
           className="w-full h-14 bg-primary text-black font-black rounded-2xl"
         >
-          ADICIONAR CART√O
+          ADICIONAR CART√ÉO
         </button>
       </div>
     );
@@ -121,7 +121,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>
           <h1 className="flex-1 text-center text-lg font-bold leading-tight tracking-tight text-black">
-            Cart„o Banc·rio
+            Cart√£o Banc√°rio
           </h1>
           <button
             onClick={handleDeleteBank}
@@ -139,9 +139,9 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
             </div>
           ) : (
             <>
-              {/* Card Banc·rio Realista e Compacto */}
+              {/* Card Banc√°rio Realista e Compacto */}
               <div className={`relative w-full aspect-[1.586/1] rounded-[20px] overflow-hidden shadow-2xl shadow-black/60 transition-transform active:scale-[0.99] duration-300 bg-gradient-to-br ${getBankStyle(bankInfo?.nome_banco)}`}>
-                {/* Textura do Cart„o */}
+                {/* Textura do Cart√£o */}
                 <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '10px 10px' }}></div>
                 {/* Brilho Glossy */}
                 <div className="absolute -top-[100%] -left-[100%] w-[300%] h-[300%] bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-[25deg] pointer-events-none"></div>
@@ -197,7 +197,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
                 </div>
               </div>
 
-              {/* AÁıes R·pidas */}
+              {/* A√ß√µes R√°pidas */}
               <div className="mt-10 flex flex-col gap-4 px-2">
                 <button
                   onClick={() => {
@@ -211,7 +211,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
                 </button>
 
                 <p className="text-center text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] leading-relaxed mt-4 px-6 opacity-60">
-                  ESTE CART√O … PROTEGIDO POR PROTOCOLOS DE SEGURAN«A BANC¡RIA DA SmartBuy AO
+                  ESTE CART√ÉO √â PROTEGIDO POR PROTOCOLOS DE SEGURAN√áA BANC√ÅRIA DA BP AO
                 </p>
               </div>
             </>
@@ -223,3 +223,4 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
 };
 
 export default DetalhesConta;
+

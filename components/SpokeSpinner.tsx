@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 interface SpokeSpinnerProps {
     className?: string;
@@ -33,3 +33,4 @@ const SpokeSpinner: React.FC<SpokeSpinnerProps> = ({ className = "text-black/60"
 };
 
 export default SpokeSpinner;
+

@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import TutorialSlider from '../components/TutorialSlider';
 
@@ -9,13 +9,13 @@ interface Props {
 const TutoriaisGanhosTarefas: React.FC<Props> = ({ onNavigate }) => {
   const steps = [
     {
-      title: "Acesse a Página",
-      description: "No menu inferior do aplicativo, toque no ícone de Raio (Ganhos) para visualizar seu painel de controle financeiro.",
+      title: "Acesse a PÃ¡gina",
+      description: "No menu inferior do aplicativo, toque no Ã­cone de Raio (Ganhos) para visualizar seu painel de controle financeiro.",
       icon: "bolt"
     },
     {
       title: "Acompanhe seu Saldo",
-      description: "Seu saldo é atualizado em tempo real na moeda local (Kz). O valor aumenta conforme suas tarefas são processadas automaticamente.",
+      description: "Seu saldo Ã© atualizado em tempo real na moeda local (Kz). O valor aumenta conforme suas tarefas sÃ£o processadas automaticamente.",
       icon: "account_balance_wallet",
       content: (
         <div className="flex flex-col items-center py-6 px-4 bg-surface-dark rounded-3xl border border-gray-200 shadow-sm">
@@ -25,8 +25,8 @@ const TutoriaisGanhosTarefas: React.FC<Props> = ({ onNavigate }) => {
       )
     },
     {
-      title: "Controle a Operação",
-      description: 'Use o botão central "Check-in Diário" para coletar suas recompensas. Mantenha o sistema ativo para maximizar ganhos.',
+      title: "Controle a OperaÃ§Ã£o",
+      description: 'Use o botÃ£o central "Check-in DiÃ¡rio" para coletar suas recompensas. Mantenha o sistema ativo para maximizar ganhos.',
       icon: "power_settings_new",
       content: (
         <div className="flex justify-center py-4 relative">
@@ -39,7 +39,7 @@ const TutoriaisGanhosTarefas: React.FC<Props> = ({ onNavigate }) => {
     },
     {
       title: "Itens Ativos",
-      description: 'Verifique a lista de "Itens Ativos" para ver quais produtos estão gerando renda e o desempenho individual de cada um.',
+      description: 'Verifique a lista de "Itens Ativos" para ver quais produtos estÃ£o gerando renda e o desempenho individual de cada um.',
       icon: "precision_manufacturing",
       content: (
         <div className="flex items-center gap-4 p-4 bg-surface-dark rounded-3xl border border-gray-200 opacity-90 text-left">
@@ -76,7 +76,7 @@ const TutoriaisGanhosTarefas: React.FC<Props> = ({ onNavigate }) => {
           >
             <span className="material-symbols-outlined text-primary">arrow_back</span>
           </div>
-          <h2 className="text-base font-bold tracking-tight text-center flex-1">Gestão de Ganhos</h2>
+          <h2 className="text-base font-bold tracking-tight text-center flex-1">GestÃ£o de Ganhos</h2>
           <div className="size-10"></div>
         </div>
 
@@ -101,3 +101,4 @@ const TutoriaisGanhosTarefas: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default TutoriaisGanhosTarefas;
+

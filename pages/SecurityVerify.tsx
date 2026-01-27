@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -25,7 +25,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
   React.useEffect(() => {
     checkStatus();
 
-    // Mitigação Anti-Screenshot
+    // MitigaÃ§Ã£o Anti-Screenshot
     const handleContextMenu = (e: MouseEvent) => e.preventDefault();
     const handleVisibilityChange = () => setIsFocused(!document.hidden);
     const handleBlur = () => setIsFocused(false);
@@ -34,7 +34,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
       // Bloquear PrintScreen e atalhos comuns
       if (e.key === 'PrintScreen' || (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4'))) {
         setIsBlurred(true);
-        showToast?.('Captura de tela detectada e bloqueada por segurança.', 'warning');
+        showToast?.('Captura de tela detectada e bloqueada por seguranÃ§a.', 'warning');
       }
     };
 
@@ -66,7 +66,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
     return () => clearInterval(timer);
   }, [biUrls, timeLeft]);
 
-  // Função para descriptografar o path
+  // FunÃ§Ã£o para descriptografar o path
   const decryptPath = (encryptedPath: string) => {
     try {
       return atob(encryptedPath.split('').reverse().join(''));
@@ -107,7 +107,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
     }
   };
 
-  // Função simples de ofuscação/encriptação para o path
+  // FunÃ§Ã£o simples de ofuscaÃ§Ã£o/encriptaÃ§Ã£o para o path
   const encryptPath = (path: string) => {
     return btoa(path).split('').reverse().join('');
   };
@@ -116,7 +116,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        showToast?.('O arquivo é muito grande. O máximo é 5MB.', 'warning');
+        showToast?.('O arquivo Ã© muito grande. O mÃ¡ximo Ã© 5MB.', 'warning');
         return;
       }
 
@@ -145,7 +145,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        showToast?.('Usuário não autenticado.', 'error');
+        showToast?.('UsuÃ¡rio nÃ£o autenticado.', 'error');
         return;
       }
 
@@ -187,8 +187,8 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
       setIsVerified(true);
       setTimeout(() => onNavigate('profile'), 2000);
     } catch (error: any) {
-      console.error('Erro na verificação:', error);
-      showToast?.('Erro ao processar verificação: ' + (error.message || 'Erro desconhecido'), 'error');
+      console.error('Erro na verificaÃ§Ã£o:', error);
+      showToast?.('Erro ao processar verificaÃ§Ã£o: ' + (error.message || 'Erro desconhecido'), 'error');
     } finally {
       setLoading(false);
     }
@@ -214,11 +214,11 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
             <h1 className="text-2xl font-black text-black">Conta Verificada</h1>
             {isBlurred ? (
               <p className="text-red-400 text-sm font-medium animate-pulse">
-                Por questões de segurança, o tempo de leitura terminou.
+                Por questÃµes de seguranÃ§a, o tempo de leitura terminou.
               </p>
             ) : (
               <p className="text-text-secondary text-sm font-medium">
-                Sua identidade foi confirmada. As imagens serão ocultadas em <span className="text-primary font-bold">{timeLeft}s</span>.
+                Sua identidade foi confirmada. As imagens serÃ£o ocultadas em <span className="text-primary font-bold">{timeLeft}s</span>.
               </p>
             )}
           </div>
@@ -268,8 +268,8 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
       {!isFocused && (
         <div className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-3xl flex flex-col items-center justify-center text-center p-6">
           <span className="material-symbols-outlined text-primary text-6xl mb-4">security</span>
-          <h2 className="text-xl font-bold text-black mb-2">Página Protegida</h2>
-          <p className="text-gray-600 text-sm">Por segurança, o conteúdo é ocultado quando você sai da página ou tenta capturá-lo.</p>
+          <h2 className="text-xl font-bold text-black mb-2">PÃ¡gina Protegida</h2>
+          <p className="text-gray-600 text-sm">Por seguranÃ§a, o conteÃºdo Ã© ocultado quando vocÃª sai da pÃ¡gina ou tenta capturÃ¡-lo.</p>
         </div>
       )}
       <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl">
@@ -282,7 +282,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
           >
             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back</span>
           </button>
-          <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Verificação de Conta</h2>
+          <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">VerificaÃ§Ã£o de Conta</h2>
         </header>
 
         {/* Progress Indicators */}
@@ -299,7 +299,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
         <div className="px-6 pb-8">
           <h1 className="text-[32px] font-extrabold leading-tight text-center pb-3">Verifique sua identidade</h1>
           <p className="text-base font-medium leading-relaxed text-center text-text-secondary">
-            Para garantir a segurança da sua conta, precisamos de uma foto nítida do seu Bilhete de Identidade (BI).
+            Para garantir a seguranÃ§a da sua conta, precisamos de uma foto nÃ­tida do seu Bilhete de Identidade (BI).
           </p>
         </div>
 
@@ -363,7 +363,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
               <span className="material-symbols-outlined text-black" style={{ fontSize: '18px', fontWeight: 'bold' }}>info</span>
             </div>
             <p className="text-sm text-text-secondary leading-relaxed font-medium">
-              Certifique-se de que todas as informações no seu BI estão legíveis e sem reflexos.
+              Certifique-se de que todas as informaÃ§Ãµes no seu BI estÃ£o legÃ­veis e sem reflexos.
             </p>
           </div>
 
@@ -381,7 +381,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
               <SpokeSpinner size="w-6 h-6" className="text-black" />
             ) : (
               <>
-                <span>Enviar para Verificação</span>
+                <span>Enviar para VerificaÃ§Ã£o</span>
                 <span className="material-symbols-outlined font-bold">arrow_forward</span>
               </>
             )}
@@ -389,7 +389,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
 
           <div className="flex items-center justify-center gap-2 mt-5 opacity-40">
             <span className="material-symbols-outlined text-[16px]">lock</span>
-            <span className="text-[10px] font-black uppercase tracking-[0.1em]">Encriptação de ponta a ponta</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.1em]">EncriptaÃ§Ã£o de ponta a ponta</span>
           </div>
         </div>
       </div>
@@ -398,3 +398,4 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
 };
 
 export default SecurityVerify;
+

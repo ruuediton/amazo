@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import TutorialSlider from '../components/TutorialSlider';
 
@@ -10,7 +10,7 @@ const TutoriaisComoConvidar: React.FC<Props> = ({ onNavigate }) => {
   const steps = [
     {
       title: "Copie seu link",
-      description: "Copie seu link exclusivo ou código AMZ-AO-95 para compartilhar com amigos.",
+      description: "Copie seu link exclusivo ou cÃ³digo AMZ-AO-95 para compartilhar com amigos.",
       icon: "content_copy",
       content: (
         <div className="bg-surface-dark border border-gray-200 rounded-3xl p-5 shadow-sm text-left">
@@ -20,7 +20,7 @@ const TutoriaisComoConvidar: React.FC<Props> = ({ onNavigate }) => {
           </div>
           <button className="w-full bg-primary hover:bg-yellow-400 active:scale-[0.98] text-black font-black py-4 px-4 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20">
             <span className="material-symbols-outlined text-[20px]">content_copy</span>
-            Copiar Código
+            Copiar CÃ³digo
           </button>
         </div>
       )
@@ -44,8 +44,8 @@ const TutoriaisComoConvidar: React.FC<Props> = ({ onNavigate }) => {
       icon: "trending_up",
       content: (
         <div className="flex flex-col gap-3 text-left">
-          <TipItem initial="WA" color="#25D366" title="Fale diretamente" desc="Envie mensagens individuais para amigos próximos." />
-          <TipItem initial="IG" gradient="linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)" title="Use Stories" desc="Grave um vídeo curto recomendando o app." />
+          <TipItem initial="WA" color="#25D366" title="Fale diretamente" desc="Envie mensagens individuais para amigos prÃ³ximos." />
+          <TipItem initial="IG" gradient="linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)" title="Use Stories" desc="Grave um vÃ­deo curto recomendando o app." />
         </div>
       )
     }
@@ -72,7 +72,7 @@ const TutoriaisComoConvidar: React.FC<Props> = ({ onNavigate }) => {
             Ganhe <span className="text-primary">500 Kz</span><br />por cada amigo
           </h2>
           <p className="text-gray-600 text-sm font-medium leading-relaxed max-w-[260px] mx-auto text-center">
-            Siga o passos para compartilhar seu código e ganhar recompensas.
+            Siga o passos para compartilhar seu cÃ³digo e ganhar recompensas.
           </p>
         </div>
 
@@ -115,3 +115,4 @@ const TipItem: React.FC<{ initial: string, color?: string, gradient?: string, ti
 );
 
 export default TutoriaisComoConvidar;
+

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -57,3 +57,4 @@ const Toast: React.FC<ToastProps> = ({ message, type, isOpen, onClose }) => {
 };
 
 export default Toast;
+

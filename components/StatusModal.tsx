@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 
 interface StatusModalProps {
     isOpen: boolean;
@@ -17,7 +17,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
     onClose,
     onSupport
 }) => {
-    // Auto‑close after 4 seconds
+    // Autoâ€‘close after 4â€¯seconds
     useEffect(() => {
         if (isOpen) {
             const timer = setTimeout(() => {
@@ -38,7 +38,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     icon: 'check',
                     iconColor: 'text-success-text',
                     title: 'Sucesso!',
-                    branding: 'SmartBuy SUCCESS'
+                    branding: 'BP SUCCESS'
                 };
             case 'warning':
                 return {
@@ -47,7 +47,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     icon: 'warning',
                     iconColor: 'text-warning-text',
                     title: 'Aviso!',
-                    branding: 'SmartBuy WARNING'
+                    branding: 'BP WARNING'
                 };
             case 'info':
                 return {
@@ -55,8 +55,8 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     shadow: 'shadow-primary/10',
                     icon: 'info',
                     iconColor: 'text-primary',
-                    title: 'Informação',
-                    branding: 'SmartBuy INFO'
+                    title: 'InformaÃ§Ã£o',
+                    branding: 'BP INFO'
                 };
             case 'error':
             default:
@@ -66,7 +66,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
                     icon: 'priority_high',
                     iconColor: 'text-error-text',
                     title: 'Erro!',
-                    branding: 'SmartBuy ERROR'
+                    branding: 'BP ERROR'
                 };
         }
     };
@@ -108,3 +108,4 @@ const StatusModal: React.FC<StatusModalProps> = ({
 };
 
 export default StatusModal;
+

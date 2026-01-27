@@ -1,4 +1,4 @@
-
+﻿
 import React, { useEffect } from 'react';
 
 interface Props {
@@ -60,7 +60,7 @@ const SplashScreenAds: React.FC<Props> = ({ onNavigate }) => {
           Ganhe <span className="text-primary">5% de Volta</span> Hoje!
         </h1>
         <p className="mb-8 max-w-xs text-center text-base font-medium leading-relaxed text-gray-700">
-          Faça compras acima de <span className="font-bold text-black">10.000 Kz</span> na categoria Eletrônicos e receba cashback instantâneo na sua conta.
+          FaÃ§a compras acima de <span className="font-bold text-black">10.000 Kz</span> na categoria EletrÃ´nicos e receba cashback instantÃ¢neo na sua conta.
         </p>
 
         <div className="flex-1"></div>
@@ -88,3 +88,4 @@ const SplashScreenAds: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default SplashScreenAds;
+

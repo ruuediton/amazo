@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -26,12 +26,12 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
           <div className="flex flex-col gap-8">
             {/* Intro */}
             <section>
-              <h1 className="text-3xl font-black mb-4 tracking-tight">Termos e Condições</h1>
+              <h1 className="text-3xl font-black mb-4 tracking-tight">Termos e CondiÃ§Ãµes</h1>
               <p className="text-text-secondary text-sm leading-relaxed mb-4">
-                Última atualização: 24 de Outubro de 2023.
+                Ãšltima atualizaÃ§Ã£o: 24 de Outubro de 2023.
               </p>
               <p className="text-black text-base font-medium leading-relaxed">
-                Bem-vindo à SmartBuy. Ao utilizar o nosso aplicativo e serviços bancários integrados, você concorda com os termos descritos abaixo. Por favor, leia-os com atenção.
+                Bem-vindo Ã  BP. Ao utilizar o nosso aplicativo e serviÃ§os bancÃ¡rios integrados, vocÃª concorda com os termos descritos abaixo. Por favor, leia-os com atenÃ§Ã£o.
               </p>
             </section>
 
@@ -40,23 +40,23 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
 
             {/* Section 1 */}
             <section>
-              <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">01. Introdução</h3>
-              <h4 className="text-lg font-bold mb-3 text-black">Aceitação dos Termos</h4>
+              <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">01. IntroduÃ§Ã£o</h3>
+              <h4 className="text-lg font-bold mb-3 text-black">AceitaÃ§Ã£o dos Termos</h4>
               <p className="text-text-secondary text-sm leading-relaxed">
-                Ao criar uma conta na plataforma SmartBuy, o utilizador declara ter capacidade jurídica e concorda integralmente com as regras de operação financeira, prazos de processamento e políticas de cashback vigentes.
+                Ao criar uma conta na plataforma BP, o utilizador declara ter capacidade jurÃ­dica e concorda integralmente com as regras de operaÃ§Ã£o financeira, prazos de processamento e polÃ­ticas de cashback vigentes.
               </p>
             </section>
 
             {/* Section 2 */}
             <section>
-              <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">02. Serviços Financeiros</h3>
-              <h4 className="text-lg font-bold mb-3 text-black">Depósitos e Retiradas</h4>
+              <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">02. ServiÃ§os Financeiros</h3>
+              <h4 className="text-lg font-bold mb-3 text-black">DepÃ³sitos e Retiradas</h4>
               <p className="text-text-secondary text-sm leading-relaxed">
-                Todas as transações são efetuadas em Kwanzas (Kz). Depósitos via Multicaixa Express possuem tempo médio de compensação de 5 minutos, enquanto retiradas bancárias podem levar até 24 horas úteis para serem processadas pela rede interbancária nacional.
+                Todas as transaÃ§Ãµes sÃ£o efetuadas em Kwanzas (Kz). DepÃ³sitos via Multicaixa Express possuem tempo mÃ©dio de compensaÃ§Ã£o de 5 minutos, enquanto retiradas bancÃ¡rias podem levar atÃ© 24 horas Ãºteis para serem processadas pela rede interbancÃ¡ria nacional.
               </p>
               <div className="mt-4 p-4 rounded-xl bg-surface-dark border border-gray-200">
                 <p className="text-xs text-text-secondary italic">
-                  *A SmartBuy não se responsabiliza por dados de IBAN inseridos incorretamente pelo utilizador.
+                  *A BP nÃ£o se responsabiliza por dados de IBAN inseridos incorretamente pelo utilizador.
                 </p>
               </div>
             </section>
@@ -64,25 +64,25 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
             {/* Section 3 */}
             <section>
               <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">03. Marketplace e Ganhos</h3>
-              <h4 className="text-lg font-bold mb-3 text-black">Produtos Eletrônicos</h4>
+              <h4 className="text-lg font-bold mb-3 text-black">Produtos EletrÃ´nicos</h4>
               <p className="text-text-secondary text-sm leading-relaxed">
-                A aquisição de dispositivos na loja SmartBuy integrada concede ao utilizador o direito de participar de campanhas de recompensas por tarefas. Os rendimentos diários são variáveis e dependem da eficiência do sistema e do tipo de dispositivo adquirido.
+                A aquisiÃ§Ã£o de dispositivos na loja BP integrada concede ao utilizador o direito de participar de campanhas de recompensas por tarefas. Os rendimentos diÃ¡rios sÃ£o variÃ¡veis e dependem da eficiÃªncia do sistema e do tipo de dispositivo adquirido.
               </p>
             </section>
 
             {/* Section 4 */}
             <section>
-              <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">04. Segurança</h3>
+              <h3 className="text-primary text-xs font-black uppercase tracking-[0.2em] mb-3">04. SeguranÃ§a</h3>
               <h4 className="text-lg font-bold mb-3 text-black">Privacidade de Dados</h4>
               <p className="text-text-secondary text-sm leading-relaxed">
-                O utilizador é o único responsável por manter o sigilo de sua senha de acesso e senha de retirada. A SmartBuy nunca solicitará sua senha por WhatsApp ou e-mail. Ative sempre a verificação em duas etapas quando disponível.
+                O utilizador Ã© o Ãºnico responsÃ¡vel por manter o sigilo de sua senha de acesso e senha de retirada. A BP nunca solicitarÃ¡ sua senha por WhatsApp ou e-mail. Ative sempre a verificaÃ§Ã£o em duas etapas quando disponÃ­vel.
               </p>
             </section>
 
             {/* Footer Legal Note */}
             <section className="pb-10 pt-4">
               <p className="text-[11px] text-gray-600 leading-relaxed text-center font-medium italic">
-                Este documento é regido pelas leis da República de Angola. Qualquer litígio será resolvido no foro da comarca de Luanda.
+                Este documento Ã© regido pelas leis da RepÃºblica de Angola. Qualquer litÃ­gio serÃ¡ resolvido no foro da comarca de Luanda.
               </p>
             </section>
           </div>
@@ -103,3 +103,4 @@ const TermsOfUse: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default TermsOfUse;
+

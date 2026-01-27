@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+Ôªøimport React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -24,7 +24,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
     "Banco BAI": "0040",
     "Banco BFA": "0006",
     "Banco BIC": "0051",
-    "Banco Atl‚ntico": "0055",
+    "Banco Atl√¢ntico": "0055",
     "Banco Sol": "0044",
     "Banco BNI": "0009"
   };
@@ -90,38 +90,38 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
   };
 
   const handleIbanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ''); // Apenas n˙meros
+    let value = e.target.value.replace(/\D/g, ''); // Apenas n√∫meros
     setIban(value);
   };
 
   const handleSaveBank = async () => {
     try {
       setLocalError(null);
-      let cleanIban = iban.replace(/[^0-9]/g, ''); // Apenas n˙meros
+      let cleanIban = iban.replace(/[^0-9]/g, ''); // Apenas n√∫meros
 
-      // 1. ValidaÁ„o de Tamanho (21 ou 25 dÌgitos)
+      // 1. Valida√ß√£o de Tamanho (21 ou 25 d√≠gitos)
       if (cleanIban.length !== 21 && cleanIban.length !== 25) {
-        setLocalError("O IBAN deve ter exatamente 21 ou 25 dÌgitos.");
+        setLocalError("O IBAN deve ter exatamente 21 ou 25 d√≠gitos.");
         return;
       }
 
-      // 2. FormataÁ„o Autom·tica
+      // 2. Formata√ß√£o Autom√°tica
       let finalIban = '';
       if (cleanIban.length === 21) {
         finalIban = `AO06${cleanIban}`;
       } else if (cleanIban.length === 25) {
-        // Se j· tem 25 dÌgitos, assume que s„o os n˙meros incluindo o 06
+        // Se j√° tem 25 d√≠gitos, assume que s√£o os n√∫meros incluindo o 06
         finalIban = `AO${cleanIban}`;
       }
 
-      // 3. ValidaÁ„o de Prefixo do Banco (Opcional/FlexÌvel)
+      // 3. Valida√ß√£o de Prefixo do Banco (Opcional/Flex√≠vel)
       if (bankName && BANK_PREFIXES[bankName]) {
         const expectedPrefix = BANK_PREFIXES[bankName];
-        // O prefixo do banco s„o os dÌgitos da posiÁ„o 4 a 8 no IBAN final (AO06XXXX...)
+        // O prefixo do banco s√£o os d√≠gitos da posi√ß√£o 4 a 8 no IBAN final (AO06XXXX...)
         const currentPrefix = finalIban.substring(4, 8);
 
         if (currentPrefix !== expectedPrefix) {
-          setLocalError(`Este IBAN n„o parece ser do ${bankName}.`);
+          setLocalError(`Este IBAN n√£o parece ser do ${bankName}.`);
           return;
         }
       }
@@ -130,7 +130,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
         const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
-          throw new Error("Sess„o expirada. Acesse novamente.");
+          throw new Error("Sess√£o expirada. Acesse novamente.");
         }
 
         const payload = {
@@ -149,7 +149,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
         showToast?.("Bem sucedido", "success");
         await checkExistingBank();
         setTimeout(() => onNavigate('profile'), 1200);
-      }, "Salvando dados banc·rios...");
+      }, "Salvando dados banc√°rios...");
 
     } catch (err: any) {
       if (err.message && !err.message.includes('loading')) {
@@ -159,7 +159,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
   };
 
   const currentBankPrefix = bankName ? BANK_PREFIXES[bankName] : '';
-  const ibanPlaceholder = "Digite apenas os 21 n˙meros do seu IBAN";
+  const ibanPlaceholder = "Digite apenas os 21 n√∫meros do seu IBAN";
 
   const maskIban = (val: string) => {
     if (!val) return '';
@@ -179,7 +179,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
             <span className="material-symbols-outlined text-[#0F1111] text-[24px]">arrow_back</span>
           </button>
           <h1 className="text-[16px] font-bold text-[#0F1111] tracking-tight">
-            {mode === 'view' ? 'Dados Banc·rios' : mode === 'edit' ? 'Editar Conta' : 'Nova Conta'}
+            {mode === 'view' ? 'Dados Banc√°rios' : mode === 'edit' ? 'Editar Conta' : 'Nova Conta'}
           </h1>
           <div className="w-10"></div>
         </div>
@@ -194,7 +194,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
             <div className="text-center space-y-1">
               <h2 className="text-xl font-bold text-[#0F1111]">Conta Vinculada</h2>
-              <p className="text-[#565959] text-sm">Seus recebimentos ser„o enviados para:</p>
+              <p className="text-[#565959] text-sm">Seus recebimentos ser√£o enviados para:</p>
             </div>
 
             <div className="w-full bg-white border border-gray-200 rounded-xl p-5 shadow-sm space-y-5">
@@ -234,14 +234,14 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
         ) : (
           <div className="flex-1 flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="mb-6">
-              <h2 className="text-[18px] font-bold text-[#0F1111] mb-1">Adicionar Conta Banc·ria</h2>
+              <h2 className="text-[18px] font-bold text-[#0F1111] mb-1">Adicionar Conta Banc√°ria</h2>
               <p className="text-[#565959] text-[13px]">Certifique-se que o titular da conta corresponde ao seu BI.</p>
             </div>
 
             <div className="space-y-3 flex-1">
               <div className="space-y-2">
                 <label className="block text-[13px] font-bold text-[#0F1111]">
-                  Banco Destinat·rio
+                  Banco Destinat√°rio
                 </label>
                 <div className="relative">
                   <select
@@ -253,7 +253,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                     <option value="Banco BAI">Banco BAI</option>
                     <option value="Banco BFA">Banco BFA</option>
                     <option value="Banco BIC">Banco BIC</option>
-                    <option value="Banco Atl‚ntico">Banco Atl‚ntico</option>
+                    <option value="Banco Atl√¢ntico">Banco Atl√¢ntico</option>
                     <option value="Banco Sol">Banco Sol</option>
                     <option value="Banco BNI">Banco BNI</option>
                   </select>
@@ -271,14 +271,14 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   value={holderName}
                   onChange={(e) => setHolderName(e.target.value)}
                   className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
-                  placeholder="Ex: Jo„o Manuel Silva"
+                  placeholder="Ex: Jo√£o Manuel Silva"
                   type="text"
                 />
               </div>
 
               <div className="space-y-2">
                 <label className="block text-[13px] font-bold text-[#0F1111]">
-                  IBAN (21 DÌgitos)
+                  IBAN (21 D√≠gitos)
                 </label>
                 <input
                   value={iban}
@@ -308,20 +308,20 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                 {loading ? (
                   <SpokeSpinner size="w-5 h-5" color="text-black" />
                 ) : (
-                  mode === 'edit' ? 'Salvar AlteraÁıes' : 'Vincular Conta'
+                  mode === 'edit' ? 'Salvar Altera√ß√µes' : 'Vincular Conta'
                 )}
               </button>
 
               <div className="flex items-center justify-center gap-1.5 pt-2 opacity-60">
                 <span className="material-symbols-outlined text-[16px] text-[#565959]">lock</span>
-                <p className="text-[11px] text-[#565959]">Ambiente seguro SmartBuy</p>
+                <p className="text-[11px] text-[#565959]">Ambiente seguro BP</p>
               </div>
             </div>
           </div>
         )}
       </main>
 
-      {/* Mini Toast - Pequenino, Transl˙cido e Centralizado */}
+      {/* Mini Toast - Pequenino, Transl√∫cido e Centralizado */}
       {localError && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none animate-in fade-in duration-200">
           <div className="bg-red-500/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl shadow-2xl max-w-sm mx-4 text-center text-sm font-medium pointer-events-auto">
@@ -334,3 +334,4 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 };
 
 export default AddBank;
+

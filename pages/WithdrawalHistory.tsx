@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
 
@@ -83,7 +83,7 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
         <button onClick={() => onNavigate('retirada')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
           <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
         </button>
-        <span className="font-bold text-[16px]">Histórico de Retiradas</span>
+        <span className="font-bold text-[16px]">HistÃ³rico de Retiradas</span>
         <div className="size-10"></div>
       </header>
 
@@ -126,7 +126,7 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
               </div>
 
               <div className="bg-gray-50 p-2.5 rounded-lg flex justify-between items-center">
-                <span className="text-[11px] font-bold text-[#565959]">Líquido a receber:</span>
+                <span className="text-[11px] font-bold text-[#565959]">LÃ­quido a receber:</span>
                 <span className="text-[13px] font-bold text-green-600">{formatCurrency(record.valor_solicitado - record.taxa_12_porcento)}</span>
               </div>
             </div>
@@ -137,7 +137,7 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
               <span className="material-symbols-outlined text-[40px] text-gray-300">receipt_long</span>
             </div>
             <h3 className="font-bold text-[#0F1111] text-[16px]">Nenhum registro</h3>
-            <p className="text-[13px] text-[#565959] mt-1">Suas retiradas aparecerão aqui assim que você as solicitar.</p>
+            <p className="text-[13px] text-[#565959] mt-1">Suas retiradas aparecerÃ£o aqui assim que vocÃª as solicitar.</p>
             <button
               onClick={() => onNavigate('retirada')}
               className="mt-6 px-6 py-2 bg-[#FFD814] border border-[#FCD200] rounded-lg text-[13px] font-medium shadow-sm transition-all active:scale-95"
@@ -152,3 +152,4 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default WithdrawalHistory;
+

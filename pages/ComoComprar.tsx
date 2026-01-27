@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -27,8 +27,8 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
 
       <main className="flex flex-col px-4 py-6 max-w-lg mx-auto w-full">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-black mb-2">Guia Rápido</h2>
-          <p className="text-gray-600 text-sm">Siga os passos abaixo para realizar suas compras com segurança e praticidade.</p>
+          <h2 className="text-2xl font-bold text-black mb-2">Guia RÃ¡pido</h2>
+          <p className="text-gray-600 text-sm">Siga os passos abaixo para realizar suas compras com seguranÃ§a e praticidade.</p>
         </div>
 
         {/* Steps Timeline */}
@@ -45,10 +45,10 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                   <div className="p-2 bg-primary/10 rounded-lg text-primary">
                     <span className="material-symbols-outlined">account_balance_wallet</span>
                   </div>
-                  <h3 className="text-black font-bold text-lg">Faça um Depósito</h3>
+                  <h3 className="text-black font-bold text-lg">FaÃ§a um DepÃ³sito</h3>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Garanta que tem saldo suficiente. Vá até a aba <strong>Banco</strong> e selecione <strong>Depositar</strong> via Multicaixa ou Transferência.
+                  Garanta que tem saldo suficiente. VÃ¡ atÃ© a aba <strong>Banco</strong> e selecione <strong>Depositar</strong> via Multicaixa ou TransferÃªncia.
                 </p>
                 <div className="bg-background-dark/50 rounded-xl p-4 flex items-center justify-center border border-gray-200 h-20">
                   <div className="flex items-center gap-3 opacity-80">
@@ -76,7 +76,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                   <h3 className="text-black font-bold text-lg">Acesse a Loja</h3>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Toque no ícone da <strong>Loja</strong> no menu inferior para explorar categorias como eletrônicos, livros e casa inteligente.
+                  Toque no Ã­cone da <strong>Loja</strong> no menu inferior para explorar categorias como eletrÃ´nicos, livros e casa inteligente.
                 </p>
                 <div className="bg-background-dark/50 rounded-xl p-4 flex items-center justify-center border border-gray-200 h-20">
                   <div className="flex gap-3 items-end">
@@ -106,7 +106,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                   <h3 className="text-black font-bold text-lg">Selecione e Compre</h3>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Escolha seu produto, veja os benefícios e toque no botão <strong>Comprar</strong>. O valor será descontado instantaneamente.
+                  Escolha seu produto, veja os benefÃ­cios e toque no botÃ£o <strong>Comprar</strong>. O valor serÃ¡ descontado instantaneamente.
                 </p>
                 <div className="bg-background-dark/50 rounded-xl p-4 flex flex-col items-center justify-center border border-gray-200 gap-2 h-20">
                   <div className="w-24 h-2 bg-white/10 rounded-full"></div>
@@ -130,10 +130,10 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                   <div className="p-2 bg-primary/10 rounded-lg text-primary">
                     <span className="material-symbols-outlined">receipt_long</span>
                   </div>
-                  <h3 className="text-black font-bold text-lg">Histórico de Compras</h3>
+                  <h3 className="text-black font-bold text-lg">HistÃ³rico de Compras</h3>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Visualize suas compras recentes e acompanhe o status de entrega na aba <strong>Conta</strong> &gt; <strong>Histórico de Compras</strong>.
+                  Visualize suas compras recentes e acompanhe o status de entrega na aba <strong>Conta</strong> &gt; <strong>HistÃ³rico de Compras</strong>.
                 </p>
                 <div className="bg-background-dark/50 rounded-xl p-4 flex flex-col gap-3 border border-gray-200 w-full justify-center h-20">
                   <div className="flex items-center gap-3 px-2">
@@ -144,7 +144,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                   </div>
                   <div className="flex justify-between text-[10px] text-gray-600 px-2 font-medium">
                     <span>Enviado</span>
-                    <span className="text-green-600">Em trânsito</span>
+                    <span className="text-green-600">Em trÃ¢nsito</span>
                   </div>
                 </div>
               </div>
@@ -158,7 +158,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
             className="w-full bg-primary hover:bg-primary-hover text-background-dark font-bold text-base py-4 rounded-xl shadow-lg shadow-yellow-500/10 active:scale-95 transition-all flex items-center justify-center gap-2 group"
           >
             <span className="material-symbols-outlined">shopping_bag</span>
-            Começar a Comprar Agora
+            ComeÃ§ar a Comprar Agora
           </button>
         </div>
       </main>
@@ -167,3 +167,4 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default ComoComprar;
+

@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
@@ -18,30 +18,30 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Requisitos de validação simplificados (4 dígitos)
+  // Requisitos de validaÃ§Ã£o simplificados (4 dÃ­gitos)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. Sanitização
+    // 1. SanitizaÃ§Ã£o
     const cleanPass = password.replace(/\D/g, '');
     const cleanConfirm = confirmPassword.replace(/\D/g, '');
 
     if (cleanPass.length !== 4) {
-      showToast?.("A senha deve conter 4 dígitos numéricos.", "warning");
+      showToast?.("A senha deve conter 4 dÃ­gitos numÃ©ricos.", "warning");
       return;
     }
 
     if (cleanPass !== cleanConfirm) {
-      showToast?.("As senhas não coincidem.", "error");
+      showToast?.("As senhas nÃ£o coincidem.", "error");
       return;
     }
 
     await withLoading(async () => {
-      // Validação de Sessão
+      // ValidaÃ§Ã£o de SessÃ£o
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        throw new Error("Sessão expirada. Acesse novamente.");
+        throw new Error("SessÃ£o expirada. Acesse novamente.");
       }
 
       // Chamada Segura RPC
@@ -74,7 +74,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
         <div className="mb-4 mt-2">
           <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-2">Definir Senha de Retirada</h2>
           <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
-            Esta senha será solicitada exclusivamente para confirmar saques, transferências e pagamentos.
+            Esta senha serÃ¡ solicitada exclusivamente para confirmar saques, transferÃªncias e pagamentos.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
                 maxLength={4}
                 inputMode="numeric"
                 className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                placeholder="Crie uma nova senha (4 dígitos)"
+                placeholder="Crie uma nova senha (4 dÃ­gitos)"
                 type={showNew ? "text" : "password"}
               />
               <button
@@ -152,3 +152,4 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
 };
 
 export default WithdrawPassword;
+

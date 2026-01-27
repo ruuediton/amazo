@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useEffect, useRef, useCallback, ReactElement, cloneElement } from 'react';
+﻿import React, { lazy, Suspense, useState, useEffect, useRef, useCallback, ReactElement, cloneElement } from 'react';
 
 // Lazy loading all pages for better performance
 const Home = lazy(() => import('./pages/Home'));
@@ -161,7 +161,7 @@ const App: React.FC = () => {
 
     timerRef.current = setTimeout(async () => {
       await performFullLogout();
-      showError('Sessão expirada. Por favor, entre novamente para sua segurança.');
+      showError('SessÃ£o expirada. Por favor, entre novamente para sua seguranÃ§a.');
     }, sessionDuration);
   }, [session, showError]);
 
@@ -324,7 +324,7 @@ const App: React.FC = () => {
               className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'home' ? 'text-secondary scale-110' : 'text-gray-400'}`}
             >
               <span className={`material-symbols-outlined text-[23px] ${currentPage === 'home' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'home' ? 1 : 0}` }}>home</span>
-              <span className="text-[9px] font-bold">Início</span>
+              <span className="text-[9px] font-bold">InÃ­cio</span>
             </button>
 
             <button
@@ -379,7 +379,7 @@ const App: React.FC = () => {
               </div>
               <h3 className="text-2xl font-black text-[#0F1111] mb-2">Deseja sair?</h3>
               <p className="text-gray-500 mb-8 leading-relaxed">
-                Você precisará entrar novamente para acessar sua conta Silver Creek Ranch. Seus dados de navegação serão limpos.
+                VocÃª precisarÃ¡ entrar novamente para acessar sua conta BP. Seus dados de navegaÃ§Ã£o serÃ£o limpos.
               </p>
 
               <div className="flex flex-col gap-3 w-full">
@@ -406,3 +406,4 @@ const App: React.FC = () => {
 
 
 export default App;
+

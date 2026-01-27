@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useMemo } from 'react';
 
 interface TutorialsProps {
@@ -19,11 +19,11 @@ interface TutorialSection {
 
 const tutorialsData: TutorialSection[] = [
   {
-    title: 'Transações',
+    title: 'TransaÃ§Ãµes',
     items: [
       {
         icon: 'arrow_circle_down',
-        title: 'Tutoriais Depósitos',
+        title: 'Tutoriais DepÃ³sitos',
         subtitle: 'Como adicionar fundos',
         route: 'tutoriais-depositos',
       },
@@ -36,24 +36,24 @@ const tutorialsData: TutorialSection[] = [
       {
         icon: 'upload_file',
         title: 'Tutoriais Enviar Comprovante ao Gerente',
-        subtitle: 'Validar transações',
+        subtitle: 'Validar transaÃ§Ãµes',
         route: 'como-enviar-comprovante',
       },
     ],
   },
   {
-    title: 'Conta & Segurança',
+    title: 'Conta & SeguranÃ§a',
     items: [
       {
         icon: 'account_balance',
-        title: 'Tutoriais Adicionar Conta Bancária',
-        subtitle: 'Vincular dados bancários',
+        title: 'Tutoriais Adicionar Conta BancÃ¡ria',
+        subtitle: 'Vincular dados bancÃ¡rios',
         route: 'tutoriais-adicionar-conta',
       },
       {
         icon: 'lock',
         title: 'Tutoriais Definir Senha de Retirada',
-        subtitle: 'Criar senha de transação',
+        subtitle: 'Criar senha de transaÃ§Ã£o',
         route: 'tutoriais-definir-senha',
       },
     ],
@@ -64,7 +64,7 @@ const tutorialsData: TutorialSection[] = [
       {
         icon: 'shopping_bag',
         title: 'Tutoriais Comprar na Loja',
-        subtitle: 'Usando saldo na SmartBuy',
+        subtitle: 'Usando saldo na BP',
         route: 'como-comprar',
       },
       {
@@ -120,7 +120,7 @@ const Tutorials: React.FC<TutorialsProps> = ({ onNavigate }) => {
         </button>
         <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center">Menu de Tutoriais</h2>
         <div className="flex w-12 items-center justify-end">
-          {/* O botão de busca no header pode focar no input ou ser removido se redundante, mantendo visual por enquanto */}
+          {/* O botÃ£o de busca no header pode focar no input ou ser removido se redundante, mantendo visual por enquanto */}
           <button className="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-transparent text-black">
             <span className="material-symbols-outlined text-[24px]">search</span>
           </button>
@@ -208,3 +208,4 @@ const TutorialItem: React.FC<TutorialItemProps> = ({ icon, title, subtitle, onCl
 );
 
 export default Tutorials;
+

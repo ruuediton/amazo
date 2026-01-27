@@ -1,4 +1,4 @@
-
+ï»¿
 import React from 'react';
 
 interface Props {
@@ -32,7 +32,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
               backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(34, 31, 16, 0.95) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuB46nRMkIPkmlVFyVpwFF-SRgylOZzKtzc_JOrBP1wctiWaFtWWOH8y2LNy9LR4j5visSJz4HW9ZQDU8mgQW-3t086JJiiPJxRxtx_XT066spjlxH_hCw6QEI5fhgH5498knw4kNL62jcC55GCWzvmAoHXPfzF8p-byF6KsxWrVYsUm5cSdjTt9TwPlG4TZEOBNJaoyxI-iOi0RS5IxCI7Y-y9_-lMC2aiyylBCPaw_hXzBO-hF1VhpSN3tUoQftIDXGMAWKNHlPkS9")'
             }}
           >
-            {/* Subtle SmartBuy-esque decorative element */}
+            {/* Subtle BP-esque decorative element */}
             <div className="absolute top-4 right-4 opacity-20">
               <span className="material-symbols-outlined text-black text-5xl">savings</span>
             </div>
@@ -48,7 +48,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
         {/* Intro Text */}
         <div className="px-5 pt-6 pb-2">
           <p className="text-text-secondary text-base font-normal leading-relaxed">
-            Obtenha ajuda personalizada para seus investimentos e transações em <span className="font-bold text-primary">Kz</span>. Veja o passo a passo para iniciar o atendimento VIP.
+            Obtenha ajuda personalizada para seus investimentos e transaÃ§Ãµes em <span className="font-bold text-primary">Kz</span>. Veja o passo a passo para iniciar o atendimento VIP.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
             <div className="flex flex-1 flex-col pb-8 pt-1">
               <p className="text-black text-lg font-bold leading-tight mb-1">Aceda ao Chat</p>
               <p className="text-text-secondary text-sm font-normal leading-normal">
-                No menu principal, toque no ícone de suporte no canto inferior direito.
+                No menu principal, toque no Ã­cone de suporte no canto inferior direito.
               </p>
             </div>
 
@@ -80,7 +80,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
             <div className="flex flex-1 flex-col pb-8 pt-1">
               <p className="text-black text-lg font-bold leading-tight mb-1">Selecione o Assunto</p>
               <p className="text-text-secondary text-sm font-normal leading-normal">
-                Escolha a opção "Gerente de Conta" ou "Investimentos Kz" na lista de tópicos.
+                Escolha a opÃ§Ã£o "Gerente de Conta" ou "Investimentos Kz" na lista de tÃ³picos.
               </p>
             </div>
 
@@ -91,9 +91,9 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
               </div>
             </div>
             <div className="flex flex-1 flex-col pt-1">
-              <p className="text-black text-lg font-bold leading-tight mb-1">Conexão Segura</p>
+              <p className="text-black text-lg font-bold leading-tight mb-1">ConexÃ£o Segura</p>
               <p className="text-text-secondary text-sm font-normal leading-normal">
-                Aguarde alguns instantes enquanto conectamos você ao seu gerente dedicado.
+                Aguarde alguns instantes enquanto conectamos vocÃª ao seu gerente dedicado.
               </p>
             </div>
           </div>
@@ -108,7 +108,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
                 <p className="text-black text-base font-bold leading-tight">O que precisa?</p>
               </div>
               <p className="text-text-secondary text-sm font-normal leading-relaxed">
-                Tenha seu <span className="text-black font-bold">ID de cliente</span> e os detalhes da transação em Kz prontos para agilizar o atendimento.
+                Tenha seu <span className="text-black font-bold">ID de cliente</span> e os detalhes da transaÃ§Ã£o em Kz prontos para agilizar o atendimento.
               </p>
             </div>
             <div
@@ -120,14 +120,14 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
 
         {/* FAQ Section */}
         <div className="px-5 pb-12">
-          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Dúvidas Comuns</h3>
+          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">DÃºvidas Comuns</h3>
           <div className="divide-y divide-white/10 border-t border-b border-white/10">
             <div className="py-5 flex justify-between items-center group cursor-pointer hover:bg-white/5 px-1 transition-colors">
-              <span className="text-black font-medium text-sm">Qual o horário de atendimento?</span>
+              <span className="text-black font-medium text-sm">Qual o horÃ¡rio de atendimento?</span>
               <span className="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">expand_more</span>
             </div>
             <div className="py-5 flex justify-between items-center group cursor-pointer hover:bg-white/5 px-1 transition-colors">
-              <span className="text-black font-medium text-sm">Posso agendar uma ligação?</span>
+              <span className="text-black font-medium text-sm">Posso agendar uma ligaÃ§Ã£o?</span>
               <span className="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">expand_more</span>
             </div>
           </div>
@@ -149,3 +149,4 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
 };
 
 export default TutoriaisFalarComGerente;
+

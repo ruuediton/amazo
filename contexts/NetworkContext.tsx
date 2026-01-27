@@ -1,4 +1,4 @@
-
+﻿
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import InternetErrorModal from '../components/InternetErrorModal';
 
@@ -37,7 +37,7 @@ export const NetworkProvider: React.FC<{ children: ReactNode }> = ({ children })
 
                 // Define Cancel Action
                 setCancelCallback(() => () => {
-                    reject(new Error("A operação falhou devido ao tempo limite de conexão."));
+                    reject(new Error("A operaÃ§Ã£o falhou devido ao tempo limite de conexÃ£o."));
                 });
 
                 setIsModalOpen(true);
@@ -89,3 +89,4 @@ export const useNetwork = () => {
     }
     return context;
 };
+

@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useNetwork } from '../contexts/NetworkContext';
@@ -50,31 +50,31 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
 
   const handleRedeem = async () => {
     if (!promoCode.trim()) {
-      showToast?.("Por favor, digite código.", "warning");
+      showToast?.("Por favor, digite cÃ³digo.", "warning");
       return;
     }
 
     await withLoading(async () => {
-      // Validação de sessão no client first
+      // ValidaÃ§Ã£o de sessÃ£o no client first
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        // Redireciona se não houver sessão ativa
+        // Redireciona se nÃ£o houver sessÃ£o ativa
         onNavigate('login');
-        throw new Error("Sessão expirada.");
+        throw new Error("SessÃ£o expirada.");
       }
 
-      // Chamada RPC simplificada e segura (User ID é pego do contexto Auth no backend)
+      // Chamada RPC simplificada e segura (User ID Ã© pego do contexto Auth no backend)
       const { data, error } = await supabase.rpc('redeem_gift_code', {
         p_code: promoCode.trim()
       });
 
       if (error) {
-        throw new Error("Não foi possível processar o pedido. Tente novamente");
+        throw new Error("NÃ£o foi possÃ­vel processar o pedido. Tente novamente");
       }
 
       if (!data.success) {
-        // Exibe mensagem segura retornada do backend (Ex: "Código inválido" ou "Muitas tentativas")
-        throw new Error(data.message || "Código inválido ou expirado.");
+        // Exibe mensagem segura retornada do backend (Ex: "CÃ³digo invÃ¡lido" ou "Muitas tentativas")
+        throw new Error(data.message || "CÃ³digo invÃ¡lido ou expirado.");
       }
 
       // Sucesso
@@ -82,7 +82,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
       setIsOpen(true);
       setPromoCode('');
 
-      // Atualiza histórico em background
+      // Atualiza histÃ³rico em background
       fetchHistory();
 
       return data.message;
@@ -100,7 +100,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
         >
           <span className="material-symbols-outlined text-[20px]">arrow_back</span>
         </div>
-        <h2 className="text-black text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">SmartBuy</h2>
+        <h2 className="text-black text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">BP</h2>
         <div className="flex w-10 items-center justify-end">
           <button onClick={() => onOpenSupport?.()} className="flex cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-black p-0">
             <span className="material-symbols-outlined text-[20px]">help_outline</span>
@@ -112,7 +112,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
       <main className="flex-1 flex flex-col justify-center items-center px-4 max-w-lg mx-auto w-full pb-20">
         {/* Header / Label */}
         <div className="mb-2">
-          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">Parabéns!</span>
+          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">ParabÃ©ns!</span>
         </div>
 
         {/* HeadlineText */}
@@ -124,7 +124,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
         <p className="text-black/70 text-[13px] font-medium leading-relaxed pb-4 px-10 text-center">
           {isOpen
             ? `Acabaste de resgatar Kz ${lastReward?.toLocaleString()}.`
-            : 'Introduz o teu código abaixo para resgatar agora.'
+            : 'Introduz o teu cÃ³digo abaixo para resgatar agora.'
           }
         </p>
 
@@ -135,7 +135,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
               <div className="relative group">
                 <input
                   className="flex w-full rounded-xl border border-gray-200 bg-gray-50 px-4 h-11 text-sm font-bold focus:border-primary focus:ring-0 focus:outline-none transition-all placeholder:text-gray-400 text-black shadow-inner"
-                  placeholder="Insira o seu código aqui"
+                  placeholder="Insira o seu cÃ³digo aqui"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                   disabled={loading}
@@ -242,14 +242,14 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2">
                         <p className="text-black font-bold text-sm">
-                          {item.status === 'success' ? 'Resgate Concluído' : 'Falha no Resgate'}
+                          {item.status === 'success' ? 'Resgate ConcluÃ­do' : 'Falha no Resgate'}
                         </p>
                         {index === 0 && isOpen && (
                           <span className="bg-primary text-[#181711] text-[10px] font-black px-1.5 py-0.5 rounded uppercase">Recente</span>
                         )}
                       </div>
                       <p className="text-black/50 text-xs text-left">
-                        {new Date(item.data_recebimento).toLocaleTimeString()} • {(() => {
+                        {new Date(item.data_recebimento).toLocaleTimeString()} â€¢ {(() => {
                           const code = item.codigo_presente || '';
                           if (code.length <= 4) return code;
                           return code.slice(0, 2) + "**" + code.slice(-2);
@@ -259,7 +259,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
                   </div>
                   <div className="text-right">
                     <span className={`font-black block ${item.status === 'success' ? 'text-green-600' : 'text-red-400'}`}>
-                      {item.status === 'success' ? `+ Kz ${item.valor_recebido || 0}` : 'Inválido'}
+                      {item.status === 'success' ? `+ Kz ${item.valor_recebido || 0}` : 'InvÃ¡lido'}
                     </span>
                     <span className="text-[10px] text-black/40 font-bold uppercase">{new Date(item.data_recebimento).toLocaleDateString()}</span>
                   </div>
@@ -281,3 +281,4 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
 };
 
 export default GiftChest;
+

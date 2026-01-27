@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -18,7 +18,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Validações em tempo real
+  // ValidaÃ§Ãµes em tempo real
   const [isSixDigits, setIsSixDigits] = useState(false);
 
   useEffect(() => {
@@ -34,22 +34,22 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
     }
 
     if (newPassword !== confirmPassword) {
-      showToast?.("A nova senha e a confirmação não coincidem.", "error");
+      showToast?.("A nova senha e a confirmaÃ§Ã£o nÃ£o coincidem.", "error");
       return;
     }
 
     if (!isSixDigits) {
-      showToast?.("A nova senha deve ter exatamente 6 dígitos.", "error");
+      showToast?.("A nova senha deve ter exatamente 6 dÃ­gitos.", "error");
       return;
     }
 
     setLoading(true);
 
     try {
-      // Nota: No Supabase, atualizar a senha de um usuário logado 
-      // não exige a senha antiga via API auth.updateUser, mas 
-      // é uma boa prática validar ou reautenticar se o sistema exigir.
-      // Para simplicidade e seguindo o padrão Supabase:
+      // Nota: No Supabase, atualizar a senha de um usuÃ¡rio logado 
+      // nÃ£o exige a senha antiga via API auth.updateUser, mas 
+      // Ã© uma boa prÃ¡tica validar ou reautenticar se o sistema exigir.
+      // Para simplicidade e seguindo o padrÃ£o Supabase:
       const { error } = await supabase.auth.updateUser({
         password: newPassword
       });
@@ -85,7 +85,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
         <div className="mb-2 mt-2">
           <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-1">Alterar Senha de Acesso</h2>
           <p className="text-[text-gray-400] text-sm font-normal leading-relaxed">
-            Para sua segurança, crie uma senha forte que você não use em outros sites.
+            Para sua seguranÃ§a, crie uma senha forte que vocÃª nÃ£o use em outros sites.
           </p>
         </div>
 
@@ -125,7 +125,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   setNewPassword(val);
                 }}
                 className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                placeholder="Crie uma nova senha (6 dígitos)"
+                placeholder="Crie uma nova senha (6 dÃ­gitos)"
                 type={showNew ? "text" : "password"}
                 maxLength={6}
                 inputMode="numeric"
@@ -181,7 +181,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
             {loading ? (
               <SpokeSpinner size="w-6 h-6" className="text-black" />
             ) : (
-              <span className="text-[#181711] text-[15px] font-bold tracking-wide">Confirmar Alteração</span>
+              <span className="text-[#181711] text-[15px] font-bold tracking-wide">Confirmar AlteraÃ§Ã£o</span>
             )}
           </button>
         </form>
@@ -191,3 +191,4 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
 };
 
 export default ChangePassword;
+

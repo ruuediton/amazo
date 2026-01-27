@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 
 interface Step {
   title: string;
@@ -125,7 +125,7 @@ const TutorialSlider: React.FC<TutorialSliderProps> = ({ steps, onFinish, finish
           onClick={nextStep}
           className="flex-1 flex h-12 items-center justify-center rounded-xl bg-primary text-black font-bold shadow-lg shadow-primary/20 transition-all active:scale-95"
         >
-          {currentStep === steps.length - 1 ? finishText : 'Próximo'}
+          {currentStep === steps.length - 1 ? finishText : 'PrÃ³ximo'}
         </button>
       </div>
     </div>
@@ -133,3 +133,4 @@ const TutorialSlider: React.FC<TutorialSliderProps> = ({ steps, onFinish, finish
 };
 
 export default TutorialSlider;
+

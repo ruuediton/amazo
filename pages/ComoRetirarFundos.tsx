@@ -1,4 +1,4 @@
-
+﻿
 import React, { useRef, useState, useEffect } from 'react';
 
 interface Props {
@@ -56,9 +56,9 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         {/* Headline */}
         <div className="px-4 pb-2 pt-6">
           <h1 className="text-black tracking-tight text-[28px] font-extrabold leading-tight text-left">
-            Retire seus Kz com segurança em <span className="text-primary">3 passos simples</span>.
+            Retire seus Kz com seguranÃ§a em <span className="text-primary">3 passos simples</span>.
           </h1>
-          <p className="mt-2 text-sm text-text-secondary">Siga este guia rápido para transferir seu dinheiro.</p>
+          <p className="mt-2 text-sm text-text-secondary">Siga este guia rÃ¡pido para transferir seu dinheiro.</p>
         </div>
 
         {/* Carousel of Steps */}
@@ -80,7 +80,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
               <div>
                 <h3 className="text-black text-lg font-bold leading-normal mb-1">Acessar Carteira</h3>
                 <p className="text-text-secondary text-sm font-medium leading-relaxed">
-                  Vá para o saldo da sua conta no painel principal e toque no botão de retirada.
+                  VÃ¡ para o saldo da sua conta no painel principal e toque no botÃ£o de retirada.
                 </p>
               </div>
             </div>
@@ -95,9 +95,9 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
                 <div className="absolute top-3 left-3 bg-primary text-black text-xs font-bold px-3 py-1 rounded-full">Passo 2</div>
               </div>
               <div>
-                <h3 className="text-black text-lg font-bold leading-normal mb-1">Escolher Método</h3>
+                <h3 className="text-black text-lg font-bold leading-normal mb-1">Escolher MÃ©todo</h3>
                 <p className="text-text-secondary text-sm font-medium leading-relaxed">
-                  Escolha Transferência Bancária para bancos locais ou Saque com Agente.
+                  Escolha TransferÃªncia BancÃ¡ria para bancos locais ou Saque com Agente.
                 </p>
               </div>
             </div>
@@ -114,7 +114,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
               <div>
                 <h3 className="text-black text-lg font-bold leading-normal mb-1">Confirmar e Verificar</h3>
                 <p className="text-text-secondary text-sm font-medium leading-relaxed">
-                  Insira seu PIN de segurança para autorizar a transação e finalizar o saque.
+                  Insira seu PIN de seguranÃ§a para autorizar a transaÃ§Ã£o e finalizar o saque.
                 </p>
               </div>
             </div>
@@ -142,7 +142,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
             <div className="flex flex-col gap-1">
               <p className="text-black text-base font-bold leading-tight">Dica Profissional</p>
               <p className="text-text-secondary text-sm font-medium leading-normal">
-                Verifique os limites diários de retirada em Kz para evitar atrasos na sua transferência.
+                Verifique os limites diÃ¡rios de retirada em Kz para evitar atrasos na sua transferÃªncia.
               </p>
             </div>
           </div>
@@ -175,3 +175,4 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
 };
 
 export default ComoRetirarFundos;
+

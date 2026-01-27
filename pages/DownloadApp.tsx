@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ï»¿import React, { useState, useEffect } from 'react';
 
 interface DownloadAppProps {
     onNavigate: (page: any) => void;
@@ -38,13 +38,13 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
         }
         if (isIOS) {
             // iOS does not support automatic install; show instructions
-            alert('Para instalar, toque no ícone de compartilhamento e escolha "Adicionar à Tela de Início".');
+            alert('Para instalar, toque no Ã­cone de compartilhamento e escolha "Adicionar Ã  Tela de InÃ­cio".');
             return;
         }
         // Fallback: download APK for Android devices (or any other platform)
         const link = document.createElement('a');
         link.href = '/app-release.apk';
-        link.download = 'SmartBuy App.apk';
+        link.download = 'BP App.apk';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -69,9 +69,9 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
                 </div>
 
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-black mb-3 text-black tracking-tight">Leve o SmartBuy App com você</h2>
+                    <h2 className="text-3xl font-black mb-3 text-black tracking-tight">Leve o BP App com vocÃª</h2>
                     <p className="text-gray-600 text-sm max-w-[280px] mx-auto leading-relaxed">
-                        Acesse seus investimentos de qualquer lugar com nossa experiência nativa.
+                        Acesse seus investimentos de qualquer lugar com nossa experiÃªncia nativa.
                     </p>
                 </div>
 
@@ -85,7 +85,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-base text-black">Arquivo APK</h3>
-                                    <p className="text-[11px] text-blue-500 font-bold uppercase tracking-wider mt-0.5">Versão Android</p>
+                                    <p className="text-[11px] text-blue-500 font-bold uppercase tracking-wider mt-0.5">VersÃ£o Android</p>
                                 </div>
                             </div>
                             <button
@@ -110,16 +110,16 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
                         <div className="flex items-start space-x-5 relative">
                             <div className="absolute left-[11px] top-8 bottom-[-20px] w-0.5 bg-gray-200"></div>
                             <div className="flex-shrink-0 w-6 h-6 bg-primary text-black rounded-full flex items-center justify-center text-xs font-black z-10">1</div>
-                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">Clique no botão <span className="text-black font-bold">"{isAndroid ? 'Instalar' : 'Baixar'}"</span> acima para iniciar o download ou a instalação do PWA.</p>
+                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">Clique no botÃ£o <span className="text-black font-bold">"{isAndroid ? 'Instalar' : 'Baixar'}"</span> acima para iniciar o download ou a instalaÃ§Ã£o do PWA.</p>
                         </div>
                         <div className="flex items-start space-x-5 relative">
                             <div className="absolute left-[11px] top-8 bottom-[-20px] w-0.5 bg-gray-200"></div>
                             <div className="flex-shrink-0 w-6 h-6 bg-primary text-black rounded-full flex items-center justify-center text-xs font-black z-10">2</div>
-                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">Após o download, toque no arquivo e habilite a opção <span className="text-black font-bold">"Instalar apps desconhecidos"</span>.</p>
+                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">ApÃ³s o download, toque no arquivo e habilite a opÃ§Ã£o <span className="text-black font-bold">"Instalar apps desconhecidos"</span>.</p>
                         </div>
                         <div className="flex items-start space-x-5">
                             <div className="flex-shrink-0 w-6 h-6 bg-primary text-black rounded-full flex items-center justify-center text-xs font-black z-10">3</div>
-                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">Siga as instruções na tela para concluir a instalação e aproveitar!</p>
+                            <p className="text-sm text-gray-600 leading-relaxed font-medium pt-0.5">Siga as instruÃ§Ãµes na tela para concluir a instalaÃ§Ã£o e aproveitar!</p>
                         </div>
                     </div>
                 </div>
@@ -135,3 +135,4 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
 };
 
 export default DownloadApp;
+

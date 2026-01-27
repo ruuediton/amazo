@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -12,7 +12,7 @@ export interface Transaction {
   dateLabel: string;
   monthIndex: number;
   type: 'incoming' | 'outgoing' | 'info' | 'warning';
-  category: 'Depósito' | 'Retirada' | 'Segurança' | 'Bônus' | 'Compras' | 'Misto';
+  category: 'DepÃ³sito' | 'Retirada' | 'SeguranÃ§a' | 'BÃ´nus' | 'Compras' | 'Misto';
   status?: string;
   year: number;
 }
@@ -41,7 +41,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Buscar perfil para o Código e Telefone
+      // Buscar perfil para o CÃ³digo e Telefone
       const { data: profile } = await supabase
         .from('profiles')
         .select('code, phone')
@@ -70,15 +70,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(d.created_at);
         combined.push({
           id: `dep-${d.id}`,
-          title: 'Depósito Bancário',
-          subtitle: `${d.nome_do_banco || 'Transferência'} - ${d.estado_de_pagamento || 'Pendente'}`,
+          title: 'DepÃ³sito BancÃ¡rio',
+          subtitle: `${d.nome_do_banco || 'TransferÃªncia'} - ${d.estado_de_pagamento || 'Pendente'}`,
           amount: Number(d.valor_deposito || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'incoming',
-          category: 'Depósito',
+          category: 'DepÃ³sito',
           status: d.estado_de_pagamento
         });
       });
@@ -88,7 +88,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(d.created_at);
         combined.push({
           id: `usdt-${d.id}`,
-          title: 'Depósito USDT',
+          title: 'DepÃ³sito USDT',
           subtitle: `Cripto - ${d.status || 'Pendente'}`,
           amount: Number(d.amount_kz || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
@@ -96,7 +96,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'incoming',
-          category: 'Depósito',
+          category: 'DepÃ³sito',
           status: d.status
         });
       });
@@ -125,7 +125,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         combined.push({
           id: `pur-${p.id}`,
           title: p.nome_produto || 'Compra de Pacote',
-          subtitle: `Investimento SmartBuy`,
+          subtitle: `Investimento BP`,
           amount: -Number(p.preco || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
@@ -141,15 +141,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(b.data_recebimento);
         combined.push({
           id: `bon-${b.id}`,
-          title: 'Bônus Recebido',
-          subtitle: b.origem_bonus || 'Promoção/Evento',
+          title: 'BÃ´nus Recebido',
+          subtitle: b.origem_bonus || 'PromoÃ§Ã£o/Evento',
           amount: Number(b.valor_recebido || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'incoming',
-          category: 'Bônus'
+          category: 'BÃ´nus'
         });
       });
 
@@ -159,8 +159,8 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const isSender = t.sender_id === user.id;
         combined.push({
           id: `p2p-${t.id}`,
-          title: isSender ? 'Transferência Enviada' : 'Transferência Recebida',
-          subtitle: isSender ? `Para outro usuário` : `De outro usuário`,
+          title: isSender ? 'TransferÃªncia Enviada' : 'TransferÃªncia Recebida',
+          subtitle: isSender ? `Para outro usuÃ¡rio` : `De outro usuÃ¡rio`,
           amount: isSender ? -Number(t.amount) : Number(t.amount),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
@@ -180,7 +180,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         return dayB - dayA;
       }));
     } catch (err) {
-      console.error('Erro ao buscar histórico:', err);
+      console.error('Erro ao buscar histÃ³rico:', err);
     } finally {
       setLoading(false);
     }
@@ -202,7 +202,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors text-primary">
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">Histórico de Conta</h2>
+        <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">HistÃ³rico de Conta</h2>
       </header>
 
       {/* User Identifier Tag */}
@@ -232,15 +232,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
               <div className="flex flex-col gap-1 px-3">
                 {groupedTransactions[date].map((t: Transaction) => (
                   <div key={t.id} className="group flex items-center gap-4 px-4 py-4 hover:bg-white/5 transition-colors rounded-[24px] border border-transparent hover:border-gray-200">
-                    <div className={`relative flex items-center justify-center size-12 rounded-2xl shrink-0 border border-gray-200 shadow-inner ${t.category === 'Depósito' ? 'bg-green-500/10 text-green-600' :
+                    <div className={`relative flex items-center justify-center size-12 rounded-2xl shrink-0 border border-gray-200 shadow-inner ${t.category === 'DepÃ³sito' ? 'bg-green-500/10 text-green-600' :
                       t.category === 'Retirada' ? 'bg-primary/10 text-primary' :
-                        t.category === 'Segurança' ? 'bg-blue-500/10 text-blue-400' :
+                        t.category === 'SeguranÃ§a' ? 'bg-blue-500/10 text-blue-400' :
                           'bg-white/5 text-gray-600'
                       }`}>
                       <span className="material-symbols-outlined text-[24px]">
-                        {t.category === 'Depósito' ? 'add_card' :
+                        {t.category === 'DepÃ³sito' ? 'add_card' :
                           t.category === 'Retirada' ? 'payments' :
-                            t.category === 'Segurança' ? 'security' :
+                            t.category === 'SeguranÃ§a' ? 'security' :
                               'shopping_bag'}
                       </span>
                     </div>
@@ -280,3 +280,4 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default HistoricoConta;
+

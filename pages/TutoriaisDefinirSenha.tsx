@@ -1,4 +1,4 @@
-
+ï»¿
 import React from 'react';
 
 interface Props {
@@ -42,14 +42,14 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
             <div>
               <h1 className="text-xl font-bold leading-tight tracking-tight mb-2 text-black">Proteja os seus Kz</h1>
               <p className="text-[text-gray-400] text-sm font-normal leading-relaxed">
-                A sua senha de levantamento é a chave para movimentar o seu dinheiro com segurança. Escolha uma combinação que só você conheça.
+                A sua senha de levantamento Ã© a chave para movimentar o seu dinheiro com seguranÃ§a. Escolha uma combinaÃ§Ã£o que sÃ³ vocÃª conheÃ§a.
               </p>
             </div>
           </div>
         </div>
 
         {/* Rules Section Title */}
-        <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-400 mb-4 px-1">Regras de Segurança</h3>
+        <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-400 mb-4 px-1">Regras de SeguranÃ§a</h3>
 
         {/* Description List (Security Rules) */}
         <div className="grid grid-cols-[auto_1fr] gap-x-4 mb-6 bg-[#2d2a1e] rounded-xl p-4 border border-gray-200">
@@ -58,8 +58,8 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
             <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>block</span>
           </div>
           <div className="flex flex-col border-b border-white/10 pb-4 mb-4 last:border-0 last:pb-0 last:mb-0">
-            <p className="text-black text-base font-bold leading-normal">Sem sequências</p>
-            <p className="text-[text-gray-400] text-sm font-normal leading-normal">Evite números fáceis como 123456 ou 111111.</p>
+            <p className="text-black text-base font-bold leading-normal">Sem sequÃªncias</p>
+            <p className="text-[text-gray-400] text-sm font-normal leading-normal">Evite nÃºmeros fÃ¡ceis como 123456 ou 111111.</p>
           </div>
           {/* Item 2 */}
           <div className="flex items-start justify-center pt-1">
@@ -67,15 +67,15 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
           </div>
           <div className="flex flex-col border-b border-white/10 pb-4 mb-4 last:border-0 last:pb-0 last:mb-0">
             <p className="text-black text-base font-bold leading-normal">Sem datas</p>
-            <p className="text-[text-gray-400] text-sm font-normal leading-normal">Não use o seu ano de nascimento ou dia.</p>
+            <p className="text-[text-gray-400] text-sm font-normal leading-normal">NÃ£o use o seu ano de nascimento ou dia.</p>
           </div>
           {/* Item 3 */}
           <div className="flex items-start justify-center pt-1">
             <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>fingerprint</span>
           </div>
           <div className="flex flex-col pb-0 mb-0">
-            <p className="text-black text-base font-bold leading-normal">Única</p>
-            <p className="text-[text-gray-400] text-sm font-normal leading-normal">Não repita a senha de login do app.</p>
+            <p className="text-black text-base font-bold leading-normal">Ãšnica</p>
+            <p className="text-[text-gray-400] text-sm font-normal leading-normal">NÃ£o repita a senha de login do app.</p>
           </div>
         </div>
 
@@ -83,7 +83,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
         <div className="flex gap-3 items-start px-2 py-2 rounded-lg bg-red-900/10 border border-red-900/20 mb-4">
           <span className="material-symbols-outlined text-red-400 shrink-0" style={{ fontSize: '20px', marginTop: '2px' }}>shield</span>
           <p className="text-red-200 text-xs font-medium leading-relaxed">
-            Nunca partilhe esta senha com ninguém, nem mesmo com a equipa de suporte SmartBuy.
+            Nunca partilhe esta senha com ninguÃ©m, nem mesmo com a equipa de suporte BP.
           </p>
         </div>
       </main>
@@ -94,7 +94,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
           onClick={() => onNavigate('withdraw-password')}
           className="w-full bg-primary hover:bg-yellow-400 text-black text-base font-bold h-12 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-[0.98]"
         >
-          <span>Começar Configuração</span>
+          <span>ComeÃ§ar ConfiguraÃ§Ã£o</span>
           <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>arrow_forward</span>
         </button>
         <div className="text-center mt-3">
@@ -111,3 +111,4 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
 };
 
 export default TutoriaisDefinirSenha;
+

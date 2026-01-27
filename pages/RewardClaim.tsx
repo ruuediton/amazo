@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 
 interface Props {
@@ -38,7 +38,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
 
         {/* Text Header */}
         <div className="text-center z-10 mb-8 animate-in fade-in zoom-in duration-500">
-          <h2 className="text-primary text-5xl font-black tracking-tight mb-3">Parabéns!</h2>
+          <h2 className="text-primary text-5xl font-black tracking-tight mb-3">ParabÃ©ns!</h2>
           <div className="flex flex-col items-center">
             <span className="text-black text-xs font-black opacity-50 uppercase tracking-[0.3em] mb-2">Recebeste</span>
             <div className="flex items-baseline gap-3">
@@ -86,7 +86,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         {/* Footer Actions */}
         <div className="w-full space-y-5 pb-8 z-10">
           <p className="text-black/60 text-center text-sm font-medium leading-relaxed px-8">
-            O valor foi adicionado ao seu saldo digital e está pronto a ser usado.
+            O valor foi adicionado ao seu saldo digital e estÃ¡ pronto a ser usado.
           </p>
 
           <div className="flex px-4">
@@ -105,7 +105,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
             onClick={() => onNavigate('historico-conta')}
             className="w-full text-center text-black/40 text-sm font-bold py-2 tracking-widest uppercase hover:text-black transition-colors"
           >
-            Ver detalhes da transação
+            Ver detalhes da transaÃ§Ã£o
           </button>
         </div>
       </main>
@@ -127,3 +127,4 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
 };
 
 export default RewardClaim;
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useLoading } from '../contexts/LoadingContext';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -52,11 +52,11 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const handleNextToBank = () => {
         const val = parseFloat(amount);
         if (!amount || isNaN(val) || val < 3000) {
-            showToast?.("Valor mínimo, 3.000 KZ", "warning");
+            showToast?.("Valor mÃ­nimo, 3.000 KZ", "warning");
             return;
         }
         if (val > 1000000) {
-            showToast?.("Valor máximo permitido: 1.000.000 KZ", "warning");
+            showToast?.("Valor mÃ¡ximo permitido: 1.000.000 KZ", "warning");
             return;
         }
         setStep('bank');
@@ -72,7 +72,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
             await withLoading(async () => {
                 const { data: { user } } = await supabase.auth.getUser();
                 if (!user) {
-                    showToast?.("Sessão expirada. Faça login novamente.", "error");
+                    showToast?.("SessÃ£o expirada. FaÃ§a login novamente.", "error");
                     onNavigate('login');
                     return;
                 }
@@ -94,7 +94,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                         }
                     });
                 }
-            }, "Gerando dados de depósito...");
+            }, "Gerando dados de depÃ³sito...");
         } catch (err: any) {
             showToast?.(err.message || "Opah algo deu errado", "error");
         }
@@ -136,7 +136,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                             placeholder="Digite o valor..."
                             autoFocus
                         />
-                        <p className="text-[11px] font-medium text-gray-400">Min: 3.000 Kz • Max: 1.000.000 Kz</p>
+                        <p className="text-[11px] font-medium text-gray-400">Min: 3.000 Kz â€¢ Max: 1.000.000 Kz</p>
                     </div>
 
                     <div className="grid grid-cols-4 gap-2">
@@ -156,8 +156,8 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                             <span className="material-symbols-outlined text-[28px]">account_balance</span>
                         </div>
                         <div>
-                            <p className="text-[14px] font-bold text-blue-900">Transferência Bancária</p>
-                            <p className="text-[12px] text-blue-700/80 leading-snug">O valor será creditado no seu saldo após a verificação do comprovativo pela nossa equipe.</p>
+                            <p className="text-[14px] font-bold text-blue-900">TransferÃªncia BancÃ¡ria</p>
+                            <p className="text-[12px] text-blue-700/80 leading-snug">O valor serÃ¡ creditado no seu saldo apÃ³s a verificaÃ§Ã£o do comprovativo pela nossa equipe.</p>
                         </div>
                     </div>
                 </main>
@@ -168,7 +168,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                         disabled={!amount || parseFloat(amount) < 3000}
                         className="w-full h-14 bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center disabled:opacity-50 disabled:grayscale"
                     >
-                        PRÓXIMO
+                        PRÃ“XIMO
                     </button>
                 </div>
             </div>
@@ -183,7 +183,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 <button onClick={() => setStep('amount')} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0F1111]">
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
-                <h1 className="text-[18px] font-bold tracking-tight">Informações da Conta</h1>
+                <h1 className="text-[18px] font-bold tracking-tight">InformaÃ§Ãµes da Conta</h1>
             </header>
 
             <main className="px-6 pt-8 space-y-6">
@@ -222,7 +222,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                         disabled={!selectedBank}
                         className="w-full h-14 bg-[#E77600] text-white font-bold rounded-lg shadow-lg active:scale-[0.98] transition-all flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300"
                     >
-                        PRÓXIMO
+                        PRÃ“XIMO
                     </button>
                 </div>
             </main>
@@ -231,3 +231,4 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
 };
 
 export default Deposit;
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../supabase';
 
 const FloatingSupportButton: React.FC = () => {
@@ -112,7 +112,7 @@ const FloatingSupportButton: React.FC = () => {
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="bg-white w-full max-w-xs rounded-2xl p-5 relative z-10 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-bold text-lg">Suporte SmartBuy</h3>
+                            <h3 className="font-bold text-lg">Suporte BP</h3>
                             <button onClick={() => setShowModal(false)} className="p-1 hover:bg-gray-100 rounded-full">
                                 <span className="material-symbols-outlined text-gray-500">close</span>
                             </button>
@@ -298,3 +298,4 @@ const DraggableButton = ({ position, onMove, onClick }: { position: { x: number,
 };
 
 export default FloatingSupportButton;
+

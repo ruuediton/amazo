@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useNetwork } from '../contexts/NetworkContext';
@@ -29,12 +29,12 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
-    // 1. Sanitização e Validação
-    const cleanPhone = phoneNumber.replace(/\D/g, ''); // Remove tudo que não for dígito
+    // 1. SanitizaÃ§Ã£o e ValidaÃ§Ã£o
+    const cleanPhone = phoneNumber.replace(/\D/g, ''); // Remove tudo que nÃ£o for dÃ­gito
     const cleanPassword = password.trim();
 
     if (!cleanPhone || cleanPhone.length < 9) {
-      showToast?.("Número de telefone inválido.", "error");
+      showToast?.("NÃºmero de telefone invÃ¡lido.", "error");
       return;
     }
 
@@ -56,8 +56,8 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
           // Incrementa contador de falhas apenas em caso de erro de credencial
           setFailureCount(prev => prev + 1);
 
-          // Feedback Genérico de Segurança
-          throw new Error("Credenciais inválidas");
+          // Feedback GenÃ©rico de SeguranÃ§a
+          throw new Error("Credenciais invÃ¡lidas");
         }
 
         // Sucesso: Resetar contador
@@ -67,7 +67,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       onNavigate('splash-ads');
     } catch (error) {
-      // O withLoading já trata a exibição do erro, mas garantimos que a mensagem sanitizada acima ("Credenciais inválidas") seja a usada se vier do bloco try.
+      // O withLoading jÃ¡ trata a exibiÃ§Ã£o do erro, mas garantimos que a mensagem sanitizada acima ("Credenciais invÃ¡lidas") seja a usada se vier do bloco try.
     }
   };
 
@@ -94,16 +94,16 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
           {/* Title & Subtitle */}
           <div className="mb-5 pt-2">
             <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-1">Bem-vindo de volta</h1>
-            <p className="text-text-secondary text-base font-normal">Faça login para gerir suas finanças e compras.</p>
+            <p className="text-text-secondary text-base font-normal">FaÃ§a login para gerir suas finanÃ§as e compras.</p>
           </div>
 
           <form className="flex flex-col gap-4" onSubmit={handleLogin}>
             {/* Phone Number Field */}
             <div className="flex flex-col gap-1">
-              <label className="text-[13px] font-bold text-[#0F1111]">Número de telefone</label>
+              <label className="text-[13px] font-bold text-[#0F1111]">NÃºmero de telefone</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <span className="text-xl mr-2">🇦🇴</span>
+                  <span className="text-xl mr-2">ðŸ‡¦ðŸ‡´</span>
                   <span className="text-base font-medium text-text-primary">+244</span>
                   <div className="ml-3 h-6 w-px bg-brand-border"></div>
                 </div>
@@ -158,7 +158,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <div className="text-center mt-4 relative">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-[#FFFFFF] px-2 text-[#565959] text-[12px]">Novo Usuário?</span>
+                <span className="bg-[#FFFFFF] px-2 text-[#565959] text-[12px]">Novo UsuÃ¡rio?</span>
               </div>
             </div>
 
@@ -177,4 +177,5 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
 };
 
 export default Login;
+
 
