@@ -73,6 +73,34 @@ const App: React.FC = () => {
   const timerRef = useRef<any>(null);
 
 
+
+  // Dynamic Title Management
+  useEffect(() => {
+    const titles: Record<string, string> = {
+      'home': 'Início',
+      'shop': 'Loja BP',
+      'register': 'Criar Conta',
+      'login': 'Acessar Conta',
+      'profile': 'Meu Perfil',
+      'wallet': 'Carteira',
+      'deposit': 'Recarga',
+      'retirada': 'Retirada',
+      'investimentos-fundo': 'Marketplace',
+      'historico-fundos': 'Meus Pedidos',
+      'ganhos-tarefas': 'Recompensas',
+      'invite-page': 'Convidar Amigos',
+      'support': 'Suporte',
+      'splash-ads': 'Bem-vindo',
+      'security-verify': 'Segurança',
+      'deposit-history': 'Histórico',
+      'purchase-history': 'Compras',
+      'change-password': 'Senha',
+      'add-bank': 'Adicionar Banco'
+    };
+    const title = titles[currentPage as string] || 'BP Commerce';
+    document.title = `${title} | BP`;
+  }, [currentPage]);
+
   const showToast = useCallback((message: string, type: ToastType = 'info') => {
     switch (type) {
       case 'success': showSuccess(message); break;
