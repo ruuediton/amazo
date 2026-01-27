@@ -84,7 +84,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <span className="material-symbols-outlined text-2xl text-primary">arrow_back</span>
           </button>
           <div className="flex items-center gap-2">
-            <img src="/bp_logo.png" alt="BP Logo" className="w-8 h-8 rounded-lg shadow-sm object-cover" />
+            <img src="/bp_logo.png" alt="BP ENERGY (SUL) LDA" className="w-8 h-8 rounded-lg shadow-sm object-cover" />
             <span className="text-xl font-bold tracking-tight text-text-primary">BP</span>
           </div>
           <div className="size-10"></div>

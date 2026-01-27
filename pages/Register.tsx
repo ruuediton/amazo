@@ -102,7 +102,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               <div className="absolute -inset-1 bg-primary/20 rounded-[28px] blur-sm"></div>
               <img
                 src="/bp_logo.png"
-                alt="BP Logo"
+                alt="BP ENERGY (SUL) LDA"
                 className="relative w-32 h-32 rounded-[24px] shadow-2xl border-2 border-white/10 object-cover"
               />
               <div className="mt-2 text-center">
