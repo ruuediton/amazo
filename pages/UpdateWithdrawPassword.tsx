@@ -67,14 +67,14 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
     };
 
     return (
-        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark font-display text-black antialiased">
+        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-white font-sans text-black antialiased">
             {/* Header */}
             <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-background-dark/95 border-b border-gray-200">
                 <button
                     onClick={() => onNavigate('profile')}
-                    className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+                    className="flex size-10 items-center justify-start rounded-full hover:bg-gray-50 transition-colors"
                 >
-                    <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>arrow_back</span>
+                    <span className="material-symbols-outlined text-[#00C853]" style={{ fontSize: '28px' }}>chevron_left</span>
                 </button>
                 <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Senha de Retirada</h1>
             </header>
@@ -99,7 +99,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setCurrentPassword(e.target.value.replace(/\D/g, ''))}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-2xl border border-transparent bg-gray-50 px-4 pr-12 text-base text-black placeholder-gray-400 focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all"
                                 placeholder="Digite a senha atual"
                                 type={showCurrent ? "text" : "password"}
                             />
@@ -125,7 +125,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setNewPassword(e.target.value.replace(/\D/g, ''))}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-2xl border border-transparent bg-gray-50 px-4 pr-12 text-base text-black placeholder-gray-400 focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all"
                                 placeholder="Crie uma nova senha (4 dígitos)"
                                 type={showNew ? "text" : "password"}
                             />
@@ -152,7 +152,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 onChange={(e) => setConfirmPassword(e.target.value.replace(/\D/g, ''))}
                                 maxLength={4}
                                 inputMode="numeric"
-                                className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-full h-14 rounded-2xl border border-transparent bg-gray-50 px-4 pr-12 text-base text-black placeholder-gray-400 focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all"
                                 placeholder="Repita a nova senha"
                                 type={showConfirm ? "text" : "password"}
                             />
@@ -173,7 +173,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full h-[48px] rounded-[12px] bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center mb-6 ${loading ? 'opacity-50' : ''}`}
+                        className={`w-full h-14 rounded-2xl bg-[#00C853] hover:bg-[#00a844] active:scale-[0.98] transition-all flex items-center justify-center mb-6 shadow-lg shadow-green-200 ${loading ? 'opacity-50' : ''}`}
                     >
                         {loading ? (
                             <SpokeSpinner size="w-6 h-6" className="text-black" />

@@ -102,13 +102,13 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
 
     return (
-        <div className="flex flex-col min-h-screen bg-background-dark font-display text-black antialiased">
+        <div className="flex flex-col min-h-screen bg-white font-sans text-black antialiased">
             <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 border-b border-gray-200">
                 <button
                     onClick={() => onNavigate('profile')}
-                    className="text-primary flex size-12 shrink-0 items-center justify-start hover:bg-white/5 rounded-full transition-all active:scale-95"
+                    className="text-[#00C853] flex size-12 shrink-0 items-center justify-start hover:bg-gray-50 rounded-full transition-all active:scale-95"
                 >
-                    <span className="material-symbols-outlined text-[24px]">arrow_back</span>
+                    <span className="material-symbols-outlined text-[24px]">chevron_left</span>
                 </button>
                 <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">
                     ConfiguraÃ§Ãµes
@@ -215,13 +215,11 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        className="w-full h-14 bg-black text-white rounded-2xl font-black text-sm uppercase tracking-[0.2em] active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-gray-900"
-                    >
-                        {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar AlteraÃ§Ãµes'}
+                        {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar Alterações'}
                     </button>
-                </div>
-            </main>
         </div>
+            </main >
+        </div >
     );
 };
 
