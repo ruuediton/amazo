@@ -15,6 +15,8 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const [loading, setLoading] = useState(true);
     const [selectedBank, setSelectedBank] = useState<any>(null);
 
+    const quickAmounts = [3000, 12000, 39000, 75000];
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -103,7 +105,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
             </header>
 
             <main className="p-6 space-y-6">
-                <div className="space-y-2">
+                <div className="space-y-3">
                     <input
                         type="number"
                         value={amount}
@@ -111,25 +113,43 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                         className="w-full h-[52px] px-4 rounded-lg bg-white border border-gray-200 text-[16px] text-[#0F1111] placeholder:text-gray-400 focus:outline-none focus:border-[#00C853] transition-all"
                         placeholder="Digite o valor"
                     />
-                </div>
 
-                <div className="space-y-3">
-                    <p className="text-[13px] font-medium text-gray-500">Bancos disponíveis</p>
                     <div className="flex flex-wrap gap-2">
-                        {banks.map(bank => (
+                        {quickAmounts.map(val => (
                             <button
-                                key={bank.id}
-                                onClick={() => setSelectedBank(bank)}
-                                className={`px-4 py-2 rounded-full border text-[14px] font-medium transition-all ${selectedBank?.id === bank?.id
-                                        ? 'bg-[#E8F5E9] border-[#00C853] text-[#00C853]'
-                                        : 'bg-white border-gray-200 text-gray-600'
-                                    }`}
+                                key={val}
+                                onClick={() => setAmount(val.toString())}
+                                className="px-3 py-2 rounded-lg bg-gray-50 text-[12px] font-medium text-gray-500 hover:bg-gray-100 transition-colors"
                             >
-                                {bank.nome_do_banco}
+                                {val.toLocaleString('pt-AO')} Kz
                             </button>
                         ))}
                     </div>
                 </div>
+
+                {amount && (
+                    <div className="space-y-2">
+                        <p className="text-[13px] font-medium text-gray-400">Banco disponível</p>
+                        <div className="relative">
+                            <select
+                                value={selectedBank?.id || ''}
+                                onChange={(e) => {
+                                    const bank = banks.find(b => String(b.id) === e.target.value);
+                                    setSelectedBank(bank);
+                                }}
+                                className="w-full h-[52px] px-4 rounded-lg bg-white border border-gray-200 text-[15px] text-[#0F1111] appearance-none focus:outline-none focus:border-[#00C853] transition-all cursor-pointer"
+                            >
+                                <option value="" disabled>Escolha o banco</option>
+                                {banks.map(bank => (
+                                    <option key={bank.id} value={bank.id}>{bank.nome_do_banco}</option>
+                                ))}
+                            </select>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                                <span className="material-symbols-outlined text-gray-400 text-[20px]">expand_more</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <div className="pt-4">
                     <button
@@ -146,5 +166,3 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
 };
 
 export default Deposit;
-
-
