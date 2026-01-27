@@ -74,7 +74,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
     const amountNum = Number(investmentAmount);
 
     if (isNaN(amountNum) || amountNum < 200) {
-      if (showToast) showToast('Valor mínimo de fundo 200 Kz.', 'warning');
+      if (showToast) showToast('Valor mínimo de alocação 200 KZs.', 'warning');
       return;
     }
 
@@ -88,7 +88,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
         }
 
         if (amountNum > Number(selectedFund.total_fundos_disponivel)) {
-          throw new Error(`?? O valor disponível é de ${Number(selectedFund.total_fundos_disponivel).toLocaleString('pt-AO')} Kz.`);
+          throw new Error(`?? O valor disponível é de ${Number(selectedFund.total_fundos_disponivel).toLocaleString('pt-AO')} KZs.`);
         }
 
         const { data, error } = await supabase.rpc('purchase_fund', {
@@ -100,11 +100,11 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
         if (error) throw new Error("Operação não sucedida");
 
         if (data && !data.success) {
-          throw new Error(data.message || "Não foi possível realizar o investimento.");
+          throw new Error(data.message || "Não foi possível realizar a operação.");
         }
 
         return data.message;
-      }, "Aplicação realizada com sucesso!");
+      }, "Operação realizada com sucesso!");
 
       setSelectedFund(null);
       setInvestmentAmount('');
@@ -142,14 +142,14 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
           <div className="flex items-center gap-2">
-            <span className="bg-[#00C853] text-[#0F1111] px-2 py-0.5 rounded text-[10px] font-black uppercase">Wealth</span>
+            <span className="bg-[#00C853] text-[#0F1111] px-2 py-0.5 rounded text-[10px] font-black uppercase">Market</span>
           </div>
         </div>
 
         <div className="absolute bottom-10 left-8 z-10 flex flex-col gap-1">
-          <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider">Liquidez Global</p>
+          <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider">Disponibilidade Global</p>
           <h1 className="text-white text-4xl font-black tabular-nums tracking-tighter">
-            <span className="text-[#febd69] text-xl mr-1">Kz</span>
+            <span className="text-[#febd69] text-xl mr-1">KZs</span>
             {totalGlobalAvailable.toLocaleString('pt-AO')}
           </h1>
         </div>
@@ -163,8 +163,8 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
               <span className="material-symbols-outlined text-[#0F1111]">account_balance_wallet</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-[11px] text-gray-500 font-bold uppercase">Meus Investimentos</span>
-              <span className="text-[#0F1111] font-black text-[13px]">Consulte sua rentabilidade</span>
+              <span className="text-[11px] text-gray-500 font-bold uppercase">Meus Produtos</span>
+              <span className="text-[#0F1111] font-black text-[13px]">Consulte sua performance</span>
             </div>
           </div>
           <button
@@ -178,7 +178,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       <div className="px-5 pt-4 space-y-2">
         <h2 className="text-[18px] font-extrabold text-[#0F1111]">Oportunidades do Dia</h2>
-        <p className="text-[12px] text-gray-500 font-medium">Selecione um fundo de investimento para começar a renderizar lucros.</p>
+        <p className="text-[12px] text-gray-500 font-medium">Selecione um produto para começar a gerar resultados.</p>
       </div>
 
       {/* Funds Carousel */}
@@ -224,7 +224,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                         : 'bg-[#00C853] border border-[#00C853] text-[#0F1111] hover:bg-[#00C853]'
                         }`}
                     >
-                      {isExhausted ? 'Indisponível' : 'Aplicar Agora'}
+                      {isExhausted ? 'Indisponível' : 'Adquirir Agora'}
                     </button>
                   </div>
                 </div>
@@ -233,7 +233,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
           ) : (
             <div className="w-[85vw] py-16 flex flex-col items-center justify-center text-gray-300 border-2 border-dashed border-gray-100 rounded-2xl">
               <span className="material-symbols-outlined text-4xl mb-2">cloud_off</span>
-              <p className="font-bold text-[11px] uppercase">Nenhum investimento disponível</p>
+              <p className="font-bold text-[11px] uppercase">Nenhum produto disponível</p>
             </div>
           )}
         </div>
@@ -263,7 +263,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-white p-4 rounded-xl border border-gray-100 flex flex-col items-center">
-                <span className="text-[9px] font-bold text-gray-400 uppercase">Lucro</span>
+                <span className="text-[9px] font-bold text-gray-400 uppercase">Resultado</span>
                 <span className="text-[20px] font-black text-green-600">{selectedFund.taxa_retorno}%</span>
               </div>
               <div className="bg-white p-4 rounded-xl border border-gray-100 flex flex-col items-center">
@@ -273,9 +273,9 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
             </div>
 
             <div className="space-y-3">
-              <label className="text-[12px] font-bold text-[#0F1111]">Valor do Aporte (Kz)</label>
+              <label className="text-[12px] font-bold text-[#0F1111]">Valor da Operação (KZs)</label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-xl text-gray-300">KZ</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-xl text-gray-300">KZs</span>
                 <input
                   autoFocus
                   type="number"
@@ -288,7 +288,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
               </div>
               <div className="bg-white p-4 rounded-xl border border-dashed border-gray-300 flex justify-between items-center">
                 <span className="text-[11px] font-bold text-gray-400 uppercase">Retorno Previsto</span>
-                <span className="text-[18px] font-black text-green-600 tabular-nums">Kz {expectedReturn.toLocaleString('pt-AO')}</span>
+                <span className="text-[18px] font-black text-green-600 tabular-nums">KZs {expectedReturn.toLocaleString('pt-AO')}</span>
               </div>
             </div>
 
@@ -300,8 +300,8 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 onChange={() => setAutoReinvest(!autoReinvest)}
               />
               <div className="flex-1">
-                <p className="text-[12px] font-bold text-[#0F1111]">Reinvestimento Automático</p>
-                <p className="text-[10px] text-gray-400">Ative para maximizar seus lucros mensais.</p>
+                <p className="text-[12px] font-bold text-[#0F1111]">Renovação Automática</p>
+                <p className="text-[10px] text-gray-400">Ative para maximizar seus resultados mensais.</p>
               </div>
             </label>
 
@@ -313,7 +313,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                 : 'bg-[#00C853] border border-[#00C853] text-[#0F1111] hover:bg-[#00C853] active:scale-[0.98]'
                 }`}
             >
-              {applying ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar Aplicação'}
+              {applying ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar Operação'}
             </button>
           </div>
         </section>
@@ -326,8 +326,8 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
               <span className="material-symbols-outlined text-[#e47911] text-2xl">verified_user</span>
             </div>
             <div className="space-y-1">
-              <p className="text-[#0F1111] font-black text-[16px]">Segurança Grantida</p>
-              <p className="text-gray-500 text-[11px] max-w-[200px] font-medium leading-relaxed italic">Seus investimentos são protegidos por fundos de reserva BP Wealth.</p>
+              <p className="text-[#0F1111] font-black text-[16px]">Segurança Garantida</p>
+              <p className="text-gray-500 text-[11px] max-w-[200px] font-medium leading-relaxed italic">Suas operações são protegidas por fundos de reserva BP Services.</p>
             </div>
           </div>
         </section>

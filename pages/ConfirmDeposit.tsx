@@ -56,7 +56,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
     }
     try {
       const message = `ID: ${userPhone || deposit.id}
-VALOR: ${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} Kz
+VALOR: ${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} KZs
 BANCO: ${deposit.nome_banco || deposit.nome_do_banco}
 NOME DO PAGADOR: ${userName}`.trim();
 
@@ -85,7 +85,7 @@ NOME DO PAGADOR: ${userName}`.trim();
     { label: 'Banco', value: deposit.nome_banco || deposit.nome_do_banco, id: 'bank' },
     { label: 'Titular', value: deposit.nome_destinatario || deposit.beneficiario, id: 'owner' },
     { label: 'IBAN / Referência', value: deposit.iban, id: 'iban' },
-    { label: 'Valor', value: `${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} Kz`, id: 'amount', rawValue: deposit.valor_deposito.toString() }
+    { label: 'Valor', value: `${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} KZs`, id: 'amount', rawValue: deposit.valor_deposito.toString() }
   ];
 
   return (
@@ -94,14 +94,14 @@ NOME DO PAGADOR: ${userName}`.trim();
         <button onClick={() => onNavigate('deposit')} className="mr-4">
           <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
         </button>
-        <h1 className="text-[16px] font-bold">Detalhes do Depósito</h1>
+        <h1 className="text-[16px] font-bold">Detalhes da Recarga</h1>
       </header>
 
       <main className="p-6 space-y-6">
         <div className="space-y-4">
           {depositDetails.map((field) => (
-            <div 
-              key={field.id} 
+            <div
+              key={field.id}
               className="flex items-center justify-between py-2 border-b border-gray-50 cursor-pointer active:bg-gray-50 transition-colors"
               onClick={() => handleCopy(field.rawValue || field.value, field.id)}
             >
@@ -135,17 +135,17 @@ NOME DO PAGADOR: ${userName}`.trim();
             onClick={handleSubmit}
             className="w-full h-[52px] bg-[#00C853] text-white font-bold rounded-lg transition-all text-[15px]"
           >
-            Finalizar Depósito
+            Finalizar Recarga
           </button>
         </div>
 
         <div className="mt-8 p-4 bg-gray-50 rounded-lg space-y-2">
-            <p className="text-[11px] text-gray-500 leading-relaxed">
-                Efetue o pagamento de acordo com as informações acima. Após o pagamento, envie o comprovativo pelo WhatsApp.
-            </p>
-            <p className="text-[11px] font-bold text-red-500">
-                Atenção: Esta conta bancária é apenas para este pagamento.
-            </p>
+          <p className="text-[11px] text-gray-500 leading-relaxed">
+            Efetue a transferência de acordo com as informações acima. Após a operação, envie o comprovativo pelo WhatsApp.
+          </p>
+          <p className="text-[11px] font-bold text-red-500">
+            Atenção: Esta conta é apenas para esta operação.
+          </p>
         </div>
       </main>
     </div>

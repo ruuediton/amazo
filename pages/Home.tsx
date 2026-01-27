@@ -196,7 +196,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
                     <span className="px-2 py-0.5 bg-[#CC0C39] text-white text-[10px] font-bold rounded">OFERTA MEGA</span>
                     <h3 className="text-[#0F1111] text-[16px] font-medium mt-2 leading-tight line-clamp-2">{cheapestProduct.name}</h3>
                     <div className="flex items-baseline gap-1 mt-2">
-                      <span className="text-[13px] font-bold">Kz</span>
+                      <span className="text-[13px] font-bold">KZs</span>
                       <span className="text-[26px] font-black leading-none">{cheapestProduct.price.toLocaleString()}</span>
                     </div>
                   </div>

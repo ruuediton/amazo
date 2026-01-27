@@ -1,5 +1,4 @@
-﻿
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useNetwork } from '../contexts/NetworkContext';
 import { useLoading } from '../contexts/LoadingContext';
@@ -16,7 +15,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
 
   const [failureCount, setFailureCount] = useState(0);
   const MAX_ATTEMPTS = 5;
@@ -53,129 +52,117 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
         }));
 
         if (error) {
-          // Incrementa contador de falhas apenas em caso de erro de credencial
           setFailureCount(prev => prev + 1);
-
-          // Feedback Genérico de Segurança
           throw new Error("Credenciais inválidas");
         }
 
-        // Sucesso: Resetar contador
         setFailureCount(0);
 
       }, "Login sucedido!");
 
       onNavigate('splash-ads');
     } catch (error) {
-      // O withLoading já trata a exibição do erro, mas garantimos que a mensagem sanitizada acima ("Credenciais inválidas") seja a usada se vier do bloco try.
+      // Toast handled by withLoading
     }
   };
 
-
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen">
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto">
-        {/* Header */}
-        <header className="flex items-center justify-between p-4 sticky top-0 z-10 bg-background-dark/95 border-b border-brand-border">
-          <button
-            onClick={() => onNavigate('home')}
-            className="flex size-10 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
-          >
-            <span className="material-symbols-outlined text-2xl text-primary">arrow_back</span>
-          </button>
-          <div className="flex items-center gap-2">
-            <img loading="lazy" decoding="async" src="/bp_logo.png" alt="BP ENERGY (SUL) LDA" className="w-8 h-8 rounded-lg object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
-            <span className="text-xl font-bold tracking-tight text-text-primary">BP</span>
-          </div>
-          <div className="size-10"></div>
-        </header>
+    <div className="bg-white font-sans text-black antialiased min-h-screen flex flex-col px-6 pt-6 pb-10">
 
-        <main className="flex-1 px-5 pb-8">
-          {/* Title & Subtitle */}
-          <div className="mb-5 pt-2">
-            <h1 className="text-[32px] font-bold leading-tight tracking-tight mb-1">Bem-vindo de volta</h1>
-            <p className="text-text-secondary text-base font-normal">Faça login para gerir suas finanças e compras.</p>
-          </div>
-
-          <form className="flex flex-col gap-4" onSubmit={handleLogin}>
-            {/* Phone Number Field */}
-            <div className="flex flex-col gap-1">
-              <label className="text-[13px] font-bold text-[#0F1111]">Número de telefone</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <span className="text-xl mr-2">🇦🇴</span>
-                  <span className="text-base font-medium text-text-primary">+244</span>
-                  <div className="ml-3 h-6 w-px bg-brand-border"></div>
-                </div>
-                <input
-                  className="flex w-full rounded-lg border border-brand-border bg-surface-dark pl-[7.5rem] pr-4 h-12 text-base focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-text-secondary/30"
-                  placeholder="9XX XXX XXX"
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Password Field */}
-            <div className="flex flex-col gap-1">
-              <label className="text-[13px] font-bold text-[#0F1111]">Senha</label>
-              <div className="relative">
-                <input
-                  className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white px-4 pr-12 h-[44px] text-[15px] focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:outline-none transition-all placeholder:text-gray-500"
-                  placeholder="Sua senha"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => {
-                    const val = e.target.value.slice(0, 8);
-                    setPassword(val);
-                  }}
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-gray-600 hover:text-black transition-colors"
-                >
-                  <span className="material-symbols-outlined text-[20px]">
-                    {showPassword ? 'visibility' : 'visibility_off'}
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className={`mt-2 flex w-full items-center justify-center rounded-[8px] bg-[#00C853] h-[48px] text-[15px] font-bold text-[#0F1111] border border-[#00C853] hover:bg-[#00C853] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-            >
-              {loading ? <div className="flex items-center gap-2">Entrando...</div> : 'Fazer Login'}
-            </button>
-
-            {/* Footer Link */}
-            <div className="text-center mt-4 relative">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
-              <div className="relative flex justify-center text-sm">
-                <span className="bg-[#FFFFFF] px-2 text-[#565959] text-[12px]">Novo Usuário?</span>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => onNavigate('register')}
-              className="w-full py-3 rounded-[8px] bg-white border border-[#D5D9D9] text-[#0F1111] text-[14px] font-medium hover:bg-gray-50 active:scale-[0.99] transition-all"
-            >
-              Criar sua conta
-            </button>
-          </form>
-        </main>
+      {/* Header / Back Button */}
+      <div className="w-full flex items-start mb-6">
+        <button
+          onClick={() => onNavigate('home')}
+          className="text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <span className="material-symbols-outlined text-[28px]">chevron_left</span>
+        </button>
       </div>
+
+      {/* 3D Illustration */}
+      <div className="w-full flex justify-center mb-10">
+        <div className="w-[80%] aspect-square relative flex items-center justify-center">
+          {/* Using a high-quality green 3D shield illustration */}
+          <img
+            src="https://cdn3d.iconscout.com/3d/premium/thumb/security-check-box-5353591-4482563.png"
+            alt="Security Login"
+            className="w-full h-full object-contain"
+            onError={(e) => {
+              // Fallback if image fails
+              (e.target as HTMLImageElement).src = "https://cdn-icons-png.flaticon.com/512/3699/3699516.png";
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Title */}
+      <div className="w-full mb-8">
+        <h1 className="text-[28px] font-bold text-[#111] leading-tight">faça login</h1>
+      </div>
+
+      <form className="w-full flex-col gap-5 flex" onSubmit={handleLogin}>
+
+        {/* Phone Input */}
+        <div className="bg-gray-50 rounded-2xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+          <span className="material-symbols-outlined text-[#00C853] text-[22px]">person</span>
+          <div className="h-5 w-[1px] bg-gray-300"></div>
+          <span className="text-gray-500 font-medium">+244</span>
+          <span className="material-symbols-outlined text-gray-400 text-[14px]">arrow_drop_down</span>
+          <input
+            type="tel"
+            placeholder="9XX XXX XXX"
+            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </div>
+
+        {/* Password Input */}
+        <div className="bg-gray-50 rounded-2xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+          <span className="material-symbols-outlined text-[#00C853] text-[22px]">lock</span>
+          <div className="h-5 w-[1px] bg-gray-300"></div>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder=".........."
+            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 tracking-widest"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            <span className="material-symbols-outlined text-gray-400 text-[20px]">
+              {showPassword ? 'visibility' : 'visibility_off'}
+            </span>
+          </button>
+        </div>
+
+        {/* Checkbox */}
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setRememberMe(!rememberMe)}>
+          <div className={`size-5 rounded-full flex items-center justify-center border transition-all ${rememberMe ? 'bg-[#00C853] border-[#00C853]' : 'border-gray-300 bg-white'}`}>
+            {rememberMe && <span className="material-symbols-outlined text-white text-[14px]">check</span>}
+          </div>
+          <span className="text-gray-500 text-[13px] font-medium">Lembre-se de nome de usuário / senha</span>
+        </div>
+
+        {/* Action Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full h-14 bg-[#00C853] text-white font-bold rounded-2xl text-[16px] mt-2 hover:bg-[#00a844] active:scale-[0.98] transition-all shadow-lg shadow-green-200 ${loading ? 'opacity-70 grayscale' : ''}`}
+        >
+          {loading ? 'Processando...' : 'faça login imediatamente'}
+        </button>
+
+        {/* Footer */}
+        <div className="w-full text-center mt-6">
+          <p className="text-gray-400 text-[13px]">
+            não tem conta? <span onClick={() => onNavigate('register')} className="text-[#fe5722] font-bold cursor-pointer hover:underline">registrado</span>
+          </p>
+        </div>
+
+      </form>
+
     </div>
   );
 };
 
 export default Login;
-
-

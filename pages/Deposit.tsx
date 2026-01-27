@@ -45,11 +45,11 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const handleFinalConfirm = async () => {
         const val = parseFloat(amount);
         if (!amount || isNaN(val) || val < 3000) {
-            showToast?.("Valor mínimo, 3.000 KZ", "warning");
+            showToast?.("Recarga mínima, 3.000 KZs", "warning");
             return;
         }
         if (val > 1000000) {
-            showToast?.("Valor máximo permitido: 1.000.000 KZ", "warning");
+            showToast?.("Recarga máxima: 1.000.000 KZs", "warning");
             return;
         }
         if (!selectedBank) {
@@ -83,7 +83,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                         }
                     });
                 }
-            }, "Gerando dados de depósito...");
+            }, "Gerando dados de recarga...");
         } catch (err: any) {
             showToast?.(err.message || "Opah algo deu errado", "error");
         }
@@ -101,7 +101,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 <button onClick={() => onNavigate('profile')} className="mr-4">
                     <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
                 </button>
-                <h1 className="text-[16px] font-bold">Depósito</h1>
+                <h1 className="text-[16px] font-bold">Recarga</h1>
             </header>
 
             <main className="p-6 space-y-6">
@@ -121,7 +121,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                                 onClick={() => setAmount(val.toString())}
                                 className="px-3 py-2 rounded-lg bg-gray-50 text-[12px] font-medium text-gray-500 hover:bg-gray-100 transition-colors"
                             >
-                                {val.toLocaleString('pt-AO')} Kz
+                                {val.toLocaleString('pt-AO')} KZs
                             </button>
                         ))}
                     </div>

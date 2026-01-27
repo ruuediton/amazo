@@ -317,46 +317,46 @@ const App: React.FC = () => {
 
       {/* Bottom Navigation */}
       {session && ['home', 'shop', 'profile', 'ganhos-tarefas', 'invite-page'].includes(currentPage) && (
-        <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-xl border-t border-border pb-6 pt-3 px-4 z-50 rounded-t-[32px] shadow-[0_-8px_30px_rgba(0,0,0,0.04)]">
+        <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 pb-2 pt-2 px-2 z-50">
           <div className="flex justify-between items-center">
             <button
               onClick={() => setCurrentPage('home')}
-              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'home' ? 'text-secondary scale-110' : 'text-gray-400'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'home' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[23px] ${currentPage === 'home' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'home' ? 1 : 0}` }}>home</span>
-              <span className="text-[9px] font-bold">InÃ­cio</span>
+              <span className="material-symbols-outlined text-[24px]">home</span>
+              <span className="text-[10px]">Casa</span>
             </button>
 
             <button
               onClick={() => setCurrentPage('shop')}
-              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'shop' ? 'text-secondary scale-110' : 'text-gray-400'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'shop' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'shop' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'shop' ? 1 : 0}` }}>pets</span>
-              <span className="text-[10px] font-bold">Mercado</span>
+              <span className="material-symbols-outlined text-[24px]">grade</span>
+              <span className="text-[10px]">tarefa</span>
             </button>
 
             <button
               onClick={() => setCurrentPage('ganhos-tarefas')}
-              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'ganhos-tarefas' ? 'text-secondary scale-110' : 'text-gray-400'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'ganhos-tarefas' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'ganhos-tarefas' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'ganhos-tarefas' ? 1 : 0}` }}>agriculture</span>
-              <span className="text-[10px] font-bold">Fazenda</span>
+              <span className="material-symbols-outlined text-[24px]">crown</span>
+              <span className="text-[10px]">VIP</span>
             </button>
 
             <button
               onClick={() => setCurrentPage('invite-page')}
-              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'invite-page' ? 'text-secondary scale-110' : 'text-gray-400'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'invite-page' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'invite-page' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'invite-page' ? 1 : 0}` }}>group</span>
-              <span className="text-[10px] font-bold">Convite</span>
+              <span className="material-symbols-outlined text-[24px]">groups</span>
+              <span className="text-[10px]">Equipe</span>
             </button>
 
             <button
               onClick={() => setCurrentPage('profile')}
-              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'profile' ? 'text-secondary scale-110' : 'text-gray-400'}`}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'profile' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
-              <span className={`material-symbols-outlined text-[24px] ${currentPage === 'profile' ? 'fill-1' : ''}`} style={{ fontVariationSettings: `'FILL' ${currentPage === 'profile' ? 1 : 0}` }}>person</span>
-              <span className="text-[10px] font-bold">Perfil</span>
+              <span className="material-symbols-outlined text-[24px]">person</span>
+              <span className="text-[10px]">minha</span>
             </button>
           </div>
         </nav>
