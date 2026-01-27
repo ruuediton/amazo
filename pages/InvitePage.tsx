@@ -103,11 +103,11 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
 
             <main className="flex-1 overflow-y-auto no-scrollbar p-5 space-y-6 pb-40">
                 {loading ? (
-                    <div className="flex justify-center py-20"><SpokeSpinner size="w-8 h-8" color="text-amber-500" /></div>
+                    <div className="flex justify-center py-20"><SpokeSpinner size="w-8 h-8" color="text-[#00C853]" /></div>
                 ) : (
                     <>
                         {/* Hero Card - Flat */}
-                        <div className="bg-[#FFD814] rounded-[24px] p-6 text-[#0F1111] border border-[#FCD200] relative overflow-hidden">
+                        <div className="bg-[#00C853] rounded-[24px] p-6 text-[#0F1111] border border-[#00C853] relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-8 opacity-10">
                                 <span className="material-symbols-outlined text-9xl">group_add</span>
                             </div>
@@ -263,7 +263,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                         <span className={`text-[11px] font-black ${isReached ? 'text-green-600' : 'text-[#0F1111]'}`}>{Math.floor(progress)}%</span>
                                                     </div>
                                                     <div className="relative w-full h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-50 shadow-inner">
-                                                        <div className={`h-full transition-all duration-1000 ease-out relative ${isReached ? 'bg-green-500' : 'bg-[#FFD814]'}`} style={{ width: `${progress}%` }}></div>
+                                                        <div className={`h-full transition-all duration-1000 ease-out relative ${isReached ? 'bg-green-500' : 'bg-[#00C853]'}`} style={{ width: `${progress}%` }}></div>
                                                     </div>
                                                 </div>
                                                 <div className="mt-4 flex items-center justify-between pt-3 border-t border-gray-50">

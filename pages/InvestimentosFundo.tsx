@@ -119,7 +119,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
   if (initialLoading) return (
     <div className="flex justify-center items-center h-screen bg-white">
-      <SpokeSpinner size="w-10 h-10" color="text-[#FFD814]" />
+      <SpokeSpinner size="w-10 h-10" color="text-[#00C853]" />
     </div>
   );
 
@@ -142,7 +142,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
           <div className="flex items-center gap-2">
-            <span className="bg-[#FFD814] text-[#0F1111] px-2 py-0.5 rounded text-[10px] font-black uppercase">Wealth</span>
+            <span className="bg-[#00C853] text-[#0F1111] px-2 py-0.5 rounded text-[10px] font-black uppercase">Wealth</span>
           </div>
         </div>
 
@@ -159,7 +159,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
       <div className="px-5 -mt-8 mb-4 relative z-20">
         <div className="bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="size-10 bg-[#FFD814] rounded-lg flex items-center justify-center">
+            <div className="size-10 bg-[#00C853] rounded-lg flex items-center justify-center">
               <span className="material-symbols-outlined text-[#0F1111]">account_balance_wallet</span>
             </div>
             <div className="flex flex-col">
@@ -201,7 +201,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                         <span className="bg-red-500 text-white px-3 py-1 rounded-full text-[10px] font-bold">ESGOTADO</span>
                       </div>
                     )}
-                    <div className="absolute bottom-2 right-2 bg-[#FFD814] text-[#0F1111] px-2 py-1 rounded font-black text-[12px]">
+                    <div className="absolute bottom-2 right-2 bg-[#00C853] text-[#0F1111] px-2 py-1 rounded font-black text-[12px]">
                       +{fund.taxa_retorno}%
                     </div>
                   </div>
@@ -221,7 +221,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                       disabled={isExhausted}
                       className={`w-full h-11 rounded-lg font-bold text-[12px] transition-all active:scale-95 ${isExhausted
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'bg-[#FFD814] border border-[#FCD200] text-[#0F1111] hover:bg-[#F7CA00]'
+                        : 'bg-[#00C853] border border-[#00C853] text-[#0F1111] hover:bg-[#00C853]'
                         }`}
                     >
                       {isExhausted ? 'Indisponível' : 'Aplicar Agora'}
@@ -245,7 +245,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
           <div className="bg-[#f3f3f3] rounded-3xl p-6 border border-gray-200 space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="size-12 rounded-xl bg-[#0F1111] flex items-center justify-center text-[#FFD814]">
+                <div className="size-12 rounded-xl bg-[#0F1111] flex items-center justify-center text-[#00C853]">
                   <span className="material-symbols-outlined text-2xl">rocket_launch</span>
                 </div>
                 <div>
@@ -295,7 +295,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
             <label className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 cursor-pointer active:scale-[0.98] transition-all">
               <input
                 type="checkbox"
-                className="size-5 rounded border-gray-300 text-[#FFD814] focus:ring-[#FFD814]"
+                className="size-5 rounded border-gray-300 text-[#00C853] focus:ring-[#00C853]"
                 checked={autoReinvest}
                 onChange={() => setAutoReinvest(!autoReinvest)}
               />
@@ -310,7 +310,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
               disabled={applying || !investmentAmount || Number(investmentAmount) <= 0}
               className={`w-full h-14 rounded-xl font-black text-[14px] uppercase shadow-lg transition-all flex items-center justify-center gap-3 ${applying || !investmentAmount || Number(investmentAmount) <= 0
                 ? 'bg-gray-200 text-gray-400'
-                : 'bg-[#FFD814] border border-[#FCD200] text-[#0F1111] hover:bg-[#F7CA00] active:scale-[0.98]'
+                : 'bg-[#00C853] border border-[#00C853] text-[#0F1111] hover:bg-[#00C853] active:scale-[0.98]'
                 }`}
             >
               {applying ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar Aplicação'}

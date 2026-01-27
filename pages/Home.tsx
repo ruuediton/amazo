@@ -17,7 +17,8 @@ interface MarketingItem {
 const carouselImages = [
   "/carousel1.png",
   "/carousel2.png",
-  "/carousel3.png"
+  "/carousel3.png",
+  "/carousel4.png"
 ];
 
 const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
@@ -137,7 +138,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       </section>
 
       {/* Marquee Banner */}
-      <div className="bg-[#FEF9E7] py-2 overflow-hidden border-b border-gray-100 flex items-center h-8">
+      <div className="bg-[#00C853] py-2 overflow-hidden border-b border-gray-100 flex items-center h-8">
         <div className="flex whitespace-nowrap animate-marquee">
           <span className="text-[10px] font-bold text-[#0F1111] uppercase tracking-widest px-8">
             • APROVEITE AS OFERTAS EXCLUSIVAS BP • GANHE 5% DE CASHBACK EM ELETRÔNICOS • SUPORTE 24H DISPONÍVEL •
@@ -151,7 +152,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       {/* Quick Actions - Flat Border Style */}
       <div className="px-4 pt-6 mb-2">
         <div className="grid grid-cols-3 gap-3">
-          <button onClick={() => onNavigate('deposit')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-primary text-black rounded-2xl border border-[#FCD200] active:scale-95 transition-all group">
+          <button onClick={() => onNavigate('deposit')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-primary text-black rounded-2xl border border-[#00C853] active:scale-95 transition-all group">
             <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>add_card</span>
             <span className="text-[11px] font-bold uppercase tracking-tight">Recarregar</span>
           </button>
@@ -201,7 +202,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
                   </div>
                   <button
                     onClick={() => onNavigate('shop')}
-                    className="bg-primary hover:bg-primary-hover text-black text-[14px] font-medium py-2.5 rounded-full w-full mt-4 transition-all border border-[#FCD200]"
+                    className="bg-primary hover:bg-primary-hover text-black text-[14px] font-medium py-2.5 rounded-full w-full mt-4 transition-all border border-[#00C853]"
                   >
                     Comprar Agora
                   </button>

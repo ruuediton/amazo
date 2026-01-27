@@ -111,7 +111,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
       <main className="max-w-md mx-auto bg-white">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-40 gap-4">
-            <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
+            <SpokeSpinner size="w-10 h-10" color="text-[#00C853]" />
           </div>
         ) : (
           <div className="flex flex-col divide-y divide-gray-100">
@@ -152,7 +152,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                     {/* Rating */}
                     <div className="flex items-center gap-1 mt-1">
                       <span className="text-[14px] font-bold text-[#565959] leading-none">4,7</span>
-                      <div className="flex text-amber-500">
+                      <div className="flex text-[#00C853]">
                         {Array(5).fill(0).map((_, i) => (
                           <span key={i} className="material-symbols-filled text-[14px]">star</span>
                         ))}
@@ -185,7 +185,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                       disabled={isPurchased}
                       className={`w-full py-2.5 rounded-full text-[13px] font-medium shadow-sm transition-all active:scale-[0.98] ${isPurchased
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
-                        : 'bg-[#FFD814] hover:bg-[#F7CA00] text-black border border-[#FCD200]'
+                        : 'bg-[#00C853] hover:bg-[#00C853] text-black border border-[#00C853]'
                         }`}
                     >
                       {isPurchased ? 'Já adquirido' : 'Adicionar ao carrinho'}
@@ -220,7 +220,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
               <button
                 disabled={isBuying}
                 onClick={handlePurchase}
-                className="w-full h-12 bg-[#FFD814] hover:bg-[#F7CA00] rounded-full font-bold text-[14px] shadow-sm transition-all active:scale-95 flex items-center justify-center"
+                className="w-full h-12 bg-[#00C853] hover:bg-[#00C853] rounded-full font-bold text-[14px] shadow-sm transition-all active:scale-95 flex items-center justify-center"
               >
                 {isBuying ? <SpokeSpinner size="w-5 h-5" color="text-black" /> : 'Confirmar e Pagar'}
               </button>

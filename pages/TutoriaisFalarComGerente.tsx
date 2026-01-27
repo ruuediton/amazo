@@ -138,7 +138,7 @@ const TutoriaisFalarComGerente: React.FC<Props> = ({ onNavigate, onOpenSupport }
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-background-dark/95 backdrop-blur-md border-t border-white/10 z-50">
         <button
           onClick={() => onOpenSupport?.()}
-          className="w-full h-14 flex items-center justify-center gap-2 bg-primary hover:bg-yellow-400 active:scale-[0.98] text-black font-extrabold text-base rounded-xl transition-all shadow-[0_8px_16px_rgba(244,209,37,0.2)]"
+          className="w-full h-14 flex items-center justify-center gap-2 bg-primary hover:bg-green-400 active:scale-[0.98] text-black font-extrabold text-base rounded-xl transition-all shadow-[0_8px_16px_rgba(244,209,37,0.2)]"
         >
           <span>Falar com Gerente Agora</span>
           <span className="material-symbols-outlined text-[20px] font-bold">arrow_forward</span>

@@ -156,7 +156,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
             </header>
 
             <main className="max-w-md mx-auto">
-                <div className="p-6 bg-[#FFD814] border-b border-[#FCD200]">
+                <div className="p-6 bg-[#00C853] border-b border-[#00C853]">
                     <div className="space-y-1">
                         <p className="text-[11px] text-[#0F1111]/60 font-bold uppercase tracking-widest">Patrimônio em Fundo</p>
                         <div className="flex items-baseline gap-1">
@@ -174,7 +174,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-40 gap-4">
-                        <SpokeSpinner size="w-10 h-10" color="text-[#FFD814]" />
+                        <SpokeSpinner size="w-10 h-10" color="text-[#00C853]" />
                     </div>
                 ) : (
                     <div className="flex flex-col divide-y divide-gray-100 px-2">
@@ -191,7 +191,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                 <img src={inv.fund.url_imagem} alt={inv.fund.nome_fundo} className="w-full h-full object-cover" />
                                             ) : (
                                                 <div className="flex flex-col items-center">
-                                                    <span className={`material-symbols-outlined text-3xl ${isFinalized ? 'text-green-600' : 'text-amber-500'}`}>
+                                                    <span className={`material-symbols-outlined text-3xl ${isFinalized ? 'text-green-600' : 'text-[#00C853]'}`}>
                                                         {isFinalized ? 'verified' : 'analytics'}
                                                     </span>
                                                 </div>
@@ -254,7 +254,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 <p className="text-[#565959] text-sm mb-8">Você ainda não possui aplicações em fundos de investimento.</p>
                                 <button
                                     onClick={() => onNavigate('investimentos-fundo')}
-                                    className="w-full py-3 bg-[#FFD814] hover:bg-[#F7CA00] rounded-full font-medium text-[14px] border border-[#FCD200]"
+                                    className="w-full py-3 bg-[#00C853] hover:bg-[#00C853] rounded-full font-medium text-[14px] border border-[#00C853]"
                                 >
                                     Explorar Fundos
                                 </button>

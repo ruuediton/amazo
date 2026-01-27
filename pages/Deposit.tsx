@@ -102,7 +102,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
 
     if (loading) return (
         <div className="flex justify-center items-center h-screen bg-white">
-            <SpokeSpinner size="w-8 h-8" color="text-[#FFD814]" />
+            <SpokeSpinner size="w-8 h-8" color="text-[#00C853]" />
         </div>
     );
 
@@ -110,7 +110,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     if (step === 'amount') {
         return (
             <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 selection:bg-amber-100 animate-in fade-in duration-300">
-                <header className="sticky top-0 z-10 bg-[#FFD814] border-b border-[#FCD200] px-4 py-3 flex items-center justify-between shadow-sm">
+                <header className="sticky top-0 z-10 bg-[#00C853] border-b border-[#00C853] px-4 py-3 flex items-center justify-between shadow-sm">
                     <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
                         <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
                     </button>
@@ -166,7 +166,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     <button
                         onClick={handleNextToBank}
                         disabled={!amount || parseFloat(amount) < 3000}
-                        className="w-full h-14 bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center disabled:opacity-50 disabled:grayscale"
+                        className="w-full h-14 bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center disabled:opacity-50 disabled:grayscale"
                     >
                         PRÃ“XIMO
                     </button>
@@ -179,7 +179,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     return (
         <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased animate-in slide-in-from-right duration-300">
             {/* Header Amarelo */}
-            <header className="bg-[#FFD814] text-[#0F1111] p-4 flex items-center justify-center relative shadow-md border-b border-[#FCD200]">
+            <header className="bg-[#00C853] text-[#0F1111] p-4 flex items-center justify-center relative shadow-md border-b border-[#00C853]">
                 <button onClick={() => setStep('amount')} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0F1111]">
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
@@ -206,7 +206,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                                 key={bank.id}
                                 onClick={() => setSelectedBank(bank)}
                                 className={`w-full py-4 px-4 rounded flex items-center justify-center text-[15px] font-bold transition-all border ${selectedBank?.id === bank?.id
-                                    ? 'bg-[#FFD814] border-[#FCD200] text-[#0F1111] scale-[1.02] shadow-md'
+                                    ? 'bg-[#00C853] border-[#00C853] text-[#0F1111] scale-[1.02] shadow-md'
                                     : 'bg-gray-50 border-gray-100 text-gray-500 active:bg-gray-100'}`}
                             >
                                 {bank.nome_do_banco}

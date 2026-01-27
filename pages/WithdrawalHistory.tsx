@@ -90,7 +90,7 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
       <main className="p-4 space-y-4">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <SpokeSpinner size="w-8 h-8" color="text-[#FFD814]" />
+            <SpokeSpinner size="w-8 h-8" color="text-[#00C853]" />
             <p className="text-[13px] text-[#565959] font-medium">Carregando registros...</p>
           </div>
         ) : records.length > 0 ? (
@@ -140,7 +140,7 @@ const WithdrawalHistory: React.FC<Props> = ({ onNavigate }) => {
             <p className="text-[13px] text-[#565959] mt-1">Suas retiradas aparecerÃ£o aqui assim que vocÃª as solicitar.</p>
             <button
               onClick={() => onNavigate('retirada')}
-              className="mt-6 px-6 py-2 bg-[#FFD814] border border-[#FCD200] rounded-lg text-[13px] font-medium shadow-sm transition-all active:scale-95"
+              className="mt-6 px-6 py-2 bg-[#00C853] border border-[#00C853] rounded-lg text-[13px] font-medium shadow-sm transition-all active:scale-95"
             >
               Retirar Kwanza Agora
             </button>

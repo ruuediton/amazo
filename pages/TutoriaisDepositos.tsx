@@ -226,7 +226,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           </button>
           <button
             onClick={() => onNavigate('deposit')}
-            className="flex-1 flex h-12 cursor-pointer items-center justify-center rounded-2xl bg-primary text-black gap-2 text-base font-bold leading-normal tracking-[0.015em] hover:bg-yellow-400 active:scale-[0.98] transition-all shadow-lg shadow-primary/20"
+            className="flex-1 flex h-12 cursor-pointer items-center justify-center rounded-2xl bg-primary text-black gap-2 text-base font-bold leading-normal tracking-[0.015em] hover:bg-green-400 active:scale-[0.98] transition-all shadow-lg shadow-primary/20"
           >
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>account_balance_wallet</span>
             <span>Depositar Agora</span>

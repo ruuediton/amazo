@@ -254,7 +254,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
 
           <button
             onClick={() => onNavigate('profile')}
-            className={`w-full mt-4 bg-primary hover:bg-yellow-400 text-black font-black text-lg py-4 rounded-2xl transition-all shadow-xl shadow-primary/20 active:scale-[0.98]`}
+            className={`w-full mt-4 bg-primary hover:bg-green-400 text-black font-black text-lg py-4 rounded-2xl transition-all shadow-xl shadow-primary/20 active:scale-[0.98]`}
           >
             Sair
           </button>
@@ -375,7 +375,7 @@ const SecurityVerify: React.FC<Props> = ({ onNavigate, showToast }) => {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className={`w-full flex items-center justify-center gap-3 bg-primary hover:bg-yellow-400 text-black font-black text-lg py-4 rounded-2xl transition-all shadow-xl shadow-primary/20 active:scale-[0.98] ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`w-full flex items-center justify-center gap-3 bg-primary hover:bg-green-400 text-black font-black text-lg py-4 rounded-2xl transition-all shadow-xl shadow-primary/20 active:scale-[0.98] ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {loading ? (
               <SpokeSpinner size="w-6 h-6" className="text-black" />

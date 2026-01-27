@@ -119,7 +119,7 @@ NOME DO PAGADOR: ${userName}`.trim();
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white text-[#0F1111] p-6 text-center">
         <h3 className="text-xl font-bold mb-2">SolicitaÃ§Ã£o nÃ£o encontrada</h3>
-        <button onClick={() => onNavigate('deposit')} className="bg-[#FFD814] px-8 py-3 rounded-xl font-bold">Voltar</button>
+        <button onClick={() => onNavigate('deposit')} className="bg-[#00C853] px-8 py-3 rounded-xl font-bold">Voltar</button>
       </div>
     );
   }
@@ -142,7 +142,7 @@ NOME DO PAGADOR: ${userName}`.trim();
           {/* Amount & Time Badges */}
           <div className="flex items-center justify-center gap-2">
             <div className="px-4 py-1.5 bg-[#00A8E1] text-white text-[11px] font-bold rounded shadow-sm uppercase">Quantia</div>
-            <div className="px-4 py-1.5 bg-[#FFD814] text-[#0F1111] text-[11px] font-bold rounded shadow-sm tabular-nums">{timeLeft}</div>
+            <div className="px-4 py-1.5 bg-[#00C853] text-[#0F1111] text-[11px] font-bold rounded shadow-sm tabular-nums">{timeLeft}</div>
           </div>
 
           {/* Large Amount */}
@@ -215,7 +215,7 @@ NOME DO PAGADOR: ${userName}`.trim();
             <button
               disabled={loading || isExpired}
               onClick={handleSubmit}
-              className="w-full h-[52px] bg-[#FFD814] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase shadow-md disabled:opacity-50"
+              className="w-full h-[52px] bg-[#00C853] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase shadow-md disabled:opacity-50"
             >
               {loading ? 'Processando...' : 'Finalizar DepÃ³sito'}
             </button>

@@ -165,7 +165,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
               <span className="material-symbols-outlined text-[16px] fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
               <span className="font-medium">Canal oficial e seguro</span>
             </div>
-            <button onClick={() => onOpenSupport?.()} className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-yellow-400 active:scale-[0.98] transition-all text-background-dark font-bold text-base shadow-lg shadow-primary/20">
+            <button onClick={() => onOpenSupport?.()} className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-green-400 active:scale-[0.98] transition-all text-background-dark font-bold text-base shadow-lg shadow-primary/20">
               <span className="material-symbols-outlined">chat</span>
               Falar com o Gerente
             </button>

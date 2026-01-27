@@ -399,7 +399,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowManualModal(false)}></div>
           <div className="bg-white w-full max-w-sm rounded-[24px] p-6 relative z-10 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
             <div className="flex flex-col items-center text-center">
-              <div className="size-16 rounded-2xl bg-[#FFD814] flex items-center justify-center mb-4 shadow-lg shadow-[#FFD814]/20 border border-[#FCD200]">
+              <div className="size-16 rounded-2xl bg-[#00C853] flex items-center justify-center mb-4 shadow-lg shadow-[#00C853]/20 border border-[#00C853]">
                 <span className="material-symbols-outlined text-black text-4xl">library_books</span>
               </div>
               <h3 className="text-xl font-black text-[#0F1111] mb-2 leading-tight">Baixar Manual Aprende BP?</h3>
@@ -416,7 +416,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
                 </button>
                 <button
                   onClick={generateManual}
-                  className="flex-1 py-3.5 bg-[#FFD814] rounded-xl font-black text-[#0F1111] text-sm hover:bg-[#F7CA00] border border-[#FCD200] transition-colors shadow-sm flex items-center justify-center gap-2"
+                  className="flex-1 py-3.5 bg-[#00C853] rounded-xl font-black text-[#0F1111] text-sm hover:bg-[#00C853] border border-[#00C853] transition-colors shadow-sm flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-[18px]">download</span>
                   Baixar

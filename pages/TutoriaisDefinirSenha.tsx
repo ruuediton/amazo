@@ -92,7 +92,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background-dark border-t border-gray-200 z-20">
         <button
           onClick={() => onNavigate('withdraw-password')}
-          className="w-full bg-primary hover:bg-yellow-400 text-black text-base font-bold h-12 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-[0.98]"
+          className="w-full bg-primary hover:bg-green-400 text-black text-base font-bold h-12 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-[0.98]"
         >
           <span>Começar Configuração</span>
           <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>arrow_forward</span>

@@ -58,7 +58,7 @@ const Campaigns: React.FC<Props> = ({ onNavigate }) => {
                 </div>
                 <button
                   onClick={() => onNavigate('gift-chest')}
-                  className="rounded-lg bg-primary hover:bg-yellow-400 text-black px-5 py-2.5 text-xs font-bold transition-all active:scale-[0.98]"
+                  className="rounded-lg bg-primary hover:bg-green-400 text-black px-5 py-2.5 text-xs font-bold transition-all active:scale-[0.98]"
                 >
                   Ativar Oferta
                 </button>

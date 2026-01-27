@@ -131,7 +131,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
       <main className="max-w-md mx-auto">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-40 gap-4">
-            <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
+            <SpokeSpinner size="w-10 h-10" color="text-[#00C853]" />
             <p className="text-[12px] text-[#565959] font-medium animate-pulse">Aguarde um momento...</p>
           </div>
         ) : purchases.length === 0 ? (
@@ -145,7 +145,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
             </p>
             <button
               onClick={() => onNavigate('shop')}
-              className="w-full py-3 bg-[#FFD814] hover:bg-[#F7CA00] rounded-full font-medium text-[14px] border border-[#FCD200] active:scale-95 transition-all shadow-sm"
+              className="w-full py-3 bg-[#00C853] hover:bg-[#00C853] rounded-full font-medium text-[14px] border border-[#00C853] active:scale-95 transition-all shadow-sm"
             >
               Ir para Loja
             </button>

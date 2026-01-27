@@ -110,7 +110,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
             disabled={hasCollectedToday || isProcessing}
             className={`relative z-10 flex flex-col items-center justify-center w-32 h-32 rounded-full transition-all active:scale-95 group border-4 ${hasCollectedToday
               ? 'bg-gray-100 border-gray-200 text-[#565959]'
-              : 'bg-[#FFD814] border-[#FCD200] text-[#0F1111] hover:bg-[#F7CA00]'
+              : 'bg-[#00C853] border-[#00C853] text-[#0F1111] hover:bg-[#00C853]'
               }`}
           >
             {isProcessing ? (
@@ -132,7 +132,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
         </div>
 
         {/* Ticker / Log - Flat */}
-        <div className="mx-4 mb-8 p-3 rounded-lg bg-[#FEF9E7] border border-[#FCD200]/30 flex items-center gap-3 overflow-hidden">
+        <div className="mx-4 mb-8 p-3 rounded-lg bg-[#00C853] border border-[#00C853]/30 flex items-center gap-3 overflow-hidden">
           <span className="material-symbols-outlined text-[#0F1111] text-[20px] shrink-0">info</span>
           <div className="flex-1 overflow-hidden relative h-5">
             <div className="absolute whitespace-nowrap animate-marquee flex items-center text-[13px] text-[#0F1111] font-medium">
@@ -178,7 +178,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
 
           {loading ? (
             <div className="flex flex-col items-center justify-center py-40 gap-4">
-              <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
+              <SpokeSpinner size="w-10 h-10" color="text-[#00C853]" />
             </div>
           ) : purchases.length === 0 ? (
             <div className="bg-gray-50 p-8 rounded-xl border border-dashed border-gray-200 text-center">
@@ -187,7 +187,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
               </p>
               <button
                 onClick={() => onNavigate('shop')}
-                className="w-full h-11 bg-[#FFD814] hover:bg-[#F7CA00] text-[#0F1111] text-[13px] font-bold uppercase rounded-full transition-all border border-[#FCD200]"
+                className="w-full h-11 bg-[#00C853] hover:bg-[#00C853] text-[#0F1111] text-[13px] font-bold uppercase rounded-full transition-all border border-[#00C853]"
               >
                 Visitar Loja
               </button>
@@ -208,7 +208,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
                     <h4 className="text-[14px] font-medium text-[#0F1111] truncate">{purchase.nome}</h4>
                     <div className="flex items-center gap-2 mt-1.5 font-bold">
                       <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div className={`h-full bg-[#FFD814] rounded-full ${purchase.status === 'confirmado' ? 'w-full' : 'w-0'}`}></div>
+                        <div className={`h-full bg-[#00C853] rounded-full ${purchase.status === 'confirmado' ? 'w-full' : 'w-0'}`}></div>
                       </div>
                       <span className={`text-[10px] uppercase tracking-tighter ${purchase.status === 'confirmado' ? 'text-[#007600]' : 'text-amber-600'}`}>
                         {purchase.status === 'confirmado' ? 'Gerando' : 'Aguardando'}

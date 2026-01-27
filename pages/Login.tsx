@@ -149,7 +149,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <button
               type="submit"
               disabled={loading}
-              className={`mt-2 flex w-full items-center justify-center rounded-[8px] bg-[#FFD814] h-[48px] text-[15px] font-bold text-[#0F1111] border border-[#FCD200] hover:bg-[#F7CA00] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`mt-2 flex w-full items-center justify-center rounded-[8px] bg-[#00C853] h-[48px] text-[15px] font-bold text-[#0F1111] border border-[#00C853] hover:bg-[#00C853] active:scale-[0.99] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {loading ? <div className="flex items-center gap-2">Entrando...</div> : 'Fazer Login'}
             </button>

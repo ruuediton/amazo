@@ -83,7 +83,7 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
       <main className="flex-1 overflow-y-auto px-4 pt-6 pb-32 no-scrollbar">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <SpokeSpinner size="w-10 h-10" color="text-amber-500" />
+            <SpokeSpinner size="w-10 h-10" color="text-[#00C853]" />
             <p className="text-[#565959] font-bold uppercase tracking-widest text-[10px]">Carregando seus convidados...</p>
           </div>
         ) : (

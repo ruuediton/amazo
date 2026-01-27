@@ -303,7 +303,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               <button
                 onClick={handleSaveBank}
                 disabled={loading}
-                className="w-full h-[48px] bg-primary hover:bg-primary-hover border border-[#FCD200] rounded-[8px] flex items-center justify-center font-bold text-[#0F1111] text-[15px] shadow-sm active:scale-[0.99] transition-all"
+                className="w-full h-[48px] bg-primary hover:bg-primary-hover border border-[#00C853] rounded-[8px] flex items-center justify-center font-bold text-[#0F1111] text-[15px] shadow-sm active:scale-[0.99] transition-all"
               >
                 {loading ? (
                   <SpokeSpinner size="w-5 h-5" color="text-black" />

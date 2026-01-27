@@ -94,7 +94,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
 
     return (
         <div className="bg-white min-h-screen font-sans text-[#0F1111] selection:bg-amber-100 pb-20 antialiased">
-            <header className="sticky top-0 z-50 flex items-center justify-between bg-[#FFD814] px-6 py-4 shadow-md border-b border-[#FCD200]">
+            <header className="sticky top-0 z-50 flex items-center justify-between bg-[#00C853] px-6 py-4 shadow-md border-b border-[#00C853]">
                 <button
                     onClick={() => onNavigate('profile')}
                     className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 transition-all"
@@ -195,7 +195,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     <button
                         onClick={handleTransfer}
                         disabled={loading || !amount || !receiverPhone || !password}
-                        className="w-full h-14 bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] uppercase tracking-widest rounded-xl shadow-md active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale mt-4 hover:bg-[#F7CA00]"
+                        className="w-full h-14 bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] uppercase tracking-widest rounded-xl shadow-md active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale mt-4 hover:bg-[#00C853]"
                     >
                         {loading ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar Envio'}
                     </button>

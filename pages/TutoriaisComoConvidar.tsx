@@ -18,7 +18,7 @@ const TutoriaisComoConvidar: React.FC<Props> = ({ onNavigate }) => {
             <span className="text-xl font-mono font-bold text-black tracking-widest italic">AMZ-AO-95</span>
             <span className="material-symbols-outlined text-green-500 text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
           </div>
-          <button className="w-full bg-primary hover:bg-yellow-400 active:scale-[0.98] text-black font-black py-4 px-4 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20">
+          <button className="w-full bg-primary hover:bg-green-400 active:scale-[0.98] text-black font-black py-4 px-4 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20">
             <span className="material-symbols-outlined text-[20px]">content_copy</span>
             Copiar CÃ³digo
           </button>

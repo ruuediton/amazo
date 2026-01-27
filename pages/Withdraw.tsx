@@ -126,7 +126,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
   if (loading) return (
     <div className="flex justify-center items-center h-screen bg-white">
-      <SpokeSpinner size="w-8 h-8" color="text-[#FFD814]" />
+      <SpokeSpinner size="w-8 h-8" color="text-[#00C853]" />
     </div>
   );
 
@@ -148,7 +148,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       <main className="p-5 space-y-6">
         {/* Balance Card - BP Style */}
-        <div className="bg-[#FFD814] rounded-xl p-6 border border-[#FCD200] shadow-sm relative overflow-hidden">
+        <div className="bg-[#00C853] rounded-xl p-6 border border-[#00C853] shadow-sm relative overflow-hidden">
           <div className="absolute right-[-20px] top-[-20px] opacity-10">
             <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>
           </div>
@@ -225,7 +225,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 px-8 bg-white border-t border-gray-100 pb-8">
         <button
           onClick={handleInitiateWithdraw}
-          className="w-full bg-[#FFD814] text-[#0F1111] border border-[#FCD200] font-bold text-[15px] py-3.5 rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#F7CA00] transition-all flex items-center justify-center"
+          className="w-full bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] py-3.5 rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center"
         >
           Solicitar Saque
         </button>
@@ -263,7 +263,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               <button
                 onClick={confirmWithdraw}
                 disabled={pin.length < 4}
-                className="flex-1 py-3 bg-[#FFD814] border border-[#FCD200] rounded-lg font-normal text-[#0F1111] disabled:opacity-50"
+                className="flex-1 py-3 bg-[#00C853] border border-[#00C853] rounded-lg font-normal text-[#0F1111] disabled:opacity-50"
               >
                 Confirmar
               </button>

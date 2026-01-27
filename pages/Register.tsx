@@ -245,7 +245,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               <button
                 type="submit"
                 disabled={loading}
-                className={`mt-4 flex w-full items-center justify-center rounded-2xl bg-wealth h-[56px] text-[16px] font-black text-text-primary shadow-soft hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`mt-4 flex w-full items-center justify-center rounded-2xl bg-[#00C853] h-[56px] text-[16px] font-black text-text-primary shadow-soft hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {loading ? <div className="flex items-center gap-2"><SpokeSpinner size="w-5 h-5" color="text-text-primary" /> Aguarde...</div> : 'CRIAR MINHA CONTA'}
               </button>
