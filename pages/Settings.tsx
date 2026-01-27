@@ -215,9 +215,11 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                     <button
                         onClick={handleSave}
                         disabled={saving}
+                        className="w-full h-14 bg-[#00C853] text-white rounded-2xl font-bold text-sm uppercase tracking-wide active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-[#00a844] shadow-lg shadow-green-200"
+                    >
                         {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar Alterações'}
                     </button>
-        </div>
+                </div>
             </main >
         </div >
     );

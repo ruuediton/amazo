@@ -71,18 +71,11 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
 
       <main className="flex-1 px-5 py-2 flex flex-col">
         {/* Intro */}
-        <div className="mb-4 mt-2">
-          <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-2">Definir Senha de Retirada</h2>
-          <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
-            Esta senha será solicitada exclusivamente para confirmar saques, transferências e pagamentos.
-          </p>
-        </div>
-
         {/* Form */}
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-4 mt-6" onSubmit={handleSubmit}>
           {/* New Password */}
           <div className="flex flex-col gap-1 pt-2">
-            <label className="text-sm font-bold text-black ml-1">Nova senha de retirada</label>
+
             <div className="relative flex items-center">
               <input
                 value={password}
@@ -109,7 +102,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
 
           {/* Confirm Password */}
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-bold text-black ml-1">Confirmar nova senha de retirada</label>
+
             <div className="relative flex items-center">
               <input
                 value={confirmPassword}

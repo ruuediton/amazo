@@ -90,6 +90,7 @@ const tutorialsData: TutorialSection[] = [
 
 const Tutorials: React.FC<TutorialsProps> = ({ onNavigate }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
 
   const filteredSections = useMemo(() => {
     if (!searchQuery.trim()) return tutorialsData;
@@ -108,68 +109,84 @@ const Tutorials: React.FC<TutorialsProps> = ({ onNavigate }) => {
       .filter((section) => section.items.length > 0);
   }, [searchQuery]);
 
+  const handleSearchToggle = () => {
+    setShowSearch(!showSearch);
+    if (showSearch) {
+      setSearchQuery('');
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-background-dark text-black font-display">
+    <div className="flex flex-col min-h-screen bg-white text-black font-sans">
       {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center bg-background-dark p-4 pb-2 justify-between border-b border-gray-200">
-        <button
-          onClick={() => onNavigate('profile')}
-          className="text-primary flex size-12 shrink-0 items-center justify-start cursor-pointer hover:opacity-70"
-        >
-          <span className="material-symbols-outlined text-[24px]">arrow_back</span>
-        </button>
-        <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center">Menu de Tutoriais</h2>
-        <div className="flex w-12 items-center justify-end">
-          {/* O botão de busca no header pode focar no input ou ser removido se redundante, mantendo visual por enquanto */}
-          <button className="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-transparent text-black">
-            <span className="material-symbols-outlined text-[24px]">search</span>
-          </button>
-        </div>
+      <header className="sticky top-0 z-10 flex items-center bg-white p-4 pb-3 justify-between border-b border-gray-100">
+        {!showSearch ? (
+          <>
+            <button
+              onClick={() => onNavigate('profile')}
+              className="text-[#00C853] flex size-10 shrink-0 items-center justify-start cursor-pointer hover:bg-gray-50 rounded-full transition-colors"
+            >
+              <span className="material-symbols-outlined text-[28px]">chevron_left</span>
+            </button>
+            <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center">Menu de Tutoriais</h2>
+            <button
+              onClick={handleSearchToggle}
+              className="flex size-10 cursor-pointer items-center justify-center rounded-full hover:bg-gray-50 transition-colors text-gray-400"
+            >
+              <span className="material-symbols-outlined text-[24px]">search</span>
+            </button>
+          </>
+        ) : (
+          <div className="flex items-center w-full gap-2">
+            <div className="relative flex items-center flex-1 h-11 rounded-2xl focus-within:ring-2 ring-[#00C853] bg-gray-50 overflow-hidden border border-transparent focus-within:border-[#00C853]">
+              <div className="grid place-items-center h-full w-11 text-gray-400">
+                <span className="material-symbols-outlined text-[20px]">search</span>
+              </div>
+              <input
+                autoFocus
+                className="peer h-full w-full outline-none bg-transparent text-sm text-black pr-4 placeholder-gray-400"
+                placeholder="Buscar ajuda..."
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <button
+              onClick={handleSearchToggle}
+              className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-gray-50 transition-colors text-gray-400"
+            >
+              <span className="material-symbols-outlined text-[24px]">close</span>
+            </button>
+          </div>
+        )}
       </header>
 
-      {/* Search Input */}
-      <div className="px-4 py-3 bg-background-dark">
-        <div className="relative flex items-center w-full h-12 rounded-xl focus-within:ring-2 ring-primary bg-gray-100 overflow-hidden">
-          <div className="grid place-items-center h-full w-12 text-gray-600">
-            <span className="material-symbols-outlined text-[20px]">search</span>
-          </div>
-          <input
-            className="peer h-full w-full outline-none bg-transparent text-sm text-black pr-4 placeholder-gray-400"
-            placeholder="Buscar ajuda..."
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className="flex-1 overflow-y-auto pb-32">
+      <div className="flex-1 overflow-y-auto pb-32 px-4">
         {filteredSections.length > 0 ? (
           filteredSections.map((section, index) => (
             <React.Fragment key={section.title}>
-              <section className={index === 0 ? 'mt-2' : ''}>
-                <h3 className="text-black tracking-tight text-xl font-bold leading-tight px-4 text-left pb-3 pt-4">
+              <section className={index === 0 ? 'mt-2' : 'mt-6'}>
+                <h3 className="text-gray-700 tracking-tight text-sm font-bold leading-tight text-left pb-3 uppercase">
                   {section.title}
                 </h3>
-                {section.items.map((item) => (
-                  <TutorialItem
-                    key={item.title}
-                    icon={item.icon}
-                    title={item.title}
-                    subtitle={item.subtitle}
-                    onClick={() => item.route && onNavigate(item.route)}
-                  />
-                ))}
+                <div className="flex flex-col gap-2">
+                  {section.items.map((item) => (
+                    <TutorialItem
+                      key={item.title}
+                      icon={item.icon}
+                      title={item.title}
+                      subtitle={item.subtitle}
+                      onClick={() => item.route && onNavigate(item.route)}
+                    />
+                  ))}
+                </div>
               </section>
-              {index < filteredSections.length - 1 && (
-                <div className="h-px bg-white/5 mx-6 my-2"></div>
-              )}
             </React.Fragment>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center pt-10 text-gray-600">
+          <div className="flex flex-col items-center justify-center pt-20 text-gray-400">
             <span className="material-symbols-outlined text-[48px] mb-2">search_off</span>
-            <p>Nenhum tutorial encontrado.</p>
+            <p className="text-sm">Nenhum tutorial encontrado.</p>
           </div>
         )}
       </div>
@@ -187,25 +204,24 @@ interface TutorialItemProps {
 const TutorialItem: React.FC<TutorialItemProps> = ({ icon, title, subtitle, onClick }) => (
   <div
     onClick={onClick}
-    className={`flex items-center gap-4 px-4 min-h-[72px] justify-between transition-colors rounded-xl mx-2 group ${onClick ? 'cursor-pointer hover:bg-white/5' : 'cursor-default'
+    className={`flex items-center gap-4 p-4 min-h-[72px] justify-between transition-all rounded-2xl bg-gray-50 border border-transparent hover:border-gray-200 ${onClick ? 'cursor-pointer active:scale-[0.98]' : 'cursor-default'
       }`}
   >
-    <div className="flex items-center gap-4 overflow-hidden">
-      <div className="text-primary flex items-center justify-center rounded-full bg-primary/10 shrink-0 size-12 group-hover:bg-primary group-hover:text-black transition-colors">
+    <div className="flex items-center gap-4 overflow-hidden flex-1">
+      <div className="text-[#00C853] flex items-center justify-center rounded-full bg-[#00C853]/10 shrink-0 size-12">
         <span className="material-symbols-outlined text-[24px]">{icon}</span>
       </div>
-      <div className="flex flex-col">
-        <p className="text-black text-base font-semibold leading-normal truncate">{title}</p>
-        <p className="text-gray-600 text-sm font-normal leading-normal truncate">{subtitle}</p>
+      <div className="flex flex-col flex-1 min-w-0">
+        <p className="text-[#111] text-[15px] font-bold leading-tight truncate">{title}</p>
+        <p className="text-gray-500 text-[13px] font-normal leading-normal truncate mt-0.5">{subtitle}</p>
       </div>
     </div>
     {onClick && (
-      <div className="shrink-0 text-gray-500">
-        <span className="material-symbols-outlined text-[24px]">chevron_right</span>
+      <div className="shrink-0 text-gray-300">
+        <span className="material-symbols-outlined text-[20px]">chevron_right</span>
       </div>
     )}
   </div>
 );
 
 export default Tutorials;
-

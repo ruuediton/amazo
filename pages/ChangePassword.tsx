@@ -81,19 +81,11 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
       </header>
 
       <main className="flex-1 px-5 py-2 flex flex-col">
-        {/* Headline Section */}
-        <div className="mb-2 mt-2">
-          <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-1">Alterar Senha de Acesso</h2>
-          <p className="text-[text-gray-400] text-sm font-normal leading-relaxed">
-            Para sua segurança, crie uma senha forte que você não use em outros sites.
-          </p>
-        </div>
-
         {/* Form Section */}
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-3 mt-4" onSubmit={handleSubmit}>
           {/* Current Password */}
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-bold text-black ml-1">Senha atual</label>
+
             <div className="relative flex items-center">
               <input
                 value={currentPassword}
@@ -116,7 +108,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
 
           {/* New Password */}
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-bold text-black ml-1">Nova senha</label>
+
             <div className="relative flex items-center">
               <input
                 value={newPassword}
@@ -144,7 +136,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-bold text-black ml-1">Confirmar nova senha</label>
+
             <div className="relative flex items-center">
               <input
                 value={confirmPassword}

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
@@ -41,7 +40,6 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Buscar perfil para o Código e Telefone
       const { data: profile } = await supabase
         .from('profiles')
         .select('code, phone')
@@ -53,7 +51,6 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         phone: profile?.phone || user.phone || user.user_metadata?.phone || "N/A"
       });
 
-      // Fetch parallel data for speed
       const [depositsRes, depositsUsdtRes, withdrawalsRes, purchasesRes, bonusRes, p2pRes] = await Promise.all([
         supabase.from('depositos_clientes').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
         supabase.from('depositos_usdt').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
@@ -70,7 +67,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(d.created_at);
         combined.push({
           id: `dep-${d.id}`,
-          title: 'Depósito Bancário',
+          title: 'Transação recargas',
           subtitle: `${d.nome_do_banco || 'Transferência'} - ${d.estado_de_pagamento || 'Pendente'}`,
           amount: Number(d.valor_deposito || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
@@ -88,7 +85,7 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(d.created_at);
         combined.push({
           id: `usdt-${d.id}`,
-          title: 'Depósito USDT',
+          title: 'Transação recargas (USDT)',
           subtitle: `Cripto - ${d.status || 'Pendente'}`,
           amount: Number(d.amount_kz || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
@@ -172,7 +169,6 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
       });
 
       setTransactions(combined.sort((a, b) => {
-        // Sort by year, then monthIndex, then day from dateLabel
         if (b.year !== a.year) return b.year - a.year;
         if (b.monthIndex !== a.monthIndex) return b.monthIndex - a.monthIndex;
         const dayA = parseInt(a.dateLabel.split(' ')[0]);
@@ -186,7 +182,6 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
     }
   };
 
-
   const groupedTransactions = transactions.reduce((groups: any, transaction) => {
     const date = transaction.dateLabel;
     if (!groups[date]) groups[date] = [];
@@ -194,48 +189,37 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
     return groups;
   }, {});
 
-
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col">
+    <div className="bg-white font-sans text-black antialiased min-h-screen flex flex-col">
       {/* Header */}
-      <header className="flex items-center p-4 justify-between bg-background-dark sticky top-0 z-40 border-b border-gray-200 bg-opacity-90">
-        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors text-primary">
-          <span className="material-symbols-outlined">arrow_back</span>
+      <header className="flex items-center p-4 justify-between bg-white sticky top-0 z-40 border-b border-gray-100">
+        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-start rounded-full hover:bg-gray-50 transition-colors text-[#00C853]">
+          <span className="material-symbols-outlined text-[28px]">chevron_left</span>
         </button>
         <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">Histórico de Conta</h2>
       </header>
 
-      {/* User Identifier Tag */}
-      {userProfile && (
-        <div className="bg-surface-dark/40 px-6 py-2 flex items-center justify-between border-b border-gray-200/50">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-[16px]">person</span>
-            <span className="text-[11px] font-bold text-black opacity-80 uppercase tracking-wider">ID: {userProfile.code}</span>
-          </div>
-          <span className="text-[10px] font-medium text-[text-gray-400]">{userProfile.phone}</span>
-        </div>
-      )}
 
 
-      <main className="flex-1 overflow-y-auto no-scrollbar pb-24 touch-pan-y">
+      <main className="flex-1 overflow-y-auto no-scrollbar pb-24 touch-pan-y pt-2">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <SpokeSpinner size="w-8 h-8" />
           </div>
         ) : Object.keys(groupedTransactions).length > 0 ? (
           Object.keys(groupedTransactions).map(date => (
-            <div key={date} className="mb-6">
-              <p className="text-[text-gray-400] text-[11px] font-black uppercase tracking-[0.2em] pb-3 pt-6 px-6 opacity-60 flex items-center gap-2">
-                <span className="size-1 bg-primary rounded-full"></span>
+            <div key={date} className="mb-4">
+              <p className="text-gray-400 text-[11px] font-bold uppercase tracking-[0.1em] pb-3 pt-4 px-6 flex items-center gap-2">
+                <span className="size-1.5 bg-[#00C853] rounded-full"></span>
                 {date}
               </p>
-              <div className="flex flex-col gap-1 px-3">
+              <div className="flex flex-col gap-2 px-4">
                 {groupedTransactions[date].map((t: Transaction) => (
-                  <div key={t.id} className="group flex items-center gap-4 px-4 py-4 hover:bg-white/5 transition-colors rounded-[24px] border border-transparent hover:border-gray-200">
-                    <div className={`relative flex items-center justify-center size-12 rounded-2xl shrink-0 border border-gray-200 ${t.category === 'Depósito' ? 'bg-green-500/10 text-green-600' :
-                      t.category === 'Retirada' ? 'bg-[#00C853]/10 text-[#00C853]' :
+                  <div key={t.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-[24px] border border-transparent">
+                    <div className={`relative flex items-center justify-center size-12 rounded-full shrink-0 ${t.category === 'Depósito' ? 'bg-[#00C853]/10 text-[#00C853]' :
+                      t.category === 'Retirada' ? 'bg-red-500/10 text-red-500' :
                         t.category === 'Segurança' ? 'bg-blue-500/10 text-blue-400' :
-                          'bg-white/5 text-gray-600'
+                          'bg-gray-200 text-gray-600'
                       }`}>
                       <span className="material-symbols-outlined text-[24px]">
                         {t.category === 'Depósito' ? 'add_card' :
@@ -245,17 +229,17 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
                       </span>
                     </div>
                     <div className="flex flex-col flex-1 min-w-0">
-                      <div className="flex justify-between items-baseline">
-                        <p className="text-black text-[15px] font-bold truncate leading-tight">{t.title}</p>
-                        {t.amount !== 0 && (
-                          <p className={`text-[15px] font-black ${t.type === 'incoming' ? 'text-green-600' : 'text-black'}`}>
-                            {t.amount > 0 ? '+' : ''} Kz {Math.abs(t.amount).toLocaleString()}
-                          </p>
-                        )}
+                      <div className="flex justify-between items-baseline mb-0.5">
+                        <p className="text-[#111] text-[15px] font-bold truncate leading-tight">{t.title}</p>
+                        <p className={`text-[15px] font-black ${t.category === 'Retirada' ? 'text-red-500' :
+                          (t.amount > 0 ? 'text-[#00C853]' : 'text-black')
+                          }`}>
+                          {t.category === 'Retirada' || t.amount < 0 ? '-' : '+'} {Math.abs(t.amount).toLocaleString()} KZs
+                        </p>
                       </div>
-                      <div className="flex justify-between items-center mt-1">
-                        <p className="text-[text-gray-400] text-[11px] uppercase font-bold tracking-wider opacity-70 truncate">{t.subtitle}</p>
-                        <p className="text-[text-gray-400] text-[11px] font-medium">{t.time}</p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-gray-400 text-[11px] uppercase font-bold tracking-wider opacity-80 truncate">{t.subtitle}</p>
+                        <p className="text-gray-400 text-[11px] font-medium">{t.time}</p>
                       </div>
                     </div>
                   </div>
@@ -265,19 +249,17 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-32 px-10 text-center opacity-30">
-            <div className="size-20 bg-surface-dark rounded-full flex items-center justify-center mb-6">
-              <span className="material-symbols-outlined">folder_off</span>
+            <div className="size-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+              <span className="material-symbols-outlined text-gray-400">folder_off</span>
             </div>
-            <p className="font-black uppercase tracking-[0.2em] text-[12px] leading-relaxed">
+            <p className="font-black uppercase tracking-[0.2em] text-[12px] leading-relaxed text-gray-400">
               Nenhum registro encontrado
             </p>
           </div>
         )}
       </main>
-
     </div>
   );
 };
 
 export default HistoricoConta;
-

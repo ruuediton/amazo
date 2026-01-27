@@ -81,7 +81,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       {/* 3D Illustration */}
       <div className="w-full flex justify-center mb-10">
-        <div className="w-[80%] aspect-square relative flex items-center justify-center">
+        <div className="w-[40%] aspect-square relative flex items-center justify-center">
           {/* Using a high-quality green 3D shield illustration */}
           <img
             src="https://cdn3d.iconscout.com/3d/premium/thumb/security-check-box-5353591-4482563.png"

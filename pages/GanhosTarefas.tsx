@@ -76,22 +76,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
   return (
     <div className="bg-white font-sans text-[#0F1111] min-h-screen selection:bg-amber-100">
       <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white">
-        {/* Header */}
-        <header className="flex items-center justify-between p-4 sticky top-0 z-50 bg-white border-b border-gray-100">
-          <button
-            onClick={() => onNavigate('home')}
-            className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
-          </button>
-          <h2 className="text-[16px] font-bold tracking-tight text-center flex-1">Minhas Compras</h2>
-          <button
-            onClick={() => onNavigate('tutoriais-ganhos-tarefas')}
-            className="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[#0F1111]">help_outline</span>
-          </button>
-        </header>
+        {/* Header removido conforme solicitação */}
 
         {/* 6?? Rendimento Diário Badge */}
         <div className="flex flex-col items-center pt-8 pb-4">

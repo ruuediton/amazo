@@ -14,8 +14,8 @@ const WithdrawPassword = lazy(() => import('./pages/WithdrawPassword'));
 const Deposit = lazy(() => import('./pages/Deposit'));
 const PurchaseHistory = lazy(() => import('./pages/PurchaseHistory'));
 const ChangePassword = lazy(() => import('./pages/ChangePassword'));
-const TutoriaisFalarComGerente = lazy(() => import('./pages/TutoriaisFalarComGerente'));
-const TutoriaisComoConvidar = lazy(() => import('./pages/TutoriaisComoConvidar'));
+const TutoriaisFalarComGerente = lazy(() => import('./components/TutoriaisFalarComGerente'));
+const TutoriaisComoConvidar = lazy(() => import('./components/TutoriaisComoConvidar'));
 const ComoComprar = lazy(() => import('./pages/ComoComprar'));
 const DetalhesConta = lazy(() => import('./pages/DetalhesConta'));
 const UpdateWithdrawPassword = lazy(() => import('./pages/UpdateWithdrawPassword'));
@@ -23,16 +23,16 @@ const HistoricoConta = lazy(() => import('./pages/HistoricoConta'));
 const Register = lazy(() => import('./pages/Register'));
 const ConfirmDeposit = lazy(() => import('./pages/ConfirmDeposit'));
 const ComoRetirarFundos = lazy(() => import('./pages/ComoRetirarFundos'));
-const TutoriaisDepositos = lazy(() => import('./pages/TutoriaisDepositos'));
+const TutoriaisDepositos = lazy(() => import('./components/TutoriaisDepositos'));
 const Withdraw = lazy(() => import('./pages/Withdraw'));
 const Login = lazy(() => import('./pages/Login'));
 const SecurityVerify = lazy(() => import('./pages/SecurityVerify'));
 const SplashScreenAds = lazy(() => import('./pages/SplashScreenAds'));
 const Campaigns = lazy(() => import('./pages/Campaigns'));
 const ComoEnviarComprovante = lazy(() => import('./pages/ComoEnviarComprovante'));
-const TutoriaisDefinirSenha = lazy(() => import('./pages/TutoriaisDefinirSenha'));
-const TutoriaisAdicionarConta = lazy(() => import('./pages/TutoriaisAdicionarConta'));
-const TutoriaisGanhosTarefas = lazy(() => import('./pages/TutoriaisGanhosTarefas'));
+const TutoriaisDefinirSenha = lazy(() => import('./components/TutoriaisDefinirSenha'));
+const TutoriaisAdicionarConta = lazy(() => import('./components/TutoriaisAdicionarConta'));
+const TutoriaisGanhosTarefas = lazy(() => import('./components/TutoriaisGanhosTarefas'));
 const GanhosTarefas = lazy(() => import('./pages/GanhosTarefas'));
 const GiftChest = lazy(() => import('./pages/GiftChest'));
 const RewardClaim = lazy(() => import('./pages/RewardClaim'));
@@ -328,16 +328,16 @@ const App: React.FC = () => {
             </button>
 
             <button
-              onClick={() => setCurrentPage('shop')}
-              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'shop' ? 'text-[#00C853]' : 'text-gray-400'}`}
+              onClick={() => setCurrentPage('ganhos-tarefas')}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'ganhos-tarefas' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
               <span className="material-symbols-outlined text-[24px]">grade</span>
               <span className="text-[10px]">tarefa</span>
             </button>
 
             <button
-              onClick={() => setCurrentPage('ganhos-tarefas')}
-              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'ganhos-tarefas' ? 'text-[#00C853]' : 'text-gray-400'}`}
+              onClick={() => setCurrentPage('shop')}
+              className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'shop' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
               <span className="material-symbols-outlined text-[24px]">crown</span>
               <span className="text-[10px]">VIP</span>
