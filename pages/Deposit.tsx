@@ -13,9 +13,6 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const { withLoading } = useLoading();
     const [banks, setBanks] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-
-    // Step management: 'amount' | 'bank'
-    const [step, setStep] = useState<'amount' | 'bank'>('amount');
     const [selectedBank, setSelectedBank] = useState<any>(null);
 
     useEffect(() => {
@@ -43,13 +40,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
         }
     };
 
-    const quickAmounts = [3000, 12000, 39000, 75000];
-
-    const handleQuickAmount = (val: number) => {
-        setAmount(val.toString());
-    };
-
-    const handleNextToBank = () => {
+    const handleFinalConfirm = async () => {
         const val = parseFloat(amount);
         if (!amount || isNaN(val) || val < 3000) {
             showToast?.("Valor mínimo, 3.000 KZ", "warning");
@@ -59,10 +50,6 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
             showToast?.("Valor máximo permitido: 1.000.000 KZ", "warning");
             return;
         }
-        setStep('bank');
-    };
-
-    const handleFinalConfirm = async () => {
         if (!selectedBank) {
             showToast?.("Por favor, selecione um banco.", "warning");
             return;
@@ -78,7 +65,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 }
 
                 const { data, error } = await supabase.rpc('create_deposit_request', {
-                    p_amount: parseFloat(amount),
+                    p_amount: val,
                     p_bank_name: selectedBank.nome_do_banco,
                     p_iban: selectedBank.iban
                 });
@@ -106,108 +93,37 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
         </div>
     );
 
-    // VIEW: ENTER AMOUNT
-    if (step === 'amount') {
-        return (
-            <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 selection:bg-amber-100 animate-in fade-in duration-300">
-                <header className="sticky top-0 z-10 bg-[#00C853] border-b border-[#00C853] px-4 py-3 flex items-center justify-between">
-                    <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
-                        <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
-                    </button>
-                    <span className="font-bold text-[16px] text-[#0F1111]">Depositar Kwanza</span>
-                    <button
-                        onClick={() => onNavigate('deposit-history')}
-                        className="size-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
-                    >
-                        <span className="material-symbols-outlined text-[#0F1111]">history</span>
-                    </button>
-                </header>
-
-                <main className="p-5 space-y-8">
-                    <div className="space-y-2">
-                        <label className="block text-[13px] font-bold text-[#0F1111]">
-                            Quantia a Depositar (Kz)
-                        </label>
-                        <input
-                            type="number"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            className="w-full h-[52px] px-4 rounded-[12px] bg-white border border-[#D5D9D9] text-[18px] font-bold text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] transition-all"
-                            placeholder="Digite o valor..."
-                            autoFocus
-                        />
-                        <p className="text-[11px] font-medium text-gray-400">Min: 3.000 Kz • Max: 1.000.000 Kz</p>
-                    </div>
-
-                    <div className="grid grid-cols-4 gap-2">
-                        {quickAmounts.map(val => (
-                            <button
-                                key={val}
-                                onClick={() => handleQuickAmount(val)}
-                                className="py-3 bg-white border border-[#D5D9D9] rounded-[16px] text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all"
-                            >
-                                {val.toLocaleString('pt-AO')}
-                            </button>
-                        ))}
-                    </div>
-
-                    <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 flex gap-4">
-                        <div className="size-12 rounded-xl bg-white flex items-center justify-center text-blue-600 shrink-0">
-                            <span className="material-symbols-outlined text-[28px]">account_balance</span>
-                        </div>
-                        <div>
-                            <p className="text-[14px] font-bold text-blue-900">Transferência Bancária</p>
-                            <p className="text-[12px] text-blue-700/80 leading-snug">O valor será creditado no seu saldo após a verificação do comprovativo pela nossa equipe.</p>
-                        </div>
-                    </div>
-                </main>
-
-                <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 px-8 bg-white border-t border-gray-100 pb-10">
-                    <button
-                        onClick={handleNextToBank}
-                        disabled={!amount || parseFloat(amount) < 3000}
-                        className="w-full h-14 bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] rounded-xl active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center disabled:opacity-50 disabled:grayscale"
-                    >
-                        PRÓXIMO
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
-    // VIEW: SELECT BANK (Full Screen matching Image Layout)
     return (
-        <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased animate-in slide-in-from-right duration-300">
-            {/* Header Amarelo */}
-            <header className="bg-[#00C853] text-[#0F1111] p-4 flex items-center justify-center relative border-b border-[#00C853]">
-                <button onClick={() => setStep('amount')} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0F1111]">
-                    <span className="material-symbols-outlined">arrow_back</span>
+        <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased">
+            <header className="p-4 border-b border-gray-100 flex items-center">
+                <button onClick={() => onNavigate('profile')} className="mr-4">
+                    <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
                 </button>
-                <h1 className="text-[18px] font-bold tracking-tight">Informações da Conta</h1>
+                <h1 className="text-[16px] font-bold">Depósito</h1>
             </header>
 
-            <main className="px-6 pt-8 space-y-6">
-                {/* Progress Bar (Matching Image Style) */}
-                <div className="w-full h-6 bg-gray-100 rounded-full overflow-hidden relative border border-gray-200">
-                    <div className="absolute inset-y-0 left-0 bg-[#00ba84] rounded-full flex items-center justify-center transition-all duration-500" style={{ width: '33.3%' }}>
-                        <span className="text-[11px] font-black text-white">1 / 3</span>
-                    </div>
+            <main className="p-6 space-y-6">
+                <div className="space-y-2">
+                    <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        className="w-full h-[52px] px-4 rounded-lg bg-white border border-gray-200 text-[16px] text-[#0F1111] placeholder:text-gray-400 focus:outline-none focus:border-[#00C853] transition-all"
+                        placeholder="Digite o valor"
+                    />
                 </div>
 
-                <div className="text-center pt-2">
-                    <h2 className="text-[20px] font-bold text-[#0F1111]">Selecione o seu Banco</h2>
-                </div>
-
-                {/* Bank Selection Box (Matching Image Container) */}
-                <div className="border border-gray-200 rounded-lg p-2 bg-white max-h-[400px] overflow-y-auto no-scrollbar">
-                    <div className="space-y-2">
+                <div className="space-y-3">
+                    <p className="text-[13px] font-medium text-gray-500">Bancos disponíveis</p>
+                    <div className="flex flex-wrap gap-2">
                         {banks.map(bank => (
                             <button
                                 key={bank.id}
                                 onClick={() => setSelectedBank(bank)}
-                                className={`w-full py-4 px-4 rounded flex items-center justify-center text-[15px] font-bold transition-all border ${selectedBank?.id === bank?.id
-                                    ? 'bg-[#00C853] border-[#00C853] text-[#0F1111] scale-[1.02]'
-                                    : 'bg-gray-50 border-gray-100 text-gray-500 active:bg-gray-100'}`}
+                                className={`px-4 py-2 rounded-full border text-[14px] font-medium transition-all ${selectedBank?.id === bank?.id
+                                        ? 'bg-[#E8F5E9] border-[#00C853] text-[#00C853]'
+                                        : 'bg-white border-gray-200 text-gray-600'
+                                    }`}
                             >
                                 {bank.nome_do_banco}
                             </button>
@@ -215,14 +131,13 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     </div>
                 </div>
 
-                {/* Next Button (Matching Image Position) */}
-                <div className="pt-6">
+                <div className="pt-4">
                     <button
                         onClick={handleFinalConfirm}
-                        disabled={!selectedBank}
-                        className="w-full h-14 bg-[#00C853] text-white font-bold rounded-lg active:scale-[0.98] transition-all flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300"
+                        disabled={!amount || !selectedBank || parseFloat(amount) < 3000}
+                        className="w-full h-[52px] bg-[#00C853] text-white font-bold rounded-lg transition-all disabled:opacity-50"
                     >
-                        PRÓXIMO
+                        Confirmar
                     </button>
                 </div>
             </main>
@@ -231,4 +146,5 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
 };
 
 export default Deposit;
+
 

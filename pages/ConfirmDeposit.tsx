@@ -16,6 +16,7 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
 
   const [userName, setUserName] = useState('');
   const [userPhone, setUserPhone] = useState('');
+  const [copiedField, setCopiedField] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -41,66 +42,24 @@ const ConfirmDeposit: React.FC<Props> = ({ onNavigate, data, showToast }) => {
     }
   }, [data]);
 
-  const [timeLeft, setTimeLeft] = useState<string>('30:00');
-  const [isExpired, setIsExpired] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!deposit) return;
-
-    const calculateTime = () => {
-      const createdAt = new Date(deposit.created_at).getTime();
-      const thirtyMinutes = 30 * 60 * 1000;
-      const expiryTime = createdAt + thirtyMinutes;
-      const now = Date.now();
-      const diffInMs = expiryTime - now;
-
-      if (diffInMs <= 0) {
-        setTimeLeft('00:00');
-        if (!isExpired) {
-          setIsExpired(true);
-        }
-        return false;
-      }
-
-      const totalSeconds = Math.max(0, Math.ceil(diffInMs / 1000));
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-
-      setTimeLeft(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
-      return true;
-    };
-
-    calculateTime();
-    const interval = setInterval(() => {
-      if (!calculateTime()) {
-        clearInterval(interval);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [deposit]);
-
-  const handleCopy = (text: string, label: string) => {
+  const handleCopy = (text: string, fieldId: string) => {
     if (!text) return;
     navigator.clipboard.writeText(text);
-    showToast?.(`${label} copiado!`, "success");
+    setCopiedField(fieldId);
+    setTimeout(() => setCopiedField(null), 2000);
   };
-
 
   const handleSubmit = async () => {
     if (!userName) {
-      showToast?.("Por favor, digite nome", "warning");
+      showToast?.("Por favor, digite seu nome", "warning");
       return;
     }
     try {
-      // Construct WhatsApp Message
       const message = `ID: ${userPhone || deposit.id}
 VALOR: ${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} Kz
 BANCO: ${deposit.nome_banco || deposit.nome_do_banco}
 NOME DO PAGADOR: ${userName}`.trim();
 
-      // Redirect to WhatsApp
       const whatsappUrl = `https://wa.me/244933850746?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
 
@@ -110,8 +69,6 @@ NOME DO PAGADOR: ${userName}`.trim();
 
     } catch (err: any) {
       showToast?.("Erro: " + err.message, "error");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -119,121 +76,82 @@ NOME DO PAGADOR: ${userName}`.trim();
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white text-[#0F1111] p-6 text-center">
         <h3 className="text-xl font-bold mb-2">Solicitação não encontrada</h3>
-        <button onClick={() => onNavigate('deposit')} className="bg-[#00C853] px-8 py-3 rounded-xl font-bold">Voltar</button>
+        <button onClick={() => onNavigate('deposit')} className="bg-[#00C853] px-8 py-3 rounded-lg font-bold text-white">Voltar</button>
       </div>
     );
   }
 
+  const depositDetails = [
+    { label: 'Banco', value: deposit.nome_banco || deposit.nome_do_banco, id: 'bank' },
+    { label: 'Titular', value: deposit.nome_destinatario || deposit.beneficiario, id: 'owner' },
+    { label: 'IBAN / Referência', value: deposit.iban, id: 'iban' },
+    { label: 'Valor', value: `${(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })} Kz`, id: 'amount', rawValue: deposit.valor_deposito.toString() }
+  ];
+
   return (
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased">
-      <div className="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto">
+      <header className="p-4 border-b border-gray-100 flex items-center">
+        <button onClick={() => onNavigate('deposit')} className="mr-4">
+          <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
+        </button>
+        <h1 className="text-[16px] font-bold">Detalhes do Depósito</h1>
+      </header>
 
-        {/* Simple Back Header with Title */}
-        <header className="p-4 flex items-center justify-between border-b border-gray-50">
-          <button onClick={() => onNavigate('deposit')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-100">
-            <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
-          </button>
-          <span className="text-[16px] font-bold text-[#0F1111]">Detalhes</span>
-          <div className="w-10"></div>
-        </header>
-
-        <main className="flex-1 space-y-4 px-6 pt-4">
-
-          {/* Amount & Time Badges */}
-          <div className="flex items-center justify-center gap-2">
-            <div className="px-4 py-1.5 bg-[#00A8E1] text-white text-[11px] font-bold rounded uppercase">Quantia</div>
-            <div className="px-4 py-1.5 bg-[#00C853] text-[#0F1111] text-[11px] font-bold rounded tabular-nums">{timeLeft}</div>
-          </div>
-
-          {/* Large Amount */}
-          <div className="text-center">
-            <h1 className="text-[36px] font-black text-[#00C853] tracking-tight">
-              KZ {(Number(deposit.valor_deposito) || 0).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
-            </h1>
-          </div>
-
-          {/* Data Fields */}
-          <div className="space-y-2">
-
-            {/* Bank Name */}
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Nome do Banco</label>
-              <div className="flex gap-2">
-                <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden">
-                  {deposit.nome_banco || deposit.nome_do_banco || "N/A"}
-                </div>
-                <button onClick={() => handleCopy(deposit.nome_banco || deposit.nome_do_banco, "Banco")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
-                  Cópia
-                </button>
-              </div>
-            </div>
-
-            {/* Account Name */}
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Nome da Conta</label>
-              <div className="flex gap-2">
-                <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-bold text-[#0F1111] text-sm overflow-hidden whitespace-nowrap">
-                  {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
-                </div>
-                <button onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario, "Nome")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
-                  Cópia
-                </button>
-              </div>
-            </div>
-
-            {/* Account Number */}
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Número da Conta</label>
-              <div className="flex gap-2">
-                <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-mono font-bold text-[#0F1111] text-[11px] overflow-hidden">
-                  {deposit.iban}
-                </div>
-                <button onClick={() => handleCopy(deposit.iban, "IBAN")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
-                  Cópia
-                </button>
-              </div>
-            </div>
-
-            <hr className="border-gray-50" />
-
-            {/* Your Name */}
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">Seu Nome</label>
-              <input
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                className="w-full h-[52px] bg-white border border-gray-200 rounded-lg px-4 text-sm font-medium outline-none focus:border-[#00A8E1] transition-colors"
-                placeholder="Por favor, insira o seu nome"
-                type="text"
-              />
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="space-y-3 pt-2">
-
-            <button
-              disabled={loading || isExpired}
-              onClick={handleSubmit}
-              className="w-full h-[52px] bg-[#00C853] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase disabled:opacity-50"
+      <main className="p-6 space-y-6">
+        <div className="space-y-4">
+          {depositDetails.map((field) => (
+            <div 
+              key={field.id} 
+              className="flex items-center justify-between py-2 border-b border-gray-50 cursor-pointer active:bg-gray-50 transition-colors"
+              onClick={() => handleCopy(field.rawValue || field.value, field.id)}
             >
-              {loading ? 'Processando...' : 'Finalizar Depósito'}
-            </button>
+              <div className="flex flex-col">
+                <span className="text-[12px] text-gray-500">{field.label}</span>
+                <span className="text-[15px] font-medium">{field.value}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {copiedField === field.id && (
+                  <span className="text-[11px] text-[#00C853] font-medium">Copiado</span>
+                )}
+                <span className="material-symbols-outlined text-gray-400 text-[20px]">content_copy</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-4 space-y-4">
+          <div className="space-y-1">
+            <label className="text-[12px] text-gray-500">Seu Nome</label>
+            <input
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              className="w-full h-[52px] bg-white border border-gray-200 rounded-lg px-4 text-[15px] outline-none focus:border-[#00C853] transition-colors"
+              placeholder="Digite seu nome"
+              type="text"
+            />
           </div>
 
-          {/* Footer Info */}
-          <div className="bg-gray-50/50 border border-gray-100 rounded-xl p-5 text-[11px] text-[#565959] leading-relaxed space-y-3">
-            <p>Esta encomenda tem validade de <span className="font-bold">30 minutos</span>. Por favor, efetue o pagamento de acordo com as informações da página e o valor fixo. </p>
-            <p>Após o pagamento, preencha o nome do pagador o mais rapidamente possível e envie uma captura de tela da confirmação de pagamento.</p>
-            <p>Para garantir que os seus fundos são creditados de forma mais rápida e precisa, preencha apenas o seu nome na nota de transferência.</p>
-            <p className="font-black text-[#CC0000] bg-red-50 p-2 rounded">Atenção: Esta conta bancária é apenas para um pagamento único!</p>
-          </div>
+          <button
+            onClick={handleSubmit}
+            className="w-full h-[52px] bg-[#00C853] text-white font-bold rounded-lg transition-all text-[15px]"
+          >
+            Finalizar Depósito
+          </button>
+        </div>
 
-        </main>
-      </div>
+        <div className="mt-8 p-4 bg-gray-50 rounded-lg space-y-2">
+            <p className="text-[11px] text-gray-500 leading-relaxed">
+                Efetue o pagamento de acordo com as informações acima. Após o pagamento, envie o comprovativo pelo WhatsApp.
+            </p>
+            <p className="text-[11px] font-bold text-red-500">
+                Atenção: Esta conta bancária é apenas para este pagamento.
+            </p>
+        </div>
+      </main>
     </div>
   );
 };
 
 export default ConfirmDeposit;
+
 
