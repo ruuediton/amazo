@@ -9,8 +9,9 @@ interface ProfileProps {
   profile: any;
 }
 
-const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
+const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showToast }) => {
   const [currentProfile, setCurrentProfile] = useState<any>(profile);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [stats, setStats] = useState<any>({
     balance: profile?.balance || 0,
     total_earnings: 0,
@@ -22,7 +23,36 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
       setCurrentProfile(profile);
       fetchStats();
     }
+
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
   }, [profile]);
+
+  const handleInstallApp = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
+      }
+    } else {
+      // Fallback for iOS or if already installed/not supported
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+      if (isIOS) {
+        showToast?.("Para instalar no iOS: Toque em Compartilhar e depois em 'Adicionar à Tela de Início'", "info");
+      } else {
+        showToast?.("Aplicativo já instalado ou não suportado neste navegador.", "info");
+      }
+    }
+  };
 
   const fetchStats = async () => {
     try {
@@ -129,11 +159,16 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile }) => {
             { label: 'Catálogo de Produtos', icon: 'shopping_basket', page: 'investimentos-fundo', color: 'bg-green-50 text-[#00C853]' },
             { label: 'Sorteio da Sorte', icon: 'auto_awesome', page: 'gift-chest', color: 'bg-green-50 text-[#00C853]' },
             { label: 'Convidar Amigos', icon: 'share', page: 'invite-page', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Baixar APP', icon: 'download', page: 'download-app', color: 'bg-pink-50 text-pink-500' },
-          ].map((item) => (
+            {
+              label: 'Baixar APP',
+              icon: 'download',
+              action: handleInstallApp,
+              color: 'bg-green-50 text-[#00C853]' // Unificando cor conforme pedido implícito de consistência, ou mantendo destaque se preferir. Vou manter o padrão verde.
+            },
+          ].map((item: any) => (
             <div
               key={item.label}
-              onClick={() => onNavigate(item.page)}
+              onClick={() => item.action ? item.action() : onNavigate(item.page)}
               className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-all text-center"
             >
               <div className={`size-12 rounded-full flex items-center justify-center ${item.color}`}>

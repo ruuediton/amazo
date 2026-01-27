@@ -9,7 +9,7 @@ interface Props {
   showToast?: (message: string, type: any) => void;
 }
 
-const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
+const Rewards: React.FC<Props> = ({ onNavigate, showToast }) => {
   const { withLoading, showError } = useLoading();
   const [loading, setLoading] = useState(true);
   const [purchases, setPurchases] = useState<any[]>([]);
@@ -121,8 +121,8 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           <span className="material-symbols-outlined text-[#0F1111] text-[20px] shrink-0">info</span>
           <div className="flex-1 overflow-hidden relative h-5">
             <div className="absolute whitespace-nowrap animate-marquee flex items-center text-[13px] text-[#0F1111] font-medium">
-              <span className="mr-12">?? Realize seu check-in diariamente para receber seus lucros.</span>
-              <span className="mr-12">?? Seus dispositivos ativos geram renda 24 horas por dia.</span>
+              <span className="mr-12">?? Realize seu check-in diariamente para receber seus ganhos.</span>
+              <span className="mr-12">?? Seus dispositivos ativos geram recompensas 24 horas por dia.</span>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
         {/* Active Items List - Divider Design */}
         <div className="flex flex-col px-4 pb-32">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-[16px] font-bold text-[#0F1111]">Dispositivos Geradores</h3>
+            <h3 className="text-[16px] font-bold text-[#0F1111]">Equipamentos Ativos</h3>
             <button
               onClick={() => onNavigate('purchase-history')}
               className="text-[12px] font-bold text-[#007185] hover:underline"
@@ -168,7 +168,7 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
           ) : purchases.length === 0 ? (
             <div className="bg-gray-50 p-8 rounded-xl border border-dashed border-gray-200 text-center">
               <p className="text-[#565959] text-[13px] font-medium leading-relaxed mb-6">
-                Você ainda não possui eletrônicos geradores de renda. Visite a loja para começar.
+                Você ainda não possui eletrônicos ativos. Visite a loja para começar.
               </p>
               <button
                 onClick={() => onNavigate('shop')}
@@ -223,5 +223,5 @@ const GanhosTarefas: React.FC<Props> = ({ onNavigate, showToast }) => {
   );
 };
 
-export default GanhosTarefas;
+export default Rewards;
 

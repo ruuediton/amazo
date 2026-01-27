@@ -11,29 +11,29 @@ const About = lazy(() => import('./pages/About'));
 const Report = lazy(() => import('./pages/Report'));
 const AddBank = lazy(() => import('./pages/AddBank'));
 const WithdrawPassword = lazy(() => import('./pages/WithdrawPassword'));
-const Deposit = lazy(() => import('./pages/Deposit'));
+const Recharge = lazy(() => import('./pages/Recharge'));
 const PurchaseHistory = lazy(() => import('./pages/PurchaseHistory'));
 const ChangePassword = lazy(() => import('./pages/ChangePassword'));
 const TutoriaisFalarComGerente = lazy(() => import('./components/TutoriaisFalarComGerente'));
 const TutoriaisComoConvidar = lazy(() => import('./components/TutoriaisComoConvidar'));
-const ComoComprar = lazy(() => import('./pages/ComoComprar'));
+const ComoComprar = lazy(() => import('./components/ComoComprar'));
 const DetalhesConta = lazy(() => import('./pages/DetalhesConta'));
 const UpdateWithdrawPassword = lazy(() => import('./pages/UpdateWithdrawPassword'));
 const HistoricoConta = lazy(() => import('./pages/HistoricoConta'));
 const Register = lazy(() => import('./pages/Register'));
-const ConfirmDeposit = lazy(() => import('./pages/ConfirmDeposit'));
-const ComoRetirarFundos = lazy(() => import('./pages/ComoRetirarFundos'));
+const ConfirmDeposit = lazy(() => import('./components/ConfirmDeposit'));
+const ComoRetirarFundos = lazy(() => import('./components/ComoRetirarFundos'));
 const TutoriaisDepositos = lazy(() => import('./components/TutoriaisDepositos'));
 const Withdraw = lazy(() => import('./pages/Withdraw'));
 const Login = lazy(() => import('./pages/Login'));
 const SecurityVerify = lazy(() => import('./pages/SecurityVerify'));
 const SplashScreenAds = lazy(() => import('./pages/SplashScreenAds'));
-const Campaigns = lazy(() => import('./pages/Campaigns'));
-const ComoEnviarComprovante = lazy(() => import('./pages/ComoEnviarComprovante'));
+const Campaigns = lazy(() => import('./components/Campaigns'));
+const ComoEnviarComprovante = lazy(() => import('./components/ComoEnviarComprovante'));
 const TutoriaisDefinirSenha = lazy(() => import('./components/TutoriaisDefinirSenha'));
 const TutoriaisAdicionarConta = lazy(() => import('./components/TutoriaisAdicionarConta'));
 const TutoriaisGanhosTarefas = lazy(() => import('./components/TutoriaisGanhosTarefas'));
-const GanhosTarefas = lazy(() => import('./pages/GanhosTarefas'));
+const Rewards = lazy(() => import('./pages/Rewards'));
 const GiftChest = lazy(() => import('./pages/GiftChest'));
 const RewardClaim = lazy(() => import('./pages/RewardClaim'));
 const Info = lazy(() => import('./pages/Info'));
@@ -41,10 +41,10 @@ const TermsOfUse = lazy(() => import('./pages/TermsOfUse'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const SystemRules = lazy(() => import('./pages/SystemRules'));
 const DepositUSDT = lazy(() => import('./pages/DepositUSDT'));
-const DepositHistory = lazy(() => import('./pages/DepositHistory'));
-const DownloadApp = lazy(() => import('./pages/DownloadApp'));
-const InvestimentosFundo = lazy(() => import('./pages/InvestimentosFundo'));
-const HistoricoFundos = lazy(() => import('./pages/HistoricoFundos'));
+const WalletHistory = lazy(() => import('./pages/WalletHistory'));
+
+const Marketplace = lazy(() => import('./pages/Marketplace'));
+const Orders = lazy(() => import('./pages/Orders'));
 const TransferenciaP2P = lazy(() => import('./pages/TransferenciaP2P'));
 const Settings = lazy(() => import('./pages/Settings'));
 const WithdrawalHistory = lazy(() => import('./pages/WithdrawalHistory'));
@@ -258,7 +258,7 @@ const App: React.FC = () => {
       'add-bank': <AddBank onNavigate={handleNavigate} showToast={showToast} />,
       'withdraw-password': <WithdrawPassword onNavigate={handleNavigate} showToast={showToast} />,
       'update-withdraw-password': <UpdateWithdrawPassword onNavigate={handleNavigate} showToast={showToast} />,
-      'deposit': <Deposit onNavigate={handleNavigate} showToast={showToast} />,
+      'deposit': <Recharge onNavigate={handleNavigate} showToast={showToast} />,
       'purchase-history': <PurchaseHistory onNavigate={handleNavigate} showToast={showToast} profile={profile} />,
       'change-password': <ChangePassword onNavigate={handleNavigate} />,
       'tutoriais-falar-com-gerente': <TutoriaisFalarComGerente onNavigate={handleNavigate} />,
@@ -279,7 +279,7 @@ const App: React.FC = () => {
       'tutoriais-definir-senha': <TutoriaisDefinirSenha onNavigate={handleNavigate} />,
       'tutoriais-adicionar-conta': <TutoriaisAdicionarConta onNavigate={handleNavigate} />,
       'tutoriais-ganhos-tarefas': <TutoriaisGanhosTarefas onNavigate={handleNavigate} />,
-      'ganhos-tarefas': <GanhosTarefas onNavigate={handleNavigate} />,
+      'ganhos-tarefas': <Rewards onNavigate={handleNavigate} />,
       'gift-chest': <GiftChest onNavigate={handleNavigate} showToast={showToast} />,
       'reward-claim': <RewardClaim onNavigate={handleNavigate} />,
       'deposit-usdt': <DepositUSDT onNavigate={handleNavigate} showToast={showToast} data={navigationData} />,
@@ -288,10 +288,10 @@ const App: React.FC = () => {
       'privacy-policy': <PrivacyPolicy onNavigate={handleNavigate} />,
       'system-rules': <SystemRules onNavigate={handleNavigate} />,
       'subordinate-list': <SubordinateList onNavigate={handleNavigate} />,
-      'deposit-history': <DepositHistory onNavigate={handleNavigate} />,
-      'download-app': <DownloadApp onNavigate={handleNavigate} />,
-      'investimentos-fundo': <InvestimentosFundo onNavigate={handleNavigate} showToast={showToast} />,
-      'historico-fundos': <HistoricoFundos onNavigate={handleNavigate} showToast={showToast} />,
+      'deposit-history': <WalletHistory onNavigate={handleNavigate} />,
+
+      'investimentos-fundo': <Marketplace onNavigate={handleNavigate} showToast={showToast} />,
+      'historico-fundos': <Orders onNavigate={handleNavigate} showToast={showToast} />,
       'p2p-transfer': <TransferenciaP2P onNavigate={handleNavigate} showToast={showToast} />,
       'settings': <Settings onNavigate={handleNavigate} showToast={showToast} profile={profile} />,
       'withdrawal-history': <WithdrawalHistory onNavigate={handleNavigate} />,

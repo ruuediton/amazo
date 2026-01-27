@@ -8,7 +8,7 @@ interface DepositProps {
     showToast?: (message: string, type: any) => void;
 }
 
-const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
+const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const [amount, setAmount] = useState<string>('');
     const { withLoading } = useLoading();
     const [banks, setBanks] = useState<any[]>([]);
@@ -165,4 +165,4 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     );
 };
 
-export default Deposit;
+export default Recharge;

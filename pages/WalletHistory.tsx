@@ -18,7 +18,7 @@ interface Props {
   onNavigate: (page: any) => void;
 }
 
-const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
+const WalletHistory: React.FC<Props> = ({ onNavigate }) => {
   const [activeFilter, setActiveFilter] = useState('Todos');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [deposits, setDeposits] = useState<DepositItem[]>([]);
@@ -196,6 +196,6 @@ const DepositHistory: React.FC<Props> = ({ onNavigate }) => {
   );
 };
 
-export default DepositHistory;
+export default WalletHistory;
 
 
