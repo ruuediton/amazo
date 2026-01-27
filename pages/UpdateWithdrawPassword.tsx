@@ -18,7 +18,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // Requisitos de validaÃ§Ã£o simplificados (4 dÃ­gitos)
+    // Requisitos de validação simplificados (4 dígitos)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,12 +29,12 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
         }
 
         if (newPassword.length !== 4 || !/^\d+$/.test(newPassword)) {
-            showToast?.("A nova senha deve ter exatamente 4 nÃºmeros.", "warning");
+            showToast?.("A nova senha deve ter exatamente 4 números.", "warning");
             return;
         }
 
         if (newPassword !== confirmPassword) {
-            showToast?.("As novas senhas nÃ£o coincidem.", "error");
+            showToast?.("As novas senhas não coincidem.", "error");
             return;
         }
 
@@ -69,7 +69,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
     return (
         <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark font-display text-black antialiased">
             {/* Header */}
-            <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-background-dark/95 backdrop-blur-md border-b border-gray-200">
+            <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-background-dark/95 border-b border-gray-200">
                 <button
                     onClick={() => onNavigate('profile')}
                     className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
@@ -84,7 +84,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                 <div className="mb-4 mt-2">
                     <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-2">Alterar Senha de Retirada</h2>
                     <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
-                        Esta senha serÃ¡ solicitada exclusivamente para confirmar saques, transferÃªncias e pagamentos.
+                        Esta senha será solicitada exclusivamente para confirmar saques, transferências e pagamentos.
                     </p>
                 </div>
 
@@ -126,7 +126,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                                 maxLength={4}
                                 inputMode="numeric"
                                 className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                                placeholder="Crie uma nova senha (4 dÃ­gitos)"
+                                placeholder="Crie uma nova senha (4 dígitos)"
                                 type={showNew ? "text" : "password"}
                             />
                             <button
@@ -173,7 +173,7 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full h-[48px] rounded-[12px] bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center shadow-md shadow-primary/10 mb-6 ${loading ? 'opacity-50' : ''}`}
+                        className={`w-full h-[48px] rounded-[12px] bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center mb-6 ${loading ? 'opacity-50' : ''}`}
                     >
                         {loading ? (
                             <SpokeSpinner size="w-6 h-6" className="text-black" />
@@ -188,4 +188,3 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
 };
 
 export default UpdateWithdrawPassword;
-

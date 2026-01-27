@@ -94,7 +94,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
     return (
         <div className="bg-white font-sans text-[#0F1111] antialiased min-h-screen flex flex-col selection:bg-amber-100">
             {/* Header */}
-            <header className="flex items-center p-4 justify-between bg-white sticky top-0 z-40 border-b border-gray-100 backdrop-blur-md">
+            <header className="flex items-center p-4 justify-between bg-white sticky top-0 z-40 border-b border-gray-100 px-4 py-3">
                 <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
                     <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
                 </button>
@@ -115,7 +115,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                             <h3 className="text-2xl font-black mb-1 leading-tight tracking-tighter">Indique e Ganhe</h3>
                             <p className="text-[13px] font-bold opacity-80 mb-6 max-w-[200px]">Compartilhe a experiência BP e ganhe comissões ilimitadas.</p>
 
-                            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-4 flex items-center justify-between border border-white/20">
+                            <div className="bg-white/30 rounded-2xl p-4 flex items-center justify-between border border-white/20">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">Seu Código</p>
                                     <p className="text-3xl font-black tracking-wider font-mono">{inviteCode || '---'}</p>
@@ -170,7 +170,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                         <div className="pt-2">
                             <button
                                 onClick={() => onNavigate('subordinate-list')}
-                                className="w-full h-14 bg-white border-2 border-[#0F1111] text-[#0F1111] rounded-2xl flex items-center justify-center gap-3 font-black text-sm active:scale-95 transition-all shadow-sm"
+                                className="w-full h-14 bg-white border-2 border-[#0F1111] text-[#0F1111] rounded-2xl flex items-center justify-center gap-3 font-black text-sm active:scale-95 transition-all"
                             >
                                 <span className="material-symbols-outlined">group</span>
                                 VISUALIZAR MINHA EQUIPE
@@ -234,12 +234,12 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                     const isReached = stats.total_invited >= meta.target;
 
                                     return (
-                                        <div key={meta.level} className={`group relative overflow-hidden rounded-[24px] border transition-all duration-300 ${isReached ? 'border-green-200 bg-white shadow-lg shadow-green-500/5' : 'bg-white border-gray-100'}`}>
+                                        <div key={meta.level} className={`group relative overflow-hidden rounded-[24px] border transition-all duration-300 ${isReached ? 'border-green-200 bg-white' : 'bg-white border-gray-100'}`}>
                                             <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform`} style={{ backgroundColor: meta.color }}></div>
                                             <div className="p-5 relative z-10">
                                                 <div className="flex justify-between items-start mb-4">
                                                     <div className="flex gap-3">
-                                                        <div className={`size-12 rounded-2xl flex items-center justify-center border shadow-sm ${isReached ? 'bg-green-50 border-green-100 text-green-600' : `${meta.bg} border-gray-100`}`} style={{ color: isReached ? undefined : meta.color }}>
+                                                        <div className={`size-12 rounded-2xl flex items-center justify-center border ${isReached ? 'bg-green-50 border-green-100 text-green-600' : `${meta.bg} border-gray-100`}`} style={{ color: isReached ? undefined : meta.color }}>
                                                             <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>{isReached ? 'verified' : meta.icon}</span>
                                                         </div>
                                                         <div>
@@ -262,7 +262,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                         </p>
                                                         <span className={`text-[11px] font-black ${isReached ? 'text-green-600' : 'text-[#0F1111]'}`}>{Math.floor(progress)}%</span>
                                                     </div>
-                                                    <div className="relative w-full h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-50 shadow-inner">
+                                                    <div className="relative w-full h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-50">
                                                         <div className={`h-full transition-all duration-1000 ease-out relative ${isReached ? 'bg-green-500' : 'bg-[#00C853]'}`} style={{ width: `${progress}%` }}></div>
                                                     </div>
                                                 </div>

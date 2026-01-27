@@ -197,7 +197,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                 </div>
                                             )}
                                             {isFinalized && (
-                                                <div className="absolute inset-0 bg-black/5 flex items-center justify-center backdrop-blur-[1px]">
+                                                <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
                                                     <div className="bg-[#007600] text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Liquidado</div>
                                                 </div>
                                             )}
@@ -237,7 +237,7 @@ const HistoricoFundos: React.FC<Props> = ({ onNavigate, showToast }) => {
                                             {isFinalized && (
                                                 <button
                                                     onClick={() => generateCertificate(inv)}
-                                                    className="mt-3 py-2 bg-white border border-gray-200 rounded-lg text-[11px] font-bold text-[#0F1111] hover:bg-gray-50 transition-all flex items-center justify-center gap-2 shadow-sm"
+                                                    className="mt-3 py-2 bg-white border border-gray-200 rounded-lg text-[11px] font-bold text-[#0F1111] hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
                                                 >
                                                     <span className="material-symbols-outlined text-[16px]">overview</span>
                                                     Baixar Recibo

@@ -10,7 +10,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
     <div className="bg-background-dark font-display text-black antialiased min-h-screen">
       <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
         {/* Top App Bar */}
-        <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-brand-border">
+        <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-brand-border">
           <button
             onClick={() => onNavigate('profile')}
             className="text-primary flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
@@ -35,7 +35,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
           >
             <div className="flex flex-col p-6 z-10">
               <span className="inline-block px-3 py-1 mb-3 text-xs font-black tracking-widest text-text-primary uppercase bg-primary rounded-full w-fit">Institucional</span>
-              <h1 className="text-white tracking-tight text-4xl font-black leading-tight drop-shadow-md">BP</h1>
+              <h1 className="text-white tracking-tight text-4xl font-black leading-tight">BP</h1>
             </div>
           </div>
         </div>
@@ -53,19 +53,19 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
             <span className="material-symbols-outlined text-success-text text-[20px]">check_circle</span>
             <p className="text-success-text text-sm font-bold">Instituição Verificada</p>
           </div>
-          <div className="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-dark border border-brand-border px-4 shadow-sm">
+          <button className="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-3 pr-4 border border-primary/20 hover:opacity-90 transition-opacity">
             <span className="material-symbols-outlined text-text-secondary text-[20px]">account_balance</span>
             <p className="text-text-primary text-sm font-bold">BFA Partner</p>
-          </div>
+          </button>
         </div>
 
         {/* Quick Info Grid */}
         <div className="px-6 grid grid-cols-2 gap-3 mb-6">
-          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border shadow-sm">
+          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border">
             <p className="text-text-secondary text-[10px] uppercase font-bold tracking-widest">NIF</p>
             <p className="text-text-primary text-base font-bold">5417382910</p>
           </div>
-          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border shadow-sm">
+          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border">
             <p className="text-text-secondary text-[10px] uppercase font-bold tracking-widest">REGISTRO</p>
             <p className="text-text-primary text-base font-bold">0284/2024</p>
           </div>
@@ -73,7 +73,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
         {/* Headquarter Card */}
         <div className="px-6 mb-6">
-          <div className="flex items-stretch justify-between gap-4 rounded-xl bg-surface-dark p-4 shadow-lg border border-brand-border">
+          <div className="flex items-stretch justify-between gap-4 rounded-xl bg-surface-dark p-4 border border-brand-border">
             <div className="flex flex-col justify-center gap-1 flex-[2_2_0px]">
               <p className="text-text-primary text-lg font-extrabold leading-tight tracking-tight">Sede Social</p>
               <p className="text-text-secondary text-sm font-medium leading-normal">Edifício Chicala, Luanda, Angola</p>
@@ -111,7 +111,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
         {/* Mission & Values */}
         <div className="px-6 py-4 grid grid-cols-1 gap-4">
-          <div className="bg-primary p-6 rounded-xl relative overflow-hidden group">
+          <div className="bg-primary p-6 rounded-xl relative overflow-hidden group border border-primary/20">
             <div className="absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4">
               <span className="material-symbols-outlined text-9xl text-black" style={{ fontVariationSettings: "'FILL' 1" }}>rocket_launch</span>
             </div>
@@ -130,9 +130,9 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
 
         {/* Sticky Footer CTA */}
-        <div className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 backdrop-blur-lg border-t border-brand-border z-40">
+        <div className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 border-t border-brand-border z-40">
           <button
-            className="w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 px-6 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+            className="w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
             <span className="material-symbols-outlined text-[20px]">ios_share</span>
             <span>Exportar Dossiê Legal</span>
@@ -144,9 +144,9 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 };
 
 const DocumentItem = ({ title, subtitle, img }: { title: string, subtitle: string, img: string }) => (
-  <div className="group relative overflow-hidden rounded-xl bg-surface-dark border border-brand-border p-3 transition-all active:scale-[0.98] shadow-sm">
+  <div className="group relative overflow-hidden rounded-xl bg-surface-dark border border-brand-border p-3 transition-all active:scale-[0.98]">
     <div className="flex gap-4">
-      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-background-dark shadow-md">
+      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-background-dark">
         <div className="absolute inset-0 bg-gradient-to-tr from-text-primary/10 to-transparent"></div>
         <img loading="lazy" decoding="async" className="h-full w-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" src={img} alt={title} />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-text-primary/20">
@@ -157,7 +157,7 @@ const DocumentItem = ({ title, subtitle, img }: { title: string, subtitle: strin
         <h4 className="text-text-primary font-bold text-base leading-tight">{title}</h4>
         <p className="text-text-secondary text-xs mt-1">{subtitle}</p>
         <div className="mt-3 flex gap-2">
-          <button className="bg-primary px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-black hover:bg-primary-hover transition-colors shadow-sm">VISUALIZAR</button>
+          <button className="bg-primary px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-black hover:bg-primary-hover transition-colors">VISUALIZAR</button>
           <button className="bg-background-dark px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-bold border border-brand-border hover:bg-surface-dark transition-colors">DOWNLOAD</button>
         </div>
       </div>

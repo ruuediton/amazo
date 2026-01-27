@@ -76,7 +76,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
     <div className="bg-background-dark font-display text-black antialiased min-h-screen">
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto">
         {/* Header */}
-        <header className="flex items-center justify-between p-4 sticky top-0 z-10 bg-background-dark/95 backdrop-blur-sm border-b border-brand-border">
+        <header className="flex items-center justify-between p-4 sticky top-0 z-10 bg-background-dark/95 border-b border-brand-border">
           <button
             onClick={() => onNavigate('home')}
             className="flex size-10 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
@@ -84,7 +84,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <span className="material-symbols-outlined text-2xl text-primary">arrow_back</span>
           </button>
           <div className="flex items-center gap-2">
-            <img loading="lazy" decoding="async" src="/bp_logo.png" alt="BP ENERGY (SUL) LDA" className="w-8 h-8 rounded-lg shadow-sm object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
+            <img loading="lazy" decoding="async" src="/bp_logo.png" alt="BP ENERGY (SUL) LDA" className="w-8 h-8 rounded-lg object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" />
             <span className="text-xl font-bold tracking-tight text-text-primary">BP</span>
           </div>
           <div className="size-10"></div>
@@ -123,7 +123,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
               <label className="text-[13px] font-bold text-[#0F1111]">Senha</label>
               <div className="relative">
                 <input
-                  className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white px-4 pr-12 h-[44px] text-[15px] focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] focus:outline-none transition-all placeholder:text-gray-500"
+                  className="flex w-full rounded-[8px] border border-[#D5D9D9] bg-white px-4 pr-12 h-[44px] text-[15px] focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:outline-none transition-all placeholder:text-gray-500"
                   placeholder="Sua senha"
                   type={showPassword ? "text" : "password"}
                   value={password}
@@ -165,7 +165,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
             <button
               type="button"
               onClick={() => onNavigate('register')}
-              className="w-full py-3 rounded-[8px] bg-white border border-[#D5D9D9] text-[#0F1111] text-[14px] font-medium hover:bg-gray-50 active:scale-[0.99] shadow-sm transition-all"
+              className="w-full py-3 rounded-[8px] bg-white border border-[#D5D9D9] text-[#0F1111] text-[14px] font-medium hover:bg-gray-50 active:scale-[0.99] transition-all"
             >
               Criar sua conta
             </button>

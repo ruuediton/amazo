@@ -38,11 +38,11 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
 
         {/* Text Header */}
         <div className="text-center z-10 mb-8 animate-in fade-in zoom-in duration-500">
-          <h2 className="text-primary text-5xl font-black tracking-tight mb-3">ParabÃ©ns!</h2>
+          <h2 className="text-primary text-5xl font-black tracking-tight mb-3">Parabéns!</h2>
           <div className="flex flex-col items-center">
             <span className="text-black text-xs font-black opacity-50 uppercase tracking-[0.3em] mb-2">Recebeste</span>
             <div className="flex items-baseline gap-3">
-              <span className="text-primary text-7xl font-black drop-shadow-[0_0_20px_rgba(244,209,37,0.3)]">500</span>
+              <span className="text-primary text-7xl font-black">500</span>
               <span className="text-primary text-3xl font-black">Kz</span>
             </div>
           </div>
@@ -55,7 +55,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
 
           <div className="relative w-full flex flex-col items-center">
             {/* Floating Top Lid */}
-            <div className="w-64 h-24 bg-[#323028] rounded-t-2xl border-x-4 border-t-4 border-[#3a3830] relative -mb-4 z-0 shadow-2xl rotate-[-12deg] -translate-y-12 -translate-x-4 border-b-4 border-black/40">
+            <div className="w-64 h-24 bg-[#323028] rounded-t-2xl border-x-4 border-t-4 border-[#3a3830] relative -mb-4 z-0 rotate-[-12deg] -translate-y-12 -translate-x-4 border-b-4 border-black/40">
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-primary/10 rounded-full"></div>
             </div>
 
@@ -64,11 +64,11 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
             <div className="absolute top-6 w-32 h-20 bg-primary/60 blur-xl rounded-full z-10"></div>
 
             {/* Chest Body */}
-            <div className="relative w-64 h-44 bg-[#2a2820] rounded-b-2xl border-x-4 border-b-4 border-[#3a3830] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] z-20 overflow-hidden flex flex-col">
+            <div className="relative w-64 h-44 bg-[#2a2820] rounded-b-2xl border-x-4 border-b-4 border-[#3a3830] z-20 overflow-hidden flex flex-col">
               <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
               <div className="flex-1 flex items-center justify-center relative">
                 {/* Reward Icon */}
-                <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(244,209,37,0.6)] z-30 animate-bounce-slow">
+                <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center z-30 animate-bounce-slow">
                   <span className="material-symbols-outlined text-[#181711] text-6xl font-black" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                 </div>
 
@@ -86,7 +86,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         {/* Footer Actions */}
         <div className="w-full space-y-5 pb-8 z-10">
           <p className="text-black/60 text-center text-sm font-medium leading-relaxed px-8">
-            O valor foi adicionado ao seu saldo digital e estÃ¡ pronto a ser usado.
+            O valor foi adicionado ao seu saldo digital e está pronto a ser usado.
           </p>
 
           <div className="flex px-4">
@@ -95,7 +95,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
                 alert("Sucesso! 500 Kz resgatados.");
                 onNavigate('wallet');
               }}
-              className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl h-16 bg-primary text-[#181711] text-xl font-black tracking-wide shadow-[0_12px_40px_-10px_rgba(244,209,37,0.5)] active:scale-95 transition-transform"
+              className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl h-16 bg-primary text-[#181711] text-xl font-black tracking-wide active:scale-95 transition-transform"
             >
               <span className="truncate uppercase tracking-wider">Resgatar Agora</span>
             </button>
@@ -105,7 +105,7 @@ const RewardClaim: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
             onClick={() => onNavigate('historico-conta')}
             className="w-full text-center text-black/40 text-sm font-bold py-2 tracking-widest uppercase hover:text-black transition-colors"
           >
-            Ver detalhes da transaÃ§Ã£o
+            Ver detalhes da transação
           </button>
         </div>
       </main>

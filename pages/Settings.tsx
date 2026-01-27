@@ -103,7 +103,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
     return (
         <div className="flex flex-col min-h-screen bg-background-dark font-display text-black antialiased">
-            <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 backdrop-blur-md p-4 pb-2 border-b border-gray-200">
+            <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 border-b border-gray-200">
                 <button
                     onClick={() => onNavigate('profile')}
                     className="text-primary flex size-12 shrink-0 items-center justify-start hover:bg-white/5 rounded-full transition-all active:scale-95"
@@ -119,10 +119,10 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                 <section className="flex flex-col items-center">
                     <div className="relative mb-4 cursor-pointer group" onClick={() => fileInputRef.current?.click()}>
                         <div
-                            className="size-24 rounded-full border-4 border-[#f4c025] shadow-lg bg-center bg-cover bg-no-repeat overflow-hidden transition-transform group-hover:scale-105"
+                            className="size-24 rounded-full border-4 border-[#f4c025] bg-center bg-cover bg-no-repeat overflow-hidden transition-transform group-hover:scale-105"
                             style={{ backgroundImage: `url("${avatarUrl || avatars[0]}")` }}
                         ></div>
-                        <div className="absolute bottom-0 right-0 bg-primary text-black size-8 rounded-full flex items-center justify-center shadow-md border-2 border-white group-hover:bg-primary/90">
+                        <div className="absolute bottom-0 right-0 bg-primary text-black size-8 rounded-full flex items-center justify-center border-2 border-white group-hover:bg-primary/90">
                             <span className="material-symbols-outlined text-[18px]">photo_camera</span>
                         </div>
                         <input
@@ -139,7 +139,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                 <section className="space-y-6">
                     <div className="space-y-2">
                         <label className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Nome Completo</label>
-                        <div className="relative flex items-center bg-white rounded-2xl border border-gray-200 p-4 focus-within:border-primary transition-all shadow-sm">
+                        <div className="relative flex items-center bg-white rounded-2xl border border-gray-200 p-4 focus-within:border-primary transition-all">
                             <span className="material-symbols-outlined text-primary mr-3">person</span>
                             <input
                                 type="text"
@@ -153,7 +153,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
                     <div className="space-y-2 opacity-60">
                         <label className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Telefone (NÃ£o editÃ¡vel)</label>
-                        <div className="relative flex items-center bg-gray-50 rounded-2xl border border-gray-100 p-4 shadow-inner">
+                        <div className="relative flex items-center bg-gray-50 rounded-2xl border border-gray-100 p-4">
                             <span className="material-symbols-outlined text-gray-400 mr-3">phone</span>
                             <input
                                 type="text"
@@ -167,7 +167,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
                 <section className="space-y-4">
                     <h3 className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">SeguranÃ§a e Acesso</h3>
-                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         {[
                             { label: 'Senha login', action: () => onNavigate('change-password'), icon: 'lock_reset' },
                             { label: 'PIN de Retirada', action: () => onNavigate('withdraw-password'), icon: 'pin' },
@@ -190,7 +190,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
                 <section className="space-y-4">
                     <h3 className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Conta e Suporte</h3>
-                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         {[
                             { label: 'Detalhes de Conta', action: () => onNavigate('detalhes-conta'), icon: 'account_circle' },
                             { label: 'Suporte', action: () => onNavigate('support'), icon: 'support_agent' },
@@ -215,7 +215,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        className="w-full h-14 bg-black text-white rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-gray-900"
+                        className="w-full h-14 bg-black text-white rounded-2xl font-black text-sm uppercase tracking-[0.2em] active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-gray-900"
                     >
                         {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar AlteraÃ§Ãµes'}
                     </button>

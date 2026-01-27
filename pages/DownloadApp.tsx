@@ -52,7 +52,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
 
     return (
         <div className="bg-background-dark min-h-screen pb-24 font-display text-black">
-            <header className="sticky top-0 z-50 bg-background-dark/95 backdrop-blur-md border-b border-gray-200 px-4 py-4 flex items-center">
+            <header className="sticky top-0 z-50 bg-background-dark/95 border-b border-gray-200 px-4 py-4 flex items-center">
                 <button
                     onClick={() => onNavigate('profile')}
                     className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors text-primary"
@@ -77,10 +77,10 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
 
                 <div className="w-full space-y-4 mb-12">
                     {/* APK Only - Removed Google Play and App Store as requested */}
-                    <div className="bg-surface-dark p-1 rounded-3xl shadow-2xl border border-gray-200">
+                    <div className="bg-surface-dark p-1 rounded-3xl border border-gray-200">
                         <div className="bg-background-dark rounded-[20px] p-5 flex items-center justify-between border border-gray-100">
                             <div className="flex items-center space-x-4">
-                                <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+                                <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white">
                                     <span className="material-symbols-outlined text-3xl">android</span>
                                 </div>
                                 <div>
@@ -99,7 +99,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ onNavigate }) => {
                 </div>
 
                 {/* Instructions */}
-                <div className="w-full bg-surface-dark rounded-3xl p-8 border border-gray-200 shadow-xl">
+                <div className="w-full bg-surface-dark rounded-3xl p-8 border border-gray-200">
                     <div className="flex items-center space-x-3 mb-8">
                         <div className="p-2 bg-primary/10 rounded-lg">
                             <span className="material-symbols-outlined text-primary">info</span>

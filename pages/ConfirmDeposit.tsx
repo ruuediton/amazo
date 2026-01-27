@@ -118,7 +118,7 @@ NOME DO PAGADOR: ${userName}`.trim();
   if (!deposit) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white text-[#0F1111] p-6 text-center">
-        <h3 className="text-xl font-bold mb-2">SolicitaÃ§Ã£o nÃ£o encontrada</h3>
+        <h3 className="text-xl font-bold mb-2">Solicitação não encontrada</h3>
         <button onClick={() => onNavigate('deposit')} className="bg-[#00C853] px-8 py-3 rounded-xl font-bold">Voltar</button>
       </div>
     );
@@ -141,8 +141,8 @@ NOME DO PAGADOR: ${userName}`.trim();
 
           {/* Amount & Time Badges */}
           <div className="flex items-center justify-center gap-2">
-            <div className="px-4 py-1.5 bg-[#00A8E1] text-white text-[11px] font-bold rounded shadow-sm uppercase">Quantia</div>
-            <div className="px-4 py-1.5 bg-[#00C853] text-[#0F1111] text-[11px] font-bold rounded shadow-sm tabular-nums">{timeLeft}</div>
+            <div className="px-4 py-1.5 bg-[#00A8E1] text-white text-[11px] font-bold rounded uppercase">Quantia</div>
+            <div className="px-4 py-1.5 bg-[#00C853] text-[#0F1111] text-[11px] font-bold rounded tabular-nums">{timeLeft}</div>
           </div>
 
           {/* Large Amount */}
@@ -163,7 +163,7 @@ NOME DO PAGADOR: ${userName}`.trim();
                   {deposit.nome_banco || deposit.nome_do_banco || "N/A"}
                 </div>
                 <button onClick={() => handleCopy(deposit.nome_banco || deposit.nome_do_banco, "Banco")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
-                  CÃ³pia
+                  Cópia
                 </button>
               </div>
             </div>
@@ -176,20 +176,20 @@ NOME DO PAGADOR: ${userName}`.trim();
                   {deposit.nome_destinatario || deposit.beneficiario || "N/A"}
                 </div>
                 <button onClick={() => handleCopy(deposit.nome_destinatario || deposit.beneficiario, "Nome")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
-                  CÃ³pia
+                  Cópia
                 </button>
               </div>
             </div>
 
             {/* Account Number */}
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-gray-400 ml-1">NÃºmero da Conta</label>
+              <label className="text-[11px] font-bold text-gray-400 ml-1">Número da Conta</label>
               <div className="flex gap-2">
                 <div className="flex-1 h-[52px] bg-gray-50 border border-gray-100 rounded-lg flex items-center px-4 font-mono font-bold text-[#0F1111] text-[11px] overflow-hidden">
                   {deposit.iban}
                 </div>
                 <button onClick={() => handleCopy(deposit.iban, "IBAN")} className="w-[68px] h-[52px] bg-[#00A8E1] text-white font-bold rounded-lg active:scale-95 transition-all text-[11px]">
-                  CÃ³pia
+                  Cópia
                 </button>
               </div>
             </div>
@@ -215,18 +215,18 @@ NOME DO PAGADOR: ${userName}`.trim();
             <button
               disabled={loading || isExpired}
               onClick={handleSubmit}
-              className="w-full h-[52px] bg-[#00C853] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase shadow-md disabled:opacity-50"
+              className="w-full h-[52px] bg-[#00C853] text-[#0F1111] font-bold rounded-lg active:scale-[0.98] transition-all text-[15px] uppercase disabled:opacity-50"
             >
-              {loading ? 'Processando...' : 'Finalizar DepÃ³sito'}
+              {loading ? 'Processando...' : 'Finalizar Depósito'}
             </button>
           </div>
 
           {/* Footer Info */}
           <div className="bg-gray-50/50 border border-gray-100 rounded-xl p-5 text-[11px] text-[#565959] leading-relaxed space-y-3">
-            <p>Esta encomenda tem validade de <span className="font-bold">30 minutos</span>. Por favor, efetue o pagamento de acordo com as informaÃ§Ãµes da pÃ¡gina e o valor fixo. </p>
-            <p>ApÃ³s o pagamento, preencha o nome do pagador o mais rapidamente possÃ­vel e envie uma captura de tela da confirmaÃ§Ã£o de pagamento.</p>
-            <p>Para garantir que os seus fundos sÃ£o creditados de forma mais rÃ¡pida e precisa, preencha apenas o seu nome na nota de transferÃªncia.</p>
-            <p className="font-black text-[#CC0000] bg-red-50 p-2 rounded">AtenÃ§Ã£o: Esta conta bancÃ¡ria Ã© apenas para um pagamento Ãºnico!</p>
+            <p>Esta encomenda tem validade de <span className="font-bold">30 minutos</span>. Por favor, efetue o pagamento de acordo com as informações da página e o valor fixo. </p>
+            <p>Após o pagamento, preencha o nome do pagador o mais rapidamente possível e envie uma captura de tela da confirmação de pagamento.</p>
+            <p>Para garantir que os seus fundos são creditados de forma mais rápida e precisa, preencha apenas o seu nome na nota de transferência.</p>
+            <p className="font-black text-[#CC0000] bg-red-50 p-2 rounded">Atenção: Esta conta bancária é apenas para um pagamento único!</p>
           </div>
 
         </main>

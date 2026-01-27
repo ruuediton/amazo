@@ -188,7 +188,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
       <main className="flex-1 flex flex-col w-full max-w-lg mx-auto px-5 pt-6 pb-10">
         {mode === 'view' ? (
           <div className="flex flex-col items-center justify-center flex-1 space-y-8 animate-in fade-in zoom-in-95 duration-500">
-            <div className="size-20 bg-green-50 rounded-full flex items-center justify-center mb-2">
+            <div className="size-20 bg-green-50 rounded-full flex items-center justify-center mb-2 border border-green-100">
               <span className="material-symbols-outlined text-green-600 text-4xl">verified_user</span>
             </div>
 
@@ -197,7 +197,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               <p className="text-[#565959] text-sm">Seus recebimentos serão enviados para:</p>
             </div>
 
-            <div className="w-full bg-white border border-gray-200 rounded-xl p-5 shadow-sm space-y-5">
+            <div className="w-full bg-white border border-gray-200 rounded-xl p-5 space-y-5">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b border-gray-100 pb-3">
                   <span className="text-[13px] font-bold text-[#565959]">Banco</span>
@@ -219,7 +219,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
             <div className="flex flex-col w-full gap-3 pt-4">
               <button
                 onClick={handleEdit}
-                className="w-full h-12 bg-white border border-gray-300 text-[#0F1111] text-[14px] font-medium rounded-lg shadow-sm active:scale-[0.98] transition-all hover:bg-gray-50"
+                className="w-full h-12 bg-white border border-gray-300 text-[#0F1111] text-[14px] font-medium rounded-lg active:scale-[0.98] transition-all hover:bg-gray-50"
               >
                 Atualizar Dados
               </button>
@@ -247,7 +247,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   <select
                     value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
-                    className="w-full h-[44px] pl-4 pr-10 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all appearance-none"
+                    className="w-full h-[44px] pl-4 pr-10 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] transition-all appearance-none"
                   >
                     <option value="">Selecione o banco...</option>
                     <option value="Banco BAI">Banco BAI</option>
@@ -270,7 +270,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                 <input
                   value={holderName}
                   onChange={(e) => setHolderName(e.target.value)}
-                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
+                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] transition-all"
                   placeholder="Ex: João Manuel Silva"
                   type="text"
                 />
@@ -284,7 +284,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
                   value={iban}
                   onChange={handleIbanChange}
                   maxLength={25}
-                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] font-mono placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
+                  className="w-full h-[44px] px-4 rounded-[8px] bg-white border border-[#D5D9D9] text-[14px] text-[#0F1111] font-mono placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] transition-all"
                   placeholder={ibanPlaceholder}
                   type="text"
                 />
@@ -303,7 +303,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
               <button
                 onClick={handleSaveBank}
                 disabled={loading}
-                className="w-full h-[48px] bg-primary hover:bg-primary-hover border border-[#00C853] rounded-[8px] flex items-center justify-center font-bold text-[#0F1111] text-[15px] shadow-sm active:scale-[0.99] transition-all"
+                className="w-full h-[48px] bg-primary hover:bg-primary-hover border border-[#00C853] rounded-[8px] flex items-center justify-center font-bold text-[#0F1111] text-[15px] active:scale-[0.99] transition-all"
               >
                 {loading ? (
                   <SpokeSpinner size="w-5 h-5" color="text-black" />
@@ -324,7 +324,7 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
       {/* Mini Toast - Pequenino, Translúcido e Centralizado */}
       {localError && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none animate-in fade-in duration-200">
-          <div className="bg-red-500/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl shadow-2xl max-w-sm mx-4 text-center text-sm font-medium pointer-events-auto">
+          <div className="bg-red-500/90 text-white px-6 py-3 rounded-xl max-w-sm mx-4 text-center text-sm font-medium pointer-events-auto">
             {localError}
           </div>
         </div>

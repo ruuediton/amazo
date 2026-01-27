@@ -79,13 +79,18 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
-    if (val < 300) { // Exemplo de mínimo
-      showToast?.("Valor mínimo 300 Kz.", "warning");
+    if (val < 300) {
+      showToast?.("Valor mínimo de saque é 300 Kz.", "warning");
+      return;
+    }
+
+    if (val > 200000) {
+      showToast?.("Valor máximo de saque é 200.000 Kz.", "warning");
       return;
     }
 
     if (val > balance) {
-      showToast?.("balance insuficiente.", "error");
+      showToast?.("Saldo insuficiente.", "error");
       return;
     }
 
@@ -105,7 +110,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
         if (error) throw error;
 
-        showToast?.("Retirada sucedida!", "success");
+        showToast?.("Retirada solicitada com sucesso!", "success");
         setShowPinModal(false);
         setPin('');
         setAmount('');
@@ -148,7 +153,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       <main className="p-5 space-y-6">
         {/* Balance Card - BP Style */}
-        <div className="bg-[#00C853] rounded-xl p-6 border border-[#00C853] shadow-sm relative overflow-hidden">
+        <div className="bg-[#00C853] rounded-xl p-6 border border-[#00C853] relative overflow-hidden">
           <div className="absolute right-[-20px] top-[-20px] opacity-10">
             <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>
           </div>
@@ -184,7 +189,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
             <button
               key={val}
               onClick={() => handleQuickAmount(val)}
-              className="py-2.5 bg-white border border-[#D5D9D9] rounded-lg text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
+              className="py-2.5 bg-white border border-[#D5D9D9] rounded-lg text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all"
             >
               {val.toLocaleString('pt-AO')}
             </button>
@@ -199,7 +204,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
           </div>
 
           {bankAccount ? (
-            <div className="flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl bg-white shadow-sm">
+            <div className="flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl bg-white">
               <div className="size-10 rounded-lg bg-gray-100 flex items-center justify-center text-[#565959]">
                 <span className="material-symbols-outlined">account_balance</span>
               </div>
@@ -225,7 +230,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 px-8 bg-white border-t border-gray-100 pb-8">
         <button
           onClick={handleInitiateWithdraw}
-          className="w-full bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] py-3.5 rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center"
+          className="w-full bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] py-3.5 rounded-xl active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center"
         >
           Solicitar Saque
         </button>
@@ -233,8 +238,8 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       {/* Pin Modal */}
       {showPinModal && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-white w-full max-w-sm rounded-[24px] p-6 shadow-2xl animate-in slide-in-from-bottom-10 duration-300">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 animate-in fade-in duration-200">
+          <div className="bg-white w-full max-w-sm rounded-[24px] p-6 border border-gray-100 animate-in slide-in-from-bottom-10 duration-300">
             <div className="text-center mb-6">
               <span className="size-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
                 <span className="material-symbols-outlined text-[#0F1111]">lock</span>

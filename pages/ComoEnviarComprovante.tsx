@@ -10,9 +10,9 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
   return (
     <div className="bg-background-dark font-display text-black antialiased min-h-screen selection:bg-primary selection:text-primary-content">
       {/* Main Container */}
-      <div className="relative flex min-h-screen w-full flex-col mx-auto max-w-md bg-background-dark shadow-xl overflow-hidden">
+      <div className="relative flex min-h-screen w-full flex-col mx-auto max-w-md bg-background-dark overflow-hidden">
         {/* Sticky Header */}
-        <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-background-dark/95 backdrop-blur-md border-b border-gray-800">
+        <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-background-dark/95 border-b border-gray-800">
           <button
             onClick={() => onNavigate('tutorials')}
             className="flex items-center justify-center p-2 -ml-2 rounded-full hover:bg-surface-dark transition-colors text-primary"
@@ -54,7 +54,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
             {/* Step 1 */}
             <div className="group relative flex gap-5">
               <div className="flex flex-col items-center">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-primary text-primary font-bold shadow-sm z-10 transition-transform group-hover:scale-110">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-primary text-primary font-bold z-10 transition-transform group-hover:scale-110">
                   1
                 </div>
               </div>
@@ -81,7 +81,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
             {/* Step 2 */}
             <div className="group relative flex gap-5">
               <div className="flex flex-col items-center">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-gray-600 text-gray-600 font-bold shadow-sm z-10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-gray-600 text-gray-600 font-bold z-10">
                   2
                 </div>
               </div>
@@ -96,7 +96,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
             {/* Step 3 */}
             <div className="group relative flex gap-5">
               <div className="flex flex-col items-center">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-gray-600 text-gray-600 font-bold shadow-sm z-10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-gray-600 text-gray-600 font-bold z-10">
                   3
                 </div>
               </div>
@@ -124,7 +124,7 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
             {/* Step 4 */}
             <div className="group relative flex gap-5">
               <div className="flex flex-col items-center">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-gray-600 text-gray-600 font-bold shadow-sm z-10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-dark border-2 border-gray-600 text-gray-600 font-bold z-10">
                   4
                 </div>
               </div>
@@ -159,13 +159,13 @@ const ComoEnviarComprovante: React.FC<Props> = ({ onNavigate, onOpenSupport }) =
         </section>
 
         {/* Sticky Footer CTA */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-background-dark border-t border-gray-800 p-5 backdrop-blur-lg bg-opacity-95 max-w-md mx-auto">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-background-dark border-t border-gray-800 p-5 bg-opacity-95 max-w-md mx-auto">
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-center gap-2 text-xs text-green-500 mb-1">
               <span className="material-symbols-outlined text-[16px] fill-1" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
               <span className="font-medium">Canal oficial e seguro</span>
             </div>
-            <button onClick={() => onOpenSupport?.()} className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-green-400 active:scale-[0.98] transition-all text-background-dark font-bold text-base shadow-lg shadow-primary/20">
+            <button onClick={() => onOpenSupport?.()} className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-green-400 active:scale-[0.98] transition-all text-background-dark font-bold text-base">
               <span className="material-symbols-outlined">chat</span>
               Falar com o Gerente
             </button>

@@ -8,10 +8,10 @@ interface Props {
 const SystemRules: React.FC<Props> = ({ onNavigate }) => {
   return (
     <div className="bg-white font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black">
-      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-white">
+      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white">
 
         {/* Header Institucional */}
-        <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100 backdrop-blur-md">
+        <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100">
           <button
             onClick={() => onNavigate('info')}
             className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
@@ -65,7 +65,7 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
             <RuleBlock
               id="02"
               title="Limites e Taxas"
-              content="O valor mínimo de saque é de 1.000 Kz. A BP reserva-se o direito de aplicar taxas administrativas sobre transações de acordo com o nível da conta do utilizador e as parcerias interbancárias vigentes."
+              content="O valor mínimo de saque é de 300 Kz e o máximo é de 200.000 Kz. A BP reserva-se o direito de aplicar taxas administrativas sobre transações de acordo com o nível da conta do utilizador e as parcerias interbancárias vigentes."
             />
 
             {/* Regra 3 */}
@@ -101,7 +101,7 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
         <div className="fixed bottom-0 max-w-md w-full p-6 bg-white/95 backdrop-blur-xl border-t border-gray-100 z-20">
           <button
             onClick={() => onNavigate('info')}
-            className="w-full bg-primary text-black font-bold py-4 rounded-xl transition-all shadow-lg active:scale-[0.98]"
+            className="w-full bg-primary text-black font-bold py-4 rounded-xl transition-all active:scale-[0.98]"
           >
             LI E CONCORDO
           </button>
@@ -114,7 +114,7 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
 const RuleBlock = ({ id, title, content }: { id: string, title: string, content: string }) => (
   <div className="flex flex-col gap-3 group">
     <div className="flex items-center gap-3">
-      <span className="text-[10px] font-black text-black bg-primary px-2 py-0.5 rounded shadow-sm">{id}</span>
+      <span className="text-[10px] font-black text-black bg-primary px-2 py-0.5 rounded border border-primary/20">{id}</span>
       <h3 className="text-sm font-black uppercase tracking-widest text-black group-hover:text-primary transition-colors">{title}</h3>
     </div>
     <p className="text-gray-600 text-[13px] leading-relaxed pl-1">

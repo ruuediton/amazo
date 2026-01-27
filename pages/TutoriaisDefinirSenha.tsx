@@ -9,7 +9,7 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
   return (
     <div className="bg-background-dark font-display text-black min-h-screen flex flex-col antialiased overflow-x-hidden selection:bg-primary selection:text-black">
       {/* Header */}
-      <header className="flex items-center p-4 pb-2 justify-between sticky top-0 z-10 bg-background-dark/90 backdrop-blur-md">
+      <header className="flex items-center p-4 pb-2 justify-between sticky top-0 z-10 bg-background-dark/90">
         <button
           onClick={() => onNavigate('tutorials')}
           className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
@@ -29,13 +29,13 @@ const TutoriaisDefinirSenha: React.FC<Props> = ({ onNavigate }) => {
       {/* Main Scrollable Content */}
       <main className="flex-1 flex flex-col px-4 pb-24">
         {/* Hero Card */}
-        <div className="flex flex-col items-stretch justify-start rounded-2xl shadow-sm bg-[#2d2a1e] overflow-hidden mb-6 border border-gray-200">
+        <div className="flex flex-col items-stretch justify-start rounded-2xl bg-[#2d2a1e] overflow-hidden mb-6 border border-gray-200">
           <div
             className="w-full h-48 bg-center bg-no-repeat bg-cover relative"
             style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrqDFdBZWNgHfUZTAGiG6Cu6jRvWdmb1Iv_x1f8NtWmzs5KWzPfjWjEoMFpyb-MxLJqoAewuFwzRtqLFv2O3rrARGO4ieEk0r6Ov0me_T1F-5kIvshKf4yVVRs-GoKEp_wzDmKpiTh4zqSau8TOBFOvDCSV3eqq5F-lB-yeAjHQ-Zw07veAS3flbhaedLHk840OoAka1Efz3mpVPBd6hY5f-HCFBQWsUB3rjkkWfVXGmPEddqxJGA5vU1ZINecsc1ftiGikqDfDL1k")' }}
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-              <span className="px-2 py-1 rounded bg-black/50 backdrop-blur-sm text-xs font-medium text-black border border-white/20">Passo 1 de 3</span>
+              <span className="px-2 py-1 rounded bg-black/50 text-xs font-medium text-black border border-white/20">Passo 1 de 3</span>
             </div>
           </div>
           <div className="flex w-full flex-col items-stretch justify-center gap-3 p-5">

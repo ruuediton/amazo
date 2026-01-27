@@ -123,7 +123,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
         </div>
 
         {/* User Greeting Overlay */}
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-full border border-white/30">
           <div className="size-6 rounded-full bg-[#00C853] flex items-center justify-center">
             <span className="material-symbols-outlined text-[14px] text-black font-bold">person</span>
           </div>

@@ -20,21 +20,21 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
   const fetchNetwork = async () => {
     setLoading(true);
     try {
-      // 1. Validar SessÃ£o
+      // 1. Validar Sessão
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         onNavigate('login');
         return;
       }
 
-      // 2. Buscar perfil para pegar o invite_code do usuÃ¡rio logado
+      // 2. Buscar perfil para pegar o invite_code do usuário logado
       const { data: profile } = await supabase
         .from('profiles')
         .select('invite_code')
         .eq('id', user.id)
         .single();
 
-      if (!profile) throw new Error("Perfil nÃ£o encontrado");
+      if (!profile) throw new Error("Perfil não encontrado");
 
       // 3. Buscar na tabela my_equipe com as colunas corretas
       // Corrigido: usando codigo_convite e telefone_subordinado
@@ -70,7 +70,7 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
   return (
     <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-gray-100 backdrop-blur-md">
+      <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-gray-100">
         <button
           onClick={() => onNavigate('invite')}
           className="text-[#0F1111] flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
@@ -89,7 +89,7 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
         ) : (
           <>
             {/* Summary Card */}
-            <div className="bg-white p-6 rounded-[28px] border border-gray-100 mb-8 shadow-sm">
+            <div className="bg-white p-6 rounded-[28px] border border-gray-100 mb-8">
               <div className="flex justify-between items-start mb-6">
                 <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                   <span className="material-symbols-outlined text-[28px]">groups</span>
@@ -108,7 +108,7 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
 
               {subordinates.length > 0 ? (
                 subordinates.map((sub) => (
-                  <div key={sub.id} className="bg-white p-4 rounded-[24px] border border-gray-100 flex items-center gap-4 shadow-sm active:scale-[0.98] transition-transform">
+                  <div key={sub.id} className="bg-white p-4 rounded-[24px] border border-gray-100 flex items-center gap-4 active:scale-[0.98] transition-transform">
                     <div className="size-12 rounded-full bg-[#F7F8F8] flex items-center justify-center text-[#565959] border border-gray-100">
                       <span className="material-symbols-outlined">person</span>
                     </div>
@@ -127,7 +127,7 @@ const SubordinateList: React.FC<Props> = ({ onNavigate }) => {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center py-20 bg-gray-50/50 rounded-[30px] border border-dashed border-gray-200">
-                  <div className="size-16 rounded-full bg-white flex items-center justify-center mb-4 shadow-inner">
+                  <div className="size-16 rounded-full bg-white flex items-center justify-center mb-4 border border-gray-100">
                     <span className="material-symbols-outlined text-gray-300 text-4xl">person_search</span>
                   </div>
                   <p className="font-bold text-[#565959] text-sm">Nenhum convidado encontrado</p>

@@ -21,11 +21,11 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
             case 1:
                 return {
                     title: 'Selecione seu Banco',
-                    description: 'Escolha seu banco na nossa lista de parceiros suportados em Angola para comeÃ§ar a integraÃ§Ã£o segura.',
+                    description: 'Escolha seu banco na nossa lista de parceiros suportados em Angola para começar a integração segura.',
                     visual: (
                         <div className="relative w-full h-full flex items-center justify-center">
                             {/* Abstract Bank UI Representation */}
-                            <div className="w-4/5 h-auto aspect-[1.6/1] bg-white dark:bg-[#1a180e] rounded-xl shadow-lg border border-slate-100 dark:border-white/10 p-4 flex flex-col gap-3 relative z-10 transform translate-y-2">
+                            <div className="w-4/5 h-auto aspect-[1.6/1] bg-white dark:bg-[#1a180e] rounded-xl border border-slate-100 dark:border-white/10 p-4 flex flex-col gap-3 relative z-10 transform translate-y-2">
                                 <div className="flex items-center gap-2 mb-1">
                                     <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center">
                                         <span className="material-symbols-outlined text-xs opacity-50">search</span>
@@ -48,7 +48,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
                                 </div>
                             </div>
                             {/* Floating Element */}
-                            <div className="absolute -right-2 top-10 bg-primary text-black text-xs font-bold px-3 py-1.5 rounded-full shadow-lg z-20 animate-bounce">
+                            <div className="absolute -right-2 top-10 bg-primary text-black text-xs font-bold px-3 py-1.5 rounded-full z-20 animate-bounce border border-black/10">
                                 Selecionar
                             </div>
                         </div>
@@ -57,10 +57,10 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
             case 2:
                 return {
                     title: 'Preencha os Dados',
-                    description: 'Insira o nÃºmero da conta e o nome do titular com atenÃ§Ã£o. Os dados devem corresponder exatamente ao seu banco.',
+                    description: 'Insira o número da conta e o nome do titular com atenção. Os dados devem corresponder exatamente ao seu banco.',
                     visual: (
                         <div className="relative w-full h-full flex items-center justify-center">
-                            <div className="w-4/5 bg-white dark:bg-[#1a180e] rounded-xl shadow-lg border border-slate-100 dark:border-white/10 p-5 flex flex-col gap-4 relative z-10">
+                            <div className="w-4/5 bg-white dark:bg-[#1a180e] rounded-xl border border-slate-100 dark:border-white/10 p-5 flex flex-col gap-4 relative z-10">
                                 <div className="space-y-2">
                                     <div className="h-2 w-1/3 bg-slate-200 dark:bg-white/10 rounded-full"></div>
                                     <div className="h-8 w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-lg"></div>
@@ -72,7 +72,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="absolute -left-4 bottom-12 bg-surface-dark text-black text-xs font-bold px-3 py-1.5 rounded-full shadow-lg z-20 border border-white/10">
+                            <div className="absolute -left-4 bottom-12 bg-surface-dark text-black text-xs font-bold px-3 py-1.5 rounded-full z-20 border border-white/10">
                                 <span className="material-symbols-outlined text-sm align-middle mr-1 text-primary">edit</span>
                                 Editar
                             </div>
@@ -82,10 +82,10 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
             case 3:
                 return {
                     title: 'Confirme e Salve',
-                    description: 'Revise todas as informaÃ§Ãµes. Se estiverem corretas, clique no botÃ£o abaixo para finalizar o vÃ­nculo.',
+                    description: 'Revise todas as informações. Se estiverem corretas, clique no botão abaixo para finalizar o vínculo.',
                     visual: (
                         <div className="relative w-full h-full flex items-center justify-center">
-                            <div className="w-64 h-40 bg-white dark:bg-[#1a180e] rounded-xl shadow-lg border border-slate-100 dark:border-white/10 flex flex-col items-center justify-center gap-3 relative z-10">
+                            <div className="w-64 h-40 bg-white dark:bg-[#1a180e] rounded-xl border border-slate-100 dark:border-white/10 flex flex-col items-center justify-center gap-3 relative z-10">
                                 <div className="size-16 rounded-full bg-green-500/10 flex items-center justify-center">
                                     <span className="material-symbols-outlined text-3xl text-green-500">check_circle</span>
                                 </div>
@@ -108,7 +108,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
     return (
         <div className="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-black transition-colors duration-200 min-h-screen flex flex-col">
             {/* Main Container */}
-            <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
+            <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark">
                 {/* Header */}
                 <header className="flex items-center px-4 py-4 justify-between bg-transparent z-10">
                     <button
@@ -137,7 +137,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
                     </div>
 
                     {/* Visual Content Card */}
-                    <div className="w-full relative aspect-[4/3] mb-8 rounded-2xl overflow-hidden bg-white dark:bg-surface-dark shadow-sm border border-slate-100 dark:border-gray-200 group transition-all duration-500">
+                    <div className="w-full relative aspect-[4/3] mb-8 rounded-2xl overflow-hidden bg-white dark:bg-surface-dark border border-slate-100 dark:border-gray-200 group transition-all duration-500">
                         {/* Decorative Gradient */}
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-50"></div>
 
@@ -169,7 +169,7 @@ const TutoriaisAdicionarConta: React.FC<Props> = ({ onNavigate }) => {
                             onClick={handleNext}
                             className="w-full h-12 bg-primary hover:bg-primary-dark text-background-dark font-bold text-base rounded-xl flex items-center justify-center transition-all active:scale-[0.98]"
                         >
-                            {currentStep === totalSteps ? 'Ir adicionar' : 'PrÃ³ximo'}
+                            {currentStep === totalSteps ? 'Ir adicionar' : 'Próximo'}
                         </button>
                     </div>
                 </main>

@@ -52,11 +52,11 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const handleNextToBank = () => {
         const val = parseFloat(amount);
         if (!amount || isNaN(val) || val < 3000) {
-            showToast?.("Valor mÃ­nimo, 3.000 KZ", "warning");
+            showToast?.("Valor mínimo, 3.000 KZ", "warning");
             return;
         }
         if (val > 1000000) {
-            showToast?.("Valor mÃ¡ximo permitido: 1.000.000 KZ", "warning");
+            showToast?.("Valor máximo permitido: 1.000.000 KZ", "warning");
             return;
         }
         setStep('bank');
@@ -72,7 +72,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
             await withLoading(async () => {
                 const { data: { user } } = await supabase.auth.getUser();
                 if (!user) {
-                    showToast?.("SessÃ£o expirada. FaÃ§a login novamente.", "error");
+                    showToast?.("Sessão expirada. Faça login novamente.", "error");
                     onNavigate('login');
                     return;
                 }
@@ -94,7 +94,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                         }
                     });
                 }
-            }, "Gerando dados de depÃ³sito...");
+            }, "Gerando dados de depósito...");
         } catch (err: any) {
             showToast?.(err.message || "Opah algo deu errado", "error");
         }
@@ -110,7 +110,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     if (step === 'amount') {
         return (
             <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 selection:bg-amber-100 animate-in fade-in duration-300">
-                <header className="sticky top-0 z-10 bg-[#00C853] border-b border-[#00C853] px-4 py-3 flex items-center justify-between shadow-sm">
+                <header className="sticky top-0 z-10 bg-[#00C853] border-b border-[#00C853] px-4 py-3 flex items-center justify-between">
                     <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
                         <span className="material-symbols-outlined text-[#0F1111]">arrow_back</span>
                     </button>
@@ -132,11 +132,11 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                             type="number"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
-                            className="w-full h-[52px] px-4 rounded-[12px] bg-white border border-[#D5D9D9] text-[18px] font-bold text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] focus:shadow-[0_0_3px_2px_rgb(228,121,17,0.5)] transition-all"
+                            className="w-full h-[52px] px-4 rounded-[12px] bg-white border border-[#D5D9D9] text-[18px] font-bold text-[#0F1111] placeholder:text-[#565959] focus:outline-none focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] transition-all"
                             placeholder="Digite o valor..."
                             autoFocus
                         />
-                        <p className="text-[11px] font-medium text-gray-400">Min: 3.000 Kz â€¢ Max: 1.000.000 Kz</p>
+                        <p className="text-[11px] font-medium text-gray-400">Min: 3.000 Kz • Max: 1.000.000 Kz</p>
                     </div>
 
                     <div className="grid grid-cols-4 gap-2">
@@ -144,7 +144,7 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                             <button
                                 key={val}
                                 onClick={() => handleQuickAmount(val)}
-                                className="py-3 bg-white border border-[#D5D9D9] rounded-[16px] text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all shadow-sm"
+                                className="py-3 bg-white border border-[#D5D9D9] rounded-[16px] text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all"
                             >
                                 {val.toLocaleString('pt-AO')}
                             </button>
@@ -152,12 +152,12 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     </div>
 
                     <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 flex gap-4">
-                        <div className="size-12 rounded-xl bg-white flex items-center justify-center text-blue-600 shadow-sm shrink-0">
+                        <div className="size-12 rounded-xl bg-white flex items-center justify-center text-blue-600 shrink-0">
                             <span className="material-symbols-outlined text-[28px]">account_balance</span>
                         </div>
                         <div>
-                            <p className="text-[14px] font-bold text-blue-900">TransferÃªncia BancÃ¡ria</p>
-                            <p className="text-[12px] text-blue-700/80 leading-snug">O valor serÃ¡ creditado no seu saldo apÃ³s a verificaÃ§Ã£o do comprovativo pela nossa equipe.</p>
+                            <p className="text-[14px] font-bold text-blue-900">Transferência Bancária</p>
+                            <p className="text-[12px] text-blue-700/80 leading-snug">O valor será creditado no seu saldo após a verificação do comprovativo pela nossa equipe.</p>
                         </div>
                     </div>
                 </main>
@@ -166,9 +166,9 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     <button
                         onClick={handleNextToBank}
                         disabled={!amount || parseFloat(amount) < 3000}
-                        className="w-full h-14 bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] rounded-xl shadow-sm active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center disabled:opacity-50 disabled:grayscale"
+                        className="w-full h-14 bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] rounded-xl active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center disabled:opacity-50 disabled:grayscale"
                     >
-                        PRÃ“XIMO
+                        PRÓXIMO
                     </button>
                 </div>
             </div>
@@ -179,16 +179,16 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     return (
         <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 antialiased animate-in slide-in-from-right duration-300">
             {/* Header Amarelo */}
-            <header className="bg-[#00C853] text-[#0F1111] p-4 flex items-center justify-center relative shadow-md border-b border-[#00C853]">
+            <header className="bg-[#00C853] text-[#0F1111] p-4 flex items-center justify-center relative border-b border-[#00C853]">
                 <button onClick={() => setStep('amount')} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0F1111]">
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
-                <h1 className="text-[18px] font-bold tracking-tight">InformaÃ§Ãµes da Conta</h1>
+                <h1 className="text-[18px] font-bold tracking-tight">Informações da Conta</h1>
             </header>
 
             <main className="px-6 pt-8 space-y-6">
                 {/* Progress Bar (Matching Image Style) */}
-                <div className="w-full h-6 bg-gray-100 rounded-full overflow-hidden relative border border-gray-200 shadow-inner">
+                <div className="w-full h-6 bg-gray-100 rounded-full overflow-hidden relative border border-gray-200">
                     <div className="absolute inset-y-0 left-0 bg-[#00ba84] rounded-full flex items-center justify-center transition-all duration-500" style={{ width: '33.3%' }}>
                         <span className="text-[11px] font-black text-white">1 / 3</span>
                     </div>
@@ -199,14 +199,14 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 </div>
 
                 {/* Bank Selection Box (Matching Image Container) */}
-                <div className="border border-gray-200 rounded-lg p-2 bg-white shadow-sm max-h-[400px] overflow-y-auto no-scrollbar">
+                <div className="border border-gray-200 rounded-lg p-2 bg-white max-h-[400px] overflow-y-auto no-scrollbar">
                     <div className="space-y-2">
                         {banks.map(bank => (
                             <button
                                 key={bank.id}
                                 onClick={() => setSelectedBank(bank)}
                                 className={`w-full py-4 px-4 rounded flex items-center justify-center text-[15px] font-bold transition-all border ${selectedBank?.id === bank?.id
-                                    ? 'bg-[#00C853] border-[#00C853] text-[#0F1111] scale-[1.02] shadow-md'
+                                    ? 'bg-[#00C853] border-[#00C853] text-[#0F1111] scale-[1.02]'
                                     : 'bg-gray-50 border-gray-100 text-gray-500 active:bg-gray-100'}`}
                             >
                                 {bank.nome_do_banco}
@@ -220,9 +220,9 @@ const Deposit: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     <button
                         onClick={handleFinalConfirm}
                         disabled={!selectedBank}
-                        className="w-full h-14 bg-[#00C853] text-white font-bold rounded-lg shadow-lg active:scale-[0.98] transition-all flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300"
+                        className="w-full h-14 bg-[#00C853] text-white font-bold rounded-lg active:scale-[0.98] transition-all flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300"
                     >
-                        PRÃ“XIMO
+                        PRÓXIMO
                     </button>
                 </div>
             </main>

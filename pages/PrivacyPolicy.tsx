@@ -8,10 +8,10 @@ interface Props {
 const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
   return (
     <div className="bg-white font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black">
-      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-white">
+      <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white">
 
         {/* Header Profissional */}
-        <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100 backdrop-blur-md">
+        <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100">
           <button
             onClick={() => onNavigate('info')}
             className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
@@ -28,7 +28,7 @@ const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
             <img loading="lazy" decoding="async"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0"
               alt="BP"
-              className="h-16 w-16 rounded-2xl shadow-lg border border-gray-100"
+              className="h-16 w-16 rounded-2xl border border-gray-100"
             />
           </div>
 
@@ -110,10 +110,10 @@ const PrivacyPolicy: React.FC<Props> = ({ onNavigate }) => {
         </main>
 
         {/* Botão de Fechar */}
-        <div className="fixed bottom-0 max-w-md w-full p-6 bg-white/95 backdrop-blur-xl border-t border-gray-100 z-20">
+        <div className="fixed bottom-0 max-w-md w-full p-6 bg-white/95 border-t border-gray-100 z-20">
           <button
             onClick={() => onNavigate('info')}
-            className="w-full bg-primary hover:bg-[#eac410] text-black font-black py-4 rounded-xl transition-all shadow-lg shadow-primary/20 active:scale-[0.98]"
+            className="w-full bg-primary hover:bg-[#eac410] text-black font-black py-4 rounded-xl transition-all active:scale-[0.98]"
           >
             CONFIRMAR LEITURA
           </button>

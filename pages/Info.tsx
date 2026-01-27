@@ -9,7 +9,7 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-dark group/design-root overflow-x-hidden font-display transition-colors duration-200 text-black">
       {/* TopAppBar */}
-      <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-gray-800/30 backdrop-blur-md">
+      <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-gray-800/30">
         <button
           onClick={() => onNavigate('profile')}
           className="text-primary flex size-12 shrink-0 items-center justify-start cursor-pointer hover:text-primary transition-colors"
@@ -22,7 +22,7 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
       {/* Hero / Brand Section */}
       <div className="flex flex-col gap-3 p-4">
         <div
-          className="w-full bg-center bg-no-repeat aspect-[3/1] bg-cover rounded-2xl shadow-lg relative overflow-hidden border border-gray-200"
+          className="w-full bg-center bg-no-repeat aspect-[3/1] bg-cover rounded-2xl relative overflow-hidden border border-gray-200"
           style={{ backgroundImage: 'url("/BP_info_hero.png")' }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-5">
@@ -34,7 +34,7 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
       {/* Content List Group */}
       <div className="flex flex-col gap-4 px-4 pb-4">
         {/* Information Group */}
-        <div className="flex flex-col bg-surface-dark rounded-2xl overflow-hidden shadow-sm border border-gray-200">
+        <div className="flex flex-col bg-surface-dark rounded-2xl overflow-hidden border border-gray-200">
           {/* Item: Sobre a BP */}
           <InfoItem
             icon="info"
@@ -71,13 +71,13 @@ const Info: React.FC<Props> = ({ onNavigate }) => {
         <div className="h-2"></div>
 
         {/* Support Group */}
-        <div className="flex flex-col bg-surface-dark rounded-2xl overflow-hidden shadow-sm border border-gray-200">
+        <div className="flex flex-col bg-surface-dark rounded-2xl overflow-hidden border border-gray-200">
           <div
             onClick={() => onNavigate('support')}
             className="flex items-center gap-4 px-4 min-h-[72px] justify-between cursor-pointer hover:bg-white/5 transition-colors"
           >
             <div className="flex items-center gap-4">
-              <div className="text-primary flex items-center justify-center rounded-xl bg-primary/20 shrink-0 size-11 shadow-lg shadow-primary/10">
+              <div className="text-primary flex items-center justify-center rounded-xl bg-primary/20 shrink-0 size-11">
                 <span className="material-symbols-outlined" style={{ fontSize: '26px', fontWeight: 'bold' }}>headset_mic</span>
               </div>
               <p className="text-black text-base font-bold leading-normal flex-1 truncate">Suporte</p>

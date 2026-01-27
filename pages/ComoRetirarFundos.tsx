@@ -56,9 +56,9 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         {/* Headline */}
         <div className="px-4 pb-2 pt-6">
           <h1 className="text-black tracking-tight text-[28px] font-extrabold leading-tight text-left">
-            Retire seus Kz com seguranÃ§a em <span className="text-primary">3 passos simples</span>.
+            Retire seus Kz com segurança em <span className="text-primary">3 passos simples</span>.
           </h1>
-          <p className="mt-2 text-sm text-text-secondary">Siga este guia rÃ¡pido para transferir seu dinheiro.</p>
+          <p className="mt-2 text-sm text-text-secondary">Siga este guia rápido para transferir seu dinheiro.</p>
         </div>
 
         {/* Carousel of Steps */}
@@ -69,7 +69,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
             className="flex overflow-x-auto snap-x snap-mandatory scroll-pl-4 gap-4 px-4 pb-4 no-scrollbar items-start"
           >
             {/* Step 1 */}
-            <div className="snap-center flex-none w-[85%] max-w-[320px] flex flex-col gap-4 rounded-2xl bg-card-dark p-4 shadow-lg border border-gray-200">
+            <div className="snap-center flex-none w-[85%] max-w-[320px] flex flex-col gap-4 rounded-2xl bg-card-dark p-4 border border-gray-200">
               <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-zinc-800">
                 <div
                   className="absolute inset-0 bg-cover bg-center opacity-90"
@@ -80,13 +80,13 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
               <div>
                 <h3 className="text-black text-lg font-bold leading-normal mb-1">Acessar Carteira</h3>
                 <p className="text-text-secondary text-sm font-medium leading-relaxed">
-                  VÃ¡ para o saldo da sua conta no painel principal e toque no botÃ£o de retirada.
+                  Vá para o saldo da sua conta no painel principal e toque no botão de retirada.
                 </p>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="snap-center flex-none w-[85%] max-w-[320px] flex flex-col gap-4 rounded-2xl bg-card-dark p-4 shadow-lg border border-gray-200">
+            <div className="snap-center flex-none w-[85%] max-w-[320px] flex flex-col gap-4 rounded-2xl bg-card-dark p-4 border border-gray-200">
               <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-zinc-800">
                 <div
                   className="absolute inset-0 bg-cover bg-center opacity-90"
@@ -95,15 +95,15 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
                 <div className="absolute top-3 left-3 bg-primary text-black text-xs font-bold px-3 py-1 rounded-full">Passo 2</div>
               </div>
               <div>
-                <h3 className="text-black text-lg font-bold leading-normal mb-1">Escolher MÃ©todo</h3>
+                <h3 className="text-black text-lg font-bold leading-normal mb-1">Escolher Método</h3>
                 <p className="text-text-secondary text-sm font-medium leading-relaxed">
-                  Escolha TransferÃªncia BancÃ¡ria para bancos locais ou Saque com Agente.
+                  Escolha Transferência Bancária para bancos locais ou Saque com Agente.
                 </p>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="snap-center flex-none w-[85%] max-w-[320px] flex flex-col gap-4 rounded-2xl bg-card-dark p-4 shadow-lg border border-gray-200">
+            <div className="snap-center flex-none w-[85%] max-w-[320px] flex flex-col gap-4 rounded-2xl bg-card-dark p-4 border border-gray-200">
               <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-zinc-800">
                 <div
                   className="absolute inset-0 bg-cover bg-center opacity-90"
@@ -114,7 +114,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
               <div>
                 <h3 className="text-black text-lg font-bold leading-normal mb-1">Confirmar e Verificar</h3>
                 <p className="text-text-secondary text-sm font-medium leading-relaxed">
-                  Insira seu PIN de seguranÃ§a para autorizar a transaÃ§Ã£o e finalizar o saque.
+                  Insira seu PIN de segurança para autorizar a transação e finalizar o saque.
                 </p>
               </div>
             </div>
@@ -142,7 +142,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
             <div className="flex flex-col gap-1">
               <p className="text-black text-base font-bold leading-tight">Dica Profissional</p>
               <p className="text-text-secondary text-sm font-medium leading-normal">
-                Verifique os limites diÃ¡rios de retirada em Kz para evitar atrasos na sua transferÃªncia.
+                Verifique os limites diários de retirada em Kz para evitar atrasos na sua transferência.
               </p>
             </div>
           </div>
@@ -164,7 +164,7 @@ const ComoRetirarFundos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-background-dark border-t border-white/10 p-4 pb-8 z-40">
         <button
           onClick={() => onNavigate('retirada')}
-          className="w-full h-14 bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 cursor-pointer"
+          className="w-full h-14 bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all rounded-xl flex items-center justify-center gap-2 cursor-pointer"
         >
           <span className="text-black text-base font-bold font-display">Iniciar Retirada</span>
           <span className="material-symbols-outlined text-black">arrow_forward</span>

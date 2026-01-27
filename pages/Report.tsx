@@ -39,8 +39,8 @@ const Report: React.FC<ReportProps> = ({ onNavigate }) => {
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={`group flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full border px-4 transition-colors ${selectedCategory === cat
-                    ? 'border-primary bg-primary/20'
-                    : 'bg-[#393628] border-transparent hover:border-gray-600'
+                  ? 'border-primary bg-primary/20'
+                  : 'bg-[#393628] border-transparent hover:border-gray-600'
                   }`}
               >
                 <span className={`text-sm leading-normal ${selectedCategory === cat ? 'font-semibold text-black' : 'font-medium text-gray-700'}`}>
@@ -115,8 +115,8 @@ const Report: React.FC<ReportProps> = ({ onNavigate }) => {
       </main>
 
       {/* Fixed Bottom Button Area */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-background-dark/95 border-t border-gray-200 p-5 z-20 backdrop-blur-md">
-        <button className="flex w-full items-center justify-center rounded-full bg-primary py-4 px-6 transition-transform active:scale-[0.98] shadow-lg shadow-primary/20">
+      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-background-dark/95 border-t border-gray-200 p-5 z-20">
+        <button className="flex w-full items-center justify-center rounded-full bg-primary py-4 px-6 transition-transform active:scale-[0.98]">
           <span className="text-black text-base font-bold leading-none tracking-wide">Enviar Relato</span>
         </button>
       </div>

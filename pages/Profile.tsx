@@ -144,6 +144,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         "- Primeiro, configure sua Senha de Retirada em 'Configurações'.\n" +
         "- Vá em 'Retirar Fundo' no perfil.\n" +
         "- Insira o valor e sua senha de retirada seis dígitos.\n" +
+        "- O valor mínimo é 300 Kz e o máximo é 200.000 Kz por transação.\n" +
         "- O valor será processado e enviado para sua conta bancária cadastrada (IBAN) dentro de 24 horas úteis.");
 
       addSection('4. Programa de Convites',
@@ -174,7 +175,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       addSection('REGULAMENTO INTERNO',
         "O descumprimento de qualquer uma das normas abaixo poderá resultar na suspensão imediata das atividades do utilizador e bloqueio preventivo de fundos para análise.\n\n" +
         "01. Operações de Caixa\nOs depósitos via Multicaixa Express são processados automaticamente 24/7. Pedidos de retirada são processados em dias úteis, das 09:00 às 18:00 (Hora de Luanda), com prazo de liquidação de até 24 horas úteis.\n\n" +
-        "02. Limites e Taxas\nO valor mínimo de saque é de 1.000 Kz. A BP reserva-se o direito de aplicar taxas administrativas sobre transações de acordo com o nível da conta do utilizador e as parcerias interbancárias vigentes.\n\n" +
+        "02. Limites e Taxas\nO valor mínimo de saque é de 300 Kz e o máximo é de 200.000 Kz. A BP reserva-se o direito de aplicar taxas administrativas sobre transações de acordo com o nível da conta do utilizador e as parcerias interbancárias vigentes.\n\n" +
         "03. Propriedade de Conta\nCada conta é pessoal e intransferível. A verificação de identidade (BI) é obrigatória para movimentações acima do limite básico. O uso de contas de terceiros para saques resultará em rejeição automática da transação.\n\n" +
         "04. Sistema de Ganhos\nA remuneração por tarefas e cashback é baseada em performance sistémica. Manipulações de software ou uso de bots para automatizar cliques violam as políticas de uso e levam ao encerramento definitivo da conta sem aviso prévio.");
 
@@ -233,7 +234,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
   };
 
   if (!currentProfile || !stats.balance === undefined) return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black/5 backdrop-blur-sm">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black/5">
       <SpokeSpinner size="w-12 h-12" className="text-black/60" />
     </div>
   );
@@ -259,10 +260,10 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           </div>
           <div className="relative shrink-0 ml-4">
             <div
-              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 border-2 border-[#00C853] shadow-sm"
+              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 border-2 border-[#00C853]"
               style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0")' }}
             ></div>
-            <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md border border-gray-100">
+            <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 border border-gray-100">
               <span className="material-symbols-outlined text-[#111418] text-[14px] block">edit</span>
             </div>
           </div>
@@ -271,7 +272,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
 
       {/* Balance Card Section */}
       <div className="px-4 mb-6">
-        <div className="rounded-2xl bg-[#f0fff4] p-6 border border-[#00C853]/20 shadow-sm relative overflow-hidden">
+        <div className="rounded-2xl bg-[#f0fff4] p-6 border border-[#00C853]/20 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none translate-x-4 -translate-y-4">
             <span className="material-symbols-outlined text-[120px] text-[#00C853]">account_balance_wallet</span>
           </div>
@@ -327,7 +328,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       <div className="px-4 space-y-6">
         <section>
           <h3 className="text-[11px] font-extrabold text-[#637381] uppercase tracking-[0.05em] mb-2.5 ml-1">Serviços</h3>
-          <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+          <div className="bg-white rounded-2xl overflow-hidden border border-gray-100">
             {[
               { label: 'Retirar fundo', icon: 'account_balance_wallet', page: 'retirada' },
               { label: 'Recarregar', icon: 'payments', page: 'deposit' },
@@ -357,7 +358,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
 
         <section>
           <h3 className="text-[11px] font-extrabold text-[#637381] uppercase tracking-[0.05em] mb-2.5 ml-1">Outros</h3>
-          <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+          <div className="bg-white rounded-2xl overflow-hidden border border-gray-100">
             {[
               { label: 'Configurações', icon: 'settings', page: 'settings' },
               { label: 'Sobre a Empresa', icon: 'domain', page: 'info' },
@@ -396,10 +397,10 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       {/* Manual Download Modal */}
       {showManualModal && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center px-4 animate-in fade-in duration-200">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowManualModal(false)}></div>
-          <div className="bg-white w-full max-w-sm rounded-[24px] p-6 relative z-10 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
+          <div className="absolute inset-0 bg-black/60" onClick={() => setShowManualModal(false)}></div>
+          <div className="bg-white w-full max-w-sm rounded-[24px] p-6 relative z-10 border border-gray-100 scale-100 animate-in zoom-in-95 duration-200">
             <div className="flex flex-col items-center text-center">
-              <div className="size-16 rounded-2xl bg-[#00C853] flex items-center justify-center mb-4 shadow-lg shadow-[#00C853]/20 border border-[#00C853]">
+              <div className="size-16 rounded-2xl bg-[#00C853] flex items-center justify-center mb-4 border border-[#00C853]">
                 <span className="material-symbols-outlined text-black text-4xl">library_books</span>
               </div>
               <h3 className="text-xl font-black text-[#0F1111] mb-2 leading-tight">Baixar Manual Aprende BP?</h3>
@@ -416,7 +417,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
                 </button>
                 <button
                   onClick={generateManual}
-                  className="flex-1 py-3.5 bg-[#00C853] rounded-xl font-black text-[#0F1111] text-sm hover:bg-[#00C853] border border-[#00C853] transition-colors shadow-sm flex items-center justify-center gap-2"
+                  className="flex-1 py-3.5 bg-[#00C853] rounded-xl font-black text-[#0F1111] text-sm hover:bg-[#00C853] border border-[#00C853] transition-colors flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-[18px]">download</span>
                   Baixar

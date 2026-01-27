@@ -103,7 +103,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               <img loading="lazy" decoding="async"
                 src="/bp_logo.png"
                 alt="BP ENERGY (SUL) LDA"
-                className="relative w-32 h-32 rounded-[24px] shadow-2xl border-2 border-white/10 object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]"
+                className="relative w-32 h-32 rounded-[24px] border-2 border-white/10 object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]"
               />
               <div className="mt-2 text-center">
                 <span className="text-2xl font-black tracking-tighter text-text-primary">BP</span>
@@ -124,7 +124,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                 <label className="text-[13px] font-bold text-text-primary">Número de telefone</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                    <span className="text-xl mr-2">????</span>
+                    <span className="text-xl mr-2">🇦🇴</span>
                     <span className="text-base font-medium text-text-primary">+244</span>
                     <div className="ml-3 h-6 w-px bg-gray-200"></div>
                   </div>
@@ -245,7 +245,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
               <button
                 type="submit"
                 disabled={loading}
-                className={`mt-4 flex w-full items-center justify-center rounded-2xl bg-[#00C853] h-[56px] text-[16px] font-black text-text-primary shadow-soft hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`mt-4 flex w-full items-center justify-center rounded-2xl bg-[#00C853] h-[56px] text-[16px] font-black text-text-primary hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {loading ? <div className="flex items-center gap-2"><SpokeSpinner size="w-5 h-5" color="text-text-primary" /> Aguarde...</div> : 'CRIAR MINHA CONTA'}
               </button>

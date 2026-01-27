@@ -19,11 +19,11 @@ interface TutorialSection {
 
 const tutorialsData: TutorialSection[] = [
   {
-    title: 'TransaÃ§Ãµes',
+    title: 'Transações',
     items: [
       {
         icon: 'arrow_circle_down',
-        title: 'Tutoriais DepÃ³sitos',
+        title: 'Tutoriais Depósitos',
         subtitle: 'Como adicionar fundos',
         route: 'tutoriais-depositos',
       },
@@ -36,24 +36,24 @@ const tutorialsData: TutorialSection[] = [
       {
         icon: 'upload_file',
         title: 'Tutoriais Enviar Comprovante ao Gerente',
-        subtitle: 'Validar transaÃ§Ãµes',
+        subtitle: 'Validar transações',
         route: 'como-enviar-comprovante',
       },
     ],
   },
   {
-    title: 'Conta & SeguranÃ§a',
+    title: 'Conta & Segurança',
     items: [
       {
         icon: 'account_balance',
-        title: 'Tutoriais Adicionar Conta BancÃ¡ria',
-        subtitle: 'Vincular dados bancÃ¡rios',
+        title: 'Tutoriais Adicionar Conta Bancária',
+        subtitle: 'Vincular dados bancários',
         route: 'tutoriais-adicionar-conta',
       },
       {
         icon: 'lock',
         title: 'Tutoriais Definir Senha de Retirada',
-        subtitle: 'Criar senha de transaÃ§Ã£o',
+        subtitle: 'Criar senha de transação',
         route: 'tutoriais-definir-senha',
       },
     ],
@@ -120,7 +120,7 @@ const Tutorials: React.FC<TutorialsProps> = ({ onNavigate }) => {
         </button>
         <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center">Menu de Tutoriais</h2>
         <div className="flex w-12 items-center justify-end">
-          {/* O botÃ£o de busca no header pode focar no input ou ser removido se redundante, mantendo visual por enquanto */}
+          {/* O botão de busca no header pode focar no input ou ser removido se redundante, mantendo visual por enquanto */}
           <button className="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-transparent text-black">
             <span className="material-symbols-outlined text-[24px]">search</span>
           </button>

@@ -43,7 +43,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       icon: "input",
       content: (
         <div className="space-y-4">
-          <div className="bg-surface-dark border border-gray-200 rounded-2xl overflow-hidden shadow-sm text-left">
+          <div className="bg-surface-dark border border-gray-200 rounded-2xl overflow-hidden text-left">
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500 mb-1">Entidade</span>
@@ -80,7 +80,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       description: "Utilize o IBAN abaixo para realizar a transferência a partir do seu banco.",
       icon: "account_balance",
       content: (
-        <div className="bg-surface-dark border border-gray-200 rounded-2xl overflow-hidden shadow-sm text-left mt-4">
+        <div className="bg-surface-dark border border-gray-200 rounded-2xl overflow-hidden text-left mt-4">
           <div className="flex items-center justify-between p-4 bg-surface-highlight/20">
             <div className="flex flex-col">
               <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500 mb-1">IBAN</span>
@@ -116,7 +116,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
   return (
     <div className="bg-background-dark font-display text-black antialiased min-h-screen pb-28">
       {/* Top Navigation */}
-      <div className="fixed top-0 z-50 w-full max-w-md mx-auto bg-background-dark/95 backdrop-blur-md border-b border-gray-200">
+      <div className="fixed top-0 z-50 w-full max-w-md mx-auto bg-background-dark/95 border-b border-gray-200">
         <div className="flex items-center justify-between px-4 h-16">
           <button
             onClick={() => onNavigate('tutorials')}
@@ -135,7 +135,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           <button
             onClick={() => setActiveTab('multicaixa')}
             className={`group flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full pl-4 pr-4 transition-transform active:scale-95 ${activeTab === 'multicaixa'
-              ? 'bg-primary text-black shadow-md shadow-primary/20'
+              ? 'bg-primary text-black border border-primary/20'
               : 'bg-surface-highlight text-gray-700 border border-transparent hover:border-primary/50'
               }`}
           >
@@ -146,7 +146,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           <button
             onClick={() => setActiveTab('bank')}
             className={`group flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full pl-4 pr-4 transition-transform active:scale-95 ${activeTab === 'bank'
-              ? 'bg-primary text-black shadow-md shadow-primary/20'
+              ? 'bg-primary text-black border border-primary/20'
               : 'bg-surface-highlight text-gray-700 border border-transparent hover:border-primary/50'
               }`}
           >
@@ -216,7 +216,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       </main>
 
       {/* Sticky Footer CTA */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-background-dark/95 border-t border-white/10 z-40 backdrop-blur-xl">
+      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-background-dark/95 border-t border-white/10 z-40">
         <div className="flex gap-4">
           <button
             onClick={() => onOpenSupport?.()}
@@ -226,7 +226,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
           </button>
           <button
             onClick={() => onNavigate('deposit')}
-            className="flex-1 flex h-12 cursor-pointer items-center justify-center rounded-2xl bg-primary text-black gap-2 text-base font-bold leading-normal tracking-[0.015em] hover:bg-green-400 active:scale-[0.98] transition-all shadow-lg shadow-primary/20"
+            className="flex-1 flex h-12 cursor-pointer items-center justify-center rounded-2xl bg-primary text-black gap-2 text-base font-bold leading-normal tracking-[0.015em] hover:bg-green-400 active:scale-[0.98] transition-all"
           >
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>account_balance_wallet</span>
             <span>Depositar Agora</span>

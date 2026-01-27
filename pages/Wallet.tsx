@@ -16,7 +16,7 @@ interface WalletProps {
 const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
   return (
     <div className="flex flex-col pb-24">
-      <header className="flex items-center p-4 justify-between sticky top-0 z-20 bg-background-dark/95 backdrop-blur-md">
+      <header className="flex items-center p-4 justify-between sticky top-0 z-20 bg-background-dark/95 border-b border-gray-200">
         <button
           onClick={() => onNavigate('home')}
           className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors text-primary"
@@ -31,7 +31,7 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
 
       <main className="flex-1 overflow-y-auto px-4">
         <div className="mb-6">
-          <div className="flex flex-col gap-4 rounded-xl bg-surface-dark p-5 shadow-lg border border-gray-200 relative overflow-hidden group">
+          <div className="flex flex-col gap-4 rounded-xl bg-surface-dark p-5 border border-gray-200 relative overflow-hidden group">
             <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
             <div className="flex flex-col z-10">
               <div className="flex justify-between items-start mb-2">
@@ -63,9 +63,9 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
         <div className="mb-6 grid grid-cols-1 gap-3">
           <button
             onClick={() => onNavigate('p2p-transfer')}
-            className="flex items-center gap-4 bg-primary/10 border border-primary/20 p-4 rounded-xl active:scale-95 transition-all shadow-sm group"
+            className="flex items-center gap-4 bg-primary/10 border border-primary/20 p-4 rounded-xl active:scale-95 transition-all group"
           >
-            <div className="size-10 rounded-full bg-primary flex items-center justify-center text-black shadow-lg group-hover:scale-110 transition-transform">
+            <div className="size-10 rounded-full bg-primary flex items-center justify-center text-black group-hover:scale-110 transition-transform">
               <span className="material-symbols-outlined">send</span>
             </div>
             <div className="flex-1 text-left">
@@ -77,7 +77,7 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
         </div>
 
         <div className="flex gap-3 overflow-x-auto no-scrollbar pb-6">
-          <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-5 shadow-md shadow-primary/20">
+          <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-5 border border-primary/20">
             <span className="text-black text-sm font-bold">Todos</span>
           </button>
           <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-white/10 px-5 transition-colors hover:bg-white/5">

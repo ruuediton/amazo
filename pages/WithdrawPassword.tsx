@@ -18,30 +18,30 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Requisitos de validaÃ§Ã£o simplificados (4 dÃ­gitos)
+  // Requisitos de validação simplificados (4 dígitos)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. SanitizaÃ§Ã£o
+    // 1. Sanitização
     const cleanPass = password.replace(/\D/g, '');
     const cleanConfirm = confirmPassword.replace(/\D/g, '');
 
     if (cleanPass.length !== 4) {
-      showToast?.("A senha deve conter 4 dÃ­gitos numÃ©ricos.", "warning");
+      showToast?.("A senha deve conter 4 dígitos numéricos.", "warning");
       return;
     }
 
     if (cleanPass !== cleanConfirm) {
-      showToast?.("As senhas nÃ£o coincidem.", "error");
+      showToast?.("As senhas não coincidem.", "error");
       return;
     }
 
     await withLoading(async () => {
-      // ValidaÃ§Ã£o de SessÃ£o
+      // Validação de Sessão
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        throw new Error("SessÃ£o expirada. Acesse novamente.");
+        throw new Error("Sessão expirada. Acesse novamente.");
       }
 
       // Chamada Segura RPC
@@ -74,7 +74,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
         <div className="mb-4 mt-2">
           <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-2">Definir Senha de Retirada</h2>
           <p className="text-[text-gray-400] text-base font-normal leading-relaxed">
-            Esta senha serÃ¡ solicitada exclusivamente para confirmar saques, transferÃªncias e pagamentos.
+            Esta senha será solicitada exclusivamente para confirmar saques, transferências e pagamentos.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
                 maxLength={4}
                 inputMode="numeric"
                 className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                placeholder="Crie uma nova senha (4 dÃ­gitos)"
+                placeholder="Crie uma nova senha (4 dígitos)"
                 type={showNew ? "text" : "password"}
               />
               <button

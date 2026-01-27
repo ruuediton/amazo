@@ -157,7 +157,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       {/* Profile/Wallet Card - BP Flat Style */}
       <div className="px-5 -mt-8 mb-4 relative z-20">
-        <div className="bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between shadow-lg">
+        <div className="bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="size-10 bg-[#00C853] rounded-lg flex items-center justify-center">
               <span className="material-symbols-outlined text-[#0F1111]">account_balance_wallet</span>
@@ -190,14 +190,14 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
               return (
                 <div
                   key={fund.id_fundo}
-                  className="snap-center flex-none w-[220px] flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  className="snap-center flex-none w-[220px] flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden"
                 >
                   <div
                     className="w-full aspect-video bg-cover bg-center relative"
                     style={{ backgroundImage: `url("${fund.url_imagem}")` }}
                   >
                     {isExhausted && (
-                      <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center">
+                      <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
                         <span className="bg-red-500 text-white px-3 py-1 rounded-full text-[10px] font-bold">ESGOTADO</span>
                       </div>
                     )}
@@ -281,7 +281,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
                   type="number"
                   min="100"
                   placeholder="0.00"
-                  className="w-full h-14 bg-white border border-gray-200 focus:border-[#e77600] rounded-xl pl-12 pr-4 text-2xl font-black text-[#0F1111] outline-none transition-all shadow-sm"
+                  className="w-full h-14 bg-white border border-gray-200 focus:border-[#e77600] rounded-xl pl-12 pr-4 text-2xl font-black text-[#0F1111] outline-none transition-all"
                   value={investmentAmount}
                   onChange={(e) => setInvestmentAmount(e.target.value)}
                 />
@@ -308,7 +308,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
             <button
               onClick={handleApply}
               disabled={applying || !investmentAmount || Number(investmentAmount) <= 0}
-              className={`w-full h-14 rounded-xl font-black text-[14px] uppercase shadow-lg transition-all flex items-center justify-center gap-3 ${applying || !investmentAmount || Number(investmentAmount) <= 0
+              className={`w-full h-14 rounded-xl font-black text-[14px] uppercase transition-all flex items-center justify-center gap-3 ${applying || !investmentAmount || Number(investmentAmount) <= 0
                 ? 'bg-gray-200 text-gray-400'
                 : 'bg-[#00C853] border border-[#00C853] text-[#0F1111] hover:bg-[#00C853] active:scale-[0.98]'
                 }`}
@@ -322,7 +322,7 @@ const InvestimentosFundo: React.FC<Props> = ({ onNavigate, showToast }) => {
       {!selectedFund && (
         <section className="px-5 mt-4">
           <div className="bg-[#fdf8f3] border border-[#f3ebdf] p-8 rounded-3xl flex flex-col items-center text-center space-y-4">
-            <div className="size-14 rounded-full bg-white flex items-center justify-center shadow-md">
+            <div className="size-14 rounded-full bg-white flex items-center justify-center border border-gray-100">
               <span className="material-symbols-outlined text-[#e47911] text-2xl">verified_user</span>
             </div>
             <div className="space-y-1">

@@ -128,7 +128,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                       alt={product.name}
                       className="max-w-full max-h-full object-contain"
                     />
-                    <button className="absolute bottom-2 left-2 size-8 bg-white/90 backdrop-blur rounded shadow-sm flex items-center justify-center border border-gray-100">
+                    <button className="absolute bottom-2 left-2 size-8 bg-white/90 rounded flex items-center justify-center border border-gray-100">
                       <span className="material-symbols-outlined text-[20px] text-gray-400">add_to_photos</span>
                     </button>
 
@@ -178,7 +178,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                     <button
                       onClick={() => handleOpenModal(product)}
                       disabled={isPurchased}
-                      className={`w-full py-3 rounded-xl text-[14px] font-black shadow-lg transition-all active:scale-[0.98] ${isPurchased
+                      className={`w-full py-3 rounded-xl text-[14px] font-black transition-all active:scale-[0.98] ${isPurchased
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
                         : 'bg-[#00C853] hover:brightness-110 text-black border border-[#00C853]'
                         }`}
@@ -199,12 +199,12 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
 
       {/* Confirmation Modal - Simplified */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-6">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-6">
           <div
             className="absolute inset-0"
             onClick={() => !isBuying && setSelectedProduct(null)}
           />
-          <div className="relative w-full max-w-sm bg-white rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+          <div className="relative w-full max-w-sm bg-white rounded-2xl p-6 border border-gray-100 animate-in zoom-in-95 duration-300">
             <h3 className="text-lg font-bold text-gray-900 mb-2">Confirmar Compra</h3>
             <p className="text-gray-600 text-[14px] leading-relaxed mb-6">
               Deseja adquirir o item <span className="font-bold">"{selectedProduct.name}"</span> pelo valor de <span className="font-bold text-black">Kz {selectedProduct.price.toLocaleString()}</span>?
@@ -215,7 +215,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
               <button
                 disabled={isBuying}
                 onClick={handlePurchase}
-                className="w-full h-12 bg-[#00C853] hover:bg-[#00C853] rounded-full font-bold text-[14px] shadow-sm transition-all active:scale-95 flex items-center justify-center"
+                className="w-full h-12 bg-[#00C853] hover:bg-[#00C853] rounded-full font-bold text-[14px] transition-all active:scale-95 flex items-center justify-center"
               >
                 {isBuying ? <SpokeSpinner size="w-5 h-5" color="text-black" /> : 'Confirmar e Pagar'}
               </button>

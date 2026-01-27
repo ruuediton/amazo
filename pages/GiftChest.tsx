@@ -50,17 +50,17 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
 
   const handleRedeem = async () => {
     if (!promoCode.trim()) {
-      showToast?.("Por favor, digite cÃ³digo.", "warning");
+      showToast?.("Por favor, digite código.", "warning");
       return;
     }
 
     await withLoading(async () => {
-      // ValidaÃ§Ã£o de sessÃ£o no client first
+      // Validação de sessão no client first
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         // Redireciona se nÃ£o houver sessÃ£o ativa
         onNavigate('login');
-        throw new Error("SessÃ£o expirada.");
+        throw new Error("Sessão expirada.");
       }
 
       // Chamada RPC simplificada e segura (User ID Ã© pego do contexto Auth no backend)
@@ -69,12 +69,12 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
       });
 
       if (error) {
-        throw new Error("NÃ£o foi possÃ­vel processar o pedido. Tente novamente");
+        throw new Error("Não foi possível processar o pedido. Tente novamente");
       }
 
       if (!data.success) {
-        // Exibe mensagem segura retornada do backend (Ex: "CÃ³digo invÃ¡lido" ou "Muitas tentativas")
-        throw new Error(data.message || "CÃ³digo invÃ¡lido ou expirado.");
+        // Exibe mensagem segura retornada do backend (Ex: "Código inválido" ou "Muitas tentativas")
+        throw new Error(data.message || "Código inválido ou expirado.");
       }
 
       // Sucesso
@@ -82,7 +82,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
       setIsOpen(true);
       setPromoCode('');
 
-      // Atualiza histÃ³rico em background
+      // Atualiza histórico em background
       fetchHistory();
 
       return data.message;
@@ -112,7 +112,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
       <main className="flex-1 flex flex-col justify-center items-center px-4 max-w-lg mx-auto w-full pb-20">
         {/* Header / Label */}
         <div className="mb-2">
-          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">ParabÃ©ns!</span>
+          <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">Parabéns!</span>
         </div>
 
         {/* HeadlineText */}
@@ -124,7 +124,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
         <p className="text-black/70 text-[13px] font-medium leading-relaxed pb-4 px-10 text-center">
           {isOpen
             ? `Acabaste de resgatar Kz ${lastReward?.toLocaleString()}.`
-            : 'Introduz o teu cÃ³digo abaixo para resgatar agora.'
+            : 'Introduz o teu código abaixo para resgatar agora.'
           }
         </p>
 
@@ -134,8 +134,8 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
             <div className="flex flex-col">
               <div className="relative group">
                 <input
-                  className="flex w-full rounded-xl border border-gray-200 bg-gray-50 px-4 h-11 text-sm font-bold focus:border-primary focus:ring-0 focus:outline-none transition-all placeholder:text-gray-400 text-black shadow-inner"
-                  placeholder="Insira o seu cÃ³digo aqui"
+                  className="flex w-full rounded-xl border border-gray-200 bg-gray-50 px-4 h-11 text-sm font-bold focus:border-primary focus:ring-0 focus:outline-none transition-all placeholder:text-gray-400 text-black"
+                  placeholder="Insira o seu código aqui"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                   disabled={loading}
@@ -155,16 +155,16 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(244,209,37,0.15)_0%,_rgba(24,23,17,0)_70%)] rounded-full"></div>
 
           {/* Metallic Chest Container */}
-          <div className={`relative w-40 h-40 bg-[#2a2820] rounded-xl border-2 transition-all duration-500 ${isOpen ? 'border-primary shadow-[0_0_80px_rgba(244,209,37,0.4)] scale-110' : 'border-[#3a3830] shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)]'} flex flex-col overflow-hidden`}>
+          <div className={`relative w-40 h-40 bg-[#2a2820] rounded-xl border-2 transition-all duration-500 ${isOpen ? 'border-primary scale-110' : 'border-[#3a3830]'} flex flex-col overflow-hidden`}>
             {/* Top lid detail */}
-            <div className={`h-1/3 bg-[#323028] border-b-2 transition-all duration-500 ${isOpen ? 'border-primary/60 -translate-y-4' : 'border-primary/30'} flex items-center justify-center shadow-inner`}>
+            <div className={`h-1/3 bg-[#323028] border-b-2 transition-all duration-500 ${isOpen ? 'border-primary/60 -translate-y-4' : 'border-primary/30'} flex items-center justify-center`}>
               <div className={`w-12 h-1.5 rounded-full transition-colors ${isOpen ? 'bg-primary' : 'bg-primary/10'}`}></div>
             </div>
 
             {/* Body / Lock detail */}
             <div className="flex-1 flex flex-col items-center justify-center relative bg-gradient-to-b from-[#2d2b22] to-[#1e1c14]">
               {/* Lock Circle */}
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-green-500 shadow-[0_0_30px_rgba(34,197,94,0.6)]' : 'bg-primary shadow-[0_0_20px_rgba(244,209,37,0.5)] animate-pulse'}`}>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-green-500' : 'bg-primary animate-pulse'}`}>
                 <span className="material-symbols-outlined text-[#181711] text-2xl font-black transition-all" style={{ fontVariationSettings: "'FILL' 1" }}>
                   {isOpen ? 'lock_open' : 'lock'}
                 </span>
@@ -173,7 +173,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
               {/* Reward Reveal - Only if open */}
               {isOpen && (
                 <div className="absolute inset-x-0 bottom-2 flex flex-col items-center animate-bounce">
-                  <p className="text-primary text-sm font-black tracking-tighter shadow-sm">+ Kz {lastReward}</p>
+                  <p className="text-primary text-sm font-black tracking-tighter">+ Kz {lastReward}</p>
                 </div>
               )}
             </div>
@@ -183,7 +183,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
           </div>
 
           {/* Currency Badge Kz */}
-          <div className="absolute bottom-2 right-2 bg-primary text-[#181711] font-black px-4 py-2 rounded-xl shadow-2xl rotate-12 flex items-center gap-1.5 border-2 border-[#181711]/10">
+          <div className="absolute bottom-2 right-2 bg-primary text-[#181711] font-black px-4 py-2 rounded-xl rotate-12 flex items-center gap-1.5 border-2 border-[#181711]/10">
             <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>payments</span>
             <span className="text-lg">Kz</span>
           </div>
@@ -193,7 +193,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
           {isOpen ? (
             <button
               onClick={() => setIsOpen(false)}
-              className="flex w-full items-center justify-center overflow-hidden rounded-xl h-11 bg-white border border-primary text-text-primary text-base font-black leading-normal tracking-wide active:scale-95 transition-all shadow-md"
+              className="flex w-full items-center justify-center overflow-hidden rounded-xl h-11 bg-white border border-primary text-text-primary text-base font-black leading-normal tracking-wide active:scale-95 transition-all"
             >
               <span>Resgatar Outro</span>
             </button>
@@ -201,7 +201,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
             <button
               onClick={handleRedeem}
               disabled={loading}
-              className={`flex w-full items-center justify-center overflow-hidden rounded-xl h-11 bg-primary text-[#181711] text-base font-black leading-normal tracking-wide shadow-lg active:scale-95 transition-all ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`flex w-full items-center justify-center overflow-hidden rounded-xl h-11 bg-primary text-[#181711] text-base font-black leading-normal tracking-wide active:scale-95 transition-all ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
               <span className="truncate">{loading ? 'Processando...' : 'Abrir Presente Agora'}</span>
             </button>
@@ -231,7 +231,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
               history.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`flex items-center justify-between p-4 bg-white/50 border rounded-2xl shadow-sm transition-all ${index === 0 && isOpen ? 'border-primary ring-2 ring-primary/20 bg-primary/5 scale-[1.02]' : 'border-gray-100'}`}
+                  className={`flex items-center justify-between p-4 bg-white/50 border rounded-2xl transition-all ${index === 0 && isOpen ? 'border-primary ring-2 ring-primary/20 bg-primary/5 scale-[1.02]' : 'border-gray-100'}`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`size-10 rounded-full flex items-center justify-center ${item.status === 'success' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
@@ -242,14 +242,14 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2">
                         <p className="text-black font-bold text-sm">
-                          {item.status === 'success' ? 'Resgate ConcluÃ­do' : 'Falha no Resgate'}
+                          {item.status === 'success' ? 'Resgate Concluído' : 'Falha no Resgate'}
                         </p>
                         {index === 0 && isOpen && (
                           <span className="bg-primary text-[#181711] text-[10px] font-black px-1.5 py-0.5 rounded uppercase">Recente</span>
                         )}
                       </div>
                       <p className="text-black/50 text-xs text-left">
-                        {new Date(item.data_recebimento).toLocaleTimeString()} â€¢ {(() => {
+                        {new Date(item.data_recebimento).toLocaleTimeString()} • {(() => {
                           const code = item.codigo_presente || '';
                           if (code.length <= 4) return code;
                           return code.slice(0, 2) + "**" + code.slice(-2);
@@ -259,7 +259,7 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
                   </div>
                   <div className="text-right">
                     <span className={`font-black block ${item.status === 'success' ? 'text-green-600' : 'text-red-400'}`}>
-                      {item.status === 'success' ? `+ Kz ${item.valor_recebido || 0}` : 'InvÃ¡lido'}
+                      {item.status === 'success' ? `+ Kz ${item.valor_recebido || 0}` : 'Inválido'}
                     </span>
                     <span className="text-[10px] text-black/40 font-bold uppercase">{new Date(item.data_recebimento).toLocaleDateString()}</span>
                   </div>

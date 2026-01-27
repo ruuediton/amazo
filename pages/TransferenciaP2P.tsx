@@ -79,7 +79,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                 if (error) throw error;
 
                 if (data && data.success) {
-                    showToast?.(data.message || "Tranferencia sucedida", 'success');
+                    showToast?.(data.message || "Transferência bem-sucedida", 'success');
                     onNavigate('historico-conta');
                 } else {
                     throw new Error(data?.message || 'Erro na transferência.');
@@ -94,7 +94,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
 
     return (
         <div className="bg-white min-h-screen font-sans text-[#0F1111] selection:bg-amber-100 pb-20 antialiased">
-            <header className="sticky top-0 z-50 flex items-center justify-between bg-[#00C853] px-6 py-4 shadow-md border-b border-[#00C853]">
+            <header className="sticky top-0 z-50 flex items-center justify-between bg-[#00C853] px-6 py-4 border-b border-[#00C853]">
                 <button
                     onClick={() => onNavigate('profile')}
                     className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 transition-all"
@@ -108,11 +108,11 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
             </header>
 
             <main className="flex-1 flex flex-col px-6 pt-8 animate-in fade-in slide-in-from-bottom-8 duration-500 max-w-md mx-auto">
-                
+
                 {/* Info Card - Light Style */}
                 <div className="relative mb-8">
-                    <div className="bg-gray-50 border border-gray-100 p-6 rounded-[24px] shadow-sm flex items-center gap-4 relative overflow-hidden">
-                        <div className="size-14 rounded-2xl bg-white border border-gray-100 flex items-center justify-center shadow-sm shrink-0">
+                    <div className="bg-gray-50 border border-gray-100 p-6 rounded-[24px] flex items-center gap-4 relative overflow-hidden">
+                        <div className="size-14 rounded-2xl bg-white border border-gray-100 flex items-center justify-center shrink-0">
                             <span className="material-symbols-outlined text-[#e47911] text-3xl">currency_exchange</span>
                         </div>
                         <div>
@@ -130,7 +130,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                             {isValidatingPhone && <span className="text-[10px] text-[#e77600] animate-pulse">Verificando...</span>}
                             {receiverName && !isValidatingPhone && <span className="text-[10px] text-green-600 font-bold truncate max-w-[150px]">{receiverName}</span>}
                         </div>
-                        <div className={`relative flex items-center bg-white rounded-xl border h-14 px-4 transition-all shadow-sm ${receiverName ? 'border-green-500 ring-1 ring-green-500' : 'border-[#D5D9D9] focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600]'}`}>
+                        <div className={`relative flex items-center bg-white rounded-xl border h-14 px-4 transition-all ${receiverName ? 'border-green-500 ring-1 ring-green-500' : 'border-[#D5D9D9] focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600]'}`}>
                             <span className={`material-symbols-outlined mr-3 ${receiverName ? 'text-green-500' : 'text-gray-400'}`}>
                                 {receiverName ? 'check_circle' : 'person_search'}
                             </span>
@@ -147,7 +147,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     {/* Amount Input */}
                     <div className="space-y-2">
                         <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Valor a Enviar</label>
-                        <div className="relative flex items-center bg-white rounded-xl border border-[#D5D9D9] h-14 px-4 focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600] transition-all shadow-sm">
+                        <div className="relative flex items-center bg-white rounded-xl border border-[#D5D9D9] h-14 px-4 focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600] transition-all">
                             <span className="text-lg font-black text-[#e77600] mr-3">Kz</span>
                             <input
                                 type="number"
@@ -160,7 +160,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     </div>
 
                     {/* Calculations Summary */}
-                    <div className="bg-gray-50/50 border border-gray-100 rounded-2xl p-5 space-y-4 shadow-inner">
+                    <div className="bg-gray-50/50 border border-gray-100 rounded-2xl p-5 space-y-4">
                         <div className="flex justify-between items-center text-[12px]">
                             <span className="text-gray-500 font-bold uppercase tracking-tighter">Subtotal</span>
                             <span className="text-[#0F1111] font-black">Kz {amountNum.toLocaleString('pt-AO')}</span>
@@ -179,7 +179,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     {/* Password Input */}
                     <div className="space-y-2">
                         <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Senha de Retirada</label>
-                        <div className="relative flex items-center bg-white rounded-xl border border-[#D5D9D9] h-14 px-4 focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600] transition-all shadow-sm">
+                        <div className="relative flex items-center bg-white rounded-xl border border-[#D5D9D9] h-14 px-4 focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600] transition-all">
                             <span className="material-symbols-outlined text-gray-400 mr-3">lock</span>
                             <input
                                 type="password"
@@ -195,11 +195,11 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     <button
                         onClick={handleTransfer}
                         disabled={loading || !amount || !receiverPhone || !password}
-                        className="w-full h-14 bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] uppercase tracking-widest rounded-xl shadow-md active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale mt-4 hover:bg-[#00C853]"
+                        className="w-full h-14 bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] uppercase tracking-widest rounded-xl active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale mt-4 hover:bg-[#00C853]"
                     >
                         {loading ? <SpokeSpinner size="w-6 h-6" color="text-[#0F1111]" /> : 'Confirmar Envio'}
                     </button>
-                    
+
                     <p className="text-center text-[11px] text-gray-400 font-medium px-4 leading-relaxed italic">
                         O envio de saldo entre contas BP é instantâneo e seguro. Verifique os dados antes de confirmar.
                     </p>

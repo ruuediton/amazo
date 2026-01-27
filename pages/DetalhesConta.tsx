@@ -113,7 +113,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
     <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black">
       <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden pb-4">
         {/* Header - Compacto */}
-        <header className="sticky top-0 z-10 flex items-center justify-between bg-background-dark/95 px-4 py-3 backdrop-blur-md">
+        <header className="sticky top-0 z-10 flex items-center justify-between bg-background-dark/95 px-4 py-3">
           <button
             onClick={() => onNavigate('profile')}
             className="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-white/10 cursor-pointer transition-colors text-primary"
@@ -140,7 +140,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
           ) : (
             <>
               {/* Card Bancário Realista e Compacto */}
-              <div className={`relative w-full aspect-[1.586/1] rounded-[20px] overflow-hidden shadow-2xl shadow-black/60 transition-transform active:scale-[0.99] duration-300 bg-gradient-to-br ${getBankStyle(bankInfo?.nome_banco)}`}>
+              <div className={`relative w-full aspect-[1.586/1] rounded-[20px] overflow-hidden transition-transform active:scale-[0.99] duration-300 bg-gradient-to-br ${getBankStyle(bankInfo?.nome_banco)}`}>
                 {/* Textura do Cartão */}
                 <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '10px 10px' }}></div>
                 {/* Brilho Glossy */}
@@ -150,7 +150,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
                   {/* Topo: Logo e Nome do Banco */}
                   <div className="flex justify-between items-start mb-1">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center p-1 shadow-inner">
+                      <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center p-1">
                         <span className="material-symbols-outlined text-black text-2xl">account_balance</span>
                       </div>
                       <div className="flex flex-col">
@@ -158,7 +158,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
                         <span className="text-[9px] text-black/70 font-bold uppercase tracking-widest mt-0.5">CONTA CORRENTE</span>
                       </div>
                     </div>
-                    <div className="w-10 h-7 rounded bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10">
+                    <div className="w-10 h-7 rounded bg-white/10 flex items-center justify-center border border-white/10">
                       <div className="flex gap-1">
                         <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
                         <div className="w-2.5 h-2.5 rounded-full bg-orange-500/80 -ml-1.5"></div>
@@ -168,7 +168,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
 
                   {/* Chip e Contactless */}
                   <div className="flex items-center gap-3 mt-3">
-                    <div className="w-10 h-8 rounded-md bg-gradient-to-br from-[#d4af37] via-[#fcf6ba] to-[#aa771c] relative overflow-hidden flex items-center justify-center shadow-inner ring-1 ring-black/5">
+                    <div className="w-10 h-8 rounded-md bg-gradient-to-br from-[#d4af37] via-[#fcf6ba] to-[#aa771c] relative overflow-hidden flex items-center justify-center ring-1 ring-black/5">
                       <div className="absolute inset-0 grid grid-cols-3 grid-rows-2 gap-px p-0.5 opacity-30">
                         {[...Array(6)].map((_, i) => <div key={i} className="border border-black/20 rounded-sm"></div>)}
                       </div>
@@ -179,7 +179,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
                   {/* Dados Centrais: IBAN */}
                   <div className="mt-auto mb-2">
                     <p className="text-[7px] text-black/60 font-black uppercase tracking-[0.3em] mb-1">IBAN</p>
-                    <p className="text-[16px] font-mono font-bold text-black tracking-[0.08em] drop-shadow-md select-all leading-none">
+                    <p className="text-[16px] font-mono font-bold text-black tracking-[0.08em] select-all leading-none">
                       {maskIban(bankInfo?.iban)}
                     </p>
                   </div>
@@ -204,7 +204,7 @@ const DetalhesConta: React.FC<Props> = ({ onNavigate, showToast }) => {
                     navigator.clipboard.writeText(bankInfo?.numero_iban || '');
                     showToast?.("IBAN copiado!", "success");
                   }}
-                  className="flex items-center justify-center gap-3 w-full h-14 rounded-2xl bg-primary text-black font-black text-base shadow-lg shadow-primary/20 active:scale-[0.98] transition-all"
+                  className="flex items-center justify-center gap-3 w-full h-14 rounded-2xl bg-primary text-black font-black text-base active:scale-[0.98] transition-all"
                 >
                   <span className="material-symbols-outlined">content_copy</span>
                   <span>COPIAR IBAN</span>

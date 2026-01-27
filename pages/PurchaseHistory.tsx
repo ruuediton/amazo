@@ -145,7 +145,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
             </p>
             <button
               onClick={() => onNavigate('shop')}
-              className="w-full py-3 bg-[#00C853] hover:bg-[#00C853] rounded-full font-medium text-[14px] border border-[#00C853] active:scale-95 transition-all shadow-sm"
+              className="w-full py-3 bg-[#00C853] hover:bg-[#00C853] rounded-full font-medium text-[14px] border border-[#00C853] active:scale-95 transition-all"
             >
               Ir para Loja
             </button>
@@ -167,7 +167,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
                       className="max-w-full max-h-full object-contain"
                       onError={(e) => (e.currentTarget.src = "/placeholder_product.png")}
                     />
-                    <div className="absolute top-0 right-0 bg-white/80 backdrop-blur px-1.5 py-0.5 rounded-bl-sm border-l border-b border-gray-100">
+                    <div className="absolute top-0 right-0 bg-white px-1.5 py-0.5 rounded-bl-sm border-l border-b border-gray-100">
                       <span className="text-[8px] font-bold text-[#565959]">ID: {purchase.id.toString().slice(-4)}</span>
                     </div>
                   </div>

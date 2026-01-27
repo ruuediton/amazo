@@ -18,7 +18,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // ValidaÃ§Ãµes em tempo real
+  // Validações em tempo real
   const [isSixDigits, setIsSixDigits] = useState(false);
 
   useEffect(() => {
@@ -34,12 +34,12 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
     }
 
     if (newPassword !== confirmPassword) {
-      showToast?.("A nova senha e a confirmaÃ§Ã£o nÃ£o coincidem.", "error");
+      showToast?.("A nova senha e a confirmação não coincidem.", "error");
       return;
     }
 
     if (!isSixDigits) {
-      showToast?.("A nova senha deve ter exatamente 6 dÃ­gitos.", "error");
+      showToast?.("A nova senha deve ter exatamente 6 dígitos.", "error");
       return;
     }
 
@@ -70,7 +70,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark font-display text-black antialiased">
       {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-background-dark/95 backdrop-blur-md border-b border-gray-200">
+      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-background-dark border-b border-gray-200">
         <button
           onClick={() => onNavigate('profile')}
           className="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
@@ -85,7 +85,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
         <div className="mb-2 mt-2">
           <h2 className="text-[28px] font-bold leading-tight tracking-tight mb-1">Alterar Senha de Acesso</h2>
           <p className="text-[text-gray-400] text-sm font-normal leading-relaxed">
-            Para sua seguranÃ§a, crie uma senha forte que vocÃª nÃ£o use em outros sites.
+            Para sua segurança, crie uma senha forte que você não use em outros sites.
           </p>
         </div>
 
@@ -125,7 +125,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
                   setNewPassword(val);
                 }}
                 className="w-full h-11 rounded-xl border border-gray-200 bg-surface-dark px-4 pr-12 text-base text-black placeholder-[text-gray-400] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                placeholder="Crie uma nova senha (6 dÃ­gitos)"
+                placeholder="Crie uma nova senha (6 dígitos)"
                 type={showNew ? "text" : "password"}
                 maxLength={6}
                 inputMode="numeric"
@@ -176,12 +176,12 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate, showToast }
           <button
             type="submit"
             disabled={loading}
-            className={`w-full h-[48px] rounded-[12px] bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center shadow-md shadow-primary/10 mb-6 ${loading ? 'opacity-50' : ''}`}
+            className={`w-full h-[48px] rounded-[12px] bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center mb-6 ${loading ? 'opacity-50' : ''}`}
           >
             {loading ? (
               <SpokeSpinner size="w-6 h-6" className="text-black" />
             ) : (
-              <span className="text-[#181711] text-[15px] font-bold tracking-wide">Confirmar AlteraÃ§Ã£o</span>
+              <span className="text-[#181711] text-[15px] font-bold tracking-wide">Confirmar Alteração</span>
             )}
           </button>
         </form>
