@@ -94,6 +94,17 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
+    // Validação de horário de funcionamento (10:00 às 16:00 - Horário de Angola/WAT)
+    const now = new Date();
+    // Converter para horário de Angola (UTC+1)
+    const angolaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Luanda' }));
+    const currentHour = angolaTime.getHours();
+
+    if (currentHour < 10 || currentHour >= 16) {
+      showToast?.("O horário de retirada é das 10:00 às 16:00 (Fuso Angola).", "warning");
+      return;
+    }
+
     setShowPinModal(true);
   };
 
@@ -142,7 +153,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <span className="font-bold text-[16px]">Retirar Kwanza</span>
+        <span className="font-bold text-[16px]">Retirada</span>
         <button
           onClick={() => onNavigate('withdrawal-history')}
           className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
@@ -174,13 +185,6 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               className="w-full h-14 pl-12 pr-4 bg-white border border-[#D5D9D9] rounded-xl text-xl font-bold focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all placeholder:text-gray-300"
             />
           </div>
-          {/* Fee Info - Flat */}
-          {amount && !isNaN(parseFloat(amount)) && (
-            <div className="flex justify-between items-center text-[11px] bg-gray-50 p-2 rounded-lg border border-gray-100">
-              <span className="text-gray-500">Taxa (12%): <span className="font-bold text-red-500">- Kz {calculateFee().toLocaleString()}</span></span>
-              <span className="font-bold text-green-600">Receberá: Kz {calculateLiquid().toLocaleString()}</span>
-            </div>
-          )}
         </div>
 
         {/* Quick Amounts */}
@@ -236,43 +240,110 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         </button>
       </div>
 
-      {/* Pin Modal */}
+      {/* Fullscreen Confirmation Modal */}
       {showPinModal && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 animate-in fade-in duration-200">
-          <div className="bg-white w-full max-w-sm rounded-[24px] p-6 border border-gray-100 animate-in slide-in-from-bottom-10 duration-300">
-            <div className="text-center mb-6">
-              <span className="size-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                <span className="material-symbols-outlined text-[#0F1111]">lock</span>
-              </span>
-              <h3 className="text-lg font-bold text-[#0F1111]">Confirme com seu PIN</h3>
-              <p className="text-xs text-gray-500 mt-1">Digite sua senha de retirada para confirmar</p>
+        <div className="fixed inset-0 z-[9999] bg-white font-sans overflow-y-auto">
+          <div className="min-h-screen flex flex-col max-w-md mx-auto">
+            {/* Header */}
+            <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+              <button onClick={() => setShowPinModal(false)} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
+                <span className="material-symbols-outlined text-[#00C853] text-[28px]">chevron_left</span>
+              </button>
+              <span className="font-bold text-[16px]">Confirmar Retirada</span>
+              <div className="size-10"></div>
+            </header>
+
+            {/* Content */}
+            <div className="flex-1 p-5 space-y-6">
+              {/* Icon */}
+              <div className="flex justify-center pt-4">
+                <div className="size-20 rounded-full bg-[#00C853]/10 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[#00C853] text-[48px]">account_balance_wallet</span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <div className="text-center">
+                <h2 className="text-2xl font-black text-[#0F1111] mb-2">Detalhes da Retirada</h2>
+                <p className="text-sm text-gray-500">Revise as informações antes de confirmar</p>
+              </div>
+
+              {/* Details Card */}
+              <div className="bg-gray-50 rounded-2xl p-5 space-y-4 border border-gray-100">
+                {/* Destinatário */}
+                <div>
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Destinatário</p>
+                  <p className="text-base font-bold text-[#0F1111]">{bankAccount?.nome_titular || 'Não informado'}</p>
+                </div>
+
+                {/* Banco */}
+                <div className="border-t border-gray-200 pt-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Banco</p>
+                  <p className="text-base font-bold text-[#0F1111]">{bankAccount?.nome_banco}</p>
+                </div>
+
+                {/* IBAN */}
+                <div className="border-t border-gray-200 pt-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">IBAN / Número de Conta</p>
+                  <p className="text-sm font-mono font-bold text-[#0F1111] break-all">{bankAccount?.iban}</p>
+                </div>
+
+                {/* Valor Solicitado */}
+                <div className="border-t border-gray-200 pt-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Valor Solicitado</p>
+                  <p className="text-2xl font-black text-[#0F1111]">Kz {parseFloat(amount).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</p>
+                </div>
+
+                {/* Taxa */}
+                <div className="border-t border-gray-200 pt-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Taxa de Processamento (12%)</p>
+                  <p className="text-lg font-black text-red-500">- Kz {calculateFee().toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</p>
+                </div>
+
+                {/* Valor a Receber */}
+                <div className="border-t-2 border-[#00C853] pt-4 bg-white rounded-xl p-4 -mx-2">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Valor a Receber</p>
+                  <p className="text-3xl font-black text-[#00C853]">Kz {calculateLiquid().toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</p>
+                </div>
+              </div>
+
+              {/* Warning Message */}
+              <div className="bg-red-50 border border-red-200 rounded-2xl p-4 flex gap-3">
+                <span className="material-symbols-outlined text-red-500 text-[20px] shrink-0 mt-0.5">info</span>
+                <div>
+                  <p className="text-sm font-bold text-red-700 mb-1">Importante</p>
+                  <p className="text-xs text-red-600 leading-relaxed">
+                    Por favor, após solicitar a sua retirada, pedimos que aguarde pacientemente no período de até 24 horas. O saque será processado na sua conta bancária.
+                  </p>
+                </div>
+              </div>
+
+              {/* PIN Input */}
+              <div className="space-y-3 pt-4">
+                <label className="text-sm font-bold text-[#0F1111] block">Digite sua Senha de Retirada</label>
+                <input
+                  type="password"
+                  maxLength={4}
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+                  placeholder="••••"
+                  className="w-full h-16 text-center text-4xl tracking-[12px] font-bold border-2 border-gray-200 rounded-2xl focus:border-[#00C853] focus:ring-2 focus:ring-[#00C853]/20 outline-none transition-all"
+                  autoFocus
+                />
+              </div>
             </div>
 
-            <input
-              type="password"
-              maxLength={4}
-              value={pin}
-              onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
-              placeholder="••••"
-              className="w-full h-14 text-center text-3xl tracking-[8px] font-bold border border-[#D5D9D9] rounded-xl focus:border-[#00C853] outline-none mb-6"
-              autoFocus
-            />
-
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowPinModal(false)}
-                className="flex-1 py-3 border border-[#D5D9D9] rounded-lg font-bold text-[#0F1111] hover:bg-gray-50"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={confirmWithdraw}
-                disabled={pin.length < 4}
-                className="flex-1 py-3 bg-[#00C853] border border-[#00C853] rounded-lg font-normal text-[#0F1111] disabled:opacity-50"
-              >
-                Confirmar
-              </button>
-            </div>
+            {/* Fixed Bottom Button */}
+            {pin.length === 4 && (
+              <div className="sticky bottom-0 p-5 bg-white border-t border-gray-100 animate-in slide-in-from-bottom-4 duration-300">
+                <button
+                  onClick={confirmWithdraw}
+                  className="w-full bg-[#00C853] text-white font-bold text-base py-4 rounded-2xl active:scale-[0.98] hover:brightness-110 transition-all shadow-lg shadow-green-200"
+                >
+                  Confirmar Retirada
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
