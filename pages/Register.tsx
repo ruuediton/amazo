@@ -101,10 +101,13 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
             <div className="relative">
               <div className="absolute -inset-1 bg-primary/20 rounded-[28px] blur-sm"></div>
               <img
-                src="/smartbuy_logo.png"
-                alt="SmartBuy Logo"
-                className="relative w-28 h-28 rounded-[24px] shadow-2xl border-2 border-white/10"
+                src="/bp_logo.png"
+                alt="BP Logo"
+                className="relative w-32 h-32 rounded-[24px] shadow-2xl border-2 border-white/10 object-cover"
               />
+              <div className="mt-2 text-center">
+                <span className="text-2xl font-black tracking-tighter text-text-primary">BP</span>
+              </div>
             </div>
           </div>
 
@@ -127,7 +130,7 @@ const Register: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) => 
                   </div>
                   <input
                     className="flex w-full rounded-2xl border border-border bg-white pl-[7.5rem] pr-4 h-[52px] text-[15px] focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all placeholder:text-gray-400"
-                    placeholder="9XX XXX XXX"
+                    placeholder="Por favor digite celurar"
                     type="tel"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
