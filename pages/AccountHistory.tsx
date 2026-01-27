@@ -11,7 +11,7 @@ export interface Transaction {
   dateLabel: string;
   monthIndex: number;
   type: 'incoming' | 'outgoing' | 'info' | 'warning';
-  category: 'Depósito' | 'Retirada' | 'Segurança' | 'Bônus' | 'Compras' | 'Misto';
+  category: 'Recarga' | 'Resgate' | 'Segurança' | 'Promoção' | 'Pedidos' | 'Misto';
   status?: string;
   year: number;
 }
@@ -25,7 +25,7 @@ const months = [
   'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
 ];
 
-const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
+const AccountHistory: React.FC<Props> = ({ onNavigate }) => {
   const [userProfile, setUserProfile] = useState<{ code: string, phone: string } | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,15 +67,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(d.created_at);
         combined.push({
           id: `dep-${d.id}`,
-          title: 'Transação recargas',
-          subtitle: `${d.nome_do_banco || 'Transferência'} - ${d.estado_de_pagamento || 'Pendente'}`,
+          title: 'Recarga de Saldo',
+          subtitle: `${d.nome_do_banco || 'Transferência'} - ${d.estado_de_pagamento || 'Concluído'}`,
           amount: Number(d.valor_deposito || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'incoming',
-          category: 'Depósito',
+          category: 'Recarga',
           status: d.estado_de_pagamento
         });
       });
@@ -85,15 +85,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(d.created_at);
         combined.push({
           id: `usdt-${d.id}`,
-          title: 'Transação recargas (USDT)',
-          subtitle: `Cripto - ${d.status || 'Pendente'}`,
+          title: 'Recarga Cripto',
+          subtitle: `Rede USDT - ${d.status || 'Pendente'}`,
           amount: Number(d.amount_kz || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'incoming',
-          category: 'Depósito',
+          category: 'Recarga',
           status: d.status
         });
       });
@@ -103,15 +103,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = w.data_de_criacao ? new Date(w.data_de_criacao) : new Date();
         combined.push({
           id: `wit-${w.id}`,
-          title: 'Levantamento de Fundos',
-          subtitle: `${w.nome_do_banco || 'Banco'} - ${w.estado_da_retirada || 'Pendente'}`,
+          title: 'Resgate de Recompensa',
+          subtitle: `${w.nome_do_banco || 'Banco'} - ${w.estado_da_retirada || 'Processado'}`,
           amount: -Number(w.valor_solicitado),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'outgoing',
-          category: 'Retirada',
+          category: 'Resgate',
           status: w.estado_da_retirada
         });
       });
@@ -121,15 +121,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(p.data_compra);
         combined.push({
           id: `pur-${p.id}`,
-          title: p.nome_produto || 'Compra de Pacote',
-          subtitle: `Investimento BP`,
+          title: p.nome_produto || 'Pedido de Produto',
+          subtitle: `Marketplace BP`,
           amount: -Number(p.preco || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'outgoing',
-          category: 'Compras'
+          category: 'Pedidos'
         });
       });
 
@@ -138,15 +138,15 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         const date = new Date(b.data_recebimento);
         combined.push({
           id: `bon-${b.id}`,
-          title: 'Bônus Recebido',
-          subtitle: b.origem_bonus || 'Promoção/Evento',
+          title: 'Incentivo Recebido',
+          subtitle: b.origem_bonus || 'Evento Especial',
           amount: Number(b.valor_recebido || 0),
           time: date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
           dateLabel: `${date.getDate()} de ${months[date.getMonth()]}`,
           monthIndex: date.getMonth(),
           year: date.getFullYear(),
           type: 'incoming',
-          category: 'Bônus'
+          category: 'Promoção'
         });
       });
 
@@ -196,10 +196,8 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
         <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-start rounded-full hover:bg-gray-50 transition-colors text-[#00C853]">
           <span className="material-symbols-outlined text-[28px]">chevron_left</span>
         </button>
-        <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">Histórico de Conta</h2>
+        <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">Histórico de Atividade</h2>
       </header>
-
-
 
       <main className="flex-1 overflow-y-auto no-scrollbar pb-24 touch-pan-y pt-2">
         {loading ? (
@@ -215,26 +213,29 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
               </p>
               <div className="flex flex-col gap-2 px-4">
                 {groupedTransactions[date].map((t: Transaction) => (
-                  <div key={t.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-[24px] border border-transparent">
-                    <div className={`relative flex items-center justify-center size-12 rounded-full shrink-0 ${t.category === 'Depósito' ? 'bg-[#00C853]/10 text-[#00C853]' :
-                      t.category === 'Retirada' ? 'bg-red-500/10 text-red-500' :
-                        t.category === 'Segurança' ? 'bg-blue-500/10 text-blue-400' :
-                          'bg-gray-200 text-gray-600'
-                      }`}>
+                  <div key={t.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-[24px] border border-transparent transition-all active:scale-[0.98]">
+                    <div className={`relative flex items-center justify-center size-12 rounded-full shrink-0 ${
+                      t.category === 'Recarga' ? 'bg-[#00C853]/10 text-[#00C853]' :
+                      t.category === 'Resgate' ? 'bg-red-500/10 text-red-500' :
+                      t.category === 'Segurança' ? 'bg-blue-500/10 text-blue-400' :
+                      t.category === 'Promoção' ? 'bg-purple-500/10 text-purple-600' :
+                      'bg-gray-200 text-gray-600'
+                    }`}>
                       <span className="material-symbols-outlined text-[24px]">
-                        {t.category === 'Depósito' ? 'add_card' :
-                          t.category === 'Retirada' ? 'payments' :
-                            t.category === 'Segurança' ? 'security' :
-                              'shopping_bag'}
+                        {t.category === 'Recarga' ? 'add_card' :
+                          t.category === 'Resgate' ? 'payments' :
+                          t.category === 'Segurança' ? 'security' :
+                          t.category === 'Promoção' ? 'redeem' :
+                          'shopping_bag'}
                       </span>
                     </div>
                     <div className="flex flex-col flex-1 min-w-0">
                       <div className="flex justify-between items-baseline mb-0.5">
                         <p className="text-[#111] text-[15px] font-bold truncate leading-tight">{t.title}</p>
-                        <p className={`text-[15px] font-black ${t.category === 'Retirada' ? 'text-red-500' :
+                        <p className={`text-[15px] font-black ${t.category === 'Resgate' ? 'text-red-500' :
                           (t.amount > 0 ? 'text-[#00C853]' : 'text-black')
                           }`}>
-                          {t.category === 'Retirada' || t.amount < 0 ? '-' : '+'} {Math.abs(t.amount).toLocaleString()} KZs
+                          {t.category === 'Resgate' || t.amount < 0 ? '-' : '+'} {Math.abs(t.amount).toLocaleString()} KZs
                         </p>
                       </div>
                       <div className="flex justify-between items-center">
@@ -262,4 +263,4 @@ const HistoricoConta: React.FC<Props> = ({ onNavigate }) => {
   );
 };
 
-export default HistoricoConta;
+export default AccountHistory;

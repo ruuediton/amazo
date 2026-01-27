@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BP - ServiÃ§os Financeiros</title>
+  <title>BP Commerce</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
@@ -44,6 +44,24 @@
     }
   </script>
   <style>
+    @keyframes emoji-float {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-10px) scale(1.2);
+      }
+    }
+
+    .emoji-effect {
+      display: inline-block;
+      animation: emoji-float 2s infinite ease-in-out;
+      margin: 0 4px;
+    }
+
     body {
       background-color: #F8F9FA;
       color: #263238;
@@ -94,12 +112,6 @@
       justify-content: center;
       z-index: 9999;
       transition: opacity 0.4s ease-out, visibility 0.4s;
-    }
-
-    .splash-logo {
-      width: 140px;
-      margin-bottom: 24px;
-      animation: pulse 2s infinite ease-in-out;
     }
 
     .loading-bar-container {
@@ -154,17 +166,25 @@
 
 <body class="antialiased">
   <div id="splash-screen">
-    <img loading="lazy" decoding="async" src="/bp_logo.png" alt="BP ENERGY (SUL) LDA" class="splash-logo"
-      style="width: 140px; height: 140px; border-radius: 20px; object-fit: cover;" />
-    <div class="loading-bar-container">
-      <div class="loading-bar" style="background: #1B5E20;"></div>
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <h1 style="font-size: 22px; font-weight: 800; color: #0F1111; margin: 0; letter-spacing: -0.02em;">
+        <span class="emoji-effect" style="animation-delay: 0s;">✨</span>
+        Estamos felizes por você
+        <span class="emoji-effect" style="animation-delay: 0.3s;">😊</span>
+      </h1>
+      <p
+        style="font-size: 16px; font-weight: 700; color: #00C853; margin: 0; display: flex; align-items: center; gap: 6px;">
+        Carregando.... <span class="emoji-effect" style="animation-delay: 0.6s;">🎉</span>
+      </p>
+    </div>
+    <div class="loading-bar-container" style="margin-top: 32px;">
+      <div class="loading-bar" style="background: #00C853;"></div>
     </div>
   </div>
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
   <script>
     window.addEventListener('load', function () {
-      // Small delay to ensure React has started mounting
       setTimeout(() => {
         document.body.classList.add('app-loaded');
       }, 500);

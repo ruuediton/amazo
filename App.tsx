@@ -19,7 +19,7 @@ const TutoriaisComoConvidar = lazy(() => import('./components/TutoriaisComoConvi
 const ComoComprar = lazy(() => import('./components/ComoComprar'));
 const DetalhesConta = lazy(() => import('./pages/DetalhesConta'));
 const UpdateWithdrawPassword = lazy(() => import('./pages/UpdateWithdrawPassword'));
-const HistoricoConta = lazy(() => import('./pages/HistoricoConta'));
+const AccountHistory = lazy(() => import('./pages/AccountHistory'));
 const Register = lazy(() => import('./pages/Register'));
 const ConfirmDeposit = lazy(() => import('./components/ConfirmDeposit'));
 const ComoRetirarFundos = lazy(() => import('./components/ComoRetirarFundos'));
@@ -293,7 +293,7 @@ const App: React.FC = () => {
       'tutoriais-como-convidar': <TutoriaisComoConvidar onNavigate={handleNavigate} />,
       'como-comprar': <ComoComprar onNavigate={handleNavigate} />,
       'detalhes-conta': <DetalhesConta onNavigate={handleNavigate} showToast={showToast} />,
-      'historico-conta': <HistoricoConta onNavigate={handleNavigate} />,
+      'historico-conta': <AccountHistory onNavigate={handleNavigate} />,
       'register': <Register onNavigate={handleNavigate} showToast={showToast} />,
       'confirmar-deposito': <ConfirmDeposit onNavigate={handleNavigate} data={navigationData} showToast={showToast} />,
       'como-retirar-fundos': <ComoRetirarFundos onNavigate={handleNavigate} />,
