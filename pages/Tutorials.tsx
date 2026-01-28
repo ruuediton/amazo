@@ -23,8 +23,8 @@ const tutorialsData: TutorialSection[] = [
     items: [
       {
         icon: 'arrow_circle_down',
-        title: 'Tutoriais Depósitos',
-        subtitle: 'Como adicionar fundos',
+        title: 'Tutoriais Recarga',
+        subtitle: 'Como fazer recarga',
         route: 'tutoriais-depositos',
       },
       {
