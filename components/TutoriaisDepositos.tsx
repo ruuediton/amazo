@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 
 interface Props {
   onNavigate: (page: any) => void;
@@ -6,6 +6,28 @@ interface Props {
 }
 
 const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      // Define a threshold to trigger the button (e.g., 50px from bottom)
+      const nearBottom = scrollTop + clientHeight >= scrollHeight - 50;
+      setIsAtBottom(nearBottom);
+    }
+  };
+
+  useEffect(() => {
+    const current = scrollRef.current;
+    if (current) {
+      current.addEventListener('scroll', handleScroll);
+      // Run once to check initial state (if content is short)
+      handleScroll();
+    }
+    return () => current?.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const steps = [
     {
       title: "Recarga via Software/APP",
@@ -88,7 +110,10 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
       </div>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto px-6 w-full max-w-md mx-auto pb-32 no-scrollbar">
+      <main
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto px-6 w-full max-w-md mx-auto pb-32 no-scrollbar"
+      >
         <div className="pt-8 mb-8 text-center">
           <h2 className="text-2xl font-black leading-tight mb-3 tracking-tight">
             Como fazer sua <span className="text-[#00C853]">Recarga</span>
@@ -138,7 +163,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         </div>
 
         {/* Warning Section */}
-        <div className="mt-12 bg-gray-50 p-6 rounded-[32px] border border-gray-100">
+        <div className="mt-12 bg-gray-50 p-6 rounded-[32px] border border-gray-100 mb-8">
           <h4 className="font-black text-sm uppercase tracking-widest text-[#111] mb-4 flex items-center gap-2">
             <span className="material-symbols-outlined text-[#00C853]">verified_user</span>
             Importante
@@ -149,13 +174,13 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
         </div>
       </main>
 
-      {/* Sticky Footer CTA */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-white/80 backdrop-blur-xl border-t border-gray-100 z-50">
+      {/* Sticky Footer CTA - Only shows when scrolled to end */}
+      <div className={`fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 z-50 transition-all duration-500 ${isAtBottom ? 'translate-y-0 opacity-100 visible' : 'translate-y-12 opacity-0 invisible'}`}>
         <button
           onClick={() => onNavigate('deposit')}
-          className="w-full flex h-14 cursor-pointer items-center justify-center rounded-2xl bg-[#00C853] text-black gap-3 text-[16px] font-black shadow-xl shadow-green-500/20 hover:brightness-110 active:scale-[0.98] transition-all"
+          className="w-full flex h-12 cursor-pointer items-center justify-center rounded-xl bg-[#00C853] text-black gap-2 text-[14px] font-black shadow-xl shadow-green-500/10 hover:brightness-105 active:scale-[0.98] transition-all"
         >
-          <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
+          <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
           <span>Recarregar Agora</span>
         </button>
       </div>
