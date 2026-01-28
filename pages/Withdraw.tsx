@@ -208,7 +208,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
             <button
               key={val}
               onClick={() => handleQuickAmount(val)}
-              className="py-2.5 bg-white border border-[#D5D9D9] rounded-lg text-[12px] font-bold text-[#0F1111] hover:bg-gray-50 active:scale-95 transition-all"
+              className="py-2.5 bg-gray-50 border border-gray-100 rounded-lg text-[12px] font-bold text-[#0F1111] hover:bg-white active:scale-95 transition-all"
             >
               {val.toLocaleString('pt-AO')}
             </button>
@@ -216,27 +216,29 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         </div>
 
         {/* Bank Account */}
-        <div>
-          <div className="flex justify-between items-center mb-2">
+        <div className="space-y-2">
+          <div className="flex justify-between items-center ml-1">
             <span className="text-[13px] font-bold text-[#0F1111]">Conta de Destino</span>
-            {bankAccount && <button onClick={() => onNavigate('add-bank')} className="text-[12px] font-bold text-[#007185]">Alterar</button>}
           </div>
 
           {bankAccount ? (
-            <div className="flex items-center gap-4 p-4 border border-[#D5D9D9] rounded-xl bg-white">
-              <div className="size-10 rounded-lg bg-gray-100 flex items-center justify-center text-[#565959]">
+            <button
+              onClick={() => onNavigate('add-bank')}
+              className="w-full flex items-center gap-4 p-4 border border-gray-100 rounded-[12px] bg-gray-50 hover:bg-white transition-all text-left active:scale-[0.99]"
+            >
+              <div className="size-10 rounded-lg bg-white flex items-center justify-center text-[#00C853] shadow-sm">
                 <span className="material-symbols-outlined">account_balance</span>
               </div>
               <div className="flex-1 overflow-hidden">
                 <p className="text-[14px] font-bold text-[#0F1111] truncate">{bankAccount.nome_banco}</p>
                 <p className="text-[11px] text-[#565959] font-mono truncate">{maskIban(bankAccount.iban)}</p>
               </div>
-              <span className="material-symbols-outlined text-green-600">check_circle</span>
-            </div>
+              <span className="material-symbols-outlined text-gray-400 group-hover:text-[#00C853] transition-colors">chevron_right</span>
+            </button>
           ) : (
             <button
               onClick={() => onNavigate('add-bank')}
-              className="w-full py-4 border-2 border-dashed border-[#D5D9D9] rounded-xl flex items-center justify-center gap-2 text-[#565959] font-bold text-[13px] hover:bg-gray-50 transition-colors"
+              className="w-full py-4 border-2 border-dashed border-gray-100 rounded-xl flex items-center justify-center gap-2 text-[#565959] font-bold text-[13px] hover:bg-gray-50 transition-colors"
             >
               <span className="material-symbols-outlined text-[18px]">add</span>
               Adicionar Conta Bancária
