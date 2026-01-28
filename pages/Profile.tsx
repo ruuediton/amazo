@@ -36,7 +36,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
     };
   }, [profile]);
 
-  const handleInstallApp = async () => {
+  const handleInstallApp = React.useCallback(async () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
@@ -44,7 +44,6 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         setDeferredPrompt(null);
       }
     } else {
-      // Fallback for iOS or if already installed/not supported
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
       if (isIOS) {
         showToast?.("Para instalar no iOS: Toque em Compartilhar e depois em 'Adicionar à Tela de Início'", "info");
@@ -52,7 +51,24 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
         showToast?.("Aplicativo já instalado ou não suportado neste navegador.", "info");
       }
     }
-  };
+  }, [deferredPrompt, showToast]);
+
+  const SERVICES_MENU = React.useMemo(() => [
+    { label: 'Dados', icon: 'person', page: 'settings', color: 'bg-green-50 text-[#00C853]' },
+    { label: 'Tarefas', icon: 'assignment', page: 'purchase-history', color: 'bg-green-50 text-[#00C853]' },
+    { label: 'Extrato', icon: 'account_balance', page: 'historico-conta', color: 'bg-green-50 text-[#00C853]' },
+    { label: 'Equipe', icon: 'pie_chart', page: 'subordinate-list', color: 'bg-green-50 text-[#00C853]' },
+    { label: 'Ajuda', icon: 'description', page: 'tutorials', color: 'bg-green-50 text-[#00C853]' },
+    { label: 'Produtos', icon: 'shopping_basket', page: 'investimentos-fundo', color: 'bg-green-50 text-[#00C853]' },
+    { label: 'Sorteio', icon: 'auto_awesome', page: 'gift-chest', color: 'bg-green-50 text-[#00C853]' },
+    { label: 'Convidar', icon: 'share', page: 'invite-page', color: 'bg-green-50 text-[#00C853]' },
+    {
+      label: 'Instalar',
+      icon: 'download',
+      action: handleInstallApp,
+      color: 'bg-green-50 text-[#00C853]'
+    },
+  ], [handleInstallApp]);
 
   const fetchStats = async () => {
     try {
@@ -150,22 +166,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       {/* Services Grid */}
       <div className="px-4 mt-6">
         <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 shadow-sm grid grid-cols-4 gap-y-8 gap-x-2">
-          {[
-            { label: 'Dados', icon: 'person', page: 'settings', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Tarefas', icon: 'assignment', page: 'purchase-history', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Extrato', icon: 'account_balance', page: 'historico-conta', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Equipe', icon: 'pie_chart', page: 'subordinate-list', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Ajuda', icon: 'description', page: 'tutorials', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Produtos', icon: 'shopping_basket', page: 'investimentos-fundo', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Sorteio', icon: 'auto_awesome', page: 'gift-chest', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Convidar', icon: 'share', page: 'invite-page', color: 'bg-green-50 text-[#00C853]' },
-            {
-              label: 'Instalar',
-              icon: 'download',
-              action: handleInstallApp,
-              color: 'bg-green-50 text-[#00C853]'
-            },
-          ].map((item: any) => (
+          {SERVICES_MENU.map((item: any) => (
             <div
               key={item.label}
               onClick={() => item.action ? item.action() : onNavigate(item.page)}

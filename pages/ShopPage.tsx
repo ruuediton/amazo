@@ -59,13 +59,13 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
     if (data) setPurchasedIds(data.map(p => p.product_id));
   };
 
-  const handleOpenModal = (product: any) => {
+  const handleOpenModal = React.useCallback((product: any) => {
     if (purchasedIds.includes(product.id)) {
       showToast?.("Limite excedido, compre outro!", "warning");
       return;
     }
     setSelectedProduct(product);
-  };
+  }, [purchasedIds, showToast]);
 
   const handlePurchase = async () => {
     if (!selectedProduct) return;
@@ -99,10 +99,10 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
     }
   };
 
-  const formatPrice = (price: number) => {
+  const formatPrice = React.useCallback((price: number) => {
     const [inteiro, centavos] = price.toFixed(2).split('.');
     return { inteiro, centavos };
-  };
+  }, []);
 
   return (
     <div className="bg-white min-h-screen text-[#0F1111] font-sans selection:bg-amber-100 pb-32">

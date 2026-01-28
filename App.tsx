@@ -268,7 +268,7 @@ const App: React.FC = () => {
     }
   };
 
-  const PageComponent = () => {
+  const renderPageComponent = () => {
     const publicPages = ['login', 'register', 'splash-ads'];
     if (!session && !publicPages.includes(currentPage)) {
       return <Register onNavigate={handleNavigate} showToast={showToast} />;
@@ -317,7 +317,6 @@ const App: React.FC = () => {
       'system-rules': <SystemRules onNavigate={handleNavigate} />,
       'subordinate-list': <SubordinateList onNavigate={handleNavigate} />,
       'deposit-history': <WalletHistory onNavigate={handleNavigate} />,
-
       'investimentos-fundo': <Marketplace onNavigate={handleNavigate} showToast={showToast} />,
       'historico-fundos': <Orders onNavigate={handleNavigate} showToast={showToast} />,
       'p2p-transfer': <TransferenciaP2P onNavigate={handleNavigate} showToast={showToast} />,
@@ -338,7 +337,7 @@ const App: React.FC = () => {
             <SpokeSpinner size="w-12 h-12" className="text-secondary" />
           </div>
         }>
-          <PageComponent />
+          {renderPageComponent()}
         </Suspense>
         {session && <FloatingSupportButton />}
       </main>

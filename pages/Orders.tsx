@@ -1,7 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import SpokeSpinner from '../components/SpokeSpinner';
-import { jsPDF } from 'jspdf';
+
 
 interface OrderItem {
     id_usuario_fundo: string;
@@ -90,45 +90,51 @@ const Orders: React.FC<Props> = ({ onNavigate, showToast }) => {
         return date.toLocaleDateString('pt-AO', { day: '2-digit', month: 'short', year: 'numeric' });
     }, []);
 
-    const formatPrice = (price: number) => {
+    const formatPrice = React.useCallback((price: number) => {
         const [inteiro, centavos] = price.toFixed(2).split('.');
         return { inteiro, centavos };
-    };
+    }, []);
 
-    const generateReceipt = (order: OrderItem) => {
-        const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a5' });
-        doc.setFillColor(255, 255, 255);
-        doc.rect(0, 0, 210, 148, 'F');
-        doc.setLineWidth(1);
-        doc.setDrawColor(255, 216, 20);
-        doc.rect(5, 5, 200, 138);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(22);
-        doc.setTextColor(15, 17, 17);
-        doc.text('COMPROVANTE DE PEDIDO', 105, 25, { align: 'center' });
-        doc.setFontSize(10);
-        doc.setTextColor(86, 89, 89);
-        doc.text('BP COMMERCE SERVICES', 105, 32, { align: 'center' });
-        doc.setDrawColor(230, 230, 230);
-        doc.line(40, 38, 170, 38);
-        doc.setFontSize(12);
-        doc.setTextColor(86, 89, 89);
-        doc.text('Confirmação de pedido processado com sucesso.', 105, 50, { align: 'center' });
-        doc.setFillColor(243, 243, 243);
-        doc.roundedRect(40, 60, 130, 50, 3, 3, 'F');
-        doc.setFontSize(14);
-        doc.setTextColor(15, 17, 17);
-        doc.text(order.fund?.nome_fundo || 'Produto BP', 105, 75, { align: 'center' });
-        doc.setFontSize(30);
-        doc.setTextColor(0, 118, 0);
-        doc.text(`Kz ${Number(order.valor_aplicado).toLocaleString('pt-AO')}`, 105, 90, { align: 'center' });
-        doc.setFontSize(10);
-        doc.setTextColor(86, 89, 89);
-        doc.text(`Data: ${formatDate(order.data_inicio)}`, 105, 102, { align: 'center' });
-        doc.setFontSize(8);
-        doc.text(`Pedido ID: ${order.id_usuario_fundo}`, 105, 130, { align: 'center' });
-        doc.save(`Recibo_BP_${order.id_usuario_fundo.slice(0, 8)}.pdf`);
-        showToast?.('Recibo gerado com sucesso!', 'success');
+    const generateReceipt = async (order: OrderItem) => {
+        try {
+            const { jsPDF } = await import('jspdf');
+            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a5' });
+            doc.setFillColor(255, 255, 255);
+            doc.rect(0, 0, 210, 148, 'F');
+            doc.setLineWidth(1);
+            doc.setDrawColor(255, 216, 20);
+            doc.rect(5, 5, 200, 138);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(22);
+            doc.setTextColor(15, 17, 17);
+            doc.text('COMPROVANTE DE PEDIDO', 105, 25, { align: 'center' });
+            doc.setFontSize(10);
+            doc.setTextColor(86, 89, 89);
+            doc.text('BP COMMERCE SERVICES', 105, 32, { align: 'center' });
+            doc.setDrawColor(230, 230, 230);
+            doc.line(40, 38, 170, 38);
+            doc.setFontSize(12);
+            doc.setTextColor(86, 89, 89);
+            doc.text('Confirmação de pedido processado com sucesso.', 105, 50, { align: 'center' });
+            doc.setFillColor(243, 243, 243);
+            doc.roundedRect(40, 60, 130, 50, 3, 3, 'F');
+            doc.setFontSize(14);
+            doc.setTextColor(15, 17, 17);
+            doc.text(order.fund?.nome_fundo || 'Produto BP', 105, 75, { align: 'center' });
+            doc.setFontSize(30);
+            doc.setTextColor(0, 118, 0);
+            doc.text(`Kz ${Number(order.valor_aplicado).toLocaleString('pt-AO')}`, 105, 90, { align: 'center' });
+            doc.setFontSize(10);
+            doc.setTextColor(86, 89, 89);
+            doc.text(`Data: ${formatDate(order.data_inicio)}`, 105, 102, { align: 'center' });
+            doc.setFontSize(8);
+            doc.text(`Pedido ID: ${order.id_usuario_fundo}`, 105, 130, { align: 'center' });
+            doc.save(`Recibo_BP_${order.id_usuario_fundo.slice(0, 8)}.pdf`);
+            showToast?.('Recibo gerado com sucesso!', 'success');
+        } catch (err) {
+            console.error("PDF generation error:", err);
+            showToast?.('Erro ao gerar recibo.', 'error');
+        }
     };
 
     return (
