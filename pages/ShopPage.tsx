@@ -114,81 +114,80 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
             <SpokeSpinner size="w-10 h-10" color="text-[#00C853]" />
           </div>
         ) : (
-          <div className="flex flex-col divide-y divide-gray-100">
+          <div className="flex flex-col gap-6 py-4">
             {products.map((product) => {
               const { inteiro, centavos } = formatPrice(product.price);
               const isPurchased = purchasedIds.includes(product.id);
 
               return (
-                <div key={product.id} className="flex gap-4 p-4 items-start active:bg-gray-50 transition-colors">
+                <div key={product.id} className="flex gap-4 p-4 mx-4 items-start active:bg-gray-50 transition-colors bg-white rounded-2xl shadow-sm border border-gray-50">
                   {/* Left Side: Image Container */}
-                  <div className="relative w-36 h-36 bg-gray-50 rounded-lg overflow-hidden shrink-0 flex items-center justify-center p-2">
+                  <div className="relative w-32 h-32 bg-gray-50 rounded-xl overflow-hidden shrink-0 flex items-center justify-center p-2">
                     <img loading="lazy" decoding="async"
                       src={product.image_url || "/placeholder_product.png"}
                       alt={product.name}
                       className="max-w-full max-h-full object-contain"
                     />
-                    <button className="absolute bottom-2 left-2 size-8 bg-white/90 rounded flex items-center justify-center border border-gray-100">
-                      <span className="material-symbols-outlined text-[20px] text-gray-400">add_to_photos</span>
+                    <button className="absolute bottom-1.5 left-1.5 size-7 bg-white/90 rounded-md flex items-center justify-center border border-gray-100 shadow-sm">
+                      <span className="material-symbols-outlined text-[18px] text-gray-400">add_to_photos</span>
                     </button>
 
                     {/* Badge */}
                     {product.price < 5000 && (
-                      <div className="absolute top-0 left-0 bg-[#CC0C39] text-white text-[10px] font-bold px-2 py-0.5 rounded-br-sm uppercase">Mais Vendido</div>
+                      <div className="absolute top-0 left-0 bg-[#CC0C39] text-white text-[9px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-wider">TOP</div>
                     )}
                   </div>
 
                   {/* Right Side: Info */}
-                  <div className="flex-1 min-w-0 flex flex-col gap-1">
-                    <h3 className="text-[17px] font-bold leading-tight text-[#0F1111]">
+                  <div className="flex-1 min-w-0 flex flex-col">
+                    <h3 className="text-[16px] font-bold leading-tight text-[#0F1111] mb-1">
                       {product.name}
                     </h3>
 
-                    <div className="flex flex-col gap-0.5 my-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[13px] font-bold text-[#00C853]">Renda:</span>
-                        <span className="text-[13px] font-black text-black">Kz {product.daily_income?.toLocaleString()} / dia</span>
+                    <div className="flex flex-col gap-0.5 mb-2">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[12px] font-bold text-[#00C853]">Renda:</span>
+                        <span className="text-[12px] font-black text-black">Kz {product.daily_income?.toLocaleString()}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[13px] font-bold text-[#00C853]">Duração:</span>
-                        <span className="text-[13px] font-black text-black">{product.duration_days} dias</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[12px] font-bold text-[#00C853]">Duração:</span>
+                        <span className="text-[12px] font-black text-black">{product.duration_days} dias</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[13px] font-bold text-[#00C853]">Limite:</span>
-                        <span className="text-[13px] font-black text-black">{product.purchase_limit} por cliente</span>
-                      </div>
-                      <p className="text-[12px] text-gray-500 line-clamp-2 mt-1 leading-relaxed">
+                      <p className="text-[11px] text-gray-400 line-clamp-1 mt-1 font-medium">
                         {product.description || 'Produto oficial BP ENERGY.'}
                       </p>
                     </div>
 
-                    {/* Price Section */}
-                    <div className="flex items-start mt-1">
-                      <span className="text-[13px] font-medium mt-1 pr-0.5">Kz</span>
-                      <span className="text-[28px] font-bold leading-none">{inteiro}</span>
-                      <span className="text-[13px] font-medium mt-1">{centavos}</span>
+                    {/* Price & Status Section */}
+                    <div className="flex items-center justify-between mt-auto">
+                      <div className="flex items-start">
+                        <span className="text-[11px] font-bold mt-1 pr-0.5">Kz</span>
+                        <span className="text-[20px] font-black leading-none">{inteiro}</span>
+                        <span className="text-[11px] font-bold mt-1">{centavos}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[#00C853] text-[14px]">verified</span>
+                        <span className="text-[10px] text-[#00C853] font-black uppercase">Luanda</span>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-1.5 mt-2 mb-3">
-                      <span className="material-symbols-outlined text-[#00C853] text-[18px]">verified</span>
-                      <span className="text-[12px] text-[#00C853] font-bold">Disponível em Luanda</span>
+                    {/* Action Button - COMPACTED */}
+                    <div className="mt-3">
+                      <button
+                        onClick={() => handleOpenModal(product)}
+                        disabled={isPurchased}
+                        className={`w-full h-10 rounded-xl text-[13px] font-black transition-all active:scale-[0.98] shadow-sm ${isPurchased
+                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
+                          : 'bg-[#00C853] hover:brightness-105 text-black'
+                          }`}
+                      >
+                        {isPurchased ? 'Adquirido' : 'Comprar'}
+                      </button>
+
+                      {isPurchased && (
+                        <p className="text-[9px] text-red-500 font-black mt-1 text-center uppercase tracking-tighter">Limite Atingido</p>
+                      )}
                     </div>
-
-                    {/* Action Button */}
-                    <button
-                      onClick={() => handleOpenModal(product)}
-                      disabled={isPurchased}
-                      className={`w-full py-3 rounded-xl text-[14px] font-black transition-all active:scale-[0.98] ${isPurchased
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
-                        : 'bg-[#00C853] hover:brightness-110 text-black border border-[#00C853]'
-                        }`}
-                    >
-                      {isPurchased ? 'Adquirido' : 'Comprar'}
-                    </button>
-
-                    {isPurchased && (
-                      <p className="text-[10px] text-red-600 font-bold mt-1 text-center">ITEM ESGOTADO PARA SUA CONTA</p>
-                    )}
                   </div>
                 </div>
               );
