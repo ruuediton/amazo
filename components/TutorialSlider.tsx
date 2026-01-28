@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState } from 'react';
 
 interface Step {
   title: string;
@@ -15,13 +15,6 @@ interface TutorialSliderProps {
 
 const TutorialSlider: React.FC<TutorialSliderProps> = ({ steps, onFinish, finishText = "Concluir" }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const goToStep = (index: number) => {
-    if (index >= 0 && index < steps.length) {
-      setCurrentStep(index);
-    }
-  };
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -37,69 +30,39 @@ const TutorialSlider: React.FC<TutorialSliderProps> = ({ steps, onFinish, finish
     }
   };
 
-  // Touch handling
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStartX.current - touchEndX.current > 50) {
-      nextStep();
-    }
-    if (touchStartX.current - touchEndX.current < -50) {
-      prevStep();
-    }
-  };
-
   return (
-    <div className="flex flex-col w-full">
-      {/* Progress Dots */}
-      <div className="flex justify-center gap-2 mb-8">
+    <div className="flex flex-col w-full max-w-md mx-auto">
+      <div className="flex justify-center gap-1.5 mb-6">
         {steps.map((_, i) => (
           <div
             key={i}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              currentStep === i ? 'w-8 bg-primary' : 'w-1.5 bg-white/20'
-            }`}
+            className={`h-1 rounded-full transition-all duration-300 ${currentStep === i ? 'w-6 bg-[#00C853]' : 'w-1 bg-gray-200'
+              }`}
           />
         ))}
       </div>
 
-      {/* Slider Content */}
-      <div 
-        ref={containerRef}
-        className="relative overflow-hidden w-full min-h-[320px]"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div 
-          className="flex transition-transform duration-500 ease-out"
+      <div className="relative overflow-hidden w-full min-h-[280px]">
+        <div
+          className="flex transition-transform duration-300 ease-out"
           style={{ transform: `translateX(-${currentStep * 100}%)` }}
         >
           {steps.map((step, index) => (
-            <div key={index} className="w-full shrink-0 px-1">
-              <div className="flex flex-col items-center text-center animate-fade-in">
-                <div className="flex items-center justify-center size-16 rounded-3xl bg-primary/10 mb-6 border border-primary/20">
-                  <span className="material-symbols-outlined text-primary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+            <div key={index} className="w-full shrink-0 px-2">
+              <div className="flex flex-col items-center text-center">
+                <div className="flex items-center justify-center size-14 rounded-2xl bg-gray-50 mb-5 border border-gray-100">
+                  <span className="material-symbols-outlined text-[#00C853] text-[32px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                     {step.icon}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-black mb-3 tracking-tight italic">
+                <h3 className="text-[17px] font-black text-[#111] mb-2 tracking-tight">
                   {index + 1}. {step.title}
                 </h3>
-                <p className="text-[#bab59c] text-sm leading-relaxed mb-6 px-4">
+                <p className="text-gray-400 text-[13px] leading-relaxed mb-6 px-2">
                   {step.description}
                 </p>
                 {step.content && (
-                  <div className="w-full mt-2">
+                  <div className="w-full">
                     {step.content}
                   </div>
                 )}
@@ -109,23 +72,20 @@ const TutorialSlider: React.FC<TutorialSliderProps> = ({ steps, onFinish, finish
         </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex gap-4 mt-8">
-        {currentStep > 0 ? (
+      <div className="flex gap-3 mt-6">
+        {currentStep > 0 && (
           <button
             onClick={prevStep}
-            className="flex-1 flex h-12 items-center justify-center rounded-xl bg-surface-dark border border-gray-200 text-black font-bold transition-all active:scale-95"
+            className="flex-1 h-11 flex items-center justify-center rounded-xl bg-gray-50 border border-gray-100 text-gray-400 font-bold text-sm active:scale-95 transition-all"
           >
             Anterior
           </button>
-        ) : (
-          <div className="flex-1" />
         )}
         <button
           onClick={nextStep}
-          className="flex-1 flex h-12 items-center justify-center rounded-xl bg-primary text-black font-bold shadow-lg shadow-primary/20 transition-all active:scale-95"
+          className="flex-1 h-11 flex items-center justify-center rounded-xl bg-[#00C853] text-black font-black text-sm shadow-lg shadow-green-500/5 active:scale-95 transition-all"
         >
-          {currentStep === steps.length - 1 ? finishText : 'PrÃ³ximo'}
+          {currentStep === steps.length - 1 ? finishText : 'Próximo'}
         </button>
       </div>
     </div>
@@ -133,4 +93,3 @@ const TutorialSlider: React.FC<TutorialSliderProps> = ({ steps, onFinish, finish
 };
 
 export default TutorialSlider;
-

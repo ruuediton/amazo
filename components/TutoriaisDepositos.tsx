@@ -60,7 +60,7 @@ const TutoriaisDepositos: React.FC<Props> = ({ onNavigate, onOpenSupport }) => {
     },
     {
       title: "Recarga via IBAN",
-      description: "Se preferir, utilize o IBAN abaixo para realizar a transferência a partir do seu banco.",
+      description: "Se preferir, utilize o IBAN abaixo para realizar o processamento a partir do seu banco.",
       icon: "account_balance",
       content: (
         <div className="bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden text-left mt-2 w-full">
