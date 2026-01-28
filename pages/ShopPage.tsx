@@ -128,9 +128,11 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                       alt={product.name}
                       className="max-w-full max-h-full object-contain"
                     />
-                    <button className="absolute bottom-1.5 left-1.5 size-7 bg-white/90 rounded-md flex items-center justify-center border border-gray-100 shadow-sm">
-                      <span className="material-symbols-outlined text-[18px] text-gray-400">add_to_photos</span>
-                    </button>
+                    <div className={`absolute bottom-1.5 left-1.5 size-7 rounded-md flex items-center justify-center border shadow-sm ${product.status === 'active' ? 'bg-green-50/90 border-green-100 text-[#00C853]' : 'bg-red-50/90 border-red-100 text-red-500'}`}>
+                      <span className="material-symbols-outlined text-[18px]">
+                        {product.status === 'active' ? 'verified' : 'unpublished'}
+                      </span>
+                    </div>
 
                     {/* Badge */}
                     {product.price < 5000 && (
