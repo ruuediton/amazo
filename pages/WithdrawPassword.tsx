@@ -74,55 +74,41 @@ const WithdrawPassword: React.FC<WithdrawPasswordProps> = ({ onNavigate, showToa
         {/* Form */}
         <form className="flex flex-col gap-4 mt-6" onSubmit={handleSubmit}>
           {/* New Password */}
-          <div className="flex flex-col gap-1 pt-2">
-
-            <div className="relative flex items-center">
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value.replace(/\D/g, ''))}
-                maxLength={4}
-                inputMode="numeric"
-                className="w-full h-14 rounded-2xl border border-transparent bg-gray-50 px-4 pr-12 text-base text-black placeholder-gray-400 focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all"
-                placeholder="Crie uma nova senha (4 dígitos)"
-                type={showNew ? "text" : "password"}
-              />
-              <button
-                type="button"
-                onClick={() => setShowNew(!showNew)}
-                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-                  {showNew ? 'visibility' : 'visibility_off'}
-                </span>
-              </button>
-            </div>
-
-
+          <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+            <span className="material-symbols-outlined text-[#00C853] text-[24px]">lock</span>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value.replace(/\D/g, ''))}
+              maxLength={4}
+              inputMode="numeric"
+              className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
+              placeholder="Crie uma nova senha (4 dígitos)"
+              type={showNew ? "text" : "password"}
+            />
+            <button type="button" onClick={() => setShowNew(!showNew)}>
+              <span className="material-symbols-outlined text-gray-400 text-[20px]">
+                {showNew ? 'visibility' : 'visibility_off'}
+              </span>
+            </button>
           </div>
 
           {/* Confirm Password */}
-          <div className="flex flex-col gap-1">
-
-            <div className="relative flex items-center">
-              <input
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value.replace(/\D/g, ''))}
-                maxLength={4}
-                inputMode="numeric"
-                className="w-full h-14 rounded-2xl border border-transparent bg-gray-50 px-4 pr-12 text-base text-black placeholder-gray-400 focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all"
-                placeholder="Repita a nova senha"
-                type={showConfirm ? "text" : "password"}
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-[text-gray-400] hover:text-primary transition-colors"
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-                  {showConfirm ? 'visibility' : 'visibility_off'}
-                </span>
-              </button>
-            </div>
+          <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+            <span className="material-symbols-outlined text-[#00C853] text-[24px]">lock</span>
+            <input
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value.replace(/\D/g, ''))}
+              maxLength={4}
+              inputMode="numeric"
+              className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
+              placeholder="Repita a nova senha"
+              type={showConfirm ? "text" : "password"}
+            />
+            <button type="button" onClick={() => setShowConfirm(!showConfirm)}>
+              <span className="material-symbols-outlined text-gray-400 text-[20px]">
+                {showConfirm ? 'visibility' : 'visibility_off'}
+              </span>
+            </button>
           </div>
 
           <div className="flex-1 min-h-[30px]"></div>

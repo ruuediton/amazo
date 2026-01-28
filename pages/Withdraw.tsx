@@ -148,42 +148,53 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20">
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
-        <span className="font-bold text-[16px]">Retirada</span>
-        <button
-          onClick={() => onNavigate('withdrawal-history')}
-          className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
-        >
-          <span className="material-symbols-outlined text-[#0F1111]">history</span>
-        </button>
-      </header>
+      {/* Premium Header */}
+      <div className="bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pt-8 pb-20 px-4 relative">
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => onNavigate('profile')}
+            className="size-10 flex items-center justify-center rounded-full bg-white/20 text-white active:scale-95 transition-all"
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+          </button>
+          <h1 className="text-white text-lg font-bold tracking-tight">Retirada</h1>
+          <button
+            onClick={() => onNavigate('withdrawal-history')}
+            className="size-10 flex items-center justify-center rounded-full bg-white/20 text-white active:scale-95 transition-all"
+          >
+            <span className="material-symbols-outlined">history</span>
+          </button>
+        </div>
+      </div>
 
-      <main className="p-5 space-y-6">
-        {/* Balance Card - BP Style */}
-        <div className="bg-[#00C853] rounded-xl p-6 border border-[#00C853] relative overflow-hidden">
-          <div className="absolute right-[-20px] top-[-20px] opacity-10">
-            <span className="material-symbols-outlined text-[100px]">account_balance_wallet</span>
+      <main className="px-4 -mt-12 relative z-10 space-y-6">
+        {/* Floating Balance Card */}
+        <div className="bg-white border border-gray-100 rounded-[28px] p-6 shadow-premium relative overflow-hidden">
+          <div className="absolute right-0 top-0 w-32 h-32 bg-[#00C853]/5 rounded-full blur-2xl -mr-16 -mt-16"></div>
+          <div className="flex items-center gap-2 mb-2">
+            <p className="text-[#565959] text-[13px] font-medium leading-none">Saldo</p>
           </div>
-          <p className="text-[12px] font-bold uppercase tracking-widest text-[#0F1111]/70 mb-1">Saldo Disponível</p>
-          <h1 className="text-4xl font-extrabold text-[#0F1111]">Kz {balance.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</h1>
+          <div className="flex items-baseline gap-1.5 leading-none">
+            <span className="text-[28px] font-black text-[#111] tracking-tighter">
+              {balance.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
+            </span>
+            <span className="text-[13px] font-bold text-[#565959]">KZs</span>
+          </div>
         </div>
 
         {/* Input */}
         <div className="space-y-2">
           <label className="text-[13px] font-bold text-[#0F1111]">Quantia Desejada</label>
-          <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-gray-400">Kz</span>
+          <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+            <span className="material-symbols-outlined text-[#00C853] text-[24px]">payments</span>
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0,00"
-              className="w-full h-14 pl-12 pr-4 bg-white border border-[#D5D9D9] rounded-xl text-xl font-bold focus:border-[#00C853] focus:ring-1 focus:ring-[#00C853] outline-none transition-all placeholder:text-gray-300"
+              className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
             />
+            <span className="text-[14px] font-bold text-gray-400">Kz</span>
           </div>
         </div>
 
@@ -318,18 +329,19 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
                 </div>
               </div>
 
-              {/* PIN Input */}
               <div className="space-y-3 pt-4">
                 <label className="text-sm font-bold text-[#0F1111] block">Digite sua Senha de Retirada</label>
-                <input
-                  type="password"
-                  maxLength={4}
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
-                  placeholder="••••"
-                  className="w-full h-16 text-center text-4xl tracking-[12px] font-bold border-2 border-gray-200 rounded-2xl focus:border-[#00C853] focus:ring-2 focus:ring-[#00C853]/20 outline-none transition-all"
-                  autoFocus
-                />
+                <div className="bg-gray-50 rounded-2xl h-16 flex items-center px-4 border-2 border-transparent focus-within:border-[#00C853] transition-colors">
+                  <input
+                    type="password"
+                    maxLength={4}
+                    value={pin}
+                    onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+                    placeholder="••••"
+                    className="w-full bg-transparent text-center text-4xl tracking-[12px] font-bold outline-none text-[#111]"
+                    autoFocus
+                  />
+                </div>
               </div>
             </div>
 

@@ -119,14 +119,14 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
   };
 
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col pb-32">
+    <div className="bg-white font-sans text-black antialiased min-h-screen flex flex-col pb-32">
       {/* Header */}
-      <header className="sticky top-0 z-50 flex items-center justify-between bg-background-dark/95 p-4 pb-2 border-b border-gray-200">
+      <header className="sticky top-0 z-50 flex items-center justify-between bg-white/95 p-4 pb-2 border-b border-gray-100">
         <button
           onClick={() => onNavigate('profile')}
-          className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+          className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
         >
-          <span className="material-symbols-outlined text-[24px]">arrow_back</span>
+          <span className="material-symbols-outlined text-[#00C853] text-[24px]">arrow_back</span>
         </button>
         <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Recarregar USDT</h2>
       </header>
@@ -144,26 +144,25 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
         </div>
 
         {/* Amount Input Section */}
-        <div className="bg-surface-dark rounded-2xl p-6 mb-6 border border-brand-border">
-          <div className="flex flex-col gap-4">
+        <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100">
+          <div className="flex flex-col gap-3">
             <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Quantia (USDT)</label>
-            <div className="relative flex items-center">
+            <div className="bg-white rounded-xl h-16 flex items-center px-5 gap-3 relative border border-gray-200 focus-within:border-[#00C853] transition-colors shadow-sm">
+              <span className="material-symbols-outlined text-[#00C853] text-[28px]">currency_bitcoin</span>
               <input
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="Mínimo 4 USDT"
-                min="4"
-                max="1090"
-                className="w-full bg-surface-dark border border-brand-border rounded-xl h-16 px-5 text-2xl font-black text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-text-secondary/30"
+                className="bg-transparent flex-1 h-full outline-none text-[#111] font-black text-2xl placeholder:text-gray-300"
               />
-              <span className="absolute right-5 text-sm font-bold text-[#26a17b]">USDT</span>
+              <span className="text-sm font-bold text-[#26a17b]">USDT</span>
             </div>
             <div className="flex justify-between items-center px-1">
-              <p className="text-xs text-text-secondary font-medium">Equivalente em Kz (Moeda de Destino)</p>
+              <p className="text-[11px] text-gray-500 font-medium">Equivalente em Kz (Moeda de Destino)</p>
               <div className="flex flex-col items-end">
-                <p className="text-sm font-black text-primary">â‰ˆ Kz {kzEquivalent}</p>
-                {isFetching && <span className="text-[9px] text-text-secondary animate-pulse">Atualizando taxa...</span>}
+                <p className="text-sm font-black text-[#00C853]">≈ Kz {kzEquivalent}</p>
+                {isFetching && <span className="text-[9px] text-gray-400 animate-pulse">Atualizando taxa...</span>}
               </div>
             </div>
             <div className="p-3 rounded-lg bg-[#26a17b]/5 border border-[#26a17b]/10 flex flex-col items-center gap-1">
@@ -180,7 +179,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
         </div>
 
         {/* Payment Details Section */}
-        <div className="bg-surface-dark rounded-2xl p-6 border border-brand-border">
+        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
           <h3 className="text-xs font-bold text-gray-800 uppercase tracking-widest mb-6 text-center">Dados para Transferência</h3>
 
           {/* Recipient Name */}
@@ -238,11 +237,11 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
       </main>
 
       {/* Footer Confirm */}
-      <footer className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 border-t border-brand-border z-50">
+      <footer className="fixed bottom-0 max-w-md w-full p-4 bg-white/95 border-t border-gray-100 z-50">
         <button
           onClick={handleConfirm}
           disabled={isSubmitting || isFetching}
-          className={`w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 rounded-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${isSubmitting || isFetching ? 'opacity-50' : ''}`}
+          className={`w-full h-14 bg-[#00C853] text-white font-bold rounded-xl text-[16px] active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${isSubmitting || isFetching ? 'opacity-50 grayscale' : 'shadow-lg shadow-green-200'}`}
         >
           <span>Confirmar Depósito</span>
           <span className="material-symbols-outlined font-bold text-[20px]">send_money</span>

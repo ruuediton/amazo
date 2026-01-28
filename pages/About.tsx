@@ -7,22 +7,17 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ onNavigate }) => {
   return (
-    <div className="bg-background-dark font-display text-black antialiased min-h-screen">
+    <div className="bg-white font-sans text-black antialiased min-h-screen">
       <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
         {/* Top App Bar */}
-        <div className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 justify-between border-b border-brand-border">
+        <div className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100">
           <button
             onClick={() => onNavigate('profile')}
-            className="text-primary flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-surface-dark transition-colors"
+            className="text-primary flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-gray-50 transition-colors"
           >
             <span className="material-symbols-outlined text-[24px]">arrow_back</span>
           </button>
-          <h2 className="text-text-primary text-lg font-bold leading-tight tracking-tight flex-1 text-center">Transparência Legal</h2>
-          <div className="flex w-12 items-center justify-end">
-            <button className="flex items-center justify-center rounded-lg h-12 bg-transparent text-primary">
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
-            </button>
-          </div>
+          <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Institucional</h2>
         </div>
 
         {/* Hero Section */}
@@ -61,11 +56,11 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
         {/* Quick Info Grid */}
         <div className="px-6 grid grid-cols-2 gap-3 mb-6">
-          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border">
+          <div className="bg-gray-50 rounded-xl p-4 flex flex-col gap-1 border border-gray-100">
             <p className="text-text-secondary text-[10px] uppercase font-bold tracking-widest">NIF</p>
             <p className="text-text-primary text-base font-bold">5417382910</p>
           </div>
-          <div className="bg-surface-dark rounded-xl p-4 flex flex-col gap-1 border border-brand-border">
+          <div className="bg-gray-50 rounded-xl p-4 flex flex-col gap-1 border border-gray-100">
             <p className="text-text-secondary text-[10px] uppercase font-bold tracking-widest">REGISTRO</p>
             <p className="text-text-primary text-base font-bold">0284/2024</p>
           </div>
@@ -73,7 +68,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
         {/* Headquarter Card */}
         <div className="px-6 mb-6">
-          <div className="flex items-stretch justify-between gap-4 rounded-xl bg-surface-dark p-4 border border-brand-border">
+          <div className="flex items-stretch justify-between gap-4 rounded-xl bg-gray-50 p-4 border border-gray-100">
             <div className="flex flex-col justify-center gap-1 flex-[2_2_0px]">
               <p className="text-text-primary text-lg font-extrabold leading-tight tracking-tight">Sede Social</p>
               <p className="text-text-secondary text-sm font-medium leading-normal">Edifício Chicala, Luanda, Angola</p>
@@ -130,12 +125,11 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         </div>
 
         {/* Sticky Footer CTA */}
-        <div className="fixed bottom-0 max-w-md w-full p-4 bg-background-dark/95 border-t border-brand-border z-40">
+        <div className="fixed bottom-0 max-w-md w-full p-4 bg-white/95 border-t border-gray-100 z-40">
           <button
-            className="w-full bg-primary hover:bg-primary-hover text-text-primary font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+            className="w-full bg-[#00C853] hover:brightness-110 text-black font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
-            <span className="material-symbols-outlined text-[20px]">ios_share</span>
-            <span>Exportar Dossiê Legal</span>
+            <span>Dossiê</span>
           </button>
         </div>
       </div>
@@ -144,21 +138,21 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 };
 
 const DocumentItem = ({ title, subtitle, img }: { title: string, subtitle: string, img: string }) => (
-  <div className="group relative overflow-hidden rounded-xl bg-surface-dark border border-brand-border p-3 transition-all active:scale-[0.98]">
+  <div className="group relative overflow-hidden rounded-xl bg-gray-50 border border-gray-100 p-3 transition-all active:scale-[0.98]">
     <div className="flex gap-4">
-      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-background-dark">
-        <div className="absolute inset-0 bg-gradient-to-tr from-text-primary/10 to-transparent"></div>
+      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-white">
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#00C853]/10 to-transparent"></div>
         <img loading="lazy" decoding="async" className="h-full w-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05]" src={img} alt={title} />
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-text-primary/20">
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
           <span className="material-symbols-outlined text-white">zoom_in</span>
         </div>
       </div>
       <div className="flex-1 flex flex-col justify-center py-1">
-        <h4 className="text-text-primary font-bold text-base leading-tight">{title}</h4>
-        <p className="text-text-secondary text-xs mt-1">{subtitle}</p>
+        <h4 className="text-[#111] font-bold text-base leading-tight">{title}</h4>
+        <p className="text-[#565959] text-xs mt-1">{subtitle}</p>
         <div className="mt-3 flex gap-2">
-          <button className="bg-primary px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-black hover:bg-primary-hover transition-colors">VISUALIZAR</button>
-          <button className="bg-background-dark px-4 py-1.5 rounded-lg text-text-primary text-[10px] font-bold border border-brand-border hover:bg-surface-dark transition-colors">DOWNLOAD</button>
+          <button className="bg-[#00C853] px-4 py-1.5 rounded-lg text-black text-[10px] font-black transition-colors">Ver</button>
+          <button className="bg-white px-4 py-1.5 rounded-lg text-black text-[10px] font-bold border border-gray-200 transition-colors">Baixar</button>
         </div>
       </div>
     </div>

@@ -91,19 +91,19 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
   };
 
   return (
-    <div className="bg-background-dark text-black min-h-screen flex flex-col font-display antialiased">
+    <div className="bg-white text-black min-h-screen flex flex-col font-sans antialiased">
       {/* TopAppBar */}
-      <div className="flex items-center bg-background-dark px-4 py-2 justify-between sticky top-0 z-50">
+      <div className="flex items-center bg-white px-4 py-2 justify-between sticky top-0 z-50 border-b border-gray-100">
         <div
           onClick={() => onNavigate('home')}
-          className="text-primary flex size-10 shrink-0 items-center cursor-pointer hover:bg-white/10 rounded-full justify-center transition-colors"
+          className="size-10 flex items-center shrink-0 cursor-pointer hover:bg-gray-50 rounded-full justify-center transition-colors"
         >
-          <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+          <span className="material-symbols-outlined text-[#00C853] text-[20px]">arrow_back</span>
         </div>
-        <h2 className="text-black text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">BP</h2>
+        <h2 className="text-black text-[32px] font-black leading-tight tracking-[-0.015em] flex-1 text-center">BP</h2>
         <div className="flex w-10 items-center justify-end">
           <button onClick={() => onOpenSupport?.()} className="flex cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-black p-0">
-            <span className="material-symbols-outlined text-[20px]">help_outline</span>
+            <span className="material-symbols-outlined text-[#00C853] text-[20px]">help_outline</span>
           </button>
         </div>
       </div>
@@ -130,20 +130,17 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
 
         {/* Redemption Input Area - Only show if not open */}
         {!isOpen && (
-          <div className="w-full px-6 mb-4">
-            <div className="flex flex-col">
-              <div className="relative group">
-                <input
-                  className="flex w-full rounded-xl border border-gray-200 bg-gray-50 px-4 h-11 text-sm font-bold focus:border-primary focus:ring-0 focus:outline-none transition-all placeholder:text-gray-400 text-black"
-                  placeholder="Insira o seu código aqui"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                  disabled={loading}
-                />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary">
-                  <span className="material-symbols-outlined text-[18px]">redeem</span>
-                </div>
-              </div>
+          <div className="w-full px-6 mb-8">
+            <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+              <span className="material-symbols-outlined text-[#00C853] text-[24px]">redeem</span>
+              <input
+                type="text"
+                placeholder="Insira o seu código aqui"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                disabled={loading}
+                className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
+              />
             </div>
           </div>
         )}

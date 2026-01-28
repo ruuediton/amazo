@@ -5,6 +5,7 @@
   --secondary: #00C853;
   --wealth: #00C853;
   --bg-neutral: #FFFFFF;
+  --surface-neutral: #F7F9FA;
   --text-main: #111111;
   --text-secondary: #565959;
 }
@@ -75,4 +76,3 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-

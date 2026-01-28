@@ -106,23 +106,23 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                     <div className="flex justify-center py-20"><SpokeSpinner size="w-8 h-8" color="text-[#00C853]" /></div>
                 ) : (
                     <>
-                        {/* Hero Card - Flat */}
-                        <div className="bg-[#00C853] rounded-[24px] p-6 text-[#0F1111] border border-[#00C853] relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-8 opacity-10">
-                                <span className="material-symbols-outlined text-9xl">group_add</span>
+                        {/* Hero Card - Neutral */}
+                        <div className="bg-gray-50 border border-gray-100 rounded-[24px] p-6 text-[#111] relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-8 opacity-5">
+                                <span className="material-symbols-outlined text-9xl text-[#00C853]">group_add</span>
                             </div>
 
                             <h3 className="text-2xl font-black mb-1 leading-tight tracking-tighter">Indique e Ganhe</h3>
-                            <p className="text-[13px] font-bold opacity-80 mb-6 max-w-[200px]">Compartilhe a experiência BP e ganhe comissões ilimitadas.</p>
+                            <p className="text-[13px] font-bold text-[#565959] mb-6 max-w-[200px]">Compartilhe a experiência BP e ganhe comissões ilimitadas.</p>
 
-                            <div className="bg-white/30 rounded-2xl p-4 flex items-center justify-between border border-white/20">
+                            <div className="bg-white rounded-2xl p-4 flex items-center justify-between border border-gray-100 shadow-sm">
                                 <div>
-                                    <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">Seu Código</p>
-                                    <p className="text-3xl font-black tracking-wider font-mono">{inviteCode || '---'}</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#565959] mb-1">Seu Código</p>
+                                    <p className="text-3xl font-black tracking-wider font-mono text-[#00C853]">{inviteCode || '---'}</p>
                                 </div>
                                 <button
                                     onClick={handleCopyCode}
-                                    className="size-12 bg-white text-black rounded-xl flex items-center justify-center active:scale-90 transition-transform border border-white/40"
+                                    className="size-12 bg-gray-50 text-black rounded-xl flex items-center justify-center active:scale-90 transition-transform border border-gray-100"
                                 >
                                     <span className="material-symbols-outlined">content_copy</span>
                                 </button>
@@ -137,7 +137,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 </div>
                                 <div className="flex-1">
                                     <h4 className="font-bold text-[16px]">Link de Convite</h4>
-                                    <p className="text-[12px] text-[#565959] font-medium">Divulgue seu link para novos usuários</p>
+                                    <p className="text-[12px] text-[#565959] font-medium">Divulgue seu ref para novos usuários</p>
                                 </div>
                             </div>
 

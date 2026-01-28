@@ -127,11 +127,11 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     <div className="space-y-2">
                         <div className="flex justify-between">
                             <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Telefone do Destinatário</label>
-                            {isValidatingPhone && <span className="text-[10px] text-[#e77600] animate-pulse">Verificando...</span>}
+                            {isValidatingPhone && <span className="text-[10px] text-[#00C853] animate-pulse">Verificando...</span>}
                             {receiverName && !isValidatingPhone && <span className="text-[10px] text-green-600 font-bold truncate max-w-[150px]">{receiverName}</span>}
                         </div>
-                        <div className={`relative flex items-center bg-white rounded-xl border h-14 px-4 transition-all ${receiverName ? 'border-green-500 ring-1 ring-green-500' : 'border-[#D5D9D9] focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600]'}`}>
-                            <span className={`material-symbols-outlined mr-3 ${receiverName ? 'text-green-500' : 'text-gray-400'}`}>
+                        <div className={`bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border transition-colors ${receiverName ? 'border-green-500' : 'border-transparent focus-within:border-[#00C853]'}`}>
+                            <span className={`material-symbols-outlined text-[24px] ${receiverName ? 'text-green-500' : 'text-[#00C853]'}`}>
                                 {receiverName ? 'check_circle' : 'person_search'}
                             </span>
                             <input
@@ -139,7 +139,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 placeholder="Nº do destinatário"
                                 value={receiverPhone}
                                 onChange={handlePhoneChange}
-                                className="w-full bg-transparent border-none p-0 text-[16px] font-bold text-[#0F1111] placeholder:text-gray-400 focus:ring-0"
+                                className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
                             />
                         </div>
                     </div>
@@ -147,15 +147,16 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     {/* Amount Input */}
                     <div className="space-y-2">
                         <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Valor a Enviar</label>
-                        <div className="relative flex items-center bg-white rounded-xl border border-[#D5D9D9] h-14 px-4 focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600] transition-all">
-                            <span className="text-lg font-black text-[#e77600] mr-3">Kz</span>
+                        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+                            <span className="material-symbols-outlined text-[#00C853] text-[24px]">payments</span>
                             <input
                                 type="number"
                                 placeholder="0.00"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
-                                className="w-full bg-transparent border-none p-0 text-[18px] font-black text-[#0F1111] placeholder:text-gray-400 focus:ring-0"
+                                className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
                             />
+                            <span className="text-[14px] font-bold text-gray-400">Kz</span>
                         </div>
                     </div>
 
@@ -179,14 +180,14 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     {/* Password Input */}
                     <div className="space-y-2">
                         <label className="block text-[11px] font-bold text-gray-500 ml-1 uppercase tracking-wider">Senha de Retirada</label>
-                        <div className="relative flex items-center bg-white rounded-xl border border-[#D5D9D9] h-14 px-4 focus-within:border-[#e77600] focus-within:ring-1 focus-within:ring-[#e77600] transition-all">
-                            <span className="material-symbols-outlined text-gray-400 mr-3">lock</span>
+                        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+                            <span className="material-symbols-outlined text-[#00C853] text-[24px]">lock</span>
                             <input
                                 type="password"
                                 placeholder="••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-transparent border-none p-0 text-[20px] font-bold text-[#0F1111] tracking-[0.4em] placeholder:text-gray-300 focus:ring-0"
+                                className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[20px] tracking-[0.4em]"
                             />
                         </div>
                     </div>

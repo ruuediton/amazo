@@ -103,28 +103,26 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
       <form className="w-full flex-col gap-5 flex" onSubmit={handleLogin}>
 
         {/* Phone Input */}
-        <div className="bg-gray-50 rounded-2xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
-          <span className="material-symbols-outlined text-[#00C853] text-[22px]">person</span>
-          <div className="h-5 w-[1px] bg-gray-300"></div>
+        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+          <span className="material-symbols-outlined text-[#00C853] text-[24px]">person</span>
           <span className="text-gray-500 font-medium">+244</span>
           <span className="material-symbols-outlined text-gray-400 text-[14px]">arrow_drop_down</span>
           <input
             type="tel"
             placeholder="9XX XXX XXX"
-            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400"
+            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </div>
 
         {/* Password Input */}
-        <div className="bg-gray-50 rounded-2xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
-          <span className="material-symbols-outlined text-[#00C853] text-[22px]">lock</span>
-          <div className="h-5 w-[1px] bg-gray-300"></div>
+        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+          <span className="material-symbols-outlined text-[#00C853] text-[24px]">lock</span>
           <input
             type={showPassword ? "text" : "password"}
             placeholder=".........."
-            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 tracking-widest"
+            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px] tracking-widest"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

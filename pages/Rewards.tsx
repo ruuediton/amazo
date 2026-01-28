@@ -129,7 +129,7 @@ const Rewards: React.FC<Props> = ({ onNavigate, showToast }) => {
 
         {/* Stats Grid - Flat Borders */}
         <div className="grid grid-cols-2 gap-3 px-4 mb-10">
-          <div className="bg-white p-4 rounded-xl border border-gray-100">
+          <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
             <div className="flex items-center gap-2 mb-2">
               <span className="material-symbols-outlined text-[20px] text-[#565959]">calendar_month</span>
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#565959]">Projeção Semanal</span>

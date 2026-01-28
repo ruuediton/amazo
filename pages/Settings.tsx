@@ -97,7 +97,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
     };
 
     const avatars = [
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0",
+        "/default_avatar.png",
     ];
 
 
@@ -139,27 +139,27 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                 <section className="space-y-6">
                     <div className="space-y-2">
                         <label className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Nome Completo</label>
-                        <div className="relative flex items-center bg-white rounded-2xl border border-gray-200 p-4 focus-within:border-primary transition-all">
-                            <span className="material-symbols-outlined text-primary mr-3">person</span>
+                        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
+                            <span className="material-symbols-outlined text-[#00C853] text-[24px]">person</span>
                             <input
                                 type="text"
                                 value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
                                 placeholder="Seu nome completo"
-                                className="w-full bg-transparent border-none p-0 text-sm font-bold text-black placeholder:text-gray-300 focus:ring-0"
+                                className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-2 opacity-60">
-                        <label className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Telefone (NÃ£o editÃ¡vel)</label>
-                        <div className="relative flex items-center bg-gray-50 rounded-2xl border border-gray-100 p-4">
-                            <span className="material-symbols-outlined text-gray-400 mr-3">phone</span>
+                        <label className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Telefone (Não editável)</label>
+                        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent transition-colors">
+                            <span className="material-symbols-outlined text-gray-400 text-[24px]">phone</span>
                             <input
                                 type="text"
                                 value={profile?.phone || ''}
                                 disabled
-                                className="w-full bg-transparent border-none p-0 text-sm font-bold text-gray-400 focus:ring-0"
+                                className="bg-transparent flex-1 h-full outline-none text-gray-400 font-medium text-[14px]"
                             />
                         </div>
                     </div>

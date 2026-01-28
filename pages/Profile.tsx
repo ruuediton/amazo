@@ -83,7 +83,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           <div className="flex items-center gap-3">
             <div className="size-14 rounded-full border-2 border-white overflow-hidden bg-white">
               <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_O5s3g5eF50cs5tQ_zh2NLwLYFyqEHtdcmZQASWBXJmsfG9k1wREC0IVW-eylYq2qw9Wumxb3YSS9L8wyFWSAANAxg0weMoxNXY5GHUshMgmu4w9sjeIyoflSKaECFCwFS1gStIJMDr7wVpnTKZtIpcTAH9dvh6Gana_Pw0-htT1Q9DdTGiPGHpfWu0oZKbmwz9Siq4VzRFUsXmwkyVAA2EOn-fhlHOMblENj8rod3pTqjUbUouxH6s1qZ6ZAEvzMM3z9YeCoHvE0"
+                src={currentProfile?.avatar_url || '/default_avatar.png'}
                 alt="Avatar"
                 className="w-full h-full object-cover"
               />
@@ -149,7 +149,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
 
       {/* Services Grid */}
       <div className="px-4 mt-6">
-        <div className="bg-white rounded-2xl p-6 shadow-sm grid grid-cols-4 gap-y-8 gap-x-2">
+        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 shadow-sm grid grid-cols-4 gap-y-8 gap-x-2">
           {[
             { label: 'Dados', icon: 'person', page: 'settings', color: 'bg-green-50 text-[#00C853]' },
             { label: 'Tarefas', icon: 'assignment', page: 'purchase-history', color: 'bg-green-50 text-[#00C853]' },

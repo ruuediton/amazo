@@ -156,11 +156,11 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
             <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>add_card</span>
             <span className="text-[11px] font-bold uppercase tracking-tight">Recarregar</span>
           </button>
-          <button onClick={() => onNavigate('retirada')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-white border border-gray-200 text-[#0F1111] rounded-2xl active:scale-95 transition-all group">
+          <button onClick={() => onNavigate('retirada')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-gray-50 border border-gray-100 text-[#0F1111] rounded-2xl active:scale-95 transition-all group">
             <span className="material-symbols-outlined text-[24px]">payments</span>
             <span className="text-[11px] font-bold uppercase tracking-tight">Retirar</span>
           </button>
-          <button onClick={() => onNavigate('tutorials')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-white border border-gray-200 text-[#0F1111] rounded-2xl active:scale-95 transition-all group">
+          <button onClick={() => onNavigate('tutorials')} className="flex flex-col items-center justify-center gap-1.5 p-4 bg-gray-50 border border-gray-100 text-[#0F1111] rounded-2xl active:scale-95 transition-all group">
             <span className="material-symbols-outlined text-[24px]">help_outline</span>
             <span className="text-[11px] font-bold uppercase tracking-tight">Ajuda</span>
           </button>
@@ -171,7 +171,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
       <div className="sticky top-0 z-40 bg-white border-b border-gray-100 py-3 mt-4">
         <div className="flex gap-2.5 px-4 overflow-x-auto no-scrollbar scroll-smooth">
           {filters.map((f: any) => (
-            <button key={f.label} onClick={() => f.page ? onNavigate(f.page) : setActiveFilter(f.label)} className={`flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg px-4 transition-all active:scale-95 ${activeFilter === f.label ? 'bg-[#F0F2F2] border border-gray-300' : 'bg-white border border-gray-200'}`}>
+            <button key={f.label} onClick={() => f.page ? onNavigate(f.page) : setActiveFilter(f.label)} className={`flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg px-4 transition-all active:scale-95 ${activeFilter === f.label ? 'bg-gray-100 border border-gray-200' : 'bg-gray-50 border border-gray-100'}`}>
               <span className={`material-symbols-outlined text-[18px] ${activeFilter === f.label ? 'text-[#0F1111]' : 'text-[#565959]'}`} style={{ fontVariationSettings: activeFilter === f.label ? "'FILL' 1" : "'FILL' 0" }}>{f.icon}</span>
               <p className={`text-[13px] ${activeFilter === f.label ? 'text-[#0F1111] font-bold' : 'text-[#565959] font-medium'}`}>{f.label}</p>
             </button>
