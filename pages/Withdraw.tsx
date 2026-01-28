@@ -257,112 +257,76 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
         </button>
       </div>
 
-      {/* Fullscreen Confirmation Modal */}
+      {/* Fullscreen Confirmation Modal - Compacted */}
       {showPinModal && (
-        <div className="fixed inset-0 z-[9999] bg-white font-sans overflow-y-auto">
-          <div className="min-h-screen flex flex-col max-w-md mx-auto">
-            {/* Header */}
-            <header className="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-              <button onClick={() => setShowPinModal(false)} className="size-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
-                <span className="material-symbols-outlined text-[#00C853] text-[28px]">chevron_left</span>
+        <div className="fixed inset-0 z-[9999] bg-white/60 backdrop-blur-md flex items-end sm:items-center justify-center p-4">
+          <div className="bg-white w-full max-w-sm rounded-[32px] shadow-2xl border border-gray-50 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-300">
+            {/* Simple Top Bar */}
+            <div className="flex items-center justify-between px-6 pt-6 pb-2">
+              <span className="text-[14px] font-black uppercase tracking-[0.1em] text-gray-400">Verificação</span>
+              <button onClick={() => setShowPinModal(false)} className="size-8 rounded-full bg-gray-50 flex items-center justify-center active:scale-90 transition-all">
+                <span className="material-symbols-outlined text-[18px] text-gray-400">close</span>
               </button>
-              <span className="font-bold text-[16px]">Confirmar Retirada</span>
-              <div className="size-10"></div>
-            </header>
-
-            {/* Content */}
-            <div className="flex-1 p-5 space-y-6">
-              {/* Icon */}
-              <div className="flex justify-center pt-4">
-                <div className="size-20 rounded-full bg-[#00C853]/10 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[#00C853] text-[48px]">account_balance_wallet</span>
-                </div>
-              </div>
-
-              {/* Title */}
-              <div className="text-center">
-                <h2 className="text-2xl font-black text-[#0F1111] mb-2">Detalhes da Retirada</h2>
-                <p className="text-sm text-gray-500">Revise as informações antes de confirmar</p>
-              </div>
-
-              {/* Details Card */}
-              <div className="bg-gray-50 rounded-2xl p-5 space-y-4 border border-gray-100">
-                {/* Destinatário */}
-                <div>
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Destinatário</p>
-                  <p className="text-base font-bold text-[#0F1111]">{bankAccount?.nome_titular || 'Não informado'}</p>
-                </div>
-
-                {/* Banco */}
-                <div className="border-t border-gray-200 pt-4">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Banco</p>
-                  <p className="text-base font-bold text-[#0F1111]">{bankAccount?.nome_banco}</p>
-                </div>
-
-                {/* IBAN */}
-                <div className="border-t border-gray-200 pt-4">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">IBAN / Número de Conta</p>
-                  <p className="text-sm font-mono font-bold text-[#0F1111] break-all">{bankAccount?.iban}</p>
-                </div>
-
-                {/* Valor Solicitado */}
-                <div className="border-t border-gray-200 pt-4">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Valor Solicitado</p>
-                  <p className="text-2xl font-black text-[#0F1111]">Kz {parseFloat(amount).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</p>
-                </div>
-
-                {/* Taxa */}
-                <div className="border-t border-gray-200 pt-4">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Taxa de Processamento (12%)</p>
-                  <p className="text-lg font-black text-red-500">- Kz {calculateFee().toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</p>
-                </div>
-
-                {/* Valor a Receber */}
-                <div className="border-t-2 border-[#00C853] pt-4 bg-white rounded-xl p-4 -mx-2">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Valor a Receber</p>
-                  <p className="text-3xl font-black text-[#00C853]">Kz {calculateLiquid().toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</p>
-                </div>
-              </div>
-
-              {/* Warning Message */}
-              <div className="bg-red-50 border border-red-200 rounded-2xl p-4 flex gap-3">
-                <span className="material-symbols-outlined text-red-500 text-[20px] shrink-0 mt-0.5">info</span>
-                <div>
-                  <p className="text-sm font-bold text-red-700 mb-1">Importante</p>
-                  <p className="text-xs text-red-600 leading-relaxed">
-                    Por favor, após solicitar a sua retirada, pedimos que aguarde pacientemente no período de até 24 horas. O saque será processado na sua conta bancária.
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-3 pt-4">
-                <label className="text-sm font-bold text-[#0F1111] block">Digite sua Senha de Retirada</label>
-                <div className="bg-gray-50 rounded-2xl h-16 flex items-center px-4 border-2 border-transparent focus-within:border-[#00C853] transition-colors">
-                  <input
-                    type="password"
-                    maxLength={4}
-                    value={pin}
-                    onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
-                    placeholder="••••"
-                    className="w-full bg-transparent text-center text-4xl tracking-[12px] font-bold outline-none text-[#111]"
-                    autoFocus
-                  />
-                </div>
-              </div>
             </div>
 
-            {/* Fixed Bottom Button */}
-            {pin.length === 4 && (
-              <div className="sticky bottom-0 p-5 bg-white border-t border-gray-100 animate-in slide-in-from-bottom-4 duration-300">
-                <button
-                  onClick={confirmWithdraw}
-                  className="w-full bg-[#00C853] text-white font-bold text-base py-4 rounded-2xl active:scale-[0.98] hover:brightness-110 transition-all shadow-lg shadow-green-200 disabled:opacity-50"
-                  disabled={loading}
-                >
-                  {loading ? 'Processando' : 'Confirmar'}
-                </button>
+            <div className="p-6 space-y-4">
+              {/* Compact Details Grid */}
+              <div className="bg-[#F8FAF8] rounded-2xl p-5 space-y-3 border border-gray-50/50">
+                <div className="flex justify-between items-center">
+                  <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Banco</span>
+                  <span className="text-[13px] font-bold text-[#111]">{bankAccount?.nome_banco}</span>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">IBAN</span>
+                  <span className="text-[12px] font-mono font-medium text-[#111]">{maskIban(bankAccount?.iban)}</span>
+                </div>
+
+                <div className="flex justify-between items-center pt-1">
+                  <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Solicitado</span>
+                  <span className="text-[15px] font-black text-[#111]">Kz {parseFloat(amount).toLocaleString('pt-AO')}</span>
+                </div>
+
+                <div className="flex justify-between items-center text-[#00C853] bg-white rounded-xl p-3 shadow-sm border border-gray-50">
+                  <span className="text-[11px] font-black uppercase tracking-wider">Líquido</span>
+                  <span className="text-[20px] font-black">Kz {calculateLiquid().toLocaleString('pt-AO')}</span>
+                </div>
               </div>
-            )}
+
+              {/* Minimal PIN Input */}
+              <div className="space-y-4 pt-2">
+                <div className="text-center">
+                  <p className="text-[13px] font-bold text-[#111]">Senha de Retirada</p>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">4 Dígitos Obrigatórios</p>
+                </div>
+
+                <div className="flex justify-center">
+                  <div className="bg-gray-50 rounded-2xl h-14 w-full flex items-center px-4 border border-gray-100 focus-within:border-[#00C853] transition-all">
+                    <input
+                      type="password"
+                      maxLength={4}
+                      value={pin}
+                      onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+                      placeholder="••••"
+                      className="w-full bg-transparent text-center text-3xl tracking-[16px] font-black outline-none text-black placeholder:text-gray-300"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <button
+                onClick={confirmWithdraw}
+                disabled={pin.length < 4 || loading}
+                className={`w-full h-14 rounded-2xl font-black text-[15px] transition-all flex items-center justify-center gap-2 shadow-xl ${pin.length === 4
+                    ? 'bg-[#00C853] text-black shadow-green-500/10 active:scale-95'
+                    : 'bg-gray-100 text-gray-400 cursor-not-allowed shadow-none'
+                  }`}
+              >
+                {loading ? <SpokeSpinner size="w-5 h-5" color="text-black" /> : 'Confirmar Saque'}
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -97,7 +97,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
     };
 
     const avatars = [
-        "/default_avatar.png",
+        "/user_avatar.png",
     ];
 
 

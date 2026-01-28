@@ -83,7 +83,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           <div className="flex items-center gap-3">
             <div className="size-14 rounded-full border-2 border-white overflow-hidden bg-white">
               <img
-                src={currentProfile?.avatar_url || '/default_avatar.png'}
+                src={currentProfile?.avatar_url || '/user_avatar.png'}
                 alt="Avatar"
                 className="w-full h-full object-cover"
               />
