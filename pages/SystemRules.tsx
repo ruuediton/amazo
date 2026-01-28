@@ -64,7 +64,7 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
             <RuleBlock
               id="01"
               title="Operações de Caixa"
-              content="Os depósitos via Multicaixa Express são processados automaticamente 24/7. Pedidos de retirada são processados em dias úteis, das 10:00 às 16:00 (Hora de Luanda), com prazo de liquidação de até 24 horas úteis."
+              content="As recargas via Multicaixa Express são processados automaticamente 24/7. Pedidos de levantamento são processados em dias úteis, das 10:00 às 16:00 (Hora de Luanda), com prazo de liquidação de até 24 horas úteis."
             />
 
             {/* Regra 2 */}

@@ -28,7 +28,7 @@ const TutoriaisComoConvidar: React.FC<Props> = ({ onNavigate }) => {
   const steps = [
     {
       title: "Copie seu link",
-      description: "Copie seu link exclusivo ou código AMZ-AO-95 para partilhar com amigos e aumentar o seu saldo.",
+      description: "Copie seu link exclusivo ou código BP-AO-95 para partilhar com amigos e aumentar o seu saldo.",
       icon: "content_copy"
     },
     {

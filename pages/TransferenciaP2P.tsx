@@ -58,11 +58,11 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
         }
 
         if (amountNum < 1000) {
-            showToast?.('Mínimo de transferência é 1.000 Kz.', 'warning');
+            showToast?.('Mínimo de envio é 1.000 Kz.', 'warning');
             return;
         }
         if (amountNum > 10000) {
-            showToast?.('Máximo de transferência é 10.000 Kz.', 'warning');
+            showToast?.('Máximo de envio é 10.000 Kz.', 'warning');
             return;
         }
 
@@ -79,10 +79,10 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                 if (error) throw error;
 
                 if (data && data.success) {
-                    showToast?.(data.message || "Transferência bem-sucedida", 'success');
+                    showToast?.(data.message || "Envio bem-sucedido", 'success');
                     onNavigate('historico-conta');
                 } else {
-                    throw new Error(data?.message || 'Erro na transferência.');
+                    throw new Error(data?.message || 'Erro no envio.');
                 }
             });
         } catch (error: any) {
@@ -120,7 +120,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                             <span className="material-symbols-outlined text-[#e47911] text-3xl">currency_exchange</span>
                         </div>
                         <div>
-                            <p className="text-[#565959] text-[10px] font-bold uppercase tracking-widest mb-1">Transferência P2P</p>
+                            <p className="text-[#565959] text-[10px] font-bold uppercase tracking-widest mb-1">Envio P2P</p>
                             <p className="text-[13px] font-bold text-[#0F1111] leading-tight">Envie saldo instantaneamente para qualquer conta BP.</p>
                         </div>
                     </div>

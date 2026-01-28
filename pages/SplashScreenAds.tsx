@@ -90,7 +90,7 @@ const SplashScreenAds: React.FC<Props> = ({ onNavigate }) => {
             Ganhe <span className="underline decoration-[#00C853] decoration-8 underline-offset-[-4px]">5% Cashback</span> agora.
           </h3>
           <p className="text-[16px] font-medium leading-relaxed text-gray-600 max-w-[90%]">
-            Realize compras acima de <span className="text-black font-bold">10.000 Kz</span> e recupere parte do seu investimento instantaneamente.
+            Realize compras acima de <span className="text-black font-bold">10.000 Kz</span> e recupere parte do seu valor instantaneamente.
           </p>
         </div>
 

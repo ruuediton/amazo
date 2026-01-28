@@ -208,7 +208,7 @@ const Orders: React.FC<Props> = ({ onNavigate, showToast }) => {
                                             </h3>
 
                                             <div className="flex items-center gap-1.5">
-                                                <span className="text-[10px] text-gray-400 font-medium">Pedido: #AMZ-{order.id_usuario_fundo.toString().slice(0, 6)}</span>
+                                                <span className="text-[10px] text-gray-400 font-medium">Pedido: #BP-{order.id_usuario_fundo.toString().slice(0, 6)}</span>
                                             </div>
 
                                             <div className="flex items-baseline mt-1">
