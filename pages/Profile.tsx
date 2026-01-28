@@ -76,7 +76,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
   );
 
   return (
-    <div className="bg-[#F8F9FA] min-h-screen pb-24 font-sans text-[#333]">
+    <div className="bg-white min-h-screen pb-24 font-sans text-[#333]">
       {/* Red/Green Header Gradient Area */}
       <div className="bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pt-8 pb-16 px-4">
         <div className="flex items-center justify-between">
@@ -112,7 +112,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
             onClick={() => onNavigate('wallet')}
             className="bg-[#00C853] text-white px-4 py-2 rounded-lg text-[12px] font-bold active:scale-95 transition-all"
           >
-            Minha Carteira
+            Carteira
           </button>
         </div>
       </div>
@@ -124,14 +124,14 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           className="flex items-center justify-center gap-2 bg-[#00C853] text-white h-[56px] rounded-xl font-bold text-[15px] active:scale-95 transition-all shadow-sm"
         >
           <span className="material-symbols-outlined">payments</span>
-          Recarrega
+          Recarregar
         </button>
         <button
           onClick={() => onNavigate('retirada')}
           className="flex items-center justify-center gap-2 bg-[#00C853] text-white h-[56px] rounded-xl font-bold text-[15px] active:scale-95 transition-all shadow-sm"
         >
           <span className="material-symbols-outlined">account_balance_wallet</span>
-          retirar o
+          Retirar
         </button>
       </div>
 
@@ -151,19 +151,19 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
       <div className="px-4 mt-6">
         <div className="bg-white rounded-2xl p-6 shadow-sm grid grid-cols-4 gap-y-8 gap-x-2">
           {[
-            { label: 'Informação pessoal', icon: 'person', page: 'settings', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Registro de tarefa', icon: 'assignment', page: 'purchase-history', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Registro de mudança de conta', icon: 'account_balance', page: 'historico-conta', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Relatório de equipe', icon: 'pie_chart', page: 'subordinate-list', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Manual de ajuda', icon: 'description', page: 'tutorials', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Catálogo de Produtos', icon: 'shopping_basket', page: 'investimentos-fundo', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Sorteio da Sorte', icon: 'auto_awesome', page: 'gift-chest', color: 'bg-green-50 text-[#00C853]' },
-            { label: 'Convidar Amigos', icon: 'share', page: 'invite-page', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Dados', icon: 'person', page: 'settings', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Tarefas', icon: 'assignment', page: 'purchase-history', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Extrato', icon: 'account_balance', page: 'historico-conta', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Equipe', icon: 'pie_chart', page: 'subordinate-list', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Ajuda', icon: 'description', page: 'tutorials', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Produtos', icon: 'shopping_basket', page: 'investimentos-fundo', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Sorteio', icon: 'auto_awesome', page: 'gift-chest', color: 'bg-green-50 text-[#00C853]' },
+            { label: 'Convidar', icon: 'share', page: 'invite-page', color: 'bg-green-50 text-[#00C853]' },
             {
-              label: 'Baixar APP',
+              label: 'Instalar',
               icon: 'download',
               action: handleInstallApp,
-              color: 'bg-green-50 text-[#00C853]' // Unificando cor conforme pedido implícito de consistência, ou mantendo destaque se preferir. Vou manter o padrão verde.
+              color: 'bg-green-50 text-[#00C853]'
             },
           ].map((item: any) => (
             <div
@@ -189,7 +189,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate, onLogout, profile, showTo
           <div className="relative z-10">
             <h4 className="font-black text-[16px] text-orange-900">Convide para Ganhar Moedas</h4>
             <div className="flex items-center gap-1 mt-1">
-              <span className="text-[11px] text-orange-700 font-bold uppercase tracking-wider">Clique para Convidar Amigos</span>
+              <span className="text-[11px] text-orange-700 font-bold uppercase tracking-wider">Convidar</span>
               <div className="size-4 bg-orange-500 rounded-full flex items-center justify-center">
                 <span className="material-symbols-outlined text-white text-[12px]">chevron_right</span>
               </div>

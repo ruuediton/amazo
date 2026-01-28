@@ -154,10 +154,10 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 <div className="pt-4">
                     <button
                         onClick={handleFinalConfirm}
-                        disabled={!amount || !selectedBank || parseFloat(amount) < 3000}
-                        className="w-full h-[52px] bg-[#00C853] text-white font-bold rounded-lg transition-all disabled:opacity-50"
+                        disabled={loading || !amount || !selectedBank || parseFloat(amount) < 3000}
+                        className="w-full h-[52px] bg-[#00C853] text-white font-bold rounded-lg transition-all disabled:opacity-50 flex items-center justify-center"
                     >
-                        Confirmar
+                        {loading ? 'Processando' : 'Confirmar'}
                     </button>
                 </div>
             </main>

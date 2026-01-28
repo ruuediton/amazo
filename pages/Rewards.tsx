@@ -157,7 +157,7 @@ const Rewards: React.FC<Props> = ({ onNavigate, showToast }) => {
               onClick={() => onNavigate('purchase-history')}
               className="text-[12px] font-bold text-[#007185] hover:underline"
             >
-              Ver Detalhes
+              Detalhes
             </button>
           </div>
 
@@ -174,7 +174,7 @@ const Rewards: React.FC<Props> = ({ onNavigate, showToast }) => {
                 onClick={() => onNavigate('shop')}
                 className="w-full h-11 bg-[#00C853] hover:bg-[#00C853] text-[#0F1111] text-[13px] font-bold uppercase rounded-full transition-all border border-[#00C853]"
               >
-                Visitar Loja
+                Loja
               </button>
             </div>
           ) : (

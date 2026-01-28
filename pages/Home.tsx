@@ -112,7 +112,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
   ];
 
   return (
-    <div className="flex flex-col pb-40 bg-background-dark min-h-screen font-display antialiased relative">
+    <div className="flex flex-col pb-40 bg-white min-h-screen font-display antialiased relative">
       {/* Carousel */}
       <section className="relative w-full h-[200px] overflow-hidden">
         <div className="flex transition-transform duration-1000 ease-in-out h-full" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
@@ -204,7 +204,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
                     onClick={() => onNavigate('shop')}
                     className="bg-[#00C853] hover:brightness-110 text-black text-[14px] font-medium py-2.5 rounded-full w-full mt-4 transition-all border border-[#00C853]"
                   >
-                    Comprar Agora
+                    Comprar
                   </button>
                 </div>
               </div>

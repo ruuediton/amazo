@@ -16,7 +16,7 @@ interface WalletProps {
 const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
   return (
     <div className="flex flex-col pb-24">
-      <header className="flex items-center p-4 justify-between sticky top-0 z-20 bg-background-dark/95 border-b border-gray-200">
+      <header className="flex items-center p-4 justify-between sticky top-0 z-20 bg-white/95 border-b border-gray-200">
         <button
           onClick={() => onNavigate('home')}
           className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors text-primary"
@@ -31,8 +31,8 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
 
       <main className="flex-1 overflow-y-auto px-4">
         <div className="mb-6">
-          <div className="flex flex-col gap-4 rounded-xl bg-surface-dark p-5 border border-gray-200 relative overflow-hidden group">
-            <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="flex flex-col gap-4 rounded-xl bg-white p-5 border border-gray-200 relative overflow-hidden group shadow-sm">
+            <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
             <div className="flex flex-col z-10">
               <div className="flex justify-between items-start mb-2">
                 <p className="text-gray-400 text-sm font-medium">Saldo BP Pay</p>
@@ -69,7 +69,7 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
               <span className="material-symbols-outlined">send</span>
             </div>
             <div className="flex-1 text-left">
-              <p className="text-black font-black text-sm uppercase">Enviar Dinheiro</p>
+              <p className="text-black font-black text-sm uppercase">Enviar</p>
               <p className="text-gray-500 text-xs">Transferência instantânea entre contas</p>
             </div>
             <span className="material-symbols-outlined text-gray-400">chevron_right</span>
@@ -80,10 +80,10 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
           <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-5 border border-primary/20">
             <span className="text-black text-sm font-bold">Todos</span>
           </button>
-          <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-white/10 px-5 transition-colors hover:bg-white/5">
+          <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-white border border-gray-200 px-5 transition-colors hover:bg-gray-50">
             <span className="text-black text-sm font-medium">Entradas</span>
           </button>
-          <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-white/10 px-5 transition-colors hover:bg-white/5">
+          <button className="flex h-9 shrink-0 items-center justify-center rounded-full bg-white border border-gray-200 px-5 transition-colors hover:bg-gray-50">
             <span className="text-black text-sm font-medium">Saídas</span>
           </button>
         </div>
@@ -91,8 +91,8 @@ const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
         <div className="flex flex-col gap-1">
           <p className="text-gray-400 text-xs font-bold uppercase tracking-wider pb-3 px-1">Hoje</p>
           {transactions.slice(0, 2).map(t => (
-            <div key={t.id} className="group flex items-center gap-4 py-4 border-b border-gray-200 hover:bg-white/5 transition-colors cursor-pointer rounded-lg px-2">
-              <div className="relative flex items-center justify-center size-12 rounded-full bg-surface-dark border border-white/10 shrink-0">
+            <div key={t.id} className="group flex items-center gap-4 py-4 border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer rounded-lg px-2">
+              <div className="relative flex items-center justify-center size-12 rounded-full bg-white border border-gray-100 shrink-0">
                 <span className={`material-symbols-outlined ${t.type === 'incoming' ? 'text-green-600' : 'text-primary'}`}>{t.icon}</span>
               </div>
               <div className="flex flex-col flex-1 min-w-0">

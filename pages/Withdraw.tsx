@@ -236,7 +236,7 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
           onClick={handleInitiateWithdraw}
           className="w-full bg-[#00C853] text-[#0F1111] border border-[#00C853] font-bold text-[15px] py-3.5 rounded-xl active:scale-[0.98] hover:bg-[#00C853] transition-all flex items-center justify-center"
         >
-          Solicitar Saque
+          Confirmar
         </button>
       </div>
 
@@ -338,9 +338,10 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
               <div className="sticky bottom-0 p-5 bg-white border-t border-gray-100 animate-in slide-in-from-bottom-4 duration-300">
                 <button
                   onClick={confirmWithdraw}
-                  className="w-full bg-[#00C853] text-white font-bold text-base py-4 rounded-2xl active:scale-[0.98] hover:brightness-110 transition-all shadow-lg shadow-green-200"
+                  className="w-full bg-[#00C853] text-white font-bold text-base py-4 rounded-2xl active:scale-[0.98] hover:brightness-110 transition-all shadow-lg shadow-green-200 disabled:opacity-50"
+                  disabled={loading}
                 >
-                  Confirmar Retirada
+                  {loading ? 'Processando' : 'Confirmar'}
                 </button>
               </div>
             )}

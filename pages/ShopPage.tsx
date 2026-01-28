@@ -183,7 +183,7 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
                         : 'bg-[#00C853] hover:brightness-110 text-black border border-[#00C853]'
                         }`}
                     >
-                      {isPurchased ? 'JÁ ADQUIRIDO' : 'COMPRAR AGORA'}
+                      {isPurchased ? 'Adquirido' : 'Comprar'}
                     </button>
 
                     {isPurchased && (
@@ -215,9 +215,9 @@ const Shop: React.FC<ShopProps> = ({ onNavigate, showToast, balance }) => {
               <button
                 disabled={isBuying}
                 onClick={handlePurchase}
-                className="w-full h-12 bg-[#00C853] hover:bg-[#00C853] rounded-full font-bold text-[14px] transition-all active:scale-95 flex items-center justify-center"
+                className="w-full h-12 bg-[#00C853] hover:bg-[#00C853] rounded-full font-bold text-[14px] transition-all active:scale-95 flex items-center justify-center font-black"
               >
-                {isBuying ? <SpokeSpinner size="w-5 h-5" color="text-black" /> : 'Confirmar e Pagar'}
+                {isBuying ? <SpokeSpinner size="w-5 h-5" color="text-black" /> : 'Confirmar'}
               </button>
               <button
                 disabled={isBuying}

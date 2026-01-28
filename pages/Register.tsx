@@ -161,7 +161,7 @@ const Register: React.FC<Props> = ({ onNavigate, showToast }) => {
       {/* Header */}
       <div className="w-full mb-8 text-center sm:text-left">
         <h1 className="text-[32px] font-black text-[#111] mb-2">BP</h1>
-        <h2 className="text-[18px] font-bold text-[#111]">Bem-vindo ao registro</h2>
+        <h2 className="text-[18px] font-bold text-[#111]">Registrar</h2>
       </div>
 
       <form className="w-full flex flex-col gap-4" onSubmit={handleRegister}>
@@ -272,13 +272,13 @@ const Register: React.FC<Props> = ({ onNavigate, showToast }) => {
           disabled={loading}
           className={`w-full h-12 bg-[#00C853] text-white font-bold rounded-2xl text-[16px] mt-4 hover:bg-[#00a844] active:scale-[0.98] transition-all shadow-lg shadow-green-200 ${loading ? 'opacity-70 grayscale' : ''}`}
         >
-          {loading ? 'Processando...' : 'Inscreva-se agora'}
+          {loading ? 'Registrando' : 'Registrar'}
         </button>
 
         {/* Footer Link */}
         <div className="w-full text-center mt-4">
           <button type="button" onClick={() => onNavigate('login')} className="text-[#fe5722] font-medium text-[14px] hover:underline">
-            Entrar agora
+            Entrar
           </button>
         </div>
 

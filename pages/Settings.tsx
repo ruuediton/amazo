@@ -103,7 +103,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
     return (
         <div className="flex flex-col min-h-screen bg-white font-sans text-black antialiased">
-            <header className="sticky top-0 z-50 flex items-center bg-background-dark/95 p-4 pb-2 border-b border-gray-200">
+            <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 border-b border-gray-200">
                 <button
                     onClick={() => onNavigate('profile')}
                     className="text-[#00C853] flex size-12 shrink-0 items-center justify-start hover:bg-gray-50 rounded-full transition-all active:scale-95"
@@ -217,7 +217,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                         disabled={saving}
                         className="w-full h-14 bg-[#00C853] text-white rounded-2xl font-bold text-sm uppercase tracking-wide active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-[#00a844] shadow-lg shadow-green-200"
                     >
-                        {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar Alterações'}
+                        {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar'}
                     </button>
                 </div>
             </main >

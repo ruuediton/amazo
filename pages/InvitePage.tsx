@@ -147,7 +147,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                     className="flex-1 h-12 bg-[#0F1111] text-white rounded-xl font-bold text-sm hover:bg-black transition-colors flex items-center justify-center gap-2"
                                 >
                                     <span className="material-symbols-outlined text-lg">share</span>
-                                    Copiar Link
+                                    Link
                                 </button>
                             </div>
                         </div>
@@ -173,7 +173,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                 className="w-full h-14 bg-white border-2 border-[#0F1111] text-[#0F1111] rounded-2xl flex items-center justify-center gap-3 font-black text-sm active:scale-95 transition-all"
                             >
                                 <span className="material-symbols-outlined">group</span>
-                                VISUALIZAR MINHA EQUIPE
+                                Equipe
                             </button>
                         </div>
 
@@ -268,7 +268,7 @@ const InvitePage: React.FC<Props> = ({ onNavigate, showToast }) => {
                                                 </div>
                                                 <div className="mt-4 flex items-center justify-between pt-3 border-t border-gray-50">
                                                     <p className="text-[9px] font-bold text-[#565959] italic opacity-60">* Válido para usuários ativos na rede</p>
-                                                    <button onClick={handleCopyLink} disabled={isReached} className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg transition-all ${isReached ? 'bg-green-50 text-green-600 border border-green-100' : 'bg-[#00A8E1]/10 text-[#007185] border border-[#00A8E1]/20 active:scale-95'}`}>{isReached ? 'RESGATADO' : 'CONVIDAR AGORA'}</button>
+                                                    <button onClick={handleCopyLink} disabled={isReached} className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg transition-all ${isReached ? 'bg-green-50 text-green-600 border border-green-100' : 'bg-[#00A8E1]/10 text-[#007185] border border-[#00A8E1]/20 active:scale-95'}`}>{isReached ? 'Resgatado' : 'Convidar'}</button>
                                                 </div>
                                             </div>
                                         </div>

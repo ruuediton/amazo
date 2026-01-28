@@ -331,10 +331,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background-light max-w-md mx-auto shadow-premium overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-white max-w-md mx-auto shadow-premium overflow-x-hidden">
       <main className="flex-1 overflow-y-auto no-scrollbar">
         <Suspense fallback={
-          <div className="flex h-screen items-center justify-center bg-background-light">
+          <div className="flex h-screen items-center justify-center bg-white">
             <SpokeSpinner size="w-12 h-12" className="text-secondary" />
           </div>
         }>
@@ -352,7 +352,7 @@ const App: React.FC = () => {
               className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'home' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
               <span className="material-symbols-outlined text-[24px]">home</span>
-              <span className="text-[10px]">Casa</span>
+              <span className="text-[10px]">Início</span>
             </button>
 
             <button
@@ -360,7 +360,7 @@ const App: React.FC = () => {
               className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'ganhos-tarefas' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
               <span className="material-symbols-outlined text-[24px]">grade</span>
-              <span className="text-[10px]">tarefa</span>
+              <span className="text-[10px]">Tarefas</span>
             </button>
 
             <button
@@ -384,7 +384,7 @@ const App: React.FC = () => {
               className={`flex flex-col items-center gap-1 w-full transition-all duration-300 ${currentPage === 'profile' ? 'text-[#00C853]' : 'text-gray-400'}`}
             >
               <span className="material-symbols-outlined text-[24px]">person</span>
-              <span className="text-[10px]">minha</span>
+              <span className="text-[10px]">Perfil</span>
             </button>
           </div>
         </nav>

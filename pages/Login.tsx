@@ -97,7 +97,7 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
 
       {/* Title */}
       <div className="w-full mb-8">
-        <h1 className="text-[28px] font-bold text-[#111] leading-tight">faça login</h1>
+        <h1 className="text-[28px] font-bold text-[#111] leading-tight">Entrar</h1>
       </div>
 
       <form className="w-full flex-col gap-5 flex" onSubmit={handleLogin}>
@@ -149,19 +149,19 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
           disabled={loading}
           className={`w-full h-14 bg-[#00C853] text-white font-bold rounded-2xl text-[16px] mt-2 hover:bg-[#00a844] active:scale-[0.98] transition-all shadow-lg shadow-green-200 ${loading ? 'opacity-70 grayscale' : ''}`}
         >
-          {loading ? 'Processando...' : 'faça login imediatamente'}
+          {loading ? 'Entrando' : 'Entrar'}
         </button>
 
         {/* Footer */}
         <div className="w-full text-center mt-6">
           <p className="text-gray-400 text-[13px]">
-            não tem conta? <span onClick={() => onNavigate('register')} className="text-[#fe5722] font-bold cursor-pointer hover:underline">registrado</span>
+            não tem conta? <span onClick={() => onNavigate('register')} className="text-[#fe5722] font-bold cursor-pointer hover:underline">Registrar</span>
           </p>
         </div>
 
       </form>
 
-    </div>
+    </div >
   );
 };
 
