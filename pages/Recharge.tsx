@@ -16,7 +16,32 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const [loading, setLoading] = useState(true);
     const [selectedBank, setSelectedBank] = useState<any>(null);
 
-    const quickAmounts = [3000, 12000, 39000, 75000];
+    const [exchangeRate, setExchangeRate] = useState<number>(0);
+    const [usdtAmount, setUsdtAmount] = useState<string>('0.00');
+
+    // Fetch USD Rate
+    useEffect(() => {
+        if (paymentMethod === 'USDT') {
+            fetch('https://api.exchangerate-api.com/v4/latest/USD')
+                .then(res => res.json())
+                .then(data => {
+                    if (data?.rates?.AOA) setExchangeRate(data.rates.AOA);
+                })
+                .catch(err => console.error("Rate error:", err));
+        }
+    }, [paymentMethod]);
+
+    // Calculate USDT when Amount (Kz) changes
+    useEffect(() => {
+        if (paymentMethod === 'USDT' && amount && exchangeRate > 0) {
+            const valKz = parseFloat(amount);
+            if (!isNaN(valKz)) {
+                // Formula: Kz / Rate = USD
+                const usd = valKz / exchangeRate;
+                setUsdtAmount(usd.toFixed(2));
+            }
+        }
+    }, [amount, exchangeRate, paymentMethod]);
 
     useEffect(() => {
         fetchData();
@@ -30,11 +55,12 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 .eq('ativo', true);
 
             if (!error && data) {
-                const filteredBanks = data.filter(b =>
+                // Filter out USDT banks from regular list (legacy cleanup)
+                const normalBanks = data.filter(b =>
                     !b.nome_do_banco.toUpperCase().includes('USDT') &&
                     !b.nome_do_banco.toUpperCase().includes('USTD')
                 );
-                setBanks(filteredBanks);
+                setBanks(normalBanks);
             }
 
             // Fetch current balance for header
@@ -55,18 +81,38 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     };
 
     const handleFinalConfirm = async () => {
-        const val = parseFloat(amount);
-        if (!amount || isNaN(val) || val < 3000) {
-            showToast?.("Recarga mínima, 3.000 KZs", "warning");
+        const valKz = parseFloat(amount);
+
+        if (!amount || isNaN(valKz)) {
+            showToast?.("Digite um valor válido.", "warning");
             return;
         }
-        if (val > 1000000) {
-            showToast?.("Recarga máxima: 1.000.000 KZs", "warning");
-            return;
-        }
-        if (!selectedBank) {
-            showToast?.("Por favor, selecione um banco.", "warning");
-            return;
+
+        if (paymentMethod === 'BANK') {
+            if (valKz < 3000) {
+                showToast?.("Recarga mínima via banco: 3.000 KZs", "warning");
+                return;
+            }
+            if (valKz > 1000000) {
+                showToast?.("Recarga máxima via banco: 1.000.000 KZs", "warning");
+                return;
+            }
+            if (!selectedBank) {
+                showToast?.("Por favor, selecione um banco.", "warning");
+                return;
+            }
+        } else {
+            // USDT Validation
+            // Min 4 USDT approx
+            const valUsd = parseFloat(usdtAmount);
+            if (valUsd < 4) {
+                showToast?.("Valor insuficiente. Mínimo aprox. 4 USDT", "warning");
+                return;
+            }
+            if (valUsd > 10000) {
+                showToast?.("Recarga máxima via USDT: 10.000 USDT", "warning");
+                return;
+            }
         }
 
         try {
@@ -78,8 +124,19 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     return;
                 }
 
+                if (paymentMethod === 'USDT') {
+                    // Pass only values, next page fetches wallet
+                    onNavigate('deposit-usdt', {
+                        amountKz: valKz,
+                        amountUsdt: parseFloat(usdtAmount),
+                        exchangeRate: exchangeRate
+                    });
+                    return;
+                }
+
+                // Normal Bank Flow
                 const { data, error } = await supabase.rpc('create_deposit_request', {
-                    p_amount: val,
+                    p_amount: valKz,
                     p_bank_name: selectedBank.nome_do_banco,
                     p_iban: selectedBank.iban
                 });
@@ -144,21 +201,57 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                 </div>
 
                 <section className="space-y-6">
+                    {/* Payment Method Selector (Checkbox Style) */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <button
+                            onClick={() => { setPaymentMethod('BANK'); setSelectedBank(null); }} // Keep amount
+                            className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${paymentMethod === 'BANK' ? 'bg-[#00C853]/5 border-[#00C853]' : 'bg-gray-50 border-transparent'}`}
+                        >
+                            <div className={`size-5 rounded-md border flex items-center justify-center transition-colors ${paymentMethod === 'BANK' ? 'bg-[#00C853] border-[#00C853]' : 'border-gray-300 bg-white'}`}>
+                                {paymentMethod === 'BANK' && <span className="material-symbols-outlined text-white text-[16px] font-bold">check</span>}
+                            </div>
+                            <div className="flex flex-col items-start">
+                                <span className={`text-[14px] font-bold ${paymentMethod === 'BANK' ? 'text-[#0F1111]' : 'text-gray-500'}`}>Bank (Kz)</span>
+                            </div>
+                        </button>
+
+                        <button
+                            onClick={() => { setPaymentMethod('USDT'); setSelectedBank(null); }} // Keep amount
+                            className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${paymentMethod === 'USDT' ? 'bg-[#00C853]/5 border-[#00C853]' : 'bg-gray-50 border-transparent'}`}
+                        >
+                            <div className={`size-5 rounded-md border flex items-center justify-center transition-colors ${paymentMethod === 'USDT' ? 'bg-[#00C853] border-[#00C853]' : 'border-gray-300 bg-white'}`}>
+                                {paymentMethod === 'USDT' && <span className="material-symbols-outlined text-white text-[16px] font-bold">check</span>}
+                            </div>
+                            <div className="flex flex-col items-start">
+                                <span className={`text-[14px] font-bold ${paymentMethod === 'USDT' ? 'text-[#0F1111]' : 'text-gray-500'}`}>USDT</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    {/* Amount Input - Always Visible, Always Kz */}
                     <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-[#0F1111]">Quantia da Recarga</label>
+                        <label className="text-[13px] font-bold text-[#0F1111]">Valor da Recarga</label>
                         <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
-                            <span className="material-symbols-outlined text-[#00C853] text-[24px]">add_card</span>
+                            <span className="material-symbols-outlined text-[#00C853] text-[24px]">payments</span>
                             <input
                                 type="number"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
                                 className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
-                                placeholder="0,00"
+                                placeholder="Digite o valor em Kz"
                             />
                             <span className="text-[14px] font-bold text-gray-400">Kz</span>
                         </div>
+                        {/* Auto-conversion Preview for USDT */}
+                        {paymentMethod === 'USDT' && amount && (
+                            <div className="flex justify-between items-center px-2 animate-in fade-in slide-in-from-top-1">
+                                <span className="text-[11px] text-gray-400 font-medium">Conversão automática</span>
+                                <span className="text-[13px] font-bold text-[#00C853]">≈ {usdtAmount} USDT</span>
+                            </div>
+                        )}
                     </div>
 
+                    {/* Quick Amounts (Optional helper) */}
                     <div className="flex flex-wrap gap-2">
                         {quickAmounts.map(val => (
                             <button
@@ -171,7 +264,7 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                         ))}
                     </div>
 
-                    {amount && (
+                    {paymentMethod === 'BANK' && (
                         <div className="space-y-2">
                             <p className="text-[13px] font-bold text-[#0F1111]">Banco disponível</p>
                             <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
@@ -197,7 +290,12 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
                     <div className="pt-4">
                         <button
                             onClick={handleFinalConfirm}
-                            disabled={loading || !amount || !selectedBank || parseFloat(amount) < 3000}
+                            disabled={
+                                loading ||
+                                !amount ||
+                                (paymentMethod === 'BANK' && (!selectedBank || parseFloat(amount) < 3000)) ||
+                                (paymentMethod === 'USDT' && parseFloat(usdtAmount) < 4)
+                            }
                             className="w-full h-[52px] bg-[#00C853] text-white font-bold rounded-lg transition-all disabled:opacity-50 flex items-center justify-center"
                         >
                             {loading ? 'Processando' : 'Confirmar'}

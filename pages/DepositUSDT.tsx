@@ -10,53 +10,35 @@ interface Props {
 
 const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
   const { withLoading } = useLoading();
-  const [amount, setAmount] = useState<string>(data?.amount || '');
-  const [exchangeRate, setExchangeRate] = useState<number>(0);
-  const [isFetching, setIsFetching] = useState(false);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  // Data passed from Recharge.tsx
+  const amountUsdt = data?.amountUsdt || 0;
+  const amountKz = data?.amountKz || 0;
+  const passedRate = data?.exchangeRate || 0;
+
+  const [walletData, setWalletData] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const walletAddress = walletData?.endereco_carteira || "Carregando...";
+  const recipientName = walletData?.nome_destinatario || "Carregando...";
 
-  // Fallback to avoid crashes, but logic requires data
-  const walletAddress = data?.bank?.iban || data?.bank?.wallet_address || "Endereço indisponível";
-  const recipientName = data?.bank?.nome_destinatario || "Destinatário desconhecido";
+  // Fetch Unified Wallet
+  useEffect(() => {
+    const fetchWallet = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('usdt_empresarial')
+          .select('*')
+          .eq('ativo', true)
+          .single();
 
-  // FunÃ§Ã£o para buscar taxa em tempo real
-  const fetchRate = useCallback(async (background = false) => {
-    const action = async () => {
-      const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-      const data = await response.json();
-
-      if (data && data.rates && data.rates.AOA) {
-        const rate = data.rates.AOA;
-        setExchangeRate(rate);
-        setLastUpdate(new Date());
-      } else {
-        throw new Error("Taxa não disponível");
+        if (!error && data) {
+          setWalletData(data);
+        }
+      } catch (err) {
+        console.error("Wallet fetch error", err);
       }
     };
-
-    if (background) {
-      setIsFetching(true);
-      try {
-        await action();
-      } catch (err) {
-        // Silencioso em background
-      } finally {
-        setIsFetching(false);
-      }
-    } else {
-      await withLoading(action);
-    }
-  }, [withLoading]);
-
-
-  // Busca inicial e efeito ao digitar
-  useEffect(() => {
-    fetchRate(false); // Carregamento inicial com spinner
-    // Atualiza a cada 2 minutos se o usuário estiver na página (background)
-    const interval = setInterval(() => fetchRate(true), 120000);
-    return () => clearInterval(interval);
-  }, [fetchRate]);
+    fetchWallet();
+  }, []);
 
 
   const handleCopy = () => {
@@ -64,55 +46,34 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
     showToast?.('Endereço copiado!', 'success');
   };
 
-  const kzEquivalent = amount && exchangeRate
-    ? (parseFloat(amount) * exchangeRate).toLocaleString('pt-AO', { minimumFractionDigits: 2 })
-    : '0,00';
 
   const handleConfirm = async () => {
-    const numAmount = parseFloat(amount);
-    if (!amount || isNaN(numAmount) || numAmount < 4) {
-      showToast?.("Recarga mínima 4 USDT.", "warning");
-      return;
-    }
-
-    // UX Validation only
-    if (numAmount > 1090) {
-      showToast?.("Recarga máxima 1090 USDT.", "warning");
+    if (!amountUsdt || amountUsdt < 4) {
+      showToast?.("Valor inválido.", "error");
       return;
     }
 
     setIsSubmitting(true);
     try {
       await withLoading(async () => {
-        // ValidaÃ§Ã£o de SessÃ£o
         const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-          onNavigate('login');
-          throw new Error("Sessão expirada.");
-        }
+        if (!user) throw new Error("Sessão expirada.");
 
-        // RPC Seguro: Valida limites, duplicidade e registra transação
         const { data, error } = await supabase.rpc('create_usdt_deposit', {
-          p_amount_usdt: numAmount,
-          p_exchange_rate: exchangeRate
+          p_amount_usdt: amountUsdt,
+          p_exchange_rate: passedRate
         });
 
-        if (error) {
-          throw new Error("Erro de conexão com servidor.");
-        }
+        if (error) throw new Error("Erro de conexão.");
+        if (data && !data.success) throw new Error(data.message);
 
-        if (data && !data.success) {
-          throw new Error(data.message || "Falha ao criar depósito.");
-        }
-
-        // Sucesso
         return data.message;
-      }, 'Solicitação criada com sucesso!');
+      }, 'Solicitação enviada! Aguarde a confirmação.');
 
       onNavigate('home');
     } catch (error: any) {
-      // Erro tratado pelo withLoading
       console.error(error);
+      showToast?.(error.message, 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -150,37 +111,15 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
         </div>
 
         {/* Amount Input Section */}
-        <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100">
-          <div className="flex flex-col gap-3">
-            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest ml-1">Quantia (USDT)</label>
-            <div className="bg-white rounded-xl h-16 flex items-center px-5 gap-3 relative border border-gray-200 focus-within:border-[#00C853] transition-colors shadow-sm">
-              <span className="material-symbols-outlined text-[#00C853] text-[28px]">currency_bitcoin</span>
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Mínimo 4 USDT"
-                className="bg-transparent flex-1 h-full outline-none text-[#111] font-black text-2xl placeholder:text-gray-300"
-              />
-              <span className="text-sm font-bold text-[#26a17b]">USDT</span>
-            </div>
-            <div className="flex justify-between items-center px-1">
-              <p className="text-[11px] text-gray-500 font-medium">Equivalente em Kz (Moeda de Destino)</p>
-              <div className="flex flex-col items-end">
-                <p className="text-sm font-black text-[#00C853]">≈ Kz {kzEquivalent}</p>
-                {isFetching && <span className="text-[9px] text-gray-400 animate-pulse">Atualizando taxa...</span>}
-              </div>
-            </div>
-            <div className="p-3 rounded-lg bg-[#26a17b]/5 border border-[#26a17b]/10 flex flex-col items-center gap-1">
-              <p className="text-[10px] text-[#26a17b] font-black uppercase tracking-widest">
-                TAXA DE CÂMBIO: 1 USDT = {exchangeRate > 0 ? exchangeRate.toFixed(2) : '---'} Kz
-              </p>
-              {lastUpdate && (
-                <p className="text-[8px] text-text-secondary/60">
-                  Atualizado em: {lastUpdate.toLocaleTimeString()}
-                </p>
-              )}
-            </div>
+        {/* Amount Read-Only Section */}
+        <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100 text-center">
+          <p className="text-gray-400 text-[11px] font-bold uppercase tracking-widest mb-1">Valor a enviar</p>
+          <div className="flex items-center justify-center gap-1">
+            <span className="text-3xl font-black text-[#00C853]">{amountUsdt.toFixed(2)}</span>
+            <span className="text-sm font-bold text-[#00C853] mt-2">USDT</span>
+          </div>
+          <div className="mt-2 text-[12px] text-gray-400 font-medium bg-gray-100 rounded-full py-1 px-3 inline-block">
+            Equivalente a <span className="text-[#0F1111] font-bold">{amountKz.toLocaleString('pt-AO')} Kz</span>
           </div>
         </div>
 
@@ -246,8 +185,8 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
       <footer className="fixed bottom-0 max-w-md w-full p-4 bg-white/95 border-t border-gray-100 z-50">
         <button
           onClick={handleConfirm}
-          disabled={isSubmitting || isFetching}
-          className={`w-full h-14 bg-[#00C853] text-white font-bold rounded-xl text-[16px] active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${isSubmitting || isFetching ? 'opacity-50 grayscale' : 'shadow-lg shadow-green-200'}`}
+          disabled={isSubmitting || !walletData}
+          className={`w-full h-14 bg-[#00C853] text-white font-bold rounded-xl text-[16px] active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${isSubmitting || !walletData ? 'opacity-50 grayscale' : 'shadow-lg shadow-green-200'}`}
         >
           <span>Confirmar Depósito</span>
           <span className="material-symbols-outlined font-bold text-[20px]">send_money</span>
