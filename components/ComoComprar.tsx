@@ -98,7 +98,7 @@ const ComoComprar: React.FC<Props> = ({ onNavigate }) => {
                             <div className="pb-2">
                                 <h3 className="text-base font-black text-[#111] mb-1">Acompanhe</h3>
                                 <p className="text-sm text-gray-500 leading-relaxed font-medium">
-                                    Veja o status em <strong>Conta</strong> > <strong>Histórico</strong>.
+                                    Veja o status em <strong>Conta</strong> &gt; <strong>Histórico</strong>.
                                 </p>
                             </div>
                         </div>
