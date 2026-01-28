@@ -118,33 +118,36 @@ const Tutorials: React.FC<TutorialsProps> = ({ onNavigate }) => {
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-black font-sans">
-      {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center bg-white p-4 pb-3 justify-between border-b border-gray-100">
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pt-4 px-4 overflow-hidden mb-4">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
         {!showSearch ? (
-          <>
+          <div className="relative z-10 flex items-center justify-between">
             <button
               onClick={() => onNavigate('profile')}
-              className="text-[#00C853] flex size-10 shrink-0 items-center justify-start cursor-pointer hover:bg-gray-50 rounded-full transition-colors"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
             >
-              <span className="material-symbols-outlined text-[28px]">chevron_left</span>
+              <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
             </button>
-            <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center">Menu de Tutoriais</h2>
+            <h1 className="text-xl font-black text-white tracking-tight">Tutoriais</h1>
             <button
               onClick={handleSearchToggle}
-              className="flex size-10 cursor-pointer items-center justify-center rounded-full hover:bg-gray-50 transition-colors text-gray-400"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
             >
-              <span className="material-symbols-outlined text-[24px]">search</span>
+              <span className="material-symbols-outlined text-white text-[24px]">search</span>
             </button>
-          </>
+          </div>
         ) : (
-          <div className="flex items-center w-full gap-2">
-            <div className="relative flex items-center flex-1 h-11 rounded-2xl focus-within:ring-2 ring-[#00C853] bg-gray-50 overflow-hidden border border-transparent focus-within:border-[#00C853]">
-              <div className="grid place-items-center h-full w-11 text-gray-400">
+          <div className="relative z-10 flex items-center w-full gap-2">
+            <div className="relative flex items-center flex-1 h-11 rounded-2xl bg-white/20 backdrop-blur-md overflow-hidden border border-white/30">
+              <div className="grid place-items-center h-full w-11 text-white/70">
                 <span className="material-symbols-outlined text-[20px]">search</span>
               </div>
               <input
                 autoFocus
-                className="peer h-full w-full outline-none bg-transparent text-sm text-black pr-4 placeholder-gray-400"
+                className="peer h-full w-full outline-none bg-transparent text-sm text-white pr-4 placeholder-white/50"
                 placeholder="Buscar ajuda..."
                 type="text"
                 value={searchQuery}
@@ -153,9 +156,9 @@ const Tutorials: React.FC<TutorialsProps> = ({ onNavigate }) => {
             </div>
             <button
               onClick={handleSearchToggle}
-              className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-gray-50 transition-colors text-gray-400"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
             >
-              <span className="material-symbols-outlined text-[24px]">close</span>
+              <span className="material-symbols-outlined text-white text-[24px]">close</span>
             </button>
           </div>
         )}

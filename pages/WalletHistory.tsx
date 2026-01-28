@@ -84,43 +84,46 @@ const WalletHistory: React.FC<Props> = ({ onNavigate }) => {
     <div className="bg-background-dark font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black">
       <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto">
 
-        <header className="sticky top-0 z-50 flex items-center justify-between bg-background-dark/95 p-4 pb-2 border-b border-gray-200">
-          <button
-            onClick={() => onNavigate('deposit')}
-            className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[24px]">arrow_back</span>
-          </button>
-          <h2 className="text-black text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
-            Histórico de Depósito
-          </h2>
-          <div className="relative">
-            <button
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className={`flex size-10 shrink-0 items-center justify-center rounded-full transition-colors ${isFilterOpen ? 'bg-primary text-black' : 'text-black hover:bg-white/10'}`}
-            >
-              <span className="material-symbols-outlined text-[24px]">filter_list</span>
-            </button>
+        <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+          {/* Background Decorative Circles */}
+          <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
 
-            {isFilterOpen && (
-              <>
-                <div className="fixed inset-0 z-10" onClick={() => setIsFilterOpen(false)}></div>
-                <div className="absolute right-0 mt-2 w-48 bg-surface-dark border border-white/10 rounded-2xl z-20 py-2 overflow-hidden animate-in fade-in zoom-in duration-200 origin-top-right">
-                  <p className="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-500 border-b border-gray-200 mb-1">Filtrar por Status</p>
-                  {filters.map(filter => (
-                    <button
-                      key={filter}
-                      onClick={() => handleFilterClick(filter)}
-                      className={`flex w-full items-center justify-between px-4 py-3 text-sm font-bold transition-colors ${activeFilter === filter ? 'text-primary bg-primary/5' : 'text-gray-700 hover:bg-white/5'
-                        }`}
-                    >
-                      <span>{filter}</span>
-                      {activeFilter === filter && <span className="material-symbols-outlined text-[18px]">check</span>}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
+          <div className="relative z-10 flex items-center justify-between">
+            <button
+              onClick={() => onNavigate('deposit')}
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+            >
+              <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+            </button>
+            <h1 className="text-xl font-black text-white tracking-tight">Depósitos</h1>
+            <div className="relative">
+              <button
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+                className={`w-11 h-11 flex items-center justify-center rounded-full transition-all backdrop-blur-md active:scale-90 ${isFilterOpen ? 'bg-[#00C853] text-white shadow-lg' : 'bg-white/20 text-white'}`}
+              >
+                <span className="material-symbols-outlined text-[24px]">filter_list</span>
+              </button>
+
+              {isFilterOpen && (
+                <>
+                  <div className="fixed inset-0 z-[100]" onClick={() => setIsFilterOpen(false)}></div>
+                  <div className="absolute right-0 mt-3 w-52 bg-white border border-gray-100 rounded-3xl z-[101] py-2 overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200 origin-top-right">
+                    <p className="px-5 py-3 text-[10px] font-black uppercase tracking-widest text-gray-400 border-b border-gray-100 mb-1">Filtrar Status</p>
+                    {filters.map(filter => (
+                      <button
+                        key={filter}
+                        onClick={() => handleFilterClick(filter)}
+                        className={`flex w-full items-center justify-between px-5 py-4 text-sm font-bold transition-colors ${activeFilter === filter ? 'text-[#00C853] bg-green-50' : 'text-gray-700 hover:bg-gray-50'}`}
+                      >
+                        <span>{filter}</span>
+                        {activeFilter === filter && <span className="material-symbols-outlined text-[18px]">check_circle</span>}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </header>
 

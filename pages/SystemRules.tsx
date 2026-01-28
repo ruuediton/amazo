@@ -10,15 +10,21 @@ const SystemRules: React.FC<Props> = ({ onNavigate }) => {
     <div className="bg-white font-display text-black antialiased min-h-screen flex flex-col selection:bg-primary selection:text-black">
       <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white">
 
-        {/* Header Institucional */}
-        <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 justify-between border-b border-gray-100">
-          <button
-            onClick={() => onNavigate('info')}
-            className="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[24px]">arrow_back</span>
-          </button>
-          <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10 uppercase text-[12px] tracking-[0.15em]">Normas de Operação</h2>
+        <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+          {/* Background Decorative Circles */}
+          <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10 flex items-center justify-between">
+            <button
+              onClick={() => onNavigate('info')}
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+            >
+              <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+            </button>
+            <h1 className="text-xl font-black text-white tracking-tight">Normas</h1>
+            <div className="w-11"></div>
+          </div>
         </header>
 
         {/* Conteúdo Rigoroso */}

@@ -16,17 +16,23 @@ interface WalletProps {
 const Wallet: React.FC<WalletProps> = ({ onNavigate }) => {
   return (
     <div className="flex flex-col pb-24">
-      <header className="flex items-center p-4 justify-between sticky top-0 z-20 bg-white/95 border-b border-gray-200">
-        <button
-          onClick={() => onNavigate('home')}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 transition-colors text-primary"
-        >
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
-        <h2 className="text-lg font-bold flex-1 text-center">Histórico de Conta</h2>
-        <button className="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors">
-          <span className="material-symbols-outlined">search</span>
-        </button>
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 flex items-center justify-between">
+          <button
+            onClick={() => onNavigate('home')}
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+          >
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+          </button>
+          <h1 className="text-xl font-black text-white tracking-tight">Histórico</h1>
+          <button className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90">
+            <span className="material-symbols-outlined text-white text-[24px]">search</span>
+          </button>
+        </div>
       </header>
 
       <main className="flex-1 overflow-y-auto px-4">

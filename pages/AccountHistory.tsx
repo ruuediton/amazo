@@ -191,12 +191,21 @@ const AccountHistory: React.FC<Props> = ({ onNavigate }) => {
 
   return (
     <div className="bg-white font-sans text-black antialiased min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="flex items-center p-4 justify-between bg-white sticky top-0 z-40 border-b border-gray-100">
-        <button onClick={() => onNavigate('profile')} className="size-10 flex items-center justify-start rounded-full hover:bg-gray-50 transition-colors text-[#00C853]">
-          <span className="material-symbols-outlined text-[28px]">chevron_left</span>
-        </button>
-        <h2 className="text-lg font-bold flex-1 text-center pr-10 tracking-tight">Histórico de Atividade</h2>
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 flex items-center justify-between">
+          <button
+            onClick={() => onNavigate('profile')}
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+          >
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+          </button>
+          <h1 className="text-xl font-black text-white tracking-tight">Atividade</h1>
+          <div className="w-11"></div>
+        </div>
       </header>
 
       <main className="flex-1 overflow-y-auto no-scrollbar pb-24 touch-pan-y pt-2">
@@ -214,19 +223,18 @@ const AccountHistory: React.FC<Props> = ({ onNavigate }) => {
               <div className="flex flex-col gap-2 px-4">
                 {groupedTransactions[date].map((t: Transaction) => (
                   <div key={t.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-[24px] border border-transparent transition-all active:scale-[0.98]">
-                    <div className={`relative flex items-center justify-center size-12 rounded-full shrink-0 ${
-                      t.category === 'Recarga' ? 'bg-[#00C853]/10 text-[#00C853]' :
-                      t.category === 'Resgate' ? 'bg-red-500/10 text-red-500' :
-                      t.category === 'Segurança' ? 'bg-blue-500/10 text-blue-400' :
-                      t.category === 'Promoção' ? 'bg-purple-500/10 text-purple-600' :
-                      'bg-gray-200 text-gray-600'
-                    }`}>
+                    <div className={`relative flex items-center justify-center size-12 rounded-full shrink-0 ${t.category === 'Recarga' ? 'bg-[#00C853]/10 text-[#00C853]' :
+                        t.category === 'Resgate' ? 'bg-red-500/10 text-red-500' :
+                          t.category === 'Segurança' ? 'bg-blue-500/10 text-blue-400' :
+                            t.category === 'Promoção' ? 'bg-purple-500/10 text-purple-600' :
+                              'bg-gray-200 text-gray-600'
+                      }`}>
                       <span className="material-symbols-outlined text-[24px]">
                         {t.category === 'Recarga' ? 'add_card' :
                           t.category === 'Resgate' ? 'payments' :
-                          t.category === 'Segurança' ? 'security' :
-                          t.category === 'Promoção' ? 'redeem' :
-                          'shopping_bag'}
+                            t.category === 'Segurança' ? 'security' :
+                              t.category === 'Promoção' ? 'redeem' :
+                                'shopping_bag'}
                       </span>
                     </div>
                     <div className="flex flex-col flex-1 min-w-0">

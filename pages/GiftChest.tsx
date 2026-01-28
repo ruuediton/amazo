@@ -92,21 +92,27 @@ const GiftChest: React.FC<Props> = ({ onNavigate, onOpenSupport, showToast }) =>
 
   return (
     <div className="bg-white text-black min-h-screen flex flex-col font-sans antialiased">
-      {/* TopAppBar */}
-      <div className="flex items-center bg-white px-4 py-2 justify-between sticky top-0 z-50 border-b border-gray-100">
-        <div
-          onClick={() => onNavigate('home')}
-          className="size-10 flex items-center shrink-0 cursor-pointer hover:bg-gray-50 rounded-full justify-center transition-colors"
-        >
-          <span className="material-symbols-outlined text-[#00C853] text-[20px]">arrow_back</span>
-        </div>
-        <h2 className="text-black text-[32px] font-black leading-tight tracking-[-0.015em] flex-1 text-center">BP</h2>
-        <div className="flex w-10 items-center justify-end">
-          <button onClick={() => onOpenSupport?.()} className="flex cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-black p-0">
-            <span className="material-symbols-outlined text-[#00C853] text-[20px]">help_outline</span>
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 flex items-center justify-between">
+          <button
+            onClick={() => onNavigate('home')}
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+          >
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+          </button>
+          <h1 className="text-xl font-black text-white tracking-tight">BP</h1>
+          <button
+            onClick={() => onOpenSupport?.()}
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+          >
+            <span className="material-symbols-outlined text-white text-[24px]">help_outline</span>
           </button>
         </div>
-      </div>
+      </header>
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col justify-center items-center px-4 max-w-lg mx-auto w-full pb-20">

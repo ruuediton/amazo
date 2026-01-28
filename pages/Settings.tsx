@@ -103,16 +103,21 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
     return (
         <div className="flex flex-col min-h-screen bg-white font-sans text-black antialiased">
-            <header className="sticky top-0 z-50 flex items-center bg-white/95 p-4 pb-2 border-b border-gray-200">
-                <button
-                    onClick={() => onNavigate('profile')}
-                    className="text-[#00C853] flex size-12 shrink-0 items-center justify-start hover:bg-gray-50 rounded-full transition-all active:scale-95"
-                >
-                    <span className="material-symbols-outlined text-[24px]">chevron_left</span>
-                </button>
-                <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">
-                    ConfiguraÃ§Ãµes
-                </h2>
+            <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+                {/* Background Decorative Circles */}
+                <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+                <div className="relative z-10 flex items-center justify-between">
+                    <button
+                        onClick={() => onNavigate('profile')}
+                        className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+                    >
+                        <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+                    </button>
+                    <h1 className="text-xl font-black text-white tracking-tight">Configurações</h1>
+                    <div className="w-11"></div>
+                </div>
             </header>
 
             <main className="flex-1 flex flex-col px-6 pt-8 pb-32 space-y-8">

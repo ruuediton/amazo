@@ -170,18 +170,22 @@ const AddBank: React.FC<AddBankProps> = ({ onNavigate, showToast }) => {
 
   return (
     <div className="font-sans antialiased bg-white text-[#0F1111] min-h-screen flex flex-col selection:bg-amber-100">
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="flex items-center justify-between px-4 py-3">
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 flex items-center justify-between">
           <button
             onClick={() => onNavigate('profile')}
-            className="group flex items-center justify-center size-10 rounded-full hover:bg-gray-100 active:scale-95 transition-all"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
           >
-            <span className="material-symbols-outlined text-[#0F1111] text-[24px]">arrow_back</span>
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
           </button>
-          <h1 className="text-[16px] font-bold text-[#0F1111] tracking-tight">
+          <h1 className="text-xl font-black text-white tracking-tight">
             {mode === 'view' ? 'Dados Bancários' : mode === 'edit' ? 'Editar Conta' : 'Nova Conta'}
           </h1>
-          <div className="w-10"></div>
+          <div className="w-11"></div>
         </div>
       </header>
 

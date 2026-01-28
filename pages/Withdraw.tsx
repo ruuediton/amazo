@@ -149,23 +149,27 @@ const Withdraw: React.FC<Props> = ({ onNavigate, showToast }) => {
   return (
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20">
       {/* Premium Header */}
-      <div className="bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pt-8 pb-20 px-4 relative">
-        <div className="flex items-center justify-between mb-4">
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-20 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 flex items-center justify-between">
           <button
             onClick={() => onNavigate('profile')}
-            className="size-10 flex items-center justify-center rounded-full bg-white/20 text-white active:scale-95 transition-all"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
           >
-            <span className="material-symbols-outlined">arrow_back</span>
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
           </button>
-          <h1 className="text-white text-lg font-bold tracking-tight">Retirada</h1>
+          <h1 className="text-xl font-black text-white tracking-tight text-center">Retirada</h1>
           <button
             onClick={() => onNavigate('withdrawal-history')}
-            className="size-10 flex items-center justify-center rounded-full bg-white/20 text-white active:scale-95 transition-all"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
           >
-            <span className="material-symbols-outlined">history</span>
+            <span className="material-symbols-outlined text-white text-[28px]">history</span>
           </button>
         </div>
-      </div>
+      </header>
 
       <main className="px-4 -mt-12 relative z-10 space-y-6">
         {/* Floating Balance Card */}

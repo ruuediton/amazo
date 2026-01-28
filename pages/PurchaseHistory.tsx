@@ -115,16 +115,24 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ onNavigate, showToast
 
   return (
     <div className="bg-white min-h-screen text-[#0F1111] font-sans selection:bg-amber-100 pb-32">
-      <header className="sticky top-0 z-50 flex items-center bg-white border-b border-gray-100 px-4 py-4">
-        <button
-          onClick={() => onNavigate('profile')}
-          className="size-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-all active:scale-90"
-        >
-          <span className="material-symbols-outlined text-[24px] text-[#0F1111]">arrow_back</span>
-        </button>
-        <div className="flex-1 flex flex-col items-center pr-10">
-          <h2 className="text-[#0F1111] text-[16px] font-bold">Minhas Compras</h2>
-          {isRefreshing && <span className="text-[10px] text-amber-600 font-bold animate-pulse">Sincronizando...</span>}
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 flex items-center justify-between">
+          <button
+            onClick={() => onNavigate('profile')}
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+          >
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+          </button>
+          <h1 className="text-xl font-black text-white tracking-tight">Minhas Compras</h1>
+          <div className="w-11">
+            {isRefreshing && (
+              <div className="size-5 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+            )}
+          </div>
         </div>
       </header>
 

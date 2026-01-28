@@ -68,15 +68,21 @@ const UpdateWithdrawPassword: React.FC<UpdateWithdrawPasswordProps> = ({ onNavig
 
     return (
         <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-white font-sans text-black antialiased">
-            {/* Header */}
-            <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-background-dark/95 border-b border-gray-200">
-                <button
-                    onClick={() => onNavigate('profile')}
-                    className="flex size-10 items-center justify-start rounded-full hover:bg-gray-50 transition-colors"
-                >
-                    <span className="material-symbols-outlined text-[#00C853]" style={{ fontSize: '28px' }}>chevron_left</span>
-                </button>
-                <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Senha de Retirada</h1>
+            <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+                {/* Background Decorative Circles */}
+                <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+                <div className="relative z-10 flex items-center justify-between">
+                    <button
+                        onClick={() => onNavigate('profile')}
+                        className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+                    >
+                        <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+                    </button>
+                    <h1 className="text-xl font-black text-white tracking-tight">Senha de Retirada</h1>
+                    <div className="w-11"></div>
+                </div>
             </header>
 
             <main className="flex-1 px-5 py-2 flex flex-col">

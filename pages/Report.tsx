@@ -12,15 +12,21 @@ const Report: React.FC<ReportProps> = ({ onNavigate }) => {
 
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden bg-background-dark font-display text-black antialiased">
-      {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center bg-background-dark p-4 pb-2 justify-between border-b border-gray-200">
-        <button
-          onClick={() => onNavigate('profile')}
-          className="text-primary flex size-12 shrink-0 items-center justify-start hover:opacity-70 transition-opacity"
-        >
-          <span className="material-symbols-outlined text-2xl">arrow_back</span>
-        </button>
-        <h2 className="text-black text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Relatar Problema</h2>
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 flex items-center justify-between">
+          <button
+            onClick={() => onNavigate('profile')}
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+          >
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+          </button>
+          <h1 className="text-xl font-black text-white tracking-tight">Relatar Problema</h1>
+          <div className="w-11"></div>
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col pb-24">

@@ -94,17 +94,21 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
 
     return (
         <div className="bg-white min-h-screen font-sans text-[#0F1111] selection:bg-amber-100 pb-20 antialiased">
-            <header className="sticky top-0 z-50 flex items-center justify-between bg-[#00C853] px-6 py-4 border-b border-[#00C853]">
-                <button
-                    onClick={() => onNavigate('profile')}
-                    className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 transition-all"
-                >
-                    <span className="material-symbols-outlined text-[#0F1111] text-[24px]">arrow_back</span>
-                </button>
-                <h1 className="flex-1 text-center text-[16px] font-bold text-[#0F1111]">
-                    Enviar Saldo
-                </h1>
-                <div className="w-10"></div>
+            <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
+                {/* Background Decorative Circles */}
+                <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+
+                <div className="relative z-10 flex items-center justify-between">
+                    <button
+                        onClick={() => onNavigate('profile')}
+                        className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+                    >
+                        <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
+                    </button>
+                    <h1 className="text-xl font-black text-white tracking-tight">Enviar Saldo</h1>
+                    <div className="w-11"></div>
+                </div>
             </header>
 
             <main className="flex-1 flex flex-col px-6 pt-8 animate-in fade-in slide-in-from-bottom-8 duration-500 max-w-md mx-auto">

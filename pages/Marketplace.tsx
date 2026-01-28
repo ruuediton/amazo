@@ -125,35 +125,35 @@ const Marketplace: React.FC<Props> = ({ onNavigate, showToast }) => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-[#0F1111] pb-20 selection:bg-amber-100 antialiased">
-      {/* Header Area: BP Style */}
-      <div className="relative h-[220px] w-full overflow-hidden bg-[#232F3E]">
-        <div className="absolute inset-0 bg-[#232F3E]/80 mix-blend-multiply transition-opacity" />
-        <img loading="lazy" decoding="async"
-          src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1000"
-          alt="BP Wealth Header"
-          className="absolute inset-0 w-full h-full object-cover contrast-[1.05] brightness-[1.02] saturate-[1.05] opacity-30 grayscale"
-        />
+      <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-20 pt-4 px-4 overflow-hidden">
+        {/* Background Decorative Circles */}
+        <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-20%] left-[-10%] w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
 
-        <div className="absolute top-6 left-5 right-5 z-10 flex items-center justify-between">
+        <div className="relative z-10 flex items-center justify-between mb-8">
           <button
             onClick={() => onNavigate('home')}
-            className="size-10 flex items-center justify-center rounded-full bg-white/10 text-white active:scale-90 transition-all hover:bg-white/20"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
           >
-            <span className="material-symbols-outlined">arrow_back</span>
+            <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>
           </button>
-          <div className="flex items-center gap-2">
-            <span className="bg-[#00C853] text-[#0F1111] px-2 py-0.5 rounded text-[10px] font-black uppercase">Market</span>
-          </div>
+          <h1 className="text-xl font-black text-white tracking-tight">Market</h1>
+          <button
+            onClick={() => onNavigate('historico-fundos')}
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
+          >
+            <span className="material-symbols-outlined text-white text-[24px]">history</span>
+          </button>
         </div>
 
-        <div className="absolute bottom-10 left-8 z-10 flex flex-col gap-1">
+        <div className="relative z-10 flex flex-col gap-1">
           <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider">Estoque Global</p>
           <h1 className="text-white text-4xl font-black tabular-nums tracking-tighter">
-            <span className="text-[#febd69] text-xl mr-1">KZs</span>
+            <span className="text-white/80 text-xl mr-1">KZs</span>
             {totalGlobalAvailable.toLocaleString('pt-AO')}
           </h1>
         </div>
-      </div>
+      </header>
 
       {/* Profile/Wallet Card - BP Flat Style */}
       <div className="px-5 -mt-8 mb-4 relative z-20">
