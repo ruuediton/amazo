@@ -69,35 +69,11 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
   return (
     <div className="bg-white font-sans text-black antialiased min-h-screen flex flex-col px-6 pt-6 pb-10">
 
-      {/* Header / Back Button */}
-      <div className="w-full flex items-start mb-6">
-        <button
-          onClick={() => onNavigate('home')}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <span className="material-symbols-outlined text-[28px]">chevron_left</span>
-        </button>
-      </div>
-
-      {/* 3D Illustration */}
-      <div className="w-full flex justify-center mb-10">
-        <div className="w-[40%] aspect-square relative flex items-center justify-center">
-          {/* Using a high-quality green 3D shield illustration */}
-          <img
-            src="https://cdn3d.iconscout.com/3d/premium/thumb/security-check-box-5353591-4482563.png"
-            alt="Security Login"
-            className="w-full h-full object-contain"
-            onError={(e) => {
-              // Fallback if image fails
-              (e.target as HTMLImageElement).src = "https://cdn-icons-png.flaticon.com/512/3699/3699516.png";
-            }}
-          />
-        </div>
-      </div>
 
       {/* Title */}
-      <div className="w-full mb-8">
-        <h1 className="text-[28px] font-bold text-[#111] leading-tight">Entrar</h1>
+      <div className="w-full mb-12 mt-16 text-center">
+        <p className="text-[#111] font-black text-xl tracking-[2px] mb-1">BP</p>
+        <h1 className="text-[28px] font-medium text-[#111] leading-tight">Entrar</h1>
       </div>
 
       <form className="w-full flex-col gap-5 flex" onSubmit={handleLogin}>
@@ -109,8 +85,8 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
           <span className="material-symbols-outlined text-gray-400 text-[14px]">arrow_drop_down</span>
           <input
             type="tel"
-            placeholder="9XX XXX XXX"
-            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
+            placeholder="Por favor digite nº celular"
+            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[13px]"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
@@ -121,8 +97,8 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
           <span className="material-symbols-outlined text-[#00C853] text-[24px]">lock</span>
           <input
             type={showPassword ? "text" : "password"}
-            placeholder=".........."
-            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px] tracking-widest"
+            placeholder="Por favor digite senha login"
+            className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[13px]"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

@@ -103,6 +103,7 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
 
     return (
         <div className="flex flex-col min-h-screen bg-white font-sans text-black antialiased">
+            {/* Standard Header - Original Style */}
             <header className="relative bg-gradient-to-b from-[#00C853] to-[#00C853]/10 pb-8 pt-4 px-4 overflow-hidden">
                 {/* Background Decorative Circles */}
                 <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
@@ -120,110 +121,108 @@ const Settings: React.FC<Props> = ({ onNavigate, showToast, profile }) => {
                 </div>
             </header>
 
-            <main className="flex-1 flex flex-col px-6 pt-8 pb-32 space-y-8">
-                <section className="flex flex-col items-center">
-                    <div className="relative mb-4 cursor-pointer group" onClick={() => fileInputRef.current?.click()}>
-                        <div
-                            className="size-24 rounded-full border-4 border-[#f4c025] bg-center bg-cover bg-no-repeat overflow-hidden transition-transform group-hover:scale-105"
-                            style={{ backgroundImage: `url("${avatarUrl || avatars[0]}")` }}
-                        ></div>
-                        <div className="absolute bottom-0 right-0 bg-primary text-black size-8 rounded-full flex items-center justify-center border-2 border-white group-hover:bg-primary/90">
-                            <span className="material-symbols-outlined text-[18px]">photo_camera</span>
-                        </div>
-                        <input
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={handleFileUpload}
-                            className="hidden"
-                            accept="image/*"
-                        />
-                    </div>
-                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Avatar do Perfil</p>
-                </section>
+            <main className="flex-1 flex flex-col px-5 pt-5 relative z-20 pb-24">
 
-                <section className="space-y-6">
-                    <div className="space-y-2">
-                        <label className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Nome Completo</label>
-                        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent focus-within:border-[#00C853] transition-colors">
-                            <span className="material-symbols-outlined text-[#00C853] text-[24px]">person</span>
-                            <input
-                                type="text"
-                                value={fullName}
-                                onChange={(e) => setFullName(e.target.value)}
-                                placeholder="Seu nome completo"
-                                className="bg-transparent flex-1 h-full outline-none text-[#111] font-medium placeholder:text-gray-400 text-[14px]"
-                            />
-                        </div>
+                {/* Personal Information Section - Compact */}
+                <div className="bg-white rounded-[24px] p-5 shadow-xl shadow-green-900/5 border border-gray-50 mb-5 text-center">
+                    <div className="size-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                        <span className="material-symbols-outlined text-[#00C853] text-[32px]">manage_accounts</span>
                     </div>
+                    <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[1.5px] mb-4">Informações Pessoais</h3>
 
-                    <div className="space-y-2 opacity-60">
-                        <label className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Telefone (Não editável)</label>
-                        <div className="bg-gray-50 rounded-xl h-14 flex items-center px-4 gap-3 relative border border-transparent transition-colors">
-                            <span className="material-symbols-outlined text-gray-400 text-[24px]">phone</span>
-                            <input
-                                type="text"
-                                value={profile?.phone || ''}
-                                disabled
-                                className="bg-transparent flex-1 h-full outline-none text-gray-400 font-medium text-[14px]"
-                            />
+                    <div className="space-y-4">
+                        <div className="space-y-1.5 text-left">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Nome Completo</label>
+                            <div className="bg-[#F8FAF8] rounded-xl h-12 flex items-center px-4 gap-3 border border-transparent focus-within:border-[#00C853]/20 transition-all">
+                                <span className="material-symbols-outlined text-[#00C853] text-[20px]">person</span>
+                                <input
+                                    type="text"
+                                    value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                    placeholder="Seu nome completo"
+                                    className="bg-transparent flex-1 h-full outline-none text-[#111] font-bold placeholder:text-gray-400 text-[13px]"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-1.5 text-left opacity-60">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Telefone da Conta</label>
+                            <div className="bg-gray-50 rounded-xl h-12 flex items-center px-4 gap-3 border border-gray-100">
+                                <span className="material-symbols-outlined text-gray-400 text-[20px]">phone_iphone</span>
+                                <input
+                                    type="text"
+                                    value={profile?.phone || ''}
+                                    disabled
+                                    className="bg-transparent flex-1 h-full outline-none text-gray-400 font-bold text-[13px]"
+                                />
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
 
-                <section className="space-y-4">
-                    <h3 className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">SeguranÃ§a e Acesso</h3>
-                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-                        {[
-                            { label: 'Senha login', action: () => onNavigate('change-password'), icon: 'lock_reset' },
-                            { label: 'PIN de Retirada', action: () => onNavigate('withdraw-password'), icon: 'pin' },
-                            { label: 'Alterar PIN de Retirada', action: () => onNavigate('update-withdraw-password'), icon: 'lock_person' },
-                        ].map((link, i, arr) => (
-                            <button
-                                key={link.label}
-                                onClick={link.action}
-                                className={`w-full flex items-center justify-between p-4 active:bg-gray-50 transition-colors ${i !== arr.length - 1 ? 'border-b border-gray-100' : ''}`}
-                            >
-                                <div className="flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-primary">{link.icon}</span>
-                                    <span className="text-sm font-bold">{link.label}</span>
-                                </div>
-                                <span className="material-symbols-outlined text-gray-300">chevron_right</span>
-                            </button>
-                        ))}
-                    </div>
-                </section>
+                {/* Navigation Sections - More Compact Items */}
+                <div className="space-y-6">
+                    <section>
+                        <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[1.5px] mb-3 ml-1">Segurança</h3>
+                        <div className="grid gap-2">
+                            {[
+                                { label: 'Senha de Acesso', action: () => onNavigate('change-password'), icon: 'lock_open' },
+                                { label: 'Definir PIN de Saque', action: () => onNavigate('withdraw-password'), icon: 'vibration' },
+                                { label: 'Alterar PIN Atual', action: () => onNavigate('update-withdraw-password'), icon: 'security' },
+                            ].map((item) => (
+                                <button
+                                    key={item.label}
+                                    onClick={item.action}
+                                    className="w-full flex items-center justify-between p-3 bg-[#F8FAF8] hover:bg-[#00C853] hover:text-white rounded-xl transition-all active:scale-[0.98] group"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className="size-9 rounded-lg bg-white shadow-sm flex items-center justify-center text-[#00C853] group-hover:bg-white/20 group-hover:text-white transition-colors">
+                                            <span className="material-symbols-outlined text-[18px]">{item.icon}</span>
+                                        </div>
+                                        <span className="text-[13px] font-bold">{item.label}</span>
+                                    </div>
+                                    <span className="material-symbols-outlined text-gray-300 group-hover:text-white/50 text-[18px]">chevron_right</span>
+                                </button>
+                            ))}
+                        </div>
+                    </section>
 
-                <section className="space-y-4">
-                    <h3 className="text-[11px] font-black uppercase tracking-widest text-gray-500 ml-1">Conta e Suporte</h3>
-                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-                        {[
-                            { label: 'Detalhes de Conta', action: () => onNavigate('detalhes-conta'), icon: 'account_circle' },
-                            { label: 'Suporte', action: () => onNavigate('support'), icon: 'support_agent' },
-                            { label: 'Relatar Problema', action: () => onNavigate('report'), icon: 'report_problem' },
-                        ].map((link, i, arr) => (
-                            <button
-                                key={link.label}
-                                onClick={link.action}
-                                className={`w-full flex items-center justify-between p-4 active:bg-gray-50 transition-colors ${i !== arr.length - 1 ? 'border-b border-gray-100' : ''}`}
-                            >
-                                <div className="flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-primary">{link.icon}</span>
-                                    <span className="text-sm font-bold">{link.label}</span>
-                                </div>
-                                <span className="material-symbols-outlined text-gray-300">chevron_right</span>
-                            </button>
-                        ))}
-                    </div>
-                </section>
+                    <section>
+                        <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[1.5px] mb-3 ml-1">Outros</h3>
+                        <div className="grid gap-2">
+                            {[
+                                { label: 'Dados Bancários', action: () => onNavigate('detalhes-conta'), icon: 'account_balance' },
+                                { label: 'Centro de Ajuda', action: () => onNavigate('support'), icon: 'live_help' },
+                                { label: 'Termos e Regras', action: () => onNavigate('system-rules'), icon: 'gavel' },
+                            ].map((item) => (
+                                <button
+                                    key={item.label}
+                                    onClick={item.action}
+                                    className="w-full flex items-center justify-between p-3 bg-[#F8FAF8] hover:bg-[#00C853] hover:text-white rounded-xl transition-all active:scale-[0.98] group"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className="size-9 rounded-lg bg-white shadow-sm flex items-center justify-center text-[#00C853] group-hover:bg-white/20 group-hover:text-white transition-colors">
+                                            <span className="material-symbols-outlined text-[18px]">{item.icon}</span>
+                                        </div>
+                                        <span className="text-[13px] font-bold">{item.label}</span>
+                                    </div>
+                                    <span className="material-symbols-outlined text-gray-300 group-hover:text-white/50 text-[18px]">chevron_right</span>
+                                </button>
+                            ))}
+                        </div>
+                    </section>
+                </div>
 
-                <div className="pt-4">
+                {/* Compact Save Button */}
+                <div className="pt-8">
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        className="w-full h-14 bg-[#00C853] text-white rounded-2xl font-bold text-sm uppercase tracking-wide active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-[#00a844] shadow-lg shadow-green-200"
+                        className="w-full h-14 bg-[#00C853] text-white rounded-2xl font-black text-[15px] tracking-tight active:scale-95 transition-all shadow-xl shadow-green-500/20 flex items-center justify-center gap-2 hover:bg-[#00a844]"
                     >
-                        {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar'}
+                        {saving ? <SpokeSpinner size="w-5 h-5" className="text-white" /> : 'Salvar Alterações'}
                     </button>
+                    <p className="text-center text-gray-400 text-[10px] font-medium mt-3 uppercase tracking-widest opacity-60">Pressione para atualizar</p>
                 </div>
             </main >
         </div >
