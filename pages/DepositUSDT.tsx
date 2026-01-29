@@ -88,7 +88,7 @@ const DepositUSDT: React.FC<Props> = ({ onNavigate, showToast, data }) => {
 
         <div className="relative z-10 flex items-center justify-between">
           <button
-            onClick={() => onNavigate('profile')}
+            onClick={() => onNavigate('deposit')}
             className="w-11 h-11 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all active:scale-90"
           >
             <span className="material-symbols-outlined text-white text-[28px]">arrow_back</span>

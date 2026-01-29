@@ -50,6 +50,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const WithdrawalHistory = lazy(() => import('./pages/WithdrawalHistory'));
 const SubordinateList = lazy(() => import('./pages/SubordinateList'));
 const InvitePage = lazy(() => import('./pages/InvitePage'));
+const HistoricoP2P = lazy(() => import('./pages/HistoricoP2P'));
 import LoadingOverlay from './components/LoadingOverlay';
 import SpokeSpinner from './components/SpokeSpinner';
 import FloatingSupportButton from './components/FloatingSupportButton';
@@ -65,7 +66,7 @@ import { useNetwork } from './contexts/NetworkContext';
 const App: React.FC = () => {
   const { showLoading, hideLoading, withLoading, showSuccess, showError, showWarning, reset } = useLoading();
   const { runWithTimeout } = useNetwork();
-  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'wallet' | 'profile' | 'invite' | 'support' | 'tutorials' | 'about' | 'report' | 'add-bank' | 'withdraw-password' | 'deposit' | 'purchase-history' | 'change-password' | 'tutoriais-falar-com-gerente' | 'tutoriais-como-convidar' | 'como-comprar' | 'detalhes-conta' | 'update-withdraw-password' | 'historico-conta' | 'register' | 'confirmar-deposito' | 'como-retirar-fundos' | 'tutoriais-depositos' | 'retirada' | 'login' | 'security-auth' | 'security-verify' | 'splash-ads' | 'campaigns' | 'como-enviar-comprovante' | 'tutoriais-definir-senha' | 'tutoriais-adicionar-conta' | 'tutoriais-ganhos-tarefas' | 'ganhos-tarefas' | 'gift-chest' | 'reward-claim' | 'info' | 'terms-of-use' | 'privacy-policy' | 'system-rules' | 'subordinate-list' | 'deposit-usdt' | 'deposit-history' | 'tutoriais-adicionar-conta' | 'investimentos-fundo' | 'historico-fundos' | 'settings' | 'withdrawal-history' | 'invite-page'>('register');
+  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'wallet' | 'profile' | 'invite' | 'support' | 'tutorials' | 'about' | 'report' | 'add-bank' | 'withdraw-password' | 'deposit' | 'purchase-history' | 'change-password' | 'tutoriais-falar-com-gerente' | 'tutoriais-como-convidar' | 'como-comprar' | 'detalhes-conta' | 'update-withdraw-password' | 'historico-conta' | 'register' | 'confirmar-deposito' | 'como-retirar-fundos' | 'tutoriais-depositos' | 'retirada' | 'login' | 'security-auth' | 'security-verify' | 'splash-ads' | 'campaigns' | 'como-enviar-comprovante' | 'tutoriais-definir-senha' | 'tutoriais-adicionar-conta' | 'tutoriais-ganhos-tarefas' | 'ganhos-tarefas' | 'gift-chest' | 'reward-claim' | 'info' | 'terms-of-use' | 'privacy-policy' | 'system-rules' | 'subordinate-list' | 'deposit-usdt' | 'deposit-history' | 'tutoriais-adicionar-conta' | 'investimentos-fundo' | 'historico-fundos' | 'settings' | 'withdrawal-history' | 'invite-page' | 'historico-p2p'>('register');
   const [lastAction, setLastAction] = useState<() => void>(() => { });
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<any>(null);
@@ -95,7 +96,11 @@ const App: React.FC = () => {
       'deposit-history': 'Histórico',
       'purchase-history': 'Compras',
       'change-password': 'Senha',
-      'add-bank': 'Adicionar Banco'
+      'add-bank': 'Adicionar Banco',
+      'historico-p2p': 'Histórico P2P',
+      'p2p-transfer': 'Enviar Saldo',
+      'settings': 'Configurações',
+      'subordinate-list': 'Equipe'
     };
     const title = titles[currentPage as string] || 'BP Commerce';
     document.title = `${title} | BP`;
@@ -215,7 +220,7 @@ const App: React.FC = () => {
     setNavigationData(data);
 
     // Dynamic prioritization
-    const heavyPages = ['historico-conta', 'withdrawal-history', 'purchase-history', 'shop'];
+    const heavyPages = ['historico-conta', 'historico-p2p', 'withdrawal-history', 'purchase-history', 'shop'];
 
     if (heavyPages.includes(page)) {
       withLoading(async () => {
@@ -322,7 +327,8 @@ const App: React.FC = () => {
       'p2p-transfer': <TransferenciaP2P onNavigate={handleNavigate} showToast={showToast} />,
       'settings': <Settings onNavigate={handleNavigate} showToast={showToast} profile={profile} />,
       'withdrawal-history': <WithdrawalHistory onNavigate={handleNavigate} />,
-      'invite-page': <InvitePage onNavigate={handleNavigate} showToast={showToast} />
+      'invite-page': <InvitePage onNavigate={handleNavigate} showToast={showToast} />,
+      'historico-p2p': <HistoricoP2P onNavigate={handleNavigate} />
     };
 
     const target = pagesMap[currentPage] || <Home onNavigate={handleNavigate} profile={profile} />;

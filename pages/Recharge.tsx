@@ -15,9 +15,12 @@ const Recharge: React.FC<DepositProps> = ({ onNavigate, showToast }) => {
     const [banks, setBanks] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedBank, setSelectedBank] = useState<any>(null);
+    const [paymentMethod, setPaymentMethod] = useState<'BANK' | 'USDT'>('BANK');
 
     const [exchangeRate, setExchangeRate] = useState<number>(0);
     const [usdtAmount, setUsdtAmount] = useState<string>('0.00');
+
+    const quickAmounts = [3000, 5000, 10000, 20000, 50000, 100000];
 
     // Fetch USD Rate
     useEffect(() => {

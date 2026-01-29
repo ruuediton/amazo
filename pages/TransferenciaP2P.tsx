@@ -17,10 +17,12 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
     const [receiverName, setReceiverName] = useState<string | null>(null);
     const [isValidatingPhone, setIsValidatingPhone] = useState(false);
 
-    const feePercentage = 0.02; // 2%
+    const feePercentage = 0.05; // 5% for internal transfers
     const amountNum = Number(amount);
     const fee = amountNum > 0 ? amountNum * feePercentage : 0;
-    const total = amountNum + fee;
+    const total = amountNum; // If amount is gross (bruto), total debited is amount.
+    // Wait, the user said "amount - fee -> valor final enviado". 
+    // This implies amount is the TOTAL debited.
 
     // Real-time phone validation
     const handlePhoneChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +82,7 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
 
                 if (data && data.success) {
                     showToast?.(data.message || "Envio bem-sucedido", 'success');
-                    onNavigate('historico-conta');
+                    onNavigate('historico-p2p');
                 } else {
                     throw new Error(data?.message || 'Erro no envio.');
                 }
@@ -167,17 +169,17 @@ const TransferenciaP2P: React.FC<Props> = ({ onNavigate, showToast }) => {
                     {/* Calculations Summary */}
                     <div className="bg-gray-50/50 border border-gray-100 rounded-2xl p-5 space-y-4">
                         <div className="flex justify-between items-center text-[12px]">
-                            <span className="text-gray-500 font-bold uppercase tracking-tighter">Subtotal</span>
-                            <span className="text-[#0F1111] font-black">Kz {amountNum.toLocaleString('pt-AO')}</span>
+                            <span className="text-gray-500 font-bold uppercase tracking-tighter">Subtotal (Líquido)</span>
+                            <span className="text-[#0F1111] font-black">Kz {(amountNum - fee).toLocaleString('pt-AO')}</span>
                         </div>
                         <div className="flex justify-between items-center text-[12px]">
-                            <span className="text-gray-500 font-bold uppercase tracking-tighter">Taxa Operacional (2%)</span>
+                            <span className="text-gray-500 font-bold uppercase tracking-tighter">Taxa Operacional (5%)</span>
                             <span className="text-red-600 font-black">+ Kz {fee.toLocaleString('pt-AO')}</span>
                         </div>
                         <hr className="border-gray-200" />
                         <div className="flex justify-between items-center">
-                            <span className="text-[#565959] font-black uppercase text-[10px] tracking-[0.2em]">Total Debitado</span>
-                            <span className="text-2xl font-black text-[#0F1111] tracking-tighter">Kz {total.toLocaleString('pt-AO')}</span>
+                            <span className="text-[#565959] font-black uppercase text-[10px] tracking-[0.2em]">Total Bruto (Debitado)</span>
+                            <span className="text-2xl font-black text-[#0F1111] tracking-tighter">Kz {amountNum.toLocaleString('pt-AO')}</span>
                         </div>
                     </div>
 

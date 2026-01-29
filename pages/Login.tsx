@@ -23,13 +23,8 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (failureCount >= MAX_ATTEMPTS) {
-      showToast?.("Muitas tentativas falhadas. Aguarde alguns instantes.", "error");
-      return;
-    }
-
     // 1. Sanitização e Validação
-    const cleanPhone = phoneNumber.replace(/\D/g, ''); // Remove tudo que não for dígito
+    const cleanPhone = phoneNumber.replace(/\D/g, '');
     const cleanPassword = password.trim();
 
     if (!cleanPhone || cleanPhone.length < 9) {
@@ -42,27 +37,39 @@ const Login: React.FC<Props> = ({ onNavigate, showToast }) => {
       return;
     }
 
-    const email = `${cleanPhone}@deepbank.user`;
-
     try {
       await withLoading(async () => {
-        const { error } = await runWithTimeout(() => supabase.auth.signInWithPassword({
+        // 2. Check server-side block
+        const { data: status, error: statusError } = await supabase.rpc('check_login_status', {
+          phone_input: cleanPhone
+        });
+
+        if (!statusError && status?.blocked) {
+          throw new Error(status.message);
+        }
+
+        const email = `${cleanPhone}@deepbank.user`;
+
+        // 3. Attempt Login
+        const { error: loginError } = await runWithTimeout(() => supabase.auth.signInWithPassword({
           email,
           password: cleanPassword,
         }));
 
-        if (error) {
-          setFailureCount(prev => prev + 1);
+        if (loginError) {
+          // 4. Register failure server-side
+          await supabase.rpc('register_failed_attempt', { phone_input: cleanPhone });
           throw new Error("Credenciais inválidas");
         }
 
-        setFailureCount(0);
+        // 5. Success - Reset attempts
+        await supabase.rpc('reset_login_attempts', { phone_input: cleanPhone });
 
       }, "Login sucedido!");
 
       onNavigate('splash-ads');
-    } catch (error) {
-      // Toast handled by withLoading
+    } catch (error: any) {
+      showToast?.(error.message || "Erro ao entrar", "error");
     }
   };
 

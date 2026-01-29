@@ -104,6 +104,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
 
   const FILTERS = [
     { label: 'Geral', icon: 'star', page: 'historico-conta' },
+    { label: 'P2P', icon: 'sync_alt', page: 'historico-p2p' },
     { label: 'Retiradas', icon: 'shopping_bag', page: 'withdrawal-history' },
     { label: 'Compras', icon: 'account_balance', page: 'purchase-history' },
     { label: 'Recargas', icon: 'handshake', page: 'deposit-history' },
@@ -127,7 +128,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, profile }) => {
           <div className="size-6 rounded-full bg-[#00C853] flex items-center justify-center">
             <span className="material-symbols-outlined text-[14px] text-black font-bold">person</span>
           </div>
-          <span className="text-black text-[11px] font-bold">Olá, {profile?.code || 'Usuário'}</span>
+          <span className="text-black text-[11px] font-bold">Olá, {profile?.invite_code || profile?.code || 'Usuário'}</span>
         </div>
 
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
